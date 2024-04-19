@@ -1,0 +1,92 @@
+<div class="main-content">
+  <div class="page-content">
+    <div class="container-fluid">
+      <div class="card">
+        <div class="card-header align-items-center d-flex">
+          <h4 class="card-title mb-0 flex-grow-1">Idea Jurney</h4>
+        </div>
+        <div class="card-body" *ngIf="ideaJurneyModel">
+          <form #editForm="ngForm" id="editForm" (ngSubmit)="addIdeaJurney()">
+            <label class="mt-3">Idea Jurney Stracture En</label>
+            <div>
+              <file-pond
+                *ngIf="!ideaJurneyModel.ideaJurnyEnUrl"
+                #ideaJurneyImgEn
+                label-idle='Drag & Drop your files or <span class="filepond--label-action"> Browse </span><br> <b>Maximum 5 files upload</b>'
+                allow-multiple="false"
+                [options]="pondOptions"
+                [files]="pondFiles"
+                (oninit)="pondHandleInit()"
+                (onaddfile)="pondHandleAddFile($event, 'ideaJurneyEnInstance')"
+              >
+              </file-pond>
+            </div>
+            <div *ngIf="ideaJurneyModel.ideaJurnyEnUrl">
+              <img
+                [src]="
+                  globalService.getImgServerBaseUrl() +
+                  ideaJurneyModel.ideaJurnyEnUrl
+                "
+                style="height: 364px; width: 603px; margin-left: 198px"
+                alt="Organization Image"
+                class="mt-2"
+              />
+              <a (click)="removeImage('en')" class="btn btn-danger mt-2"
+                >Remove</a
+              >
+            </div>
+
+            <label class="mt-3">Idea Jurney Stracture Ar</label>
+            <div>
+              <file-pond
+                *ngIf="!ideaJurneyModel.ideaJurnyArUrl"
+                #ideaJurneyImgAr
+                label-idle='Drag & Drop your files or <span class="filepond--label-action"> Browse </span><br> <b>Maximum 5 files upload</b>'
+                allow-multiple="false"
+                [options]="pondOptions"
+                [files]="pondFiles"
+                (oninit)="pondHandleInit()"
+                (onaddfile)="pondHandleAddFile($event, 'ideaJurneyArInstance')"
+              >
+              </file-pond>
+            </div>
+
+            <div *ngIf="ideaJurneyModel.ideaJurnyArUrl">
+              <img
+                [src]="
+                  globalService.getImgServerBaseUrl() +
+                  ideaJurneyModel.ideaJurnyArUrl
+                "
+                style="height: 364px; width: 603px; margin-left: 198px"
+                alt="Organization Image"
+                class="mt-2"
+              />
+              <a (click)="removeImage('ar')" class="btn btn-danger mt-2"
+                >Remove</a
+              >
+            </div>
+
+            <button
+              style="margin-top: 20px"
+              type="submit"
+              class="btn btn-danger waves-effect waves-light ms-2 col-3 pull-right"
+              *ngIf="ideaJurneyModel.id == 0"
+            >
+              Save
+            </button>
+            <button
+              style="margin-top: 20px"
+              type="submit"
+              class="btn btn-danger waves-effect waves-light ms-2 col-3 pull-right"
+              *ngIf="ideaJurneyModel.id != 0"
+            >
+              Update
+            </button>
+          </form>
+        </div>
+      </div>
+      <!-- container-fluid -->
+    </div>
+    <!-- End Page-content -->
+  </div>
+</div>

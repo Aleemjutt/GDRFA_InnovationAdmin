@@ -1,0 +1,24 @@
+// src/custom-styles.scss
+
+// Import Bootstrap SCSS
+@import "~bootstrap/dist/css/bootstrap.min.css";
+
+// Override Bootstrap variables
+$primary: none; // Change primary color to blue
+$secondary: #9fa1a3;
+$text: black; // Change secondary color if needed
+
+// Add any additional custom styles
+body {
+  background-color: white; // Change body background color
+}
+
+&.ng-selected,
+.ng-has-value,
+&.filtered {
+  .ng-control .ng-value-container .ng-placeholder {
+    .ng-placeholder {
+      display: none;
+    }
+  }
+}

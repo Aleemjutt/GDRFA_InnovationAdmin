@@ -1,0 +1,88 @@
+ @font-face {
+     font-family: DinNextArabic;
+     src: url('../../fonts/certificates/DINNextLTArabic-Regular-2.ttf')
+ }
+
+ @font-face {
+     font-family: DubaiMedium;
+     src: url('../../fonts/certificates/DubaiW23-Medium.woff');
+ }
+
+ .certificatebg {
+     width: 100%;
+     background: url(../../images/certificates/bg.png) no-repeat;
+     background-size: cover;
+ }
+
+ .gold-border {
+     border: 12px solid #BC9B22;
+     margin: 0 auto;
+     width: 100%;
+     min-height: 548px;
+     text-align: center;
+     padding: 30px;
+ }
+
+ .textupper {
+     text-transform: uppercase;
+ }
+
+ .title {
+     font-size: 49px;
+     margin-top: 20px;
+ }
+
+ .font-weight100 {
+     font-weight: 100 !important;
+ }
+
+ .font-noto {
+     font-family: 'DinNextArabic', serif !important;
+ }
+
+ .font-dubai {
+     font-family: 'DubaiMedium', serif !important;
+ }
+
+ .letterspacing9 {
+     letter-spacing: 9px;
+ }
+
+ .text-light {
+     color: #666666;
+ }
+
+ .gold-text {
+     color: #BC9B22;
+ }
+
+ .issuename {
+     font-family: 'DubaiMedium', serif !important;
+ }
+
+ .mt-0 {
+     margin-top: 0px;
+ }
+
+ .mb-0 {
+     margin-bottom: 0px;
+ }
+
+ .font50 {
+     font-size: 50px;
+ }
+
+ .date {
+     position: relative;
+     top: 60px;
+ }
+
+ .certcontent {
+     line-height: 28px;
+     padding: 0px 95px;
+ }
+
+ .sign img{
+    height: 50px;
+
+ }

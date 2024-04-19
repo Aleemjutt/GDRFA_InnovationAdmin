@@ -1,0 +1,69 @@
+.insetcust[_ngcontent-ng-c610422707] {
+  inset: 100% auto auto 0px !important;
+}
+.ng-dropdown-panel {
+  background-color: white !important;
+  padding: 10px;
+  border: 1px solid #dde2e6;
+  right: -1px;
+  top: 36px;
+  border-radius: 6px;
+}
+
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
+  padding: 2px 10px;
+  transition: 2s;
+}
+
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option:hover {
+  background-color: #dde2e6;
+  border-radius: 5px;
+}
+
+.dataTables_wrapper div.dataTables_filter {
+  text-align: left !important;
+}
+
+.badge-success {
+  color: #fff !important;
+  background-color: #28a745 !important;
+}
+
+.badge-info {
+  color: #fff;
+  background-color: #17a2b8;
+}
+.badge-danger {
+  color: #fff;
+  background-color: #dc3545;
+}
+.badge-secondary {
+  color: #fff;
+  background-color: #6c757d;
+}
+.badge-warning {
+  color: #212529;
+  background-color: #ffc107;
+}
+.badge-light {
+  color: #212529;
+  background-color: #f8f9fa;
+}
+.badge-dark {
+  color: #fff;
+  background-color: #343a40;
+}
+
+td {
+  padding: 8px !important;
+  text-align: right !important;
+}
+th {
+  padding: 8px !important;
+  text-align: right !important ;
+}
+
+.tableHead {
+  padding: 8px !important;
+  text-align: right !important ;
+}

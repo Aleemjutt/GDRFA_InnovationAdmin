@@ -1,0 +1,12 @@
+.modal-dialog:not(.modal-dialog-scrollable) .modal-header {
+  padding-bottom: -0;
+}
+.bg-light {
+  background: none !important;
+}
+
+.img-thumbnail {
+  margin: 25px;
+  width: 85%;
+  height: 85%;
+}

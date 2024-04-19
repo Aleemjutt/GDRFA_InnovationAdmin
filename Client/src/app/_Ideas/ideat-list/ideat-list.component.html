@@ -1,0 +1,626 @@
+<div class="main-content">
+  <div class="page-content">
+    <div class="container-fluid">
+      <div class="card">
+        <div class="card-header align-items-center d-flex">
+          <h4 class="card-title mb-0 flex-grow-1">Submited Ideas List</h4>
+          <div class="flex-shrink-0">
+            <div class="d-flex align-items-center">
+              <input
+                type="text"
+                class="form-control me-3"
+                data-provider="flatpickr"
+                data-date-format="d M, Y"
+                data-range-date="true"
+                placeholder="Select Date Range"
+              />
+              <select
+                class="form-select mb-0 me-2"
+                aria-label="Default select example"
+              >
+                <option selected>Status</option>
+                <option value="1">Submitted</option>
+                <option value="2">In Review</option>
+                <option value="3">Approved</option>
+                <option value="4">Rejected</option>
+              </select>
+              <button
+                type="button"
+                class="btn btn-light waves-effect waves-light ms-2 me-2 col-1"
+              >
+                <i class="ri-search-2-line"></i>
+              </button>
+              <!-- |
+              <a
+                type="button"
+                class="btn btn-danger waves-effect waves-light ms-2 col-3"
+                id="btnAdd"
+                style="float: inline-end"
+                (click)="openModal(template)"
+              >
+                Add New
+              </a> -->
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <table class="table table-nowrap" id="ideaDataTable">
+            <thead>
+              <tr>
+                <th>{{ "ID" }}</th>
+                <th>{{ "Idea Title" }}</th>
+                <th>{{ "Sector" }}</th>
+                <th>{{ "Administration" }}</th>
+                <th>{{ "Status" }}</th>
+                <th>{{ "Actions" }}</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!-- container-fluid -->
+  </div>
+  <!-- End Page-content -->
+</div>
+<ng-template #template class="modal-lg">
+  <div class="modal-header bg-light">
+    <h4 class="modal-title pull-left">Consulting Request</h4>
+    <button
+      type="button"
+      class="btn-close close pull-right"
+      aria-label="Close"
+      (click)="modalRef?.hide()"
+    >
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row" style="margin-bottom: 65px">
+      <div class="card-body">
+        <div class="row" *ngIf="ideaSubmitModel">
+          <div class="col-md-12">
+            <div class="col-md-6">
+              <div class="mt-0">
+                <label for="basiInput" class="form-label">Idea title</label>
+                <p
+                  type="input"
+                  class="form-control"
+                  id="basiInput"
+                  [(ngModel)]="ideaSubmitModel.title"
+                  [disabled]="true"
+                ></p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mt-3">
+                <label for="basiInput" class="form-label">Idea text</label>
+                <p
+                  type="input"
+                  class="form-control"
+                  id="basiInput"
+                  [(ngModel)]="ideaSubmitModel.ideaText"
+                  [disabled]="true"
+                ></p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mt-3">
+                <div class="form-group mt-4">
+                  <label for="exampleFormControlTextarea1" class="text-dark"
+                    >{{ "Return from implementing the idea" }}
+                    <span class="text-danger">*</span></label
+                  >
+                  <p class="mb-1 mt-3 text-dark">
+                    {{
+                      "Choose no more than two of the most influential returns from the returns listed below :"
+                    }}
+                  </p>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      value=""
+                      id="defaultCheck1"
+                      disabled
+                      [(ngModel)]="ideaSubmitModel.employeehappiness"
+                    />
+                    <label
+                      class="form-check-label text-dark"
+                      for="defaultCheck1"
+                    >
+                      {{ "Employee happiness" }}
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      value=""
+                      id="defaultCheck1"
+                      disabled
+                      [(ngModel)]="ideaSubmitModel.improvingservices"
+                    />
+                    <label
+                      class="form-check-label text-dark"
+                      for="defaultCheck1"
+                    >
+                      {{ "Improving services" }}
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      value=""
+                      id="defaultCheck1"
+                      disabled
+                      [(ngModel)]="ideaSubmitModel.rationalizationofexpenses"
+                    />
+                    <label
+                      class="form-check-label text-dark"
+                      for="defaultCheck1"
+                    >
+                      {{ "Rationalization of expenses" }}
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      value=""
+                      id="defaultCheck1"
+                      disabled
+                      [(ngModel)]="ideaSubmitModel.customerhappiness"
+                    />
+                    <label
+                      class="form-check-label text-dark"
+                      for="defaultCheck1"
+                    >
+                      {{ "Customer happiness" }}
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      value=""
+                      id="defaultCheck1"
+                      disabled
+                      [(ngModel)]="
+                        ideaSubmitModel.informationabouttechnologydevelopment
+                      "
+                    />
+                    <label
+                      class="form-check-label text-dark"
+                      for="defaultCheck1"
+                    >
+                      {{ "Information technology development" }}
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      value=""
+                      id="defaultCheck1"
+                      disabled
+                      [(ngModel)]="ideaSubmitModel.findindnewsourcesoffinancing"
+                    />
+                    <label
+                      class="form-check-label text-dark"
+                      for="defaultCheck1"
+                    >
+                      {{ "Finding new sources of financing" }}
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mt-3">
+                <label for="basiInput" class="form-label">Sector</label>
+                <ng-select
+                  #mySector
+                  class="form-control mt-2 form-select"
+                  [items]="sectorList"
+                  [bindLabel]="bindLableSector"
+                  bindValue="sectorId"
+                  [(ngModel)]="ideaSubmitModel.sectorId"
+                >
+                </ng-select>
+              </div>
+            </div>
+            <br />
+            <div class="col-md-6">
+              <div class="mt-3">
+                <label for="basiInput" class="form-label">Administration</label>
+                <ng-select
+                  #myAdministration
+                  class="form-control mt-2 form-select"
+                  [items]="administrationList"
+                  [bindLabel]="bindLableAdministration"
+                  bindValue="administrationId"
+                  [(ngModel)]="ideaSubmitModel.administrationId"
+                >
+                </ng-select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mt-3">
+                <label for="basiInput" class="form-label text-muted mb-0"
+                  >Attachment</label
+                >
+                <div class="fs-15">
+                  <!-- <img
+                    src="{{
+                      ideaSubmitModel.attachmentUrlView ||
+                        './assests/default.png'
+                    }}"
+                    class="card-img-top img-thumnail"
+                  /> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="modal-footer">
+        <div class="button-container">
+          <button
+            type="button"
+            class="btn btn-danger waves-effect waves-light"
+            (click)="Update()"
+          >
+            Save
+          </button>
+
+          <button
+            type="button"
+            class="btn btn-light button"
+            aria-label="Close"
+            (click)="modalRef?.hide()"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #templateDetails class="modal-lg">
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Idea Details</h4>
+    <button
+      type="button"
+      class="btn-close close pull-right"
+      aria-label="Close"
+      (click)="modalRef?.hide()"
+    >
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="row mt-3">
+        <div class="col-md-4">
+          <label for="basiInput" class="form-label text-muted mb-0">Date</label>
+          <div>{{ ideaSubmitModel?.createdDate }}</div>
+        </div>
+        <div class="col-md-4">
+          <label for="basiInput" class="form-label text-muted mb-0"
+            >Status</label
+          >
+          <div *ngIf="ideaSubmitModel?.workFlowStatus == 0">
+            <div class="text-success badge badge-soft-success fs-12 fw-regular">
+              {{ ideaSubmitModel?.workFlowStatusName }}
+            </div>
+          </div>
+
+          <div *ngIf="ideaSubmitModel?.workFlowStatus == 1">
+            <div class="text-danger badge badge-soft-danger fs-12 fw-regular">
+              {{ ideaSubmitModel?.workFlowStatusName }}
+            </div>
+          </div>
+
+          <div *ngIf="ideaSubmitModel?.workFlowStatus == 3">
+            <div class="text-info badge badge-soft-info fs-12 fw-regular">
+              {{ ideaSubmitModel?.workFlowStatusName }}
+            </div>
+          </div>
+
+          <div *ngIf="ideaSubmitModel?.workFlowStatus == 4">
+            <div
+              class="text-secondary badge badge-soft-secondary fs-12 fw-regular"
+            >
+              {{ ideaSubmitModel?.workFlowStatusName }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr class="bg-soft-dark" />
+      <div class="row mt-3">
+        <div class="col-md-3">
+          <label for="basiInput" class="form-label text-muted mb-0"
+            >Employee ID</label
+          >
+          <div class="fs-15"></div>
+        </div>
+        <div class="col-md-3">
+          <label for="basiInput" class="form-label text-muted mb-0">Name</label>
+          <div class="fs-15"></div>
+        </div>
+        <div class="col-md-3">
+          <label for="basiInput" class="form-label text-muted mb-0"
+            >Job Title</label
+          >
+          <div class="fs-15"></div>
+        </div>
+        <div class="col-md-3">
+          <label for="basiInput" class="form-label text-muted mb-0"
+            >Section</label
+          >
+          <div class="fs-15"></div>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-md-3">
+          <label for="basiInput" class="form-label text-muted mb-0"
+            >Department</label
+          >
+          <div class="fs-15"></div>
+        </div>
+        <div class="col-md-3">
+          <label for="basiInput" class="form-label text-muted mb-0"
+            >Sector</label
+          >
+          <div class="fs-15"></div>
+        </div>
+        <div class="col-md-3">
+          <label for="basiInput" class="form-label text-muted mb-0"
+            >Mobile No</label
+          >
+          <div class="fs-15"></div>
+        </div>
+        <div class="col-md-3">
+          <label for="basiInput" class="form-label text-muted mb-0"
+            >Office No</label
+          >
+          <div class="fs-15"></div>
+        </div>
+      </div>
+
+      <div class="row mt-3">
+        <div class="col-md-3">
+          <label for="basiInput" class="form-label text-muted mb-0"
+            >Address</label
+          >
+          <div class="fs-15"></div>
+        </div>
+        <div class="col-md-3">
+          <label for="basiInput" class="form-label text-muted mb-0"
+            >Email</label
+          >
+          <div class="fs-15"></div>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <hr class="bg-soft-dark" />
+        <div class="col-md-6">
+          <label for="basiInput" class="form-label text-muted mb-0"
+            >Title</label
+          >
+          <div class="fs-15">{{ ideaSubmitModel?.title }}</div>
+        </div>
+        <div class="col-md-6">
+          <label for="basiInput" class="form-label text-muted mb-0"
+            >Details</label
+          >
+          <div class="fs-15">{{ ideaSubmitModel?.ideaText }}</div>
+        </div>
+      </div>
+
+      <div class="row mt-3">
+        <label for="basiInput" class="form-label text-muted mb-0"
+          >Return from implementing the idea
+        </label>
+        <hr class="bg-soft-dark" />
+        <div class="col-md-4">
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              id="employeeHappinessCheckbox"
+              [checked]="ideaSubmitModel?.employeehappiness"
+            />
+
+            <label class="form-check-label" for="employeeHappinessCheckbox"
+              >Employee happiness</label
+            >
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              id="employeeHappinessCheckbox"
+              [checked]="ideaSubmitModel?.improvingservices"
+            />
+
+            <label class="form-check-label" for="employeeHappinessCheckbox"
+              >Improving Services</label
+            >
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              id="employeeHappinessCheckbox"
+              [checked]="ideaSubmitModel?.rationalizationofexpenses"
+            />
+
+            <label class="form-check-label" for="employeeHappinessCheckbox"
+              >Rationalization of expenses</label
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-3">
+        <div class="col-md-4">
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              id="employeeHappinessCheckbox"
+              [checked]="ideaSubmitModel?.customerhappiness"
+            />
+
+            <label class="form-check-label" for="employeeHappinessCheckbox"
+              >Customer happiness</label
+            >
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              id="employeeHappinessCheckbox"
+              [checked]="ideaSubmitModel?.informationabouttechnologydevelopment"
+            />
+
+            <label class="form-check-label" for="employeeHappinessCheckbox"
+              >Information about technology development</label
+            >
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              id="employeeHappinessCheckbox"
+              [checked]="ideaSubmitModel?.improvingservices"
+            />
+
+            <label class="form-check-label" for="employeeHappinessCheckbox"
+              >إيجاد مصادر جديدة للتمويل</label
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-3">
+        <div class="col-md-6">
+          <label for="basiInput" class="form-label text-muted mb-0"
+            >Sector</label
+          >
+          <div class="fs-15">{{ ideaSubmitModel?.sectorName }}</div>
+        </div>
+        <div class="col-md-6">
+          <label for="basiInput" class="form-label text-muted mb-0"
+            >Administration</label
+          >
+          <div class="fs-15">{{ ideaSubmitModel?.administrationName }}</div>
+        </div>
+      </div>
+
+      <hr class="bg-soft-dark" />
+
+      <div class="row mt-3">
+        <label for="basicInput" class="form-label text-muted mb-0"
+          >Attachments</label
+        >
+      </div>
+
+      <div class="row mt-2">
+        <div class="col-md-12">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">File</th>
+                <th scope="col">Download</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let attachment of ideaSubmitModel?.attachmentsModel">
+                <td>
+                  <!-- Display file icon based on extension -->
+                  <i
+                    *ngIf="attachment.extension === '.jpg'"
+                    class="bi bi-file-image"
+                  ></i>
+                  <i
+                    *ngIf="attachment.extension === '.png'"
+                    class="bi bi-file-image"
+                  ></i>
+                  <i
+                    *ngIf="attachment.extension === '.pdf'"
+                    class="bi bi-file-pdf"
+                  ></i>
+                  <!-- Add more conditions for other file types as needed -->
+                  <!-- Display attachment title -->
+                  <span>{{ attachment.title }}</span>
+                </td>
+                <td>
+                  <!-- Download button with download icon -->
+                  <button
+                    class="btn btn-primary btn-sm"
+                    (click)="downloadFile(attachment.url)"
+                  >
+                    <i class="bi bi-download"></i> Download
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="modal-footer">
+      <div class="button-container">
+        <button
+          type="button"
+          class="btn btn-success button mr-2"
+          (click)="accept(0)"
+        >
+          Accept
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger button mr-2"
+          (click)="reject(1)"
+        >
+          Reject
+        </button>
+        <button
+          type="button"
+          class="btn btn-warning button mr-2"
+          (click)="modify(3)"
+        >
+          Modify
+        </button>
+        <button
+          type="button"
+          class="btn btn-light button"
+          aria-label="Close"
+          (click)="modalRef?.hide()"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>

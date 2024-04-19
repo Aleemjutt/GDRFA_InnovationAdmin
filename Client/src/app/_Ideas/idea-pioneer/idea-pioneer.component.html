@@ -1,0 +1,201 @@
+<div class="main-content">
+  <div class="page-content">
+    <div class="container-fluid">
+      <div class="card">
+        <div class="card-header align-items-center d-flex">
+          <h4 class="card-title mb-0 flex-grow-1">Idea Pionner List</h4>
+          <div class="flex-shrink-0">
+            <div class="d-flex align-items-center">
+              <input
+                type="text"
+                class="form-control me-3"
+                data-provider="flatpickr"
+                data-date-format="d M, Y"
+                data-range-date="true"
+                placeholder="Select Date Range"
+              />
+              <select
+                class="form-select mb-0 me-2"
+                aria-label="Default select example"
+              >
+                <option selected>Status</option>
+                <option value="1">Submitted</option>
+                <option value="2">In Review</option>
+                <option value="3">Approved</option>
+                <option value="4">Rejected</option>
+              </select>
+              <button
+                type="button"
+                class="btn btn-light waves-effect waves-light ms-2 me-2 col-1"
+              >
+                <i class="ri-search-2-line"></i>
+              </button>
+              |
+              <a
+                type="button"
+                class="btn btn-danger waves-effect waves-light ms-2 col-3"
+                id="btnAdd"
+                style="float: inline-end"
+                (click)="openModal(template)"
+              >
+                Add New
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <table class="table table-nowrap" id="creditsDataTable">
+            <thead>
+              <tr>
+                <th>{{ "ID" }}</th>
+                <th>{{ "Description En" }}</th>
+                <th>{{ "Description Ar" }}</th>
+                <th>{{ "Actions" }}</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!-- container-fluid -->
+  </div>
+  <!-- End Page-content -->
+</div>
+<ng-template #template class="modal-lg">
+  <div class="modal-header bg-light">
+    <h4 class="modal-title pull-left">Add New</h4>
+    <button
+      type="button"
+      class="btn-close close pull-right"
+      aria-label="Close"
+      (click)="modalRef?.hide()"
+    >
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row" style="margin-bottom: 65px">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6">
+            <div>
+              <label for="basiInput" class="form-label">Description Eng</label>
+              <input
+                type="input"
+                class="form-control"
+                id="basiInput"
+                [(ngModel)]="ideaPionnerModel.descriptionEn"
+              />
+            </div>
+            <div class="mt-3">
+              <label for="basiInput" class="form-label">Description Ar</label>
+              <input
+                type="input"
+                class="form-control"
+                id="basiInput"
+                [(ngModel)]="ideaPionnerModel.descriptionAr"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="modal-footer">
+        <div class="button-container">
+          <button
+            type="button"
+            class="btn btn-danger waves-effect waves-light"
+            (click)="add()"
+            *ngIf="ideaPionnerModel.id == 0"
+          >
+            Save
+          </button>
+
+          <button
+            type="button"
+            class="btn btn-danger waves-effect waves-light"
+            (click)="update()"
+            *ngIf="ideaPionnerModel.id != 0"
+          >
+            Update
+          </button>
+          <button
+            type="button"
+            class="btn btn-light button"
+            aria-label="Close"
+            (click)="modalRef?.hide()"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #templateDetails class="modal-lg">
+  <div class="modal-header bg-light">
+    <h4 class="modal-title pull-left"></h4>
+    <button
+      type="button"
+      class="btn-close close pull-right"
+      aria-label="Close"
+      (click)="modalRef?.hide()"
+    >
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="container-fluid">
+      <div class="card-header align-items-center d-flex">
+        <h4 class="card-title mb-0 flex-grow-1">Idea Pionner Details</h4>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6">
+            <label for="basiInput" class="form-label text-muted mb-0"
+              >Description Ar</label
+            >
+            <div>{{ ideaPionnerModel.descriptionAr }}</div>
+          </div>
+          <div class="col-md-6">
+            <label for="basiInput" class="form-label text-muted mb-0"
+              >Description Ar</label
+            >
+            <div>{{ ideaPionnerModel.descriptionAr }}</div>
+          </div>
+          <div class="col-md-6">
+            <label for="basiInput" class="form-label text-muted mb-0"
+              >Description En</label
+            >
+            <div>{{ ideaPionnerModel.descriptionEn }}</div>
+          </div>
+          <div class="col-md-6">
+            <label for="basiInput" class="form-label text-muted mb-0"
+              >Description Ar</label
+            >
+            <div>{{ ideaPionnerModel.descriptionAr }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- container-fluid -->
+    <!-- End Page-content -->
+    <div class="row">
+      <div class="modal-footer">
+        <div class="button-container">
+          <button
+            type="button"
+            class="btn btn-light button"
+            aria-label="Close"
+            (click)="modalRef?.hide()"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

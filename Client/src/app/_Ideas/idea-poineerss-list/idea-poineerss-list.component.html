@@ -1,0 +1,392 @@
+<div class="main-content">
+  <div class="page-content">
+    <div class="container-fluid">
+      <div class="card">
+        <div class="card-header align-items-center d-flex">
+          <h4 class="card-title mb-0 flex-grow-1">Idea Pionner List</h4>
+          <div class="flex-shrink-0">
+            <div class="d-flex align-items-center">
+              <input
+                type="text"
+                class="form-control me-3"
+                data-provider="flatpickr"
+                data-date-format="d M, Y"
+                data-range-date="true"
+                placeholder="Select Date Range"
+              />
+              <select
+                class="form-select mb-0 me-2"
+                aria-label="Default select example"
+              >
+                <option selected>Status</option>
+                <option value="1">Submitted</option>
+                <option value="2">In Review</option>
+                <option value="3">Approved</option>
+                <option value="4">Rejected</option>
+              </select>
+              <button
+                type="button"
+                class="btn btn-light waves-effect waves-light ms-2 me-2 col-1"
+              >
+                <i class="ri-search-2-line"></i>
+              </button>
+              |
+              <a
+                type="button"
+                class="btn btn-danger waves-effect waves-light ms-2 col-3"
+                id="btnAdd"
+                style="float: inline-end"
+                (click)="openModal(template)"
+              >
+                Add New
+              </a>
+
+              <a
+                type="button"
+                class="btn btn-danger waves-effect waves-light ms-2 col-3"
+                id="btnAdd"
+                style="float: inline-end"
+                (click)="OpenPointsModel(templatePoints)"
+              >
+                Add Points
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <table class="table table-nowrap" id="ideaPionnerDataTable">
+            <thead>
+              <tr>
+                <th>{{ "ID" }}</th>
+                <th>{{ "Title En" }}</th>
+                <th>{{ "Title Ar" }}</th>
+                <th>{{ "Name En" }}</th>
+                <th>{{ "Name Ar" }}</th>
+                <th>{{ "Actions" }}</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!-- container-fluid -->
+  </div>
+  <!-- End Page-content -->
+</div>
+<ng-template #template class="modal-lg">
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Add New</h4>
+    <button
+      type="button"
+      class="btn-close close pull-right"
+      aria-label="Close"
+      (click)="modalRef?.hide()"
+    >
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row" style="margin-bottom: 65px">
+      <div class="row">
+        <div class="col-md-6">
+          <div>
+            <label for="basiInput" class="form-label">Title Eng</label>
+            <input
+              type="input"
+              class="form-control"
+              id="basiInput"
+              [(ngModel)]="ideaPionnerModel.titleEn"
+            />
+          </div>
+          <div class="mt-3">
+            <label for="basiInput" class="form-label">Title Ar</label>
+            <input
+              type="input"
+              class="form-control"
+              id="basiInput"
+              [(ngModel)]="ideaPionnerModel.titleAr"
+            />
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div>
+            <label for="basiInput" class="form-label">Name Eng</label>
+            <input
+              type="input"
+              class="form-control"
+              id="basiInput"
+              [(ngModel)]="ideaPionnerModel.nameEn"
+            />
+          </div>
+          <div class="mt-3">
+            <label for="basiInput" class="form-label">Name Ar</label>
+            <input
+              type="input"
+              class="form-control"
+              id="basiInput"
+              [(ngModel)]="ideaPionnerModel.nameAr"
+            />
+          </div>
+        </div>
+
+        <div class="mt-3">
+          <div class="mb-3">
+            <div *ngIf="!ideaPionnerModel.url">
+              <label for="formFile" class="form-label">Choose file</label>
+              <file-pond
+                #myPond
+                label-idle='Drag & Drop your files or <span class="filepond--label-action"> Browse </span><br> <b>Maximum 5 files upload</b>'
+                allow-multiple="true"
+                [options]="pondOptions"
+                [files]="pondFiles"
+                (oninit)="pondHandleInit()"
+                (onaddfile)="pondHandleAddFile($event)"
+              >
+              </file-pond>
+            </div>
+            <div *ngIf="ideaPionnerModel.url">
+              <img
+                [src]="
+                  globalService.getImgServerBaseUrl() + ideaPionnerModel.url
+                "
+                alt="Membership Image"
+                style="height: 200px; width: auto"
+                class="mt-2"
+              />
+              <a
+                (click)="removeImage()"
+                class="btn btn-danger"
+                style="display: block; margin-top: 10px"
+                >Remove</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="modal-footer">
+      <div class="button-container">
+        <button
+          type="button"
+          class="btn btn-danger waves-effect waves-light mr-2"
+          (click)="add()"
+          *ngIf="ideaPionnerModel.id == 0"
+        >
+          Save
+        </button>
+
+        <button
+          type="button"
+          class="btn btn-danger waves-effect waves-light mr-2"
+          (click)="update()"
+          *ngIf="ideaPionnerModel.id != 0"
+        >
+          Update
+        </button>
+        <button
+          type="button"
+          class="btn btn-light button mr-2"
+          aria-label="Close"
+          (click)="modalRef?.hide()"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #templateDetails class="modal-lg">
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Idea Pionner Details</h4>
+    <button
+      type="button"
+      class="btn-close close pull-right"
+      aria-label="Close"
+      (click)="modalRef?.hide()"
+    >
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6">
+          <label for="basiInput" class="form-label text-muted mb-0"
+            >Name En</label
+          >
+          <div>{{ ideaPionnerModel.titleEn }}</div>
+        </div>
+        <div class="col-md-6">
+          <label for="basiInput" class="form-label text-muted mb-0"
+            >Title Ar</label
+          >
+          <div>{{ ideaPionnerModel.titleAr }}</div>
+        </div>
+        <div class="col-md-6">
+          <label for="basiInput" class="form-label text-muted mb-0"
+            >Name En</label
+          >
+          <div>{{ ideaPionnerModel.nameEn }}</div>
+        </div>
+        <div class="col-md-6">
+          <label for="basiInput" class="form-label text-muted mb-0"
+            >Name Ar</label
+          >
+          <div>{{ ideaPionnerModel.nameAr }}</div>
+        </div>
+        <div class="col-md-6">
+          <label for="basiInput" class="form-label text-muted mb-0"
+            >Attachment</label
+          >
+          <div class="fs-15">
+            <img
+              [src]="globalService.getImgServerBaseUrl() + ideaPionnerModel.url"
+              class="card-img-top img-thumnail"
+              style="height: 200px; width: auto"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- container-fluid -->
+  <!-- End Page-content -->
+  <div class="row">
+    <div class="modal-footer">
+      <div class="button-container">
+        <button
+          type="button"
+          class="btn btn-light button"
+          aria-label="Close"
+          (click)="modalRef?.hide()"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<ng-template #templatePoints class="modal-lg">
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Membership Application Points</h4>
+    <button
+      type="button"
+      class="btn-close close pull-right"
+      aria-label="Close"
+      (click)="modalRef?.hide()"
+    >
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row" style="margin-bottom: 65px">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="mb-3">
+              <label for="Enter value for En" class="form-label">Text En</label>
+              <input
+                type="text"
+                class="form-control"
+                id="textEn"
+                placeholder="Enter value for En"
+                [(ngModel)]="ideaPionnerPointsModel.textEn"
+                name="textEn"
+              />
+            </div>
+
+            <div class="mb-3">
+              <label for="Enter value for Ar" class="form-label">Text Ar</label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="textAr"
+                  placeholder="Enter value for Ar"
+                  [(ngModel)]="ideaPionnerPointsModel.textAr"
+                  name="textAr"
+                />
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <button
+                class="btn btn-danger waves-effect waves-light pull-right"
+                type="button"
+                id="ourValuesEnButton"
+                (click)="addPoints()"
+              >
+                Add
+              </button>
+            </div>
+
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Text En</th>
+                    <th scope="col">Text Ar</th>
+                    <th scope="col">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    *ngFor="
+                      let item of ideaPionnerPointsListModel;
+                      let i = index
+                    "
+                  >
+                    <td>{{ item.textEn }}</td>
+                    <td>{{ item.textAr }}</td>
+                    <td>
+                      <a
+                        class="btn btn-danger btn-sm"
+                        (click)="removePoints(i)"
+                      >
+                        Remove
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="modal-footer">
+      <div class="button-container">
+        <button
+          type="button"
+          class="btn btn-danger waves-effect waves-light mr-2"
+          (click)="savePoinets()"
+          *ngIf="ideaPionnerPointsModel.id == 0"
+        >
+          Save
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger waves-effect waves-light mr-2"
+          (click)="savePoinets()"
+          *ngIf="ideaPionnerPointsModel.id != 0"
+        >
+          Update
+        </button>
+        <button
+          type="button"
+          class="btn btn-light button mr-2"
+          aria-label="Close"
+          (click)="modalRef?.hide()"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>

@@ -1,0 +1,7 @@
+{
+  "/api": {
+    "target": "https://localhost:7010/gateway/",
+    "secure": false,
+    "changeOrigin": true
+  }
+}

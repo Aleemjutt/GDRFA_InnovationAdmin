@@ -1,0 +1,21 @@
+export interface InnovationConsultingModel {
+  id: number | null;
+  contactDescEn: string | null;
+  contactDescAr: string | null;
+  mobile: string | null;
+  availablity: string | null;
+  twitterUrl: string | null;
+  instagramUrl: string | null;
+  submitComplain: string | null;
+  facebookUrl: string | null;
+  submitSuggestion: string | null;
+  amirChart: string | null;
+  contactGeneralManager: string | null;
+  instantVideoCall: string | null;
+  email: string | null;
+  toolFreeNumber: string | null;
+  internationalPhoneNumber: string | null;
+  amirChartLink: string | null;
+  postalAddress: string | null;
+  headquaterLocation: string | null;
+}

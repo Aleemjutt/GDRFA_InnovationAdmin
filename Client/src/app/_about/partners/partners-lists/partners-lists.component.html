@@ -1,0 +1,285 @@
+<div class="main-content">
+  <div class="page-content">
+    <div class="container-fluid">
+      <div class="card">
+        <div class="card-header align-items-center d-flex">
+          <h4 class="card-title mb-0 flex-grow-1">Partners List</h4>
+          <div class="flex-shrink-0">
+            <div class="d-flex align-items-center">
+              <input
+                type="text"
+                class="form-control me-3"
+                data-provider="flatpickr"
+                data-date-format="d M, Y"
+                data-range-date="true"
+                placeholder="Select Date Range"
+              />
+              <select
+                class="form-select mb-0 me-2"
+                aria-label="Default select example"
+              >
+                <option selected>Status</option>
+                <option value="1">Submitted</option>
+                <option value="2">In Review</option>
+                <option value="3">Approved</option>
+                <option value="4">Rejected</option>
+              </select>
+              <button
+                type="button"
+                class="btn btn-light waves-effect waves-light ms-2 me-2 col-1"
+              >
+                <i class="ri-search-2-line"></i>
+              </button>
+              |
+              <a
+                type="button"
+                class="btn btn-danger waves-effect waves-light ms-2 col-3"
+                id="btnAdd"
+                style="float: inline-end"
+                (click)="openModal(template)"
+              >
+                Add New
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <table class="table table-nowrap" id="partnersDataTable">
+            <thead>
+              <tr>
+                <th>{{ "ID" }}</th>
+                <th>{{ "Description En" }}</th>
+                <th>{{ "Description Ar" }}</th>
+                <!-- <th>{{ "Actions" }}</th> -->
+                <th>{{ "Actions" }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- <tr>
+                <th scope="row"><a href="#" class="fw-semibold">#VZ2110</a></th>
+                <td>Lorem ipsum dolor sit amet consectetur adipiscing elit.</td>
+                <td>
+                  <a href="details.html" class="link-warning"
+                    >View in Detail
+                    <i class="ri-arrow-right-line align-middle"></i
+                  ></a>
+                </td>
+              </tr> -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!-- container-fluid -->
+  </div>
+  <!-- End Page-content -->
+</div>
+<ng-template #template class="modal-lg">
+  <div class="modal-header">
+    <h4 class="modal-title pull-left" *ngIf="partnerModel.id == 0">
+      Add New Partner
+    </h4>
+    <h4 class="modal-title pull-left" *ngIf="partnerModel.id != 0">
+      Update Partner
+    </h4>
+    <button
+      type="button"
+      class="btn-close close pull-right"
+      aria-label="Close"
+      (click)="modalRef?.hide()"
+    >
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="mt-3">
+          <label for="basiInput" class="form-label">Description Eng</label>
+          <input
+            type="input"
+            class="form-control"
+            id="basiInput"
+            [(ngModel)]="partnerModel.descriptionEn"
+          />
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="mt-3">
+          <label for="basiInput" class="form-label">Description Ar</label>
+          <input
+            type="input"
+            class="form-control"
+            id="basiInput"
+            [(ngModel)]="partnerModel.descriptionAr"
+          />
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="mt-3">
+          <label for="basiInput" class="form-label">Partner Type</label>
+          <select class="form-control" [(ngModel)]="partnerModel.partnerType">
+            <option [ngValue]="0" class="form-control">Normal</option>
+            <option [ngValue]="1" class="form-control">Strategic</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="mt-3">
+          <div class="mb-3">
+            <div *ngIf="!partnerModel.imageUrl">
+              <label for="formFile" class="form-label">Choose file</label>
+              <file-pond
+                #myPond
+                label-idle='Drag & Drop your files or <span class="filepond--label-action"> Browse </span><br> <b>Maximum 5 files upload</b>'
+                allow-multiple="true"
+                [options]="pondOptions"
+                [files]="pondFiles"
+                (oninit)="pondHandleInit()"
+                (onaddfile)="pondHandleAddFile($event)"
+              >
+              </file-pond>
+            </div>
+
+            <div *ngIf="partnerModel.imageUrl">
+              <img
+                [src]="
+                  globalService.getImgServerBaseUrl() + partnerModel.imageUrl
+                "
+                alt="Membership Image"
+                style="height: 200px; width: auto"
+                class="mt-2"
+              />
+              <a
+                (click)="removeImage()"
+                class="btn btn-danger"
+                style="display: block; margin-top: 10px"
+                >Remove</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="mt-6">
+        <div class="mb-3">
+          <label for="formFile" class="form-label">Choose file</label>
+          <file-pond
+            #myPond
+            label-idle='Drag & Drop your files or <span class="filepond--label-action"> Browse </span><br> <b>Maximum 5 files upload</b>'
+            allow-multiple="true"
+            [options]="pondOptions"
+            [files]="pondFiles"
+            (oninit)="pondHandleInit()"
+            (onaddfile)="pondHandleAddFile($event)"
+          >
+          </file-pond>
+          {{ message }}
+         
+        </div>
+      </div> -->
+    </div>
+  </div>
+  <div class="row">
+    <div class="modal-footer">
+      <div class="button-container">
+        <button
+          type="button"
+          class="btn btn-danger waves-effect waves-light mr-2"
+          (click)="add()"
+          *ngIf="partnerModel.id == 0"
+        >
+          Save
+        </button>
+
+        <button
+          type="button"
+          class="btn btn-danger waves-effect waves-light mr-2"
+          (click)="update()"
+          *ngIf="partnerModel.id != 0"
+        >
+          Update
+        </button>
+        <button
+          type="button"
+          class="btn btn-light button"
+          aria-label="Close"
+          (click)="modalRef?.hide()"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #templateDetails class="modal-lg">
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Partner Details</h4>
+    <button
+      type="button"
+      class="btn-close close pull-right"
+      aria-label="Close"
+      (click)="modalRef?.hide()"
+    >
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-md-6">
+        <label for="basiInput" class="form-label text-muted mb-0"
+          >Description En</label
+        >
+        <div>{{ partnerModel.descriptionEn }}</div>
+      </div>
+      <div class="col-md-6">
+        <label for="basiInput" class="form-label text-muted mb-0"
+          >Description Ar</label
+        >
+        <div>{{ partnerModel.descriptionAr }}</div>
+      </div>
+      <div class="col-md-6">
+        <label for="basiInput" class="form-label text-muted mb-0"
+          >Partner Type</label
+        >
+
+        <div *ngIf="partnerModel.partnerType === 1">Strategic</div>
+
+        <div *ngIf="partnerModel.partnerType === 0">Normal</div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <label for="basiInput" class="form-label text-muted mb-0"
+          >Attachment</label
+        >
+        <div class="fs-15">
+          <img
+            src="{{ partnerModel.imageUrlView || './assests/default.png' }}"
+            class="card-img-top img-thumnail"
+            style="height: 200px; width: auto"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- container-fluid -->
+  <!-- End Page-content -->
+  <div class="row">
+    <div class="modal-footer">
+      <div class="button-container">
+        <button
+          type="button"
+          class="btn btn-light button"
+          aria-label="Close"
+          (click)="modalRef?.hide()"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>

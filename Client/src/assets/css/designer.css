@@ -1,0 +1,8 @@
+.navbar-menu .navbar-nav .nav-link.active {
+    color: #6A2E9E !important;
+    font-weight: bold !important;
+}
+
+.navbar-menu .navbar-nav .nav-link:hover {
+    color: #6A2E9E !important;
+}

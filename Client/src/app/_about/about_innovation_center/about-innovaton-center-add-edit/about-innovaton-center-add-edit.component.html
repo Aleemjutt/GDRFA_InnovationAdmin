@@ -1,0 +1,919 @@
+<!-- ============================================================== -->
+<!-- Start right Content here -->
+<!-- ============================================================== -->
+<div class="main-content">
+  <div class="page-content">
+    <div class="container-fluid">
+      <div class="card">
+        <div class="card-header align-items-center d-flex">
+          <h4 class="card-title mb-0 flex-grow-1">
+            About the Innovation Center
+          </h4>
+        </div>
+        <div class="card-body" *ngIf="aboutInnovationCenterModel">
+          <form
+            #editForm="ngForm"
+            id="editForm"
+            (ngSubmit)="addAboutInnovation()"
+          >
+            <tabset>
+              <tab heading="About the Center">
+                <div class="row mt-3">
+                  <label>About the Center En</label>
+                  <textarea
+                    class="textareasize form-control"
+                    name="aboutDescriptionAr"
+                    [(ngModel)]="aboutInnovationCenterModel.aboutDescriptionEn"
+                  ></textarea>
+                  <label class="mt-3">About the Center Ar</label>
+                  <textarea
+                    class="textareasize form-control"
+                    name="aboutDescriptionEn"
+                    [(ngModel)]="aboutInnovationCenterModel.aboutDescriptionAr"
+                  ></textarea>
+                </div>
+              </tab>
+
+              <!-- <tab heading="Organization Stracture">
+                <label class="mt-3">Organization Stracture En</label>
+                <div>
+                  <file-pond
+                    *ngIf="!aboutInnovationCenterModel.orgStractureUrlEn"
+                    #organizationImgEn
+                    label-idle='Drag & Drop your files or <span class="filepond--label-action"> Browse </span><br> <b>Maximum 5 files upload</b>'
+                    allow-multiple="true"
+                    [options]="pondOptions"
+                    [files]="pondFiles"
+                    (oninit)="pondHandleInit()"
+                    (onaddfile)="
+                      pondHandleAddFile($event, 'OrganizationEnInstance')
+                    "
+                  ></file-pond>
+
+                  <img
+                    *ngIf="aboutInnovationCenterModel.orgStractureUrlEn"
+                    [src]="
+                      globalService.getImgServerBaseUrl() +
+                      aboutInnovationCenterModel.orgStractureUrlEn
+                    "
+                    style="height: 364px; width: 603px; margin-left: 198px"
+                    alt="Organization Image"
+                    class="mt-2"
+                  />
+                </div>
+
+                <label class="mt-3">Organization Stracture Ar</label>
+                <div>
+                  <file-pond
+                    *ngIf="!aboutInnovationCenterModel.orgStractureUrlAr"
+                    #organizationImgAr
+                    label-idle='Drag & Drop your files or <span class="filepond--label-action"> Browse </span><br> <b>Maximum 5 files upload</b>'
+                    allow-multiple="true"
+                    [options]="pondOptions"
+                    [files]="pondFiles"
+                    (oninit)="pondHandleInit()"
+                    (onaddfile)="
+                      pondHandleAddFile($event, 'OrganizationArInstance')
+                    "
+                  >
+                  </file-pond>
+
+                  <img
+                    *ngIf="aboutInnovationCenterModel.orgStractureUrlAr"
+                    [src]="
+                      globalService.getImgServerBaseUrl() +
+                      aboutInnovationCenterModel.orgStractureUrlAr
+                    "
+                    style="height: 364px; width: 603px; margin-left: 198px"
+                    alt="Organization Image"
+                    class="mt-2"
+                  />
+                </div>
+              </tab> -->
+              <tab heading="Organization Structure">
+                <label class="mt-3">Organization Structure En</label>
+                <div>
+                  <file-pond
+                    *ngIf="!aboutInnovationCenterModel.orgStractureUrlEn"
+                    #organizationImgEn
+                    label-idle='Drag & Drop your files or <span class="filepond--label-action"> Browse </span><br> <b>Maximum 5 files upload</b>'
+                    allow-multiple="true"
+                    [options]="pondOptions"
+                    [files]="pondFiles"
+                    (oninit)="pondHandleInit()"
+                    (onaddfile)="
+                      pondHandleAddFile($event, 'OrganizationEnInstance')
+                    "
+                  ></file-pond>
+
+                  <div *ngIf="aboutInnovationCenterModel.orgStractureUrlEn">
+                    <img
+                      [src]="
+                        globalService.getImgServerBaseUrl() +
+                        aboutInnovationCenterModel.orgStractureUrlEn
+                      "
+                      style="height: 364px; width: 603px; margin-left: 198px"
+                      alt="Organization Image"
+                      class="mt-2"
+                    />
+                    <a (click)="removeImage('en')" class="btn btn-danger mt-2"
+                      >Remove</a
+                    >
+                  </div>
+                </div>
+
+                <label class="mt-3">Organization Structure Ar</label>
+                <div>
+                  <file-pond
+                    *ngIf="!aboutInnovationCenterModel.orgStractureUrlAr"
+                    #organizationImgAr
+                    label-idle='Drag & Drop your files or <span class="filepond--label-action"> Browse </span><br> <b>Maximum 5 files upload</b>'
+                    allow-multiple="true"
+                    [options]="pondOptions"
+                    [files]="pondFiles"
+                    (oninit)="pondHandleInit()"
+                    (onaddfile)="
+                      pondHandleAddFile($event, 'OrganizationArInstance')
+                    "
+                  >
+                  </file-pond>
+
+                  <div *ngIf="aboutInnovationCenterModel.orgStractureUrlAr">
+                    <img
+                      [src]="
+                        globalService.getImgServerBaseUrl() +
+                        aboutInnovationCenterModel.orgStractureUrlAr
+                      "
+                      style="height: 364px; width: 603px; margin-left: 198px"
+                      alt="Organization Image"
+                      class="mt-2"
+                    />
+                    <a (click)="removeImage('ar')" class="btn btn-danger mt-2"
+                      >Remove</a
+                    >
+                  </div>
+                </div>
+              </tab>
+
+              <tab heading="Message From the Director">
+                <div class="row mt-3">
+                  <div class="col-md-4">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <label for="name" class="mt-3">Director Name En </label>
+                        <input
+                          type=" text"
+                          class="form-control"
+                          name="directorNameEn"
+                          [(ngModel)]="
+                            aboutInnovationCenterModel.directorNameEn
+                          "
+                        />
+                        <label for="name" class="mt-3">Director Name Ar</label>
+                        <textarea
+                          type=" text"
+                          class="form-control"
+                          name="directorNameAr"
+                          [(ngModel)]="
+                            aboutInnovationCenterModel.directorNameAr
+                          "
+                        ></textarea>
+                      </div>
+                      <div class="col-md-12">
+                        <label>Director Profile Photo</label>
+                        <!-- <file-pond
+                          #DirectorImg
+                          label-idle='Drag & Drop your files or <span class="filepond--label-action"> Browse </span><br> <b>Maximum 5 files upload</b>'
+                          allow-multiple="true"
+                          [options]="pondOptions"
+                          [files]="pondFiles"
+                          (oninit)="pondHandleInit()"
+                          (onaddfile)="
+                            pondHandleAddFile($event, 'DirectorEnInstance')
+                          "
+                        >
+                        </file-pond> -->
+
+                        <ng-container
+                          *ngIf="
+                            !aboutInnovationCenterModel.directorImgUrl;
+                            else showImage
+                          "
+                        >
+                          <file-pond
+                            #DirectorImg
+                            label-idle='Drag & Drop your files or <span class="filepond--label-action"> Browse </span><br> <b>Maximum 5 files upload</b>'
+                            allow-multiple="true"
+                            [options]="pondOptions"
+                            [files]="pondFiles"
+                            (oninit)="pondHandleInit()"
+                            (onaddfile)="
+                              pondHandleAddFile($event, 'DirectorEnInstance')
+                            "
+                          >
+                          </file-pond>
+                        </ng-container>
+                        <ng-template #showImage>
+                          <div>
+                            <img
+                              [src]="
+                                globalService.getImgServerBaseUrl() +
+                                aboutInnovationCenterModel.directorImgUrl
+                              "
+                              alt="Director Image"
+                              style="height: 200px; width: auto"
+                              class="mt-2"
+                            />
+                            <a
+                              (click)="removeImage('director')"
+                              class="btn btn-danger"
+                              style="display: block; margin-top: 10px"
+                              >Remove</a
+                            >
+                          </div>
+                        </ng-template>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-8">
+                    <label for="message" class="mt-3">Message En</label>
+                    <textarea
+                      class="messageTexarea form-control"
+                      name="messageFromDirectorEn"
+                      [(ngModel)]="
+                        aboutInnovationCenterModel.messageFromDirectorEn
+                      "
+                    ></textarea>
+
+                    <label for="message" class="mt-3">Message Ar</label>
+                    <textarea
+                      class="messageTexarea form-control"
+                      name="messageFromDirectorAr"
+                      [(ngModel)]="
+                        aboutInnovationCenterModel.messageFromDirectorAr
+                      "
+                    ></textarea>
+                  </div>
+                </div>
+              </tab>
+              <tab heading="Our Strategy And Institutional Values">
+                <label class="mt-3"
+                  >Our Strategy And Institutional Values</label
+                >
+
+                <div class="row">
+                  <div class="col-md-4">
+                    <label class="mt-3">Strategy En</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="strategyEn"
+                      [(ngModel)]="aboutInnovationCenterModel.strategyEn"
+                    />
+
+                    <div *ngIf="!aboutInnovationCenterModel.strategyImageUrlEn">
+                      <file-pond
+                        #StrategyEnImg
+                        label-idle='Drag & Drop your files or <span class="filepond--label-action"> Browse </span><br> <b>Maximum 5 files upload</b>'
+                        allow-multiple="true"
+                        [options]="pondOptions"
+                        [files]="pondFiles"
+                        (oninit)="pondHandleInit()"
+                        (onaddfile)="
+                          pondHandleAddFile($event, 'StrategyEnInstance')
+                        "
+                      ></file-pond>
+                    </div>
+
+                    <div *ngIf="aboutInnovationCenterModel.strategyImageUrlEn">
+                      <img
+                        [src]="
+                          globalService.getImgServerBaseUrl() +
+                          aboutInnovationCenterModel.strategyImageUrlEn
+                        "
+                        alt="Strategy Image"
+                        class="mt-2 imgTag"
+                      />
+                      <a
+                        (click)="removeImage('strategyEn')"
+                        class="btn btn-danger mt-2 imgButton"
+                      >
+                        Remove
+                      </a>
+                    </div>
+
+                    <label class="mt-3">Strategy Ar</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="strategyAr"
+                      [(ngModel)]="aboutInnovationCenterModel.strategyAr"
+                    />
+
+                    <div *ngIf="!aboutInnovationCenterModel.strategyImageUrlAr">
+                      <file-pond
+                        #StrategyArImg
+                        label-idle='Drag & Drop your files or <span class="filepond--label-action"> Browse </span><br> <b>Maximum 5 files upload</b>'
+                        allow-multiple="true"
+                        [options]="pondOptions"
+                        [files]="pondFiles"
+                        (oninit)="pondHandleInit()"
+                        (onaddfile)="
+                          pondHandleAddFile($event, 'StrategyArInstance')
+                        "
+                      ></file-pond>
+                    </div>
+
+                    <div *ngIf="aboutInnovationCenterModel.strategyImageUrlAr">
+                      <img
+                        [src]="
+                          globalService.getImgServerBaseUrl() +
+                          aboutInnovationCenterModel.strategyImageUrlAr
+                        "
+                        style="height: 200px; width: auto"
+                        alt="Strategy Image"
+                        class="mt-2 imgTag"
+                      />
+                      <a
+                        (click)="removeImage('strategyAr')"
+                        class="btn btn-danger mt-2 imgButton"
+                      >
+                        Remove
+                      </a>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <label class="mt-3">Our Vision En</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="ourVisionEn"
+                      [(ngModel)]="aboutInnovationCenterModel.ourVisionEn"
+                    />
+
+                    <div
+                      *ngIf="!aboutInnovationCenterModel.ourVisionImageUrlEn"
+                    >
+                      <file-pond
+                        #StrategyEnImg
+                        label-idle='Drag & Drop your files or <span class="filepond--label-action"> Browse </span><br> <b>Maximum 5 files upload</b>'
+                        allow-multiple="true"
+                        [options]="pondOptions"
+                        [files]="pondFiles"
+                        (oninit)="pondHandleInit()"
+                        (onaddfile)="
+                          pondHandleAddFile($event, 'VisionEnInstance')
+                        "
+                      ></file-pond>
+                    </div>
+
+                    <div *ngIf="aboutInnovationCenterModel.ourVisionImageUrlEn">
+                      <img
+                        [src]="
+                          globalService.getImgServerBaseUrl() +
+                          aboutInnovationCenterModel.ourVisionImageUrlEn
+                        "
+                        style="height: 200px; width: auto"
+                        alt="Strategy Image"
+                        class="mt-2 imgTag"
+                      />
+                      <a
+                        (click)="removeImage('VisionEnInstance')"
+                        class="btn btn-danger mt-2 imgButton"
+                      >
+                        Remove
+                      </a>
+                    </div>
+
+                    <label class="mt-3">Our Vision Ar</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="ourVisionAr"
+                      [(ngModel)]="aboutInnovationCenterModel.ourVisionAr"
+                    />
+
+                    <div
+                      *ngIf="!aboutInnovationCenterModel.ourVisionImageUrlAr"
+                    >
+                      <file-pond
+                        #StrategyArImg
+                        label-idle='Drag & Drop your files or <span class="filepond--label-action"> Browse </span><br> <b>Maximum 5 files upload</b>'
+                        allow-multiple="true"
+                        [options]="pondOptions"
+                        [files]="pondFiles"
+                        (oninit)="pondHandleInit()"
+                        (onaddfile)="
+                          pondHandleAddFile($event, 'VisionArInstance')
+                        "
+                      ></file-pond>
+                    </div>
+
+                    <div *ngIf="aboutInnovationCenterModel.ourVisionImageUrlAr">
+                      <img
+                        [src]="
+                          globalService.getImgServerBaseUrl() +
+                          aboutInnovationCenterModel.ourVisionImageUrlAr
+                        "
+                        style="height: 200px; width: auto"
+                        alt="ourVisionAr Image"
+                        class="mt-2 imgTag"
+                      />
+                      <a
+                        (click)="removeImage('VisionArInstance')"
+                        class="btn btn-danger mt-2 imgButton"
+                      >
+                        Remove
+                      </a>
+                    </div>
+                  </div>
+
+                  <!-- <div class="col-md-4">
+                    <label class="mt-3">Our Mission En</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="ourMissionEn"
+                      [(ngModel)]="aboutInnovationCenterModel.ourMissionEn"
+                    />
+                    <file-pond
+                      #MissionEnImg
+                      label-idle='Drag & Drop your files or <span class="filepond--label-action"> Browse </span><br> <b>Maximum 5 files upload</b>'
+                      allow-multiple="true"
+                      [options]="pondOptions"
+                      [files]="pondFiles"
+                      (oninit)="pondHandleInit()"
+                      (onaddfile)="
+                        pondHandleAddFile($event, 'MissionEnInstance')
+                      "
+                    >
+                    </file-pond>
+                    <label class="mt-3">Our Mission Ar</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      [(ngModel)]="aboutInnovationCenterModel.ourMissionAr"
+                    />
+                    <file-pond
+                      #MissionArImg
+                      label-idle='Drag & Drop your files or <span class="filepond--label-action"> Browse </span><br> <b>Maximum 5 files upload</b>'
+                      allow-multiple="true"
+                      [options]="pondOptions"
+                      [files]="pondFiles"
+                      (oninit)="pondHandleInit()"
+                      (onaddfile)="
+                        pondHandleAddFile($event, 'MissionArInstance')
+                      "
+                    >
+                    </file-pond>
+                  </div> -->
+
+                  <div class="col-md-4">
+                    <label class="mt-3">Our Mission En</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="ourMissionEn"
+                      [(ngModel)]="aboutInnovationCenterModel.ourMissionEn"
+                    />
+
+                    <div
+                      *ngIf="!aboutInnovationCenterModel.ourMissionImageUrlEn"
+                    >
+                      <file-pond
+                        #MissionEnImg
+                        label-idle='Drag & Drop your files or <span class="filepond--label-action"> Browse </span><br> <b>Maximum 5 files upload</b>'
+                        allow-multiple="true"
+                        [options]="pondOptions"
+                        [files]="pondFiles"
+                        (oninit)="pondHandleInit()"
+                        (onaddfile)="
+                          pondHandleAddFile($event, 'MissionEnInstance')
+                        "
+                      ></file-pond>
+                    </div>
+
+                    <div
+                      *ngIf="aboutInnovationCenterModel.ourMissionImageUrlEn"
+                      style="display: flex; flex-direction: column"
+                    >
+                      <img
+                        [src]="
+                          globalService.getImgServerBaseUrl() +
+                          aboutInnovationCenterModel.ourMissionImageUrlEn
+                        "
+                        style="height: 200px; width: auto"
+                        alt="Mission Image "
+                        class="mt-2 imgTag"
+                      />
+                      <a
+                        (click)="removeImage('ourMissionEn')"
+                        class="btn btn-danger mt-2 imgButton"
+                        >Remove</a
+                      >
+                    </div>
+
+                    <label class="mt-3">Our Mission Ar</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="ourMissionAr"
+                      [(ngModel)]="aboutInnovationCenterModel.ourMissionAr"
+                    />
+
+                    <div
+                      *ngIf="!aboutInnovationCenterModel.ourMissionImageUrlAr"
+                    >
+                      <file-pond
+                        #MissionArImg
+                        label-idle='Drag & Drop your files or <span class="filepond--label-action"> Browse </span><br> <b>Maximum 5 files upload</b>'
+                        allow-multiple="true"
+                        [options]="pondOptions"
+                        [files]="pondFiles"
+                        (oninit)="pondHandleInit()"
+                        (onaddfile)="
+                          pondHandleAddFile($event, 'MissionArInstance')
+                        "
+                      ></file-pond>
+                    </div>
+
+                    <div
+                      *ngIf="aboutInnovationCenterModel.ourMissionImageUrlAr"
+                    >
+                      <img
+                        [src]="
+                          globalService.getImgServerBaseUrl() +
+                          aboutInnovationCenterModel.ourMissionImageUrlAr
+                        "
+                        style="height: 200px; width: auto"
+                        alt="Mission Image"
+                        class="mt-2 imgTag"
+                      />
+                      <a
+                        (click)="removeImage('ourMissionAr')"
+                        class="btn btn-danger mt-2 imgButton"
+                      >
+                        Remove
+                      </a>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <label class="mt-3">Our Golas</label>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="input-group mb-3">
+                          <div class="input-group-prepend">
+                            <label class="input-group-text">Our Goals Ar</label>
+                          </div>
+                          <input
+                            type="text"
+                            class="form-control"
+                            placeholder="Enter value for Ar"
+                            aria-label="Example text with button addon"
+                            aria-describedby="button-addon1"
+                            name="ourGoalAr"
+                            [(ngModel)]="ourGoalModel.ourGoalAr"
+                          />
+                        </div>
+
+                        <div class="input-group mb-3">
+                          <div class="input-group-prepend">
+                            <label class="input-group-text">Our Goals En</label>
+                          </div>
+                          <input
+                            type="text"
+                            class="form-control"
+                            placeholder="Enter value for En"
+                            aria-label="Example text with button addon"
+                            aria-describedby="button-addon1"
+                            name="ourGoalEn"
+                            [(ngModel)]="ourGoalModel.ourGoalEn"
+                          />
+                          <div class="input-group-append">
+                            <button
+                              class="btn btn-outline-secondary"
+                              type="button"
+                              id="ourValuesEnButton"
+                              (click)="addItem()"
+                            >
+                              Add
+                            </button>
+                          </div>
+                        </div>
+                        <div class="table-responsive">
+                          <table class="table">
+                            <thead>
+                              <tr>
+                                <th scope="col">Our Goal Ar</th>
+                                <th scope="col">Our Goal En</th>
+                                <th scope="col">Actions</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr
+                                *ngFor="
+                                  let item of aboutInnovationCenterModel.ourGoalsModel;
+                                  let i = index
+                                "
+                              >
+                                <td>{{ item.ourGoalAr }}</td>
+                                <td>{{ item.ourGoalEn }}</td>
+                                <td>
+                                  <button
+                                    class="btn btn-danger btn-sm"
+                                    (click)="removeItem(i)"
+                                  >
+                                    Remove
+                                  </button>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <label class="mt-3">Our Values</label>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="input-group mb-3">
+                          <div class="input-group-prepend">
+                            <label class="input-group-text"
+                              >Our Values Ar</label
+                            >
+                          </div>
+                          <input
+                            type="text"
+                            class="form-control"
+                            placeholder="Enter value for Ar"
+                            aria-label="Example text with button addon"
+                            aria-describedby="button-addon1"
+                            [(ngModel)]="ourValueModel.ourValuesAr"
+                            name="ourValuesAr"
+                          />
+                        </div>
+
+                        <div class="input-group mb-3">
+                          <div class="input-group-prepend">
+                            <label class="input-group-text"
+                              >Our Values En</label
+                            >
+                          </div>
+                          <input
+                            type="text"
+                            class="form-control"
+                            placeholder="Enter value for En"
+                            aria-label="Example text with button addon"
+                            aria-describedby="button-addon1"
+                            [(ngModel)]="ourValueModel.ourValuesEn"
+                            name="ourValuesEn"
+                          />
+                          <div class="input-group-append">
+                            <a
+                              class="btn btn-outline-secondary"
+                              type="button"
+                              id="ourValuesEnButton"
+                              (click)="addItemValues()"
+                            >
+                              Add
+                            </a>
+                          </div>
+                        </div>
+                        <div class="table-responsive">
+                          <table class="table">
+                            <thead>
+                              <tr>
+                                <th scope="col">Our Values Ar</th>
+                                <th scope="col">Our Values En</th>
+                                <th scope="col">Actions</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr
+                                *ngFor="
+                                  let item of aboutInnovationCenterModel.ourValuesModel;
+                                  let i = index
+                                "
+                              >
+                                <td>{{ item.ourValuesAr }}</td>
+                                <td>{{ item.ourValuesEn }}</td>
+                                <td>
+                                  <a
+                                    class="btn btn-danger btn-sm"
+                                    (click)="removeValueItem(i)"
+                                  >
+                                    Remove
+                                  </a>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Column for Our Values En -->
+                  <!-- <div class="col-md-6">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <label>Our Values En</label>
+                      <div class="input-group mb-3">
+                        <button
+                          class="btn btn-outline-secondary"
+                          type="button"
+                          id="ourValuesEnButton"
+                          (click)="addItem('en')"
+                        >
+                          Add
+                        </button>
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder=""
+                          aria-label="Example text with button addon"
+                          aria-describedby="button-addon1"
+                          [(ngModel)]="ourValuesEnInput"
+                        />
+                      </div>
+                      <ul class="list-group">
+                        <li
+                          class="list-group-item"
+                          *ngFor="let value of ourValuesEnList; let i = index"
+                        >
+                          {{ value }}
+                          <button
+                            class="btn btn-danger btn-sm float-end"
+                            (click)="removeItem('en', i)"
+                          >
+                            Remove
+                          </button>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div> -->
+
+                  <!-- Column for Our Values Ar -->
+                  <!-- <div class="col-md-6">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <label for="ourValuesAr">Our Values Ar</label>
+                      <div class="input-group mb-3">
+                        <button
+                          class="btn btn-outline-secondary"
+                          type="button"
+                          id="ourValuesArButton"
+                          (click)="addItem('ar')"
+                        >
+                          Add
+                        </button>
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder=""
+                          aria-label="Example text with button addon"
+                          aria-describedby="button-addon1"
+                          id="ourValuesArInput"
+                          [(ngModel)]="ourValuesArInput"
+                        />
+                      </div>
+                      <ul class="list-group">
+                        <li
+                          class="list-group-item"
+                          *ngFor="let value of ourValuesArList; let i = index"
+                        >
+                          {{ value }}
+                          <button
+                            class="btn btn-danger btn-sm float-end"
+                            (click)="removeItem('ar', i)"
+                          >
+                            Remove
+                          </button>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div> -->
+                </div>
+              </tab>
+            </tabset>
+            <button
+              type="submit"
+              class="btn btn-danger waves-effect waves-light ms-2 col-3 pull-right mt-2"
+            >
+              Save
+            </button>
+          </form>
+        </div>
+      </div>
+      <!-- container-fluid -->
+    </div>
+    <!-- End Page-content -->
+  </div>
+  <!-- end main content-->
+
+  <!-- <div class="row">
+  <div class="col-md-6">
+    <div>
+      <label for="basiInput" class="form-label">Employee ID</label>
+      <input type="input" class="form-control" id="basiInput" />
+    </div>
+    <div class="mt-3">
+      <label for="basiInput" class="form-label">Name</label>
+      <input type="input" class="form-control" id="basiInput" />
+    </div>
+    <div class="mt-3">
+      <label for="basiInput" class="form-label">Job Title</label>
+      <input type="input" class="form-control" id="basiInput" />
+    </div>
+    <div class="mt-3">
+      <label for="basiInput" class="form-label">Section</label>
+      <select
+        class="form-select mb-3"
+        aria-label="Default select example"
+      >
+        <option selected>Select Section</option>
+        <option value="1">One</option>
+        <option value="2">Two</option>
+        <option value="3">Three</option>
+      </select>
+    </div>
+    <div class="mt-3">
+      <label for="basiInput" class="form-label">Department</label>
+      <select
+        class="form-select mb-3"
+        aria-label="Default select example"
+      >
+        <option selected>Select Department</option>
+        <option value="1">One</option>
+        <option value="2">Two</option>
+        <option value="3">Three</option>
+      </select>
+    </div>
+    <div class="mt-3">
+      <label for="basiInput" class="form-label">Sector</label>
+      <select
+        class="form-select mb-3"
+        aria-label="Default select example"
+      >
+        <option selected>Select Sector</option>
+        <option value="1">One</option>
+        <option value="2">Two</option>
+        <option value="3">Three</option>
+      </select>
+    </div>
+    <div class="mt-3">
+      <label for="basiInput" class="form-label">Mobile No.</label>
+      <input type="input" class="form-control" id="basiInput" />
+    </div>
+    <div class="mt-3">
+      <label for="basiInput" class="form-label">Office No.</label>
+      <input type="input" class="form-control" id="basiInput" />
+    </div>
+    <div class="mt-3">
+      <label for="basiInput" class="form-label">Address</label>
+      <input type="input" class="form-control" id="basiInput" />
+    </div>
+    <div class="mt-3">
+      <label for="basiInput" class="form-label">Email</label>
+      <input type="input" class="form-control" id="basiInput" />
+    </div>
+    <div class="mt-3">
+      <label for="basiInput" class="form-label">Title</label>
+      <input type="input" class="form-control" id="basiInput" />
+    </div>
+    <div class="mt-3">
+      <label for="basiInput" class="form-label"
+        >Type Intellectual Property</label
+      >
+      <select
+        class="form-select mb-3"
+        aria-label="Default select example"
+      >
+        <option selected>Select One</option>
+        <option value="1">One</option>
+        <option value="2">Two</option>
+        <option value="3">Three</option>
+      </select>
+    </div>
+    <div>
+      <button
+        type="button"
+        class="btn btn-danger waves-effect waves-light"
+        onclick="window.open('list.html')"
+      >
+        Register New IP
+      </button>
+    </div>
+  </div>
+</div> -->
+</div>
+
+{{ aboutInnovationCenterModel }}

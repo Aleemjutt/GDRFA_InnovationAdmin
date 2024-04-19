@@ -1,0 +1,440 @@
+<div class="main-content">
+  <div class="page-content">
+    <div class="container-fluid">
+      <div class="card">
+        <div class="card-header align-items-center d-flex">
+          <h4 class="card-title mb-0 flex-grow-1">Agendas List</h4>
+          <div class="flex-shrink-0">
+            <div class="d-flex align-items-center">
+              <input
+                type="text"
+                class="form-control me-3"
+                data-provider="flatpickr"
+                data-date-format="d M, Y"
+                data-range-date="true"
+                placeholder="Select Date Range"
+              />
+              <select
+                class="form-select mb-0 me-2"
+                aria-label="Default select example"
+              >
+                <option selected>Status</option>
+                <option value="1">Submitted</option>
+                <option value="2">In Review</option>
+                <option value="3">Approved</option>
+                <option value="4">Rejected</option>
+              </select>
+              <button
+                type="button"
+                class="btn btn-light waves-effect waves-light ms-2 me-2 col-1"
+              >
+                <i class="ri-search-2-line"></i>
+              </button>
+              |
+              <a
+                type="button"
+                class="btn btn-danger waves-effect waves-light ms-2 col-3"
+                id="btnAdd"
+                style="float: inline-end"
+                (click)="openModal(template)"
+              >
+                Add New
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <table class="table table-nowrap" id="agendaDataTable">
+            <thead>
+              <tr>
+                <th>{{ "ID" }}</th>
+                <th>{{ "Heading En" }}</th>
+                <th>{{ "Description En" }}</th>
+                <th>{{ "Heading Ar" }}</th>
+                <th>{{ "Description Ar" }}</th>
+                <!-- <th>{{ "Actions" }}</th> -->
+                <th>{{ "Actions" }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- <tr>
+                <th scope="row"><a href="#" class="fw-semibold">#VZ2110</a></th>
+                <td>Lorem ipsum dolor sit amet consectetur adipiscing elit.</td>
+                <td>
+                  <a href="details.html" class="link-warning"
+                    >View in Detail
+                    <i class="ri-arrow-right-line align-middle"></i
+                  ></a>
+                </td>
+              </tr> -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!-- container-fluid -->
+  </div>
+  <!-- End Page-content -->
+</div>
+<ng-template #template class="modal-lg">
+  <div class="modal-header">
+    <h4 class="modal-title pull-left" *ngIf="agendaModel.id == 0">
+      Add New Agenda
+    </h4>
+    <h4 class="modal-title pull-left" *ngIf="agendaModel.id != 0">
+      Update Agenda
+    </h4>
+    <button
+      type="button"
+      class="btn-close close pull-right"
+      aria-label="Close"
+      (click)="modalRef?.hide()"
+    >
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="row">
+        <div class="col-md-6 mt-3">
+          <div class="mt-0">
+            <label for="basiInput" class="form-label">Heading En</label>
+            <input
+              type="input"
+              class="form-control"
+              id="basiInput"
+              [(ngModel)]="agendaModel.headingEn"
+            />
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mt-3">
+            <label for="basiInput" class="form-label">Heading Ar</label>
+            <input
+              type="input"
+              class="form-control"
+              id="basiInput"
+              [(ngModel)]="agendaModel.headingAr"
+            />
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mt-3">
+            <label for="basiInput" class="form-label">Description En</label>
+            <input
+              type="input"
+              class="form-control"
+              id="basiInput"
+              [(ngModel)]="agendaModel.descriptionEn"
+            />
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mt-3">
+            <label for="basiInput" class="form-label">Description Ar</label>
+            <input
+              type="input"
+              class="form-control"
+              id="basiInput"
+              [(ngModel)]="agendaModel.descriptionAr"
+            />
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mt-3">
+            <label for="basiInput" class="form-label">Date</label>
+            <input
+              type="date"
+              placeholder="Date"
+              class="form-control"
+              bsDatepicker
+              [(ngModel)]="agendaModel.date"
+            />
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mt-3">
+            <label for="basiInput" class="form-label">Time</label>
+            <input
+              type="time"
+              placeholder="Time"
+              class="form-control"
+              bsDatepicker
+              [(ngModel)]="agendaModel.time"
+            />
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mt-3">
+            <label for="basiInput" class="form-label">Venue</label>
+            <select class="form-control" [(ngModel)]="agendaModel.agendaVenue">
+              <option [ngValue]="0">On Premises</option>
+              <option [ngValue]="1">Online</option>
+            </select>
+          </div>
+        </div>
+        <div *ngIf="agendaModel.agendaVenue == 0">
+          <div class="col-md-6">
+            <div class="mt-3">
+              <label for="basiInput" class="form-label"
+                >Location Description En</label
+              >
+              <input
+                class="form-control"
+                [(ngModel)]="agendaModel.locationDescriptionEn"
+              />
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="mt-3">
+              <label for="basiInput" class="form-label"
+                >Location Description Ar</label
+              >
+              <input
+                class="form-control"
+                [(ngModel)]="agendaModel.locationDescriptionAr"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mt-3">
+            <div class="mb-3">
+              <div *ngIf="!agendaModel.imageUrl">
+                <label for="formFile" class="form-label">Choose file</label>
+                <file-pond
+                  #myPond
+                  label-idle='Drag & Drop your files or <span class="filepond--label-action"> Browse </span><br> <b>Maximum 5 files upload</b>'
+                  allow-multiple="true"
+                  [options]="pondOptions"
+                  [files]="pondFiles"
+                  (oninit)="pondHandleInit()"
+                  (onaddfile)="pondHandleAddFile($event, 'agendaBannerImg')"
+                >
+                </file-pond>
+              </div>
+              <div *ngIf="agendaModel.imageUrl">
+                <img
+                  [src]="
+                    globalService.getImgServerBaseUrl() + agendaModel.imageUrl
+                  "
+                  alt="Membership Image"
+                  style="height: 200px; width: auto"
+                  class="mt-2"
+                />
+                <a
+                  (click)="removeImage()"
+                  class="btn btn-danger"
+                  style="display: block; margin-top: 10px"
+                  >Remove</a
+                >
+              </div>
+            </div>
+          </div>
+          <!-- <div class="mt-3">
+            <div class="mb-3">
+              <label for="formFile" class="form-label">Choose file</label>
+              <file-pond
+                #myPond
+                label-idle='Drag & Drop your files or <span class="filepond--label-action"> Browse </span><br> <b>Maximum 5 files upload</b>'
+                allow-multiple="true"
+                [options]="pondOptions"
+                [files]="pondFiles"
+                (oninit)="pondHandleInit()"
+                (onaddfile)="pondHandleAddFile($event, 'agendaBannerImg')"
+              >
+              </file-pond>
+              {{ message }}
+            </div>
+          </div> -->
+        </div>
+        <div class="col-md-6">
+          <div class="mt-3">
+            <div class="mb-3">
+              <label for="formFile" class="form-label"
+                >Choose file For Details</label
+              >
+              <file-pond
+                #agendDownloadAttachment
+                label-idle='Drag & Drop your files or <span class="filepond--label-action"> Browse </span><br> <b>Maximum 5 files upload</b>'
+                allow-multiple="true"
+                [options]="pondOptions_Multiple"
+                [files]="pondFiles_Multiples"
+                (oninit)="pondHandleInit()"
+                (onaddfile)="pondHandleAddFile($event, 'agendDownloadFile')"
+                (onremovefile)="pondHandleRemoveFile($event)"
+              >
+              </file-pond>
+              {{ message }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="modal-footer">
+      <div class="button-container">
+        <button
+          type="button"
+          class="btn btn-danger waves-effect waves-light mr-2"
+          (click)="add()"
+          *ngIf="agendaModel.id == 0"
+        >
+          Save
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger waves-effect waves-light mr-2"
+          (click)="update()"
+          *ngIf="agendaModel.id != 0"
+        >
+          Update
+        </button>
+        <button
+          type="button"
+          class="btn btn-light button"
+          aria-label="Close"
+          (click)="modalRef?.hide()"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #templateDetails class="modal-lg">
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Agenda Details</h4>
+    <button
+      type="button"
+      class="btn-close close pull-right"
+      aria-label="Close"
+      (click)="modalRef?.hide()"
+    >
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6">
+          <label for="basiInput" class="form-label text-muted mb-0"
+            >Heading En</label
+          >
+          <div>{{ agendaModel.headingEn }}</div>
+        </div>
+
+        <div class="col-md-6">
+          <label for="basiInput" class="form-label text-muted mb-0"
+            >Heading Ar</label
+          >
+          <div>{{ agendaModel.headingAr }}</div>
+        </div>
+        <div class="col-md-6">
+          <label for="basiInput" class="form-label text-muted mb-0"
+            >Description En</label
+          >
+          <div>{{ agendaModel.descriptionEn }}</div>
+        </div>
+        <div class="col-md-6">
+          <label for="basiInput" class="form-label text-muted mb-0"
+            >Description Ar</label
+          >
+          <div>{{ agendaModel.descriptionAr }}</div>
+        </div>
+
+        <div class="col-md-6">
+          <label for="basiInput" class="form-label text-muted mb-0"
+            >Date
+          </label>
+          <div>{{ agendaModel.date }}</div>
+        </div>
+        <div class="col-md-6">
+          <label for="basiInput" class="form-label text-muted mb-0"
+            >Time
+          </label>
+          <div>{{ agendaModel.time }}</div>
+        </div>
+        <div class="col-md-6">
+          <label for="basiInput" class="form-label text-muted mb-0"
+            >Venue</label
+          >
+          <div *ngIf="agendaModel.agendaVenue === 1">Online</div>
+          <div *ngIf="agendaModel.agendaVenue === 0">On Premises</div>
+        </div>
+        <div *ngIf="agendaModel.agendaVenue === 0">
+          <div class="col-md-6">
+            <label for="basiInput" class="form-label text-muted mb-0"
+              >Location Description En</label
+            >
+            <div>{{ agendaModel.locationDescriptionEn }}</div>
+          </div>
+          <div class="col-md-6">
+            <label for="basiInput" class="form-label text-muted mb-0"
+              >Location Description Ar</label
+            >
+            <div>{{ agendaModel.locationDescriptionAr }}</div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <label for="basiInput" class="form-label text-muted mb-0"
+            >Attachment</label
+          >
+          <div class="fs-15">
+            <img
+              src="{{ agendaModel.imageUrlView || './assests/default.png' }}"
+              class="card-img-top img-thumnail"
+              style="height: 200px; width: auto"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <label for="basiInput" class="form-label text-muted mb-0"
+            >Attachment For Download</label
+          >
+
+          <div *ngFor="let attach of agendaModel.agendaAttachmentModels">
+            <img
+              *ngIf="attach.url; else defaultImage"
+              [src]="globalService.getImgServerBaseUrl() + attach.url"
+              class="card-img-top img-thumbnail"
+              alt="Attachment Image"
+              style="height: 200px; width: auto"
+            />
+            <ng-template #defaultImage>
+              <img
+                src="/assets/default.png"
+                class="card-img-top img-thumbnail"
+                alt="Default Image"
+                style="height: 200px; width: auto"
+              />
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- container-fluid -->
+  <!-- End Page-content -->
+  <div class="row">
+    <div class="modal-footer">
+      <div class="button-container">
+        <button
+          type="button"
+          class="btn btn-light button"
+          aria-label="Close"
+          (click)="modalRef?.hide()"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>

@@ -1,0 +1,26 @@
+<ngx-spinner type="line-scale-party">
+  <h3>{{ "Loading..." | translate }}</h3>
+</ngx-spinner>
+<app-log-in
+  *ngIf="!(accountServices.currentUser$ | async)"
+  (login)="onLogin()"
+></app-log-in>
+
+<div id="layout-wrapper">
+  <div *ngIf="accountServices.currentUser$ | async">
+    <app-nav></app-nav>
+    <app-side-bar></app-side-bar>
+
+    <div class="vertical-overlay"></div>
+    <router-outlet></router-outlet>
+  </div>
+</div>
+
+<!-- <div>
+  <app-nav></app-nav>
+  <div class="container-fluid" style="margin-top: 100px">
+    <div class="row">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div> -->

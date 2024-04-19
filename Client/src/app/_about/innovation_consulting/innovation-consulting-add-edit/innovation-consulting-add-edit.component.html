@@ -1,0 +1,212 @@
+<!-- ============================================================== -->
+<!-- Start right Content here -->
+<!-- ============================================================== -->
+<div class="main-content">
+  <div class="page-content">
+    <div class="container-fluid">
+      <div class="card">
+        <div class="card-header align-items-center d-flex">
+          <h4 class="card-title mb-0 flex-grow-1">Contact Information</h4>
+        </div>
+        <div class="card-body">
+          <form (ngSubmit)="saveAndUpdate()" #editForm="ngForm" id="editForm">
+            <div class="row" *ngIf="innovationConsultingModel">
+              <div class="col-md-6">
+                <div>
+                  <label for="basiInput" class="form-label"
+                    >Toll free number</label
+                  >
+                  <input
+                    type="input"
+                    class="form-control"
+                    name="toolFreeNumber"
+                    [(ngModel)]="innovationConsultingModel.toolFreeNumber"
+                  />
+                </div>
+                <div class="mt-3">
+                  <label for="basiInput" class="form-label">Mobile</label>
+                  <input
+                    type="input"
+                    name="mobile"
+                    [(ngModel)]="innovationConsultingModel.mobile"
+                    class="form-control"
+                    id="basiInput"
+                  />
+                </div>
+                <div class="mt-3">
+                  <label for="basiInput" class="form-label">Email</label>
+                  <input
+                    type="input"
+                    name="mobile"
+                    [(ngModel)]="innovationConsultingModel.email"
+                    class="form-control"
+                    id="basiInput"
+                  />
+                </div>
+
+                <div class="mt-3">
+                  <label for="basiInput" class="form-label"
+                    >International Phone Number</label
+                  >
+                  <input
+                    type="input"
+                    name="internationalPhoneNumber"
+                    [(ngModel)]="
+                      innovationConsultingModel.internationalPhoneNumber
+                    "
+                    class="form-control"
+                    id="basiInput"
+                  />
+                </div>
+
+                <div class="mt-3">
+                  <label for="basiInput" class="form-label"
+                    >Amir Chart Link</label
+                  >
+                  <input
+                    type="input"
+                    name="amirChartLink"
+                    [(ngModel)]="innovationConsultingModel.amirChartLink"
+                    class="form-control"
+                    id="basiInput"
+                  />
+                </div>
+
+                <div class="mt-3">
+                  <label for="basiInput" class="form-label"
+                    >Postal Address</label
+                  >
+                  <input
+                    type="input"
+                    name="postalAddress"
+                    [(ngModel)]="innovationConsultingModel.postalAddress"
+                    class="form-control"
+                    id="basiInput"
+                  />
+                </div>
+
+                <div class="mt-3">
+                  <label for="basiInput" class="form-label"
+                    >Headquater Location</label
+                  >
+                  <input
+                    type="input"
+                    name="headquaterLocation"
+                    [(ngModel)]="innovationConsultingModel.headquaterLocation"
+                    class="form-control"
+                    id="basiInput"
+                  />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="">
+                  <label for="basiInput" class="form-label">Twitter Link</label>
+                  <input
+                    type="input"
+                    name="twitterUrl"
+                    [(ngModel)]="innovationConsultingModel.twitterUrl"
+                    class="form-control"
+                    id="basiInput"
+                  />
+                </div>
+
+                <div class="mt-3">
+                  <label for="basiInput" class="form-label"
+                    >InstagramUrl Link</label
+                  >
+                  <input
+                    type="input"
+                    name="instagramUrl"
+                    [(ngModel)]="innovationConsultingModel.instagramUrl"
+                    class="form-control"
+                    id="basiInput"
+                  />
+                </div>
+
+                <div class="mt-3">
+                  <label for="basiInput" class="form-label"
+                    >Facebook Link</label
+                  >
+                  <input
+                    type="input"
+                    name="facebookUrl"
+                    [(ngModel)]="innovationConsultingModel.facebookUrl"
+                    class="form-control"
+                    id="basiInput"
+                  />
+                </div>
+
+                <div class="mt-3">
+                  <label for="basiInput" class="form-label"
+                    >Instant Video Call Link</label
+                  >
+                  <input
+                    type="input"
+                    name="instantVideoCall"
+                    [(ngModel)]="innovationConsultingModel.instantVideoCall"
+                    class="form-control"
+                    id="basiInput"
+                  />
+                </div>
+
+                <div class="mt-3">
+                  <label for="basiInput" class="form-label"
+                    >Submit Suggestion</label
+                  >
+                  <input
+                    type="input"
+                    name="submitSuggestion"
+                    [(ngModel)]="innovationConsultingModel.submitSuggestion"
+                    class="form-control"
+                    id="basiInput"
+                  />
+                </div>
+                <div class="mt-3">
+                  <label for="basiInput" class="form-label"
+                    >Contact General Manager</label
+                  >
+                  <input
+                    type="input"
+                    name="contactGeneralManager"
+                    [(ngModel)]="
+                      innovationConsultingModel.contactGeneralManager
+                    "
+                    class="form-control"
+                    id="basiInput"
+                  />
+                </div>
+
+                <div
+                  style="margin-top: 20px"
+                  *ngIf="innovationConsultingModel.id == 0 || null"
+                >
+                  <button
+                    type="submit"
+                    class="btn btn-danger waves-effect waves-light pull-right"
+                  >
+                    Save
+                  </button>
+                </div>
+
+                <div
+                  style="margin-top: 20px"
+                  *ngIf="innovationConsultingModel.id != 0 || null"
+                >
+                  <button
+                    type="submit"
+                    class="btn btn-danger waves-effect waves-light pull-right"
+                  >
+                    Update
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- container-fluid -->
+  </div>
+  <!-- End Page-content -->
+</div>
+<!-- end main content-->

@@ -1,0 +1,24 @@
+.textareasize {
+  height: 200px;
+  width: 1000px;
+  overflow-x: scroll;
+  overflow-y: scroll;
+}
+.messageTexarea {
+  height: 258px;
+  width: 675px;
+  overflow-x: scroll;
+  overflow-y: scroll;
+}
+
+.labelmr {
+  margin-top: 10px;
+}
+.imgTag {
+  height: 200px;
+  width: auto;
+}
+.imgButton {
+  margin-top: 10px;
+  display: flex;
+}

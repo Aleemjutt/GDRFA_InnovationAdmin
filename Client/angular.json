@@ -1,0 +1,178 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "Client": {
+      "projectType": "application",
+      "schematics": {},
+      "root": "",
+      "sourceRoot": "src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "allowedCommonJsDependencies": [
+              "lodash"
+            ],
+            "outputPath": "dist/client",
+            "index": "src/index.html",
+            "main": "src/main.ts",
+            "polyfills": [
+              "zone.js"
+            ],
+            "tsConfig": "tsconfig.app.json",
+            "assets": [
+              "src/assets/images/favicon.ico",
+              "src/assets"
+            ],
+            "scripts": [
+              "src/assets/js/layout.js",
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/datatables.net/js/jquery.dataTables.min.js",
+              "node_modules/datatables.net-bs5/js/dataTables.bootstrap5.min.js",
+              "src/assets/libs/bootstrap/js/bootstrap.bundle.min.js",
+              "src/assets/libs/simplebar/simplebar.min.js",
+              "src/assets/libs/node-waves/waves.min.js",
+              "src/assets/libs/feather-icons/feather.min.js",
+              "src/assets/js/pages/plugins/lord-icon-2.1.0.js",
+              "src/assets/js/plugins.js",
+              "src/assets/js/app.js"
+            ],
+            "styles": [
+              "./node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
+              "node_modules/font-awesome/css/font-awesome.min.css",
+              "node_modules/filepond/dist/filepond.min.css",
+              "node_modules/ngx-toastr/toastr.css",
+              "node_modules/datatables.net-bs5/css/dataTables.bootstrap5.min.css",
+              "node_modules/ngx-spinner/animations/line-scale-party.css",
+              "./node_modules/filepond/dist/filepond.min.css",
+              "./node_modules/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css",
+              {
+                "input": "src/styles.css",
+                "bundleName": "englishStyle",
+                "inject": false
+              },
+              {
+                "input": "src/arabicStyle.css",
+                "bundleName": "arabicStyle",
+                "inject": false
+              },
+              {
+                "input": "src/assets/css/bootstrap-rtl.min.css",
+                "bundleName": "bootstrapRtl",
+                "inject": false
+              },
+              {
+                "input": "src/assets/css/bootstrap.min.css",
+                "bundleName": "bootstrapLtr",
+                "inject": false
+              },
+              "src/assets/css/icons.min.css",
+              "src/assets/css/app.min.css",
+              "src/assets/css/custom.min.css",
+              "src/assets/css/designer.css"
+            ]
+          },
+          "configurations": {
+            "hmr": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.hmr.ts"
+                }
+              ]
+            },
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.development.ts"
+                }
+              ]
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "options": {
+            "sslCert": "./ssl/server.crt",
+            "sslKey": "./ssl/server.key",
+            "ssl": true,
+            "proxyConfig": "proxy.conf.json",
+            "buildTarget": "Client:build"
+          },
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "Client:build:production"
+            },
+            "development": {
+              "buildTarget": "Client:build:development"
+            },
+            "hmr": {
+              "hmr": true,
+              "buildTarget": "<client>:build:hmr"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "buildTarget": "Client:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
+            "tsConfig": "tsconfig.spec.json",
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "styles": [
+              "src/styles.css",
+              "./node_modules/filepond/dist/filepond.min.css"
+            ],
+            "scripts": [
+              "./node_modules/filepond/dist/filepond.min.js"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "analytics": "b8eddfae-3820-4eab-999a-c5a446eae130"
+  }
+}
