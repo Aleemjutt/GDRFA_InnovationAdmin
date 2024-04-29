@@ -27,7 +27,7 @@ export class DubaiResidencayService {
 
   add(dubaiResidencyCentenaryModel: DubaiResidencyCentenaryModel | undefined) {
     return this.httpClient.post<ResponseResult>(
-      this.baseUrl + 'dubaiResidency/add',
+      this.baseUrl + 'futureFocused/dubaiResidency/add',
       dubaiResidencyCentenaryModel,
       this.globalService.getHttpOptions()
     );
@@ -37,23 +37,23 @@ export class DubaiResidencayService {
     dubaiResidencyCentenaryModel: DubaiResidencyCentenaryModel | undefined
   ) {
     return this.httpClient.put<ResponseResult>(
-      this.baseUrl + 'dubaiResidency/update',
+      this.baseUrl + 'futureFocused/dubaiResidency/update',
       dubaiResidencyCentenaryModel,
       this.globalService.getHttpOptions()
     );
   }
 
-  getDetails(id: number | undefined) {
+  getDetails() {
     return this.httpClient.get<ResponseResult>(
-      this.baseUrl + 'dubaiResidency/getDetails' + id,
+      this.baseUrl + 'futureFocused/dubaiResidency/details',
 
       this.globalService.getHttpOptions()
     );
   }
 
-  delete(id: number | undefined) {
+  delete() {
     return this.httpClient.get<ResponseResult>(
-      this.baseUrl + 'dubaiResidency/delete' + id,
+      this.baseUrl + 'futureFocused/dubaiResidency/delete',
 
       this.globalService.getHttpOptions()
     );

@@ -34,6 +34,7 @@ import { TargetCompainAnswerListComponent } from './_Ideas/target-compain-answer
 import { InnovationConsultingListsComponent } from './_about/innovation_consulting/innovation-consulting-lists/innovation-consulting-lists.component';
 import { EstabishingDubaiFutureListComponent } from './_futureFocused/estabishing-dubai-future-list/estabishing-dubai-future-list.component';
 import { DubaiResidencyListsComponent } from './_futureFocused/dubai-residency-lists/dubai-residency-lists.component';
+import { EstablishedChallengedAnswerListComponent } from './_futureFocused/established-challenged-answer-list/established-challenged-answer-list.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -226,6 +227,18 @@ const routes: Routes = [
     path: 'futureFocused/establishingFutureFocusedList',
     component: EstabishingDubaiFutureListComponent,
     //canDeactivate: [preventUnsavedChangesGuard],
+  },
+
+  {
+    path: '',
+    runGuardsAndResolvers: 'always',
+    canActivate: [authGuard],
+    children: [
+      {
+        path: 'establisehdAnswerlist/:id',
+        component: EstablishedChallengedAnswerListComponent,
+      },
+    ],
   },
 
   {

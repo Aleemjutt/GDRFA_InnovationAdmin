@@ -1,7 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { GlobalServiceService } from 'src/app/_global/-global-service.service';
-import { DubaiResidencyCentenaryModel } from 'src/app/_models/FutureFocused/dubaiResidancy';
 import { EstablishingDubaiForTheFutureModel } from 'src/app/_models/FutureFocused/futureFocused';
 import { ResponseResult } from 'src/app/_models/responseResult';
 import { environment } from 'src/environments/environment.development';
@@ -20,7 +19,7 @@ export class FutureFocusedService {
 
   getList() {
     return this.httpClient.get<ResponseResult>(
-      this.baseUrl + 'dubaiResidency/list',
+      this.baseUrl + 'futureFocused/futureFocused/list',
       //this.getHttpOptions()
       this.globalService.getHttpOptions()
     );
@@ -30,7 +29,7 @@ export class FutureFocusedService {
     dubaiResidencyCentenaryModel: EstablishingDubaiForTheFutureModel | undefined
   ) {
     return this.httpClient.post<ResponseResult>(
-      this.baseUrl + 'dubaiResidency/add',
+      this.baseUrl + 'futureFocused/futureFocused/add',
       dubaiResidencyCentenaryModel,
       this.globalService.getHttpOptions()
     );
@@ -40,7 +39,7 @@ export class FutureFocusedService {
     dubaiResidencyCentenaryModel: EstablishingDubaiForTheFutureModel | undefined
   ) {
     return this.httpClient.put<ResponseResult>(
-      this.baseUrl + 'dubaiResidency/update',
+      this.baseUrl + 'futureFocused/futureFocused/update',
       dubaiResidencyCentenaryModel,
       this.globalService.getHttpOptions()
     );
@@ -48,7 +47,7 @@ export class FutureFocusedService {
 
   getDetails(id: number | undefined) {
     return this.httpClient.get<ResponseResult>(
-      this.baseUrl + 'dubaiResidency/getDetails' + id,
+      this.baseUrl + 'futureFocused/futureFocused/getDetails?id=' + id,
 
       this.globalService.getHttpOptions()
     );
@@ -56,7 +55,7 @@ export class FutureFocusedService {
 
   delete(id: number | undefined) {
     return this.httpClient.get<ResponseResult>(
-      this.baseUrl + 'dubaiResidency/delete' + id,
+      this.baseUrl + 'futureFocused/futureFocused/delete' + id,
 
       this.globalService.getHttpOptions()
     );

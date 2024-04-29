@@ -1,1 +1,870 @@
-<p>estabishing-dubai-future-list works!</p>
+<div class="main-content">
+  <div class="page-content">
+    <div class="container-fluid">
+      <div class="card">
+        <div class="card-header align-items-center d-flex">
+          <h4 class="card-title mb-0 flex-grow-1">
+            Established Challengies List
+          </h4>
+          <div class="flex-shrink-0">
+            <div class="d-flex align-items-center">
+              <input
+                type="text"
+                class="form-control me-3"
+                data-provider="flatpickr"
+                data-date-format="d M, Y"
+                data-range-date="true"
+                placeholder="Select Date Range"
+              />
+              <select
+                class="form-select mb-0 me-2"
+                aria-label="Default select example"
+              >
+                <option selected>Status</option>
+                <option value="1">Submitted</option>
+                <option value="2">In Review</option>
+                <option value="3">Approved</option>
+                <option value="4">Rejected</option>
+              </select>
+              <button
+                type="button"
+                class="btn btn-light waves-effect waves-light ms-2 me-2 col-1"
+              >
+                <i class="ri-search-2-line"></i>
+              </button>
+              |
+              <a
+                type="button"
+                class="btn btn-danger waves-effect waves-light ms-2 col-3"
+                id="btnAdd"
+                style="float: inline-end"
+                (click)="openModal(template)"
+              >
+                Add New
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <table class="table table-nowrap" id="awardsDataTable">
+            <thead>
+              <tr>
+                <th>{{ "ID" }}</th>
+                <th>{{ "Description En" }}</th>
+                <th>{{ "Description Ar" }}</th>
+                <th>{{ "Actions" }}</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!-- container-fluid -->
+  </div>
+  <!-- End Page-content -->
+</div>
+<ng-template #template class="modal-lg">
+  <div class="modal-header">
+    <h4
+      class="modal-title pull-left"
+      *ngIf="establishingDubaiForTheFutureModel.id == 0"
+    >
+      Add New Challenged
+    </h4>
+    <h4
+      class="modal-title pull-left"
+      *ngIf="establishingDubaiForTheFutureModel.id != 0"
+    >
+      Update Challenged
+    </h4>
+    <button
+      type="button"
+      class="btn-close close pull-right"
+      aria-label="Close"
+      (click)="modalRef?.hide()"
+    >
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row" style="margin-bottom: 65px">
+      <div class="col-md-12" style="margin-bottom: 65px">
+        <div class="row">
+          <div class="col-md-12">
+            <div>
+              <label for="tagLineEngInput" class="form-label"
+                >Description En</label
+              >
+              <textarea
+                type="input"
+                class="form-control row-2"
+                id="descriptionEngInput"
+                [(ngModel)]="establishingDubaiForTheFutureModel.descriptionEn"
+              ></textarea>
+            </div>
+            <div class="mt-3">
+              <label for="descriptionEngInput" class="form-label"
+                >Description Ar</label
+              >
+              <textarea
+                type="input"
+                class="form-control row-2"
+                id="descriptionEngInput"
+                [(ngModel)]="establishingDubaiForTheFutureModel.descriptionAr"
+              ></textarea>
+            </div>
+          </div>
+        </div>
+        <hr style="margin-top: 20px" />
+        <div class="row mt-3">
+          <div class="col-md-6"></div>
+          <div class="col-md-6 text-right">
+            <button
+              class="btn btn-danger pull-right"
+              (click)="addChallengedDetail()"
+            >
+              Add Detail
+            </button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label for="headingLineEnInput" class="form-label"
+              >Description En</label
+            >
+            <input
+              type="input"
+              class="form-control"
+              id="headingLineEnInput"
+              [(ngModel)]="
+                establishingDubaiForTheFutureDetailModel.descriptionEn
+              "
+            />
+          </div>
+          <div class="col-md-6">
+            <label for="headingLineArInput" class="form-label"
+              >Description Ar</label
+            >
+            <input
+              type="input"
+              class="form-control"
+              id="headingLineArInput"
+              [(ngModel)]="
+                establishingDubaiForTheFutureDetailModel.descriptionAr
+              "
+            />
+          </div>
+        </div>
+        <div class="col-md-12">
+          <label class="mt-3">Heading Points</label>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <label class="input-group-text">Text En</label>
+                </div>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter value for En"
+                  aria-label="Example text with button addon"
+                  aria-describedby="button-addon1"
+                  name="ourValuesAr"
+                  [(ngModel)]="requirmentsHeadingPointModel.textEn"
+                />
+              </div>
+
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <label class="input-group-text">Text Ar</label>
+                </div>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter value for Ar"
+                  aria-label="Example text with button addon"
+                  aria-describedby="button-addon1"
+                  [(ngModel)]="requirmentsHeadingPointModel.textAr"
+                />
+                <div class="input-group-append">
+                  <a
+                    class="btn btn-outline-secondary"
+                    type="button"
+                    id="ourValuesEnButton"
+                    (click)="addRequirmentHeadingPoint()"
+                  >
+                    Add
+                  </a>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Text En</th>
+                      <th scope="col">Text Ar</th>
+                      <th scope="col">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      *ngFor="
+                        let item of requirmentsHeadingPointModels;
+                        let i = index
+                      "
+                    >
+                      <td>{{ item.textAr }}</td>
+                      <td>{{ item.textEn }}</td>
+                      <td>
+                        <a
+                          class="btn btn-danger btn-sm"
+                          (click)="requirmentsHeadingPointItem(i)"
+                        >
+                          Remove
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <label class="mt-3">Points</label>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <label class="input-group-text">Text En</label>
+                </div>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter value for En"
+                  aria-label="Example text with button addon"
+                  aria-describedby="button-addon1"
+                  name="ourValuesAr"
+                  [(ngModel)]="requirmentsPointsModel.textEn"
+                />
+              </div>
+
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <label class="input-group-text">Text Ar</label>
+                </div>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter value for Ar"
+                  aria-label="Example text with button addon"
+                  aria-describedby="button-addon1"
+                  [(ngModel)]="requirmentsPointsModel.textAr"
+                />
+                <div class="input-group-append">
+                  <a
+                    class="btn btn-outline-secondary"
+                    type="button"
+                    id="ourValuesEnButton"
+                    (click)="addRequirmentPoint()"
+                  >
+                    Add
+                  </a>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Text En</th>
+                      <th scope="col">Text Ar</th>
+                      <th scope="col">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      *ngFor="
+                        let item of requirmentsPointsModels;
+                        let i = index
+                      "
+                    >
+                      <td>{{ item.textAr }}</td>
+                      <td>{{ item.textEn }}</td>
+                      <td>
+                        <a
+                          class="btn btn-danger btn-sm"
+                          (click)="requirmentsHeadingPointDetails(i)"
+                        >
+                          Remove
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <accordion [closeOthers]="oneAtATime" class="" style="padding: 0px">
+            <accordion-group
+              heading="{{ challengedDetails.descriptionEn }}"
+              style="padding-top: 10px"
+              *ngFor="
+                let challengedDetails of establishingDubaiForTheFutureDetailModels;
+                let i = index
+              "
+            >
+              <div class="row">
+                <div class="col-md-12">
+                  <!-- Buttons for edit and delete -->
+                  <div class="accordion-top-right">
+                    <button
+                      class="btn btn-sm btn-primary mx-1 pull-right"
+                      (click)="editItem(challengedDetails, i)"
+                    >
+                      <i class="fa fa-edit"></i> Edit
+                    </button>
+                    <button
+                      class="btn btn-sm btn-danger mx-1 pull-right"
+                      (click)="deleteItem(challengedDetails, i)"
+                    >
+                      <i class="fa fa-trash"></i> Delete
+                    </button>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label
+                        for="headingLineEnInput"
+                        class="form-label text-muted mb-0"
+                        >Description En</label
+                      >
+                      <div>{{ challengedDetails.descriptionEn }}</div>
+                    </div>
+
+                    <div class="col-md-6">
+                      <label
+                        for="headingLineArInput"
+                        class="form-label text-muted mb-0"
+                        >Description Ar</label
+                      >
+                      <div>{{ challengedDetails.descriptionAr }}</div>
+                    </div>
+                  </div>
+
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th scope="col">Heading Point Ar</th>
+                          <th scope="col">Heading Point En</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr
+                          *ngFor="
+                            let item of challengedDetails.requirmentsHeadingPointModels;
+                            let i = index
+                          "
+                        >
+                          <td>{{ item.textAr }}</td>
+                          <td>{{ item.textEn }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th scope="col">Point Ar</th>
+                          <th scope="col">Point En</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr
+                          *ngFor="
+                            let item of challengedDetails.requirmentsPointsModels;
+                            let i = index
+                          "
+                        >
+                          <td>{{ item.textAr }}</td>
+                          <td>{{ item.textEn }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </accordion-group>
+          </accordion>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="modal-footer">
+      <div class="button-container">
+        <button
+          type="button"
+          class="btn btn-danger waves-effect waves-light mr-2"
+          (click)="addChallenged()"
+          *ngIf="establishingDubaiForTheFutureModel.id == 0"
+        >
+          Save
+        </button>
+
+        <button
+          type="button"
+          class="btn btn-danger waves-effect waves-light mr-2"
+          (click)="updateChallenged()"
+          *ngIf="establishingDubaiForTheFutureModel.id != 0"
+        >
+          Update
+        </button>
+        <button
+          type="button"
+          class="btn btn-light button"
+          aria-label="Close"
+          (click)="modalRef?.hide()"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #templateDetails class="modal-lg">
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Challenged Details</h4>
+    <button
+      type="button"
+      class="btn-close close pull-right"
+      aria-label="Close"
+      (click)="modalRef?.hide()"
+    >
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-md-6">
+        <label for="basiInput" class="form-label text-muted mb-0">
+          Description En
+        </label>
+        <div class="mt-10">
+          {{ establishingDubaiForTheFutureModel.descriptionEn }}
+        </div>
+      </div>
+      <div class="col-md-6">
+        <label for="basiInput" class="form-label text-muted mb-0"
+          >Description Ar</label
+        >
+        <div class="mt-10">
+          {{ establishingDubaiForTheFutureModel.descriptionAr }}
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <accordion [closeOthers]="oneAtATime" class="" style="padding: 0px">
+          <accordion-group
+            heading="{{ challengedDetails.descriptionEn }}"
+            style="padding-top: 10px"
+            *ngFor="
+              let challengedDetails of establishingDubaiForTheFutureDetailModels;
+              let i = index
+            "
+          >
+            <div class="row mt-0">
+              <div class="col-md-12">
+                <!-- Buttons for edit and delete -->
+                <div class="accordion-top-right"></div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <label
+                      for="headingLineEnInput"
+                      class="form-label text-muted mb-0"
+                      >Description En</label
+                    >
+                    <div>{{ challengedDetails.descriptionEn }}</div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <label
+                      for="headingLineArInput"
+                      class="form-label text-muted mb-0"
+                      >Description Ar</label
+                    >
+                    <div>{{ challengedDetails.descriptionAr }}</div>
+                  </div>
+                </div>
+
+                <div class="table-responsive mt-20">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Heading Point Ar</th>
+                        <th scope="col">Heading Point En</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        *ngFor="
+                          let item of challengedDetails.requirmentsHeadingPointModels;
+                          let i = index
+                        "
+                      >
+                        <td>{{ item.textAr }}</td>
+                        <td>{{ item.textEn }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <hr />
+                <div class="table-responsive">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Point Ar</th>
+                        <th scope="col">Point En</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        *ngFor="
+                          let item of challengedDetails.requirmentsPointsModels;
+                          let i = index
+                        "
+                      >
+                        <td>{{ item.textAr }}</td>
+                        <td>{{ item.textEn }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </accordion-group>
+        </accordion>
+      </div>
+    </div>
+  </div>
+
+  <!-- container-fluid -->
+  <!-- End Page-content -->
+  <div class="row">
+    <div class="modal-footer">
+      <div class="button-container">
+        <button
+          type="button"
+          class="btn btn-light button"
+          aria-label="Close"
+          (click)="modalRef?.hide()"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<!-- <div class="main-content">
+  <div class="page-content">
+    <div class="container-fluid">
+      <div class="card">
+        <div class="card-header align-items-center d-flex">
+          <h4 class="card-title mb-0 flex-grow-1">Dubai Residencay</h4>
+        </div>
+        <div class="card-body">
+          <div class="col-md-12" style="margin-bottom: 65px">
+            <div class="row">
+              <div class="col-md-6">
+                <div>
+                  <label for="tagLineEngInput" class="form-label"
+                    >Tag Line Eng</label
+                  >
+                  <input
+                    type="input"
+                    class="form-control"
+                    id="tagLineEngInput"
+                    [(ngModel)]="dubaiResidencyCentenaryModel.tagLineEn"
+                  />
+                </div>
+
+                <div class="mt-3">
+                  <label for="descriptionEngInput" class="form-label"
+                    >Brief Eng</label
+                  >
+                  <textarea
+                    type="input"
+                    class="form-control row-2"
+                    id="descriptionEngInput"
+                    [(ngModel)]="dubaiResidencyCentenaryModel.descriptionEn"
+                  ></textarea>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div>
+                  <label for="tagLineArInput" class="form-label"
+                    >Tag Line Ar</label
+                  >
+                  <input
+                    type="input"
+                    class="form-control"
+                    id="tagLineArInput"
+                    [(ngModel)]="dubaiResidencyCentenaryModel.tagLineAr"
+                  />
+                </div>
+
+                <div class="mt-3">
+                  <label for="descriptionArInput" class="form-label"
+                    >Brief Ar</label
+                  >
+                  <textarea
+                    type="input"
+                    class="form-control row-2"
+                    id="descriptionArInput"
+                    [(ngModel)]="dubaiResidencyCentenaryModel.descriptionAr"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+            <hr style="margin-top: 20px" />
+            <div class="row mt-3">
+              <div class="col-md-6"></div>
+              <div class="col-md-6 text-right">
+                <button class="btn btn-danger pull-right" (click)="addPoint()">
+                  Add Points
+                </button>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label for="headingLineEnInput" class="form-label"
+                  >Point Heading Line En</label
+                >
+                <input
+                  type="input"
+                  class="form-control"
+                  id="headingLineEnInput"
+                  [(ngModel)]="
+                    dubaiResidencyCentenaryPointsMainModel.headLineEn
+                  "
+                />
+              </div>
+              <div class="col-md-6">
+                <label for="headingLineArInput" class="form-label"
+                  >Point Heading Line Ar</label
+                >
+                <input
+                  type="input"
+                  class="form-control"
+                  id="headingLineArInput"
+                  [(ngModel)]="
+                    dubaiResidencyCentenaryPointsMainModel.headLineAr
+                  "
+                />
+              </div>
+            </div>
+            <div class="col-md-12">
+              <label class="mt-3">Point Lines</label>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text">Point Ar</label>
+                    </div>
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Enter value for Ar"
+                      aria-label="Example text with button addon"
+                      aria-describedby="button-addon1"
+                      name="ourValuesAr"
+                      [(ngModel)]="
+                        dubaiResidencyCentenaryPointsLineModel.textAr
+                      "
+                    />
+                  </div>
+
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text">Point En</label>
+                    </div>
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Enter value for En"
+                      aria-label="Example text with button addon"
+                      aria-describedby="button-addon1"
+                      [(ngModel)]="
+                        dubaiResidencyCentenaryPointsLineModel.textEn
+                      "
+                    />
+                    <div class="input-group-append">
+                      <a
+                        class="btn btn-outline-secondary"
+                        type="button"
+                        id="ourValuesEnButton"
+                        (click)="addPointLine()"
+                      >
+                        Add
+                      </a>
+                    </div>
+                  </div>
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th scope="col">Point Ar</th>
+                          <th scope="col">Point En</th>
+                          <th scope="col">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr
+                          *ngFor="
+                            let item of dubaiResidencyCentenaryPointsLineModelList;
+                            let i = index
+                          "
+                        >
+                          <td>{{ item.textAr }}</td>
+                          <td>{{ item.textEn }}</td>
+                          <td>
+                            <a
+                              class="btn btn-danger btn-sm"
+                              (click)="removePointLine(i)"
+                            >
+                              Remove
+                            </a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <accordion
+                [closeOthers]="oneAtATime"
+                class=""
+                style="padding: 0px"
+              >
+                <accordion-group
+                  heading="{{ dubaiResidency.headLineEn }}"
+                  style="padding-top: 10px"
+                  *ngFor="
+                    let dubaiResidency of dubaiResidencyCentenaryPointsMainModelList;
+                    let i = index
+                  "
+                >
+                  <div class="row">
+                    <div class="col-md-12">
+                       Buttons for edit and delete 
+                      <div class="accordion-top-right">
+                        <button
+                          class="btn btn-sm btn-primary mx-1 pull-right"
+                          (click)="editItem(dubaiResidency, i)"
+                        >
+                          <i class="fa fa-edit"></i> Edit
+                        </button>
+                        <button
+                          class="btn btn-sm btn-danger mx-1 pull-right"
+                          (click)="deleteItem(dubaiResidency, i)"
+                        >
+                          <i class="fa fa-trash"></i> Delete
+                        </button>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-6">
+                          <label
+                            for="headingLineEnInput"
+                            class="form-label text-muted mb-0"
+                            >Heading Line En</label
+                          >
+                          <div>{{ dubaiResidency.headLineEn }}</div>
+                        </div>
+
+                        <div class="col-md-6">
+                          <label
+                            for="headingLineArInput"
+                            class="form-label text-muted mb-0"
+                            >Heading Line Ar</label
+                          >
+                          <div>{{ dubaiResidency.headLineAr }}</div>
+                        </div>
+                      </div>
+
+                      <div class="table-responsive">
+                        <table class="table">
+                          <thead>
+                            <tr>
+                              <th scope="col">Point Ar</th>
+                              <th scope="col">Point En</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr
+                              *ngFor="
+                                let item of dubaiResidency.dubaiResidencyCentenaryPointsLineModels;
+                                let i = index
+                              "
+                            >
+                              <td>{{ item.textAr }}</td>
+                              <td>{{ item.textEn }}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </accordion-group>
+              </accordion>
+            </div>
+
+            <div class="button-container">
+              <button
+                type="button"
+                class="btn btn-danger waves-effect waves-light mr-2 pull-right"
+                (click)="add()"
+                *ngIf="dubaiResidencyCentenaryModel.id == 0"
+              >
+                Save
+              </button>
+
+              <button
+                type="button"
+                class="btn btn-danger waves-effect waves-light mr-2 pull-right"
+                (click)="update()"
+                *ngIf="dubaiResidencyCentenaryModel.id != 0"
+              >
+                Update
+              </button>
+
+              <button
+                type="button"
+                class="btn btn-light button mr-2 pull-right"
+                aria-label="Close"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+     container-fluid 
+  </div>
+ End Page-content 
+</div> -->

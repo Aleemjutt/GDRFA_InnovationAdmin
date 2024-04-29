@@ -73,3 +73,21 @@ th {
 .mr-2 {
   margin: 4px;
 }
+
+thead {
+  background-color: #f3f3f9;
+  color: white;
+}
+.mt-40 {
+  margin-top: 40px;
+}
+.mt-30 {
+  margin-top: 30px;
+}
+.mt-20 {
+  margin-top: 20px;
+}
+
+.mt-10 {
+  margin-top: 10px;
+}

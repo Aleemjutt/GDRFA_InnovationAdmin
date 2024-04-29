@@ -1,9 +1,13 @@
+import { EstablishedAsnswerdModel } from './establishedAsnswerdModel';
+
 export interface EstablishingDubaiForTheFutureModel {
   descriptionEn: string;
   descriptionAr: string;
   establishingDubaiForTheFutureDetailModels:
     | EstablishingDubaiForTheFutureDetailModel[]
     | null;
+
+  establishedAsnswerdModels: EstablishedAsnswerdModel[] | null;
 }
 
 export interface EstablishingDubaiForTheFutureDetailModel {

@@ -4,44 +4,6 @@
       <div class="card">
         <div class="card-header align-items-center d-flex">
           <h4 class="card-title mb-0 flex-grow-1">Dubai Residencay</h4>
-          <!-- <div class="flex-shrink-0">
-            <div class="d-flex align-items-center">
-              <input
-                type="text"
-                class="form-control me-3"
-                data-provider="flatpickr"
-                data-date-format="d M, Y"
-                data-range-date="true"
-                placeholder="Select Date Range"
-              />
-              <select
-                class="form-select mb-0 me-2"
-                aria-label="Default select example"
-              >
-                <option selected>Status</option>
-                <option value="1">Submitted</option>
-                <option value="2">In Review</option>
-                <option value="3">Approved</option>
-                <option value="4">Rejected</option>
-              </select>
-              <button
-                type="button"
-                class="btn btn-light waves-effect waves-light ms-2 me-2 col-1"
-              >
-                <i class="ri-search-2-line"></i>
-              </button>
-              |
-              <a
-                type="button"
-                class="btn btn-danger waves-effect waves-light ms-2 col-3"
-                id="btnAdd"
-                style="float: inline-end"
-                (click)="openModal(template)"
-              >
-                Add New
-              </a>
-            </div>
-          </div> -->
         </div>
         <div class="card-body">
           <div class="col-md-12" style="margin-bottom: 65px">
@@ -98,7 +60,6 @@
                 </div>
               </div>
             </div>
-
             <hr style="margin-top: 20px" />
             <div class="row mt-3">
               <div class="col-md-6"></div>
@@ -122,7 +83,6 @@
                   "
                 />
               </div>
-
               <div class="col-md-6">
                 <label for="headingLineArInput" class="form-label"
                   >Point Heading Line Ar</label
@@ -216,7 +176,6 @@
                 </div>
               </div>
             </div>
-
             <div class="col-md-12">
               <accordion
                 [closeOthers]="oneAtATime"
@@ -227,7 +186,8 @@
                   heading="{{ dubaiResidency.headLineEn }}"
                   style="padding-top: 10px"
                   *ngFor="
-                    let dubaiResidency of dubaiResidencyCentenaryPointsMainModelList
+                    let dubaiResidency of dubaiResidencyCentenaryPointsMainModelList;
+                    let i = index
                   "
                 >
                   <div class="row">
@@ -236,13 +196,13 @@
                       <div class="accordion-top-right">
                         <button
                           class="btn btn-sm btn-primary mx-1 pull-right"
-                          (click)="editItem(dubaiResidency)"
+                          (click)="editItem(dubaiResidency, i)"
                         >
                           <i class="fa fa-edit"></i> Edit
                         </button>
                         <button
                           class="btn btn-sm btn-danger mx-1 pull-right"
-                          (click)="deleteItem(dubaiResidency)"
+                          (click)="deleteItem(dubaiResidency, i)"
                         >
                           <i class="fa fa-trash"></i> Delete
                         </button>
@@ -292,79 +252,38 @@
                     </div>
                   </div>
                 </accordion-group>
-
-                <!-- <accordion-group
-                  heading="{{ dubaiResidency.headLineEn }}"
-                  style="padding-top: 10px"
-                  *ngFor="
-                    let dubaiResidency of dubaiResidencyCentenaryPointsMainModelList
-                  "
-                >
-                  <div class="row">
-                    <div class="col-md-12">
-                      <div class="row">
-                        <div class="col-md-6">
-                          <label
-                            for="basiInput"
-                            class="form-label text-muted mb-0"
-                            >Heading Line En</label
-                          >
-                          <div>
-                            {{ dubaiResidency.headLineEn }}
-                          </div>
-                        </div>
-
-                        <div class="col-md-6">
-                          <label
-                            for="basiInput"
-                            class="form-label text-muted mb-0"
-                            >Heading Line Ar</label
-                          >
-                          <div>
-                            {{ dubaiResidency.headLineAr }}
-                          </div>
-                        </div>
-                      </div>
-                      <div class="table-responsive">
-                        <table class="table">
-                          <thead>
-                            <tr>
-                              <th scope="col">Point Ar</th>
-                              <th scope="col">Point En</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr
-                              *ngFor="
-                                let item of dubaiResidency.dubaiResidencyCentenaryPointsLineModels;
-                                let i = index
-                              "
-                            >
-                              <td>{{ item.textAr }}</td>
-                              <td>{{ item.textEn }}</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
-                </accordion-group> -->
               </accordion>
             </div>
+
+            <div class="button-container">
+              <button
+                type="button"
+                class="btn btn-danger waves-effect waves-light mr-2 pull-right"
+                (click)="add()"
+                *ngIf="dubaiResidencyCentenaryModel.id == 0"
+              >
+                Save
+              </button>
+
+              <button
+                type="button"
+                class="btn btn-danger waves-effect waves-light mr-2 pull-right"
+                (click)="update()"
+                *ngIf="dubaiResidencyCentenaryModel.id != 0"
+              >
+                Update
+              </button>
+
+              <button
+                type="button"
+                class="btn btn-light button mr-2 pull-right"
+                aria-label="Close"
+                (click)="modalRef?.hide()"
+              >
+                Close
+              </button>
+            </div>
           </div>
-          <!-- <table class="table table-nowrap" id="ideaDubaiResidencyDataTable">
-            <thead>
-              <tr>
-                <th>{{ "ID" }}</th>
-                <th>{{ "Tag Line En" }}</th>
-                <th>{{ "Tag Line Ar" }}</th>
-                <th>{{ "Description En" }}</th>
-                <th>{{ "Description Ar" }}</th>
-                <th>{{ "Actions" }}</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table> -->
         </div>
       </div>
     </div>

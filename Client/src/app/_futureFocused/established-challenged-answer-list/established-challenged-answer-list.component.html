@@ -1,0 +1,216 @@
+<div class="main-content">
+  <div class="page-content">
+    <div class="container-fluid">
+      <div class="card">
+        <div class="card-header align-items-center d-flex">
+          <h4 class="card-title mb-0 flex-grow-1">Target Compain Answer</h4>
+          <div class="flex-shrink-0">
+            <div class="d-flex align-items-center">
+              <input
+                type="text"
+                class="form-control me-3"
+                data-provider="flatpickr"
+                data-date-format="d M, Y"
+                data-range-date="true"
+                placeholder="Select Date Range"
+              />
+              <select
+                class="form-select mb-0 me-2"
+                aria-label="Default select example"
+              >
+                <option selected>Status</option>
+                <option value="1">Submitted</option>
+                <option value="2">In Review</option>
+                <option value="3">Approved</option>
+                <option value="4">Rejected</option>
+              </select>
+              <button
+                type="button"
+                class="btn btn-light waves-effect waves-light ms-2 me-2 col-1"
+              >
+                <i class="ri-search-2-line"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <table class="table table-nowrap" id="establishedAnswerDataTable">
+            <thead>
+              <tr>
+                <th>{{ "ID" }}</th>
+                <th>{{ "Actions" }}</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!-- container-fluid -->
+  </div>
+  <!-- End Page-content -->
+</div>
+
+<ng-template #templateDetails class="modal-lg">
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Establised Challenged Details</h4>
+    <button
+      type="button"
+      class="btn-close close pull-right"
+      aria-label="Close"
+      (click)="modalRef?.hide()"
+    >
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-md-6">
+        <label for="basiInput" class="form-label text-muted mb-0"
+          >Challenge Title</label
+        >
+        <div>{{ establishedAsnswerdModel.descriptionEn }}</div>
+      </div>
+      <div class="row mt-0">
+        <div class="col-md-12">
+          <!-- Buttons for edit and delete -->
+          <div class="accordion-top-right"></div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <label for="headingLineEnInput" class="form-label text-muted mb-0"
+                >Description En</label
+              >
+              <div>{{ establishingDubaiForTheFutureModel.descriptionEn }}</div>
+            </div>
+
+            <div class="col-md-6">
+              <label for="headingLineArInput" class="form-label text-muted mb-0"
+                >Description Ar</label
+              >
+              <div>{{ establishingDubaiForTheFutureModel.descriptionAr }}</div>
+            </div>
+          </div>
+
+          <div class="table-responsive mt-20">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Heading Point Ar</th>
+                  <th scope="col">Heading Point En</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="
+                    let item of establishingDubaiForTheFutureModel.requirmentsHeadingPointModels;
+                    let i = index
+                  "
+                >
+                  <td>{{ item.textAr }}</td>
+                  <td>{{ item.textEn }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <hr />
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Point Ar</th>
+                  <th scope="col">Point En</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="
+                    let item of establishingDubaiForTheFutureModel.requirmentsPointsModels;
+                    let i = index
+                  "
+                >
+                  <td>{{ item.textAr }}</td>
+                  <td>{{ item.textEn }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-3">
+        <label for="basicInput" class="form-label text-muted mb-0"
+          >Attachments</label
+        >
+      </div>
+
+      <div class="row mt-2">
+        <div class="col-md-12">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">File</th>
+                <th scope="col">Download</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="
+                  let attachment of establishingDubaiForTheFutureModel
+                    .establishedAsnswerdModel
+                    .establishedAsnswerdAttachmentModels
+                "
+              >
+                <td>
+                  <!-- Display file icon based on extension -->
+                  <i
+                    *ngIf="attachment.extension === '.jpg'"
+                    class="bi bi-file-image"
+                  ></i>
+                  <i
+                    *ngIf="attachment.extension === '.png'"
+                    class="bi bi-file-image"
+                  ></i>
+                  <i
+                    *ngIf="attachment.extension === '.pdf'"
+                    class="bi bi-file-pdf"
+                  ></i>
+                  <!-- Add more conditions for other file types as needed -->
+                  <!-- Display attachment title -->
+                  <span>{{ attachment.title }}</span>
+                </td>
+                <td>
+                  <!-- Download button with download icon -->
+                  <a
+                    href="{{ attachment.url }}"
+                    class="btn btn-primary btn-sm"
+                    download
+                  >
+                    <i class="bi bi-download"></i> Download
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- container-fluid -->
+    <!-- End Page-content -->
+  </div>
+  <div class="row">
+    <div class="modal-footer">
+      <div class="button-container">
+        <button
+          type="button"
+          class="btn btn-default button"
+          aria-label="Close"
+          (click)="modalRef?.hide()"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>

@@ -461,7 +461,6 @@ export class IdeaPoineerssListComponent {
   }
 
   OpenPointsModel(templatePoints: TemplateRef<void>) {
-    
     this.ideaPionnerPointsModel = {
       id: 0,
       textEn: '',
