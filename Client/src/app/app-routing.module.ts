@@ -35,6 +35,8 @@ import { InnovationConsultingListsComponent } from './_about/innovation_consulti
 import { EstabishingDubaiFutureListComponent } from './_futureFocused/estabishing-dubai-future-list/estabishing-dubai-future-list.component';
 import { DubaiResidencyListsComponent } from './_futureFocused/dubai-residency-lists/dubai-residency-lists.component';
 import { EstablishedChallengedAnswerListComponent } from './_futureFocused/established-challenged-answer-list/established-challenged-answer-list.component';
+import { InnovativeEntrepreneurshipProgramListComponent } from './_innovationPossiblities/innovative-entrepreneurship-program-list/innovative-entrepreneurship-program-list.component';
+import { UsersListComponent } from './_users/users-list/users-list.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -252,7 +254,20 @@ const routes: Routes = [
       },
     ],
   },
+
+  {
+    path: 'innovationPossibilities/innovativeEntrepreneurshipList',
+    component: InnovativeEntrepreneurshipProgramListComponent,
+    //canDeactivate: [preventUnsavedChangesGuard],
+  },
+
   ///******** Idea End********///
+
+  {
+    path: 'users/userList',
+    component: UsersListComponent,
+    //canDeactivate: [preventUnsavedChangesGuard],
+  },
 
   { path: '**', component: HomeComponent, pathMatch: 'full' },
   // {

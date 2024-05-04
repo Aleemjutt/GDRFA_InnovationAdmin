@@ -143,6 +143,12 @@ export class EstabishingDubaiFutureListComponent {
               {
                 data: 'descriptionAr', //(row: any) => this.getDepartmentName(row.requestModel.sID),
               },
+
+              {
+                data: (row: any) =>
+                  this.globalService.getStatusName(row.status),
+               
+              },
               {
                 data: 'data',
                 defaultContent: `

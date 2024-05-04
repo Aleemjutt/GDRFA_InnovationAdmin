@@ -1,124 +1,141 @@
-<div class="content pt-0">
-  <div class="container bg-primary rounded-xl">
-    <!--begin::breadcrumb-->
-    <div class="row">
-      <div class="col-lg-12">
-        <!--begin::Info-->
-        <div class="d-flex align-items-center flex-wrap mr-1">
-          <!--begin::Breadcrumb-->
-          <ul
-            class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-md"
-          >
-            <li class="breadcrumb-item">
-              <span class="mr-2 mt-n1px">
-                <i class="fa fa-home text-dark icon-1em" aria-hidden="true"></i>
-              </span>
-              <a
-                href="~/CPanel/Dashboard"
-                class="font-weight-bolder text-dark font-size-sm"
-                ><span data-localize="Home">Home</span
-                ><i
-                  class="la la-angle-right ml-1 text-dark icon-1em"
-                  aria-hidden="true"
-                ></i
-              ></a>
-            </li>
-            <li class="breadcrumb-item">
-              <a
-                href="javascript:;"
-                class="font-weight-bolder text-dark font-size-sm"
-                ><span data-localize="setting_manageuser_text">Users</span
-                ><i
-                  class="la la-angle-right ml-1 text-dark icon-1em"
-                  aria-hidden="true"
-                ></i
-              ></a>
-            </li>
-          </ul>
-          <!--end::Breadcrumb-->
-        </div>
-        <!--end::Info-->
-      </div>
-    </div>
-  </div>
-  <div class="container">
-    <div class="row mb-2 mt-2">
-      <div class="col-12 d-lg-flex">
-        <h2 class="card-title align-items-start col-lg-8 flex-column mb-2 pl-0">
-          <span
-            class="card-label font-weight-bolder text-black mt-3"
-            data-localize="setting_manageuser_text"
-            >Manage Users
-          </span>
-        </h2>
-        <div class="right-arrow col-lg-4 ml-lg-auto text-right pr-0">
-          <a
-            id="btnAdd"
-            class="btn btn-primary font-weight-bold"
-            style="float: inline-end"
-          >
-            <span data-localize="">Add New</span>
-            <i class="flaticon2-plus ml-2 pr-0 icon-md"></i>
-          </a>
-        </div>
-      </div>
-    </div>
-    <div class="card rounded-xl border-0 pt-1 mt-0 shadow-sm">
-      <!--Card::Start-->
-      <div class="card-body px-5 pb-1 pt-1">
-        <!--CardBody::Start-->
-        <div class="row">
-          <div class="col-12">
-            <div class="table-responsive">
-              <table
-                id="tblUserDetail"
-                class="table th_small table_hover_tr shadow-sm rounded-xl bg-white td_lr_padding th_lr_padding"
-                
+<div class="main-content">
+  <div class="page-content">
+    <div class="container-fluid">
+      <div class="card">
+        <div class="card-header align-items-center d-flex">
+          <h4 class="card-title mb-0 flex-grow-1">Users List</h4>
+          <div class="flex-shrink-0">
+            <div class="d-flex align-items-center">
+              <input
+                type="text"
+                class="form-control me-3"
+                data-provider="flatpickr"
+                data-date-format="d M, Y"
+                data-range-date="true"
+                placeholder="Select Date Range"
+              />
+              <select
+                class="form-select mb-0 me-2"
+                aria-label="Default select example"
               >
-                <thead class="thead-light">
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">First Name</th>
-                    <th scope="col">Last Name</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Role</th>
-                    <th scope="col">Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Aleem</td>
-                    <td>Akram</td>
-                    <td>aaleem&#64;dnard.ae</td>
-                    <td>Super Admin</td>
-                    <td>Edit/Delete</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Shammem</td>
-                    <td>Shammem</td>
-                    <td>shammem&#64;dnard.ae</td>
-                    <td>Admin</td>
-                    <td>Edit/Delete</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td>Umair</td>
-                    <td>Bashir</td>
-                    <td>umair&#64;dnard.ae</td>
-                    <td>User</td>
-                    <td>Edit/Delete</td>
-                  </tr>
-                </tbody>
-              </table>
+                <option selected>Status</option>
+                <option value="1">Submitted</option>
+                <option value="2">In Review</option>
+                <option value="3">Approved</option>
+                <option value="4">Rejected</option>
+              </select>
+              <button
+                type="button"
+                class="btn btn-light waves-effect waves-light ms-2 me-2 col-1"
+              >
+                <i class="ri-search-2-line"></i>
+              </button>
+              <!-- |
+              <a
+                type="button"
+                class="btn btn-danger waves-effect waves-light ms-2 col-3"
+                id="btnAdd"
+                style="float: inline-end"
+                (click)="openModal(template)"
+              >
+                Add New
+              </a> -->
             </div>
-            <!--end: Datatable-->
           </div>
         </div>
+        <div class="card-body">
+          <table class="table table-nowrap" id="usersDataTable">
+            <thead>
+              <tr>
+                <th>{{ "ID" }}</th>
+                <th>{{ "First Name" }}</th>
+                <th>{{ "Last Name" }}</th>
+                <th>{{ "Email" }}</th>
+                <th>{{ "User Status" }}</th>
+                <th>{{ "Actions" }}</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
       </div>
-      <!--CardBody::End-->
     </div>
-    <!--Card::End-->
+    <!-- container-fluid -->
   </div>
+  <!-- End Page-content -->
 </div>
+
+<ng-template #template class="modal-lg">
+  <div class="modal-header bg-light">
+    <h4 class="modal-title pull-left">Add User</h4>
+    <button
+      type="button"
+      class="btn-close close pull-right"
+      aria-label="Close"
+      (click)="modalRef?.hide()"
+    >
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row" style="margin-bottom: 65px">
+      <div class="card-body">
+        <div class="row" *ngIf="">
+          <div class="col-md-12"></div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="modal-footer">
+        <div class="button-container">
+          <button type="button" class="btn btn-danger waves-effect waves-light">
+            Save
+          </button>
+
+          <button
+            type="button"
+            class="btn btn-light button"
+            aria-label="Close"
+            (click)="modalRef?.hide()"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #templateDetails class="modal-lg">
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Idea Details</h4>
+    <button
+      type="button"
+      class="btn-close close pull-right"
+      aria-label="Close"
+      (click)="modalRef?.hide()"
+    >
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <hr class="bg-soft-dark" />
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="modal-footer">
+      <div class="button-container">
+        <button
+          type="button"
+          class="btn btn-light button"
+          aria-label="Close"
+          (click)="modalRef?.hide()"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>

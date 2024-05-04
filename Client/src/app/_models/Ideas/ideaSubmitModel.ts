@@ -1,3 +1,5 @@
+import { WorkFlowStatus } from '../Common/workflowStatus';
+
 export interface IdeasSubmitModel {
   termAndCondition: boolean | null;
   title: string | null;
@@ -29,11 +31,12 @@ export interface AttachmentModel {
   size: string | null;
 }
 
-export enum WorkFlowStatus {
-  Accept = 0,
-  Reject = 1,
-  Approved = 2,
-  Modification = 3,
-  UnderProcesses = 4,
-  Returned = 5,
-}
+// export enum WorkFlowStatus {
+//   Accept = 0,
+//   Reject = 1,
+//   Approved = 2,
+//   Modification = 3,
+//   UnderProcesses = 4,
+//   Returned = 5,
+//   Submit = 6,
+// }

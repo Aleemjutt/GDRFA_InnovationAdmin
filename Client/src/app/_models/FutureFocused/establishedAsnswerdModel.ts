@@ -3,6 +3,8 @@ export interface EstablishedAsnswerdModel {
   establishedAsnswerdAttachmentModels:
     | EstablishedAsnswerdAttachmentModel[]
     | null;
+
+    
 }
 
 export interface EstablishedAsnswerdAttachmentModel {

@@ -64,9 +64,10 @@
   </div>
   <!-- End Page-content -->
 </div>
+
 <ng-template #template class="modal-lg">
   <div class="modal-header bg-light">
-    <h4 class="modal-title pull-left">Consulting Request</h4>
+    <h4 class="modal-title pull-left">Innovative Entrepreneureships List</h4>
     <button
       type="button"
       class="btn-close close pull-right"
@@ -79,191 +80,8 @@
   <div class="modal-body">
     <div class="row" style="margin-bottom: 65px">
       <div class="card-body">
-        <div class="row" *ngIf="ideaSubmitModel">
-          <div class="col-md-12">
-            <div class="col-md-6">
-              <div class="mt-0">
-                <label for="basiInput" class="form-label">Idea title</label>
-                <p
-                  type="input"
-                  class="form-control"
-                  id="basiInput"
-                  [(ngModel)]="ideaSubmitModel.title"
-                  [disabled]="true"
-                ></p>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="mt-3">
-                <label for="basiInput" class="form-label">Idea text</label>
-                <p
-                  type="input"
-                  class="form-control"
-                  id="basiInput"
-                  [(ngModel)]="ideaSubmitModel.ideaText"
-                  [disabled]="true"
-                ></p>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="mt-3">
-                <div class="form-group mt-4">
-                  <label for="exampleFormControlTextarea1" class="text-dark"
-                    >{{ "Return from implementing the idea" }}
-                    <span class="text-danger">*</span></label
-                  >
-                  <p class="mb-1 mt-3 text-dark">
-                    {{
-                      "Choose no more than two of the most influential returns from the returns listed below :"
-                    }}
-                  </p>
-                  <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      value=""
-                      id="defaultCheck1"
-                      disabled
-                      [(ngModel)]="ideaSubmitModel.employeehappiness"
-                    />
-                    <label
-                      class="form-check-label text-dark"
-                      for="defaultCheck1"
-                    >
-                      {{ "Employee happiness" }}
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      value=""
-                      id="defaultCheck1"
-                      disabled
-                      [(ngModel)]="ideaSubmitModel.improvingservices"
-                    />
-                    <label
-                      class="form-check-label text-dark"
-                      for="defaultCheck1"
-                    >
-                      {{ "Improving services" }}
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      value=""
-                      id="defaultCheck1"
-                      disabled
-                      [(ngModel)]="ideaSubmitModel.rationalizationofexpenses"
-                    />
-                    <label
-                      class="form-check-label text-dark"
-                      for="defaultCheck1"
-                    >
-                      {{ "Rationalization of expenses" }}
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      value=""
-                      id="defaultCheck1"
-                      disabled
-                      [(ngModel)]="ideaSubmitModel.customerhappiness"
-                    />
-                    <label
-                      class="form-check-label text-dark"
-                      for="defaultCheck1"
-                    >
-                      {{ "Customer happiness" }}
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      value=""
-                      id="defaultCheck1"
-                      disabled
-                      [(ngModel)]="
-                        ideaSubmitModel.informationabouttechnologydevelopment
-                      "
-                    />
-                    <label
-                      class="form-check-label text-dark"
-                      for="defaultCheck1"
-                    >
-                      {{ "Information technology development" }}
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      value=""
-                      id="defaultCheck1"
-                      disabled
-                      [(ngModel)]="ideaSubmitModel.findindnewsourcesoffinancing"
-                    />
-                    <label
-                      class="form-check-label text-dark"
-                      for="defaultCheck1"
-                    >
-                      {{ "Finding new sources of financing" }}
-                    </label>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="mt-3">
-                <label for="basiInput" class="form-label">Sector</label>
-                <ng-select
-                  #mySector
-                  class="form-control mt-2 form-select"
-                  [items]="sectorList"
-                  [bindLabel]="bindLableSector"
-                  bindValue="sectorId"
-                  [(ngModel)]="ideaSubmitModel.sectorId"
-                >
-                </ng-select>
-              </div>
-            </div>
-            <br />
-            <div class="col-md-6">
-              <div class="mt-3">
-                <label for="basiInput" class="form-label">Administration</label>
-                <ng-select
-                  #myAdministration
-                  class="form-control mt-2 form-select"
-                  [items]="administrationList"
-                  [bindLabel]="bindLableAdministration"
-                  bindValue="administrationId"
-                  [(ngModel)]="ideaSubmitModel.administrationId"
-                >
-                </ng-select>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="mt-3">
-                <label for="basiInput" class="form-label text-muted mb-0"
-                  >Attachment</label
-                >
-                <div class="fs-15">
-                  <!-- <img
-                    src="{{
-                      ideaSubmitModel.attachmentUrlView ||
-                        './assests/default.png'
-                    }}"
-                    class="card-img-top img-thumnail"
-                  /> -->
-                </div>
-              </div>
-            </div>
-          </div>
+        <div class="row" *ngIf="entrepreneureshipModel">
+          <div class="col-md-12"></div>
         </div>
       </div>
     </div>
@@ -309,35 +127,35 @@
       <div class="row mt-3">
         <div class="col-md-4">
           <label for="basiInput" class="form-label text-muted mb-0">Date</label>
-          <div>{{ ideaSubmitModel?.createdDate }}</div>
+          <div>{{ entrepreneureshipModel?.createdDate }}</div>
         </div>
         <div class="col-md-4">
           <label for="basiInput" class="form-label text-muted mb-0"
             >Status</label
           >
-          <div *ngIf="ideaSubmitModel?.workFlowStatus == 0">
+          <div *ngIf="entrepreneureshipModel?.workFlowStatus == 0">
             <div class="text-success badge badge-soft-success fs-12 fw-regular">
-              {{ ideaSubmitModel?.workFlowStatusName }}
+              {{ entrepreneureshipModel?.workFlowStatusName }}
             </div>
           </div>
 
-          <div *ngIf="ideaSubmitModel?.workFlowStatus == 1">
+          <div *ngIf="entrepreneureshipModel?.workFlowStatus == 1">
             <div class="text-danger badge badge-soft-danger fs-12 fw-regular">
-              {{ ideaSubmitModel?.workFlowStatusName }}
+              {{ entrepreneureshipModel?.workFlowStatusName }}
             </div>
           </div>
 
-          <div *ngIf="ideaSubmitModel?.workFlowStatus == 3">
+          <div *ngIf="entrepreneureshipModel?.workFlowStatus == 3">
             <div class="text-info badge badge-soft-info fs-12 fw-regular">
-              {{ ideaSubmitModel?.workFlowStatusName }}
+              {{ entrepreneureshipModel?.workFlowStatusName }}
             </div>
           </div>
 
-          <div *ngIf="ideaSubmitModel?.workFlowStatus == 4">
+          <div *ngIf="entrepreneureshipModel?.workFlowStatus == 4">
             <div
               class="text-secondary badge badge-soft-secondary fs-12 fw-regular"
             >
-              {{ ideaSubmitModel?.workFlowStatusName }}
+              {{ entrepreneureshipModel?.workFlowStatusName }}
             </div>
           </div>
         </div>
@@ -415,13 +233,13 @@
           <label for="basiInput" class="form-label text-muted mb-0"
             >Title</label
           >
-          <div class="fs-15">{{ ideaSubmitModel?.title }}</div>
+          <div class="fs-15">{{ entrepreneureshipModel?.title }}</div>
         </div>
         <div class="col-md-6">
           <label for="basiInput" class="form-label text-muted mb-0"
             >Details</label
           >
-          <div class="fs-15">{{ ideaSubmitModel?.ideaText }}</div>
+          <div class="fs-15">{{ entrepreneureshipModel?.ideaText }}</div>
         </div>
       </div>
 
@@ -436,7 +254,7 @@
               class="form-check-input"
               type="checkbox"
               id="employeeHappinessCheckbox"
-              [checked]="ideaSubmitModel?.employeehappiness"
+              [checked]="entrepreneureshipModel?.employeehappiness"
             />
 
             <label class="form-check-label" for="employeeHappinessCheckbox"
@@ -450,7 +268,7 @@
               class="form-check-input"
               type="checkbox"
               id="employeeHappinessCheckbox"
-              [checked]="ideaSubmitModel?.improvingservices"
+              [checked]="entrepreneureshipModel?.improvingservices"
             />
 
             <label class="form-check-label" for="employeeHappinessCheckbox"
@@ -464,7 +282,7 @@
               class="form-check-input"
               type="checkbox"
               id="employeeHappinessCheckbox"
-              [checked]="ideaSubmitModel?.rationalizationofexpenses"
+              [checked]="entrepreneureshipModel?.rationalizationofexpenses"
             />
 
             <label class="form-check-label" for="employeeHappinessCheckbox"
@@ -481,7 +299,7 @@
               class="form-check-input"
               type="checkbox"
               id="employeeHappinessCheckbox"
-              [checked]="ideaSubmitModel?.customerhappiness"
+              [checked]="entrepreneureshipModel?.customerhappiness"
             />
 
             <label class="form-check-label" for="employeeHappinessCheckbox"
@@ -495,7 +313,9 @@
               class="form-check-input"
               type="checkbox"
               id="employeeHappinessCheckbox"
-              [checked]="ideaSubmitModel?.informationabouttechnologydevelopment"
+              [checked]="
+                entrepreneureshipModel?.informationabouttechnologydevelopment
+              "
             />
 
             <label class="form-check-label" for="employeeHappinessCheckbox"
@@ -509,7 +329,7 @@
               class="form-check-input"
               type="checkbox"
               id="employeeHappinessCheckbox"
-              [checked]="ideaSubmitModel?.improvingservices"
+              [checked]="entrepreneureshipModel?.improvingservices"
             />
 
             <label class="form-check-label" for="employeeHappinessCheckbox"
@@ -524,67 +344,19 @@
           <label for="basiInput" class="form-label text-muted mb-0"
             >Sector</label
           >
-          <div class="fs-15">{{ ideaSubmitModel?.sectorName }}</div>
+          <div class="fs-15">{{ entrepreneureshipModel?.sectorName }}</div>
         </div>
         <div class="col-md-6">
           <label for="basiInput" class="form-label text-muted mb-0"
             >Administration</label
           >
-          <div class="fs-15">{{ ideaSubmitModel?.administrationName }}</div>
+          <div class="fs-15">
+            {{ entrepreneureshipModel?.administrationName }}
+          </div>
         </div>
       </div>
 
       <hr class="bg-soft-dark" />
-
-      <div class="row mt-3">
-        <label for="basicInput" class="form-label text-muted mb-0"
-          >Attachments</label
-        >
-      </div>
-
-      <div class="row mt-2">
-        <div class="col-md-12">
-          <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">File</th>
-                <th scope="col">Download</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let attachment of ideaSubmitModel?.attachmentsModel">
-                <td>
-                  <!-- Display file icon based on extension -->
-                  <i
-                    *ngIf="attachment.extension === '.jpg'"
-                    class="bi bi-file-image"
-                  ></i>
-                  <i
-                    *ngIf="attachment.extension === '.png'"
-                    class="bi bi-file-image"
-                  ></i>
-                  <i
-                    *ngIf="attachment.extension === '.pdf'"
-                    class="bi bi-file-pdf"
-                  ></i>
-                  <!-- Add more conditions for other file types as needed -->
-                  <!-- Display attachment title -->
-                  <span>{{ attachment.title }}</span>
-                </td>
-                <td>
-                  <!-- Download button with download icon -->
-                  <button
-                    class="btn btn-primary btn-sm"
-                    (click)="downloadFile(attachment.url)"
-                  >
-                    <i class="bi bi-download"></i> Download
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
     </div>
   </div>
 
@@ -594,21 +366,21 @@
         <button
           type="button"
           class="btn btn-success button mr-2"
-          (click)="accept(enum.Accept)"
+          (click)="workFlowUpdate(enum.Accept)"
         >
           Accept
         </button>
         <button
           type="button"
           class="btn btn-danger button mr-2"
-          (click)="reject(enum.Reject)"
+          (click)="workFlowUpdate(enum.Reject)"
         >
           Reject
         </button>
         <button
           type="button"
           class="btn btn-warning button mr-2"
-          (click)="modify(enum.Modification)"
+          (click)="workFlowUpdate(enum.Modification)"
         >
           Modify
         </button>

@@ -141,7 +141,8 @@ export class AccountService {
   // }
 
   logout() {
-    localStorage.removeItem('logedInUser');
+    console.log('Remove Users');
+    localStorage.removeItem('user');
     //localStorage.removeItem('user');
     this.currentUserSource.next(null);
   }

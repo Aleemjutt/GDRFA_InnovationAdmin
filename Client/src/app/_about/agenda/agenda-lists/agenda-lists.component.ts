@@ -10,7 +10,7 @@ import { Observable, finalize } from 'rxjs';
 import { GlobalServiceService } from 'src/app/_global/-global-service.service';
 import { AgendaAttachmentModel } from 'src/app/_models/About/agendaAttachment';
 import { AgendaModel } from 'src/app/_models/About/agendaModel';
-import { ResponseResult } from 'src/app/_models/responseResult';
+import { ResponseResult, StatusCodes } from 'src/app/_models/responseResult';
 import { AgendaService } from 'src/app/_services/_about/agenda.service';
 import { UploadServiceService } from 'src/app/_services/upload-service.service';
 
@@ -269,7 +269,11 @@ export class AgendaListsComponent implements OnInit {
   addWithFile() {
     this.agendaService.addAgenda(this.agendaModel).subscribe({
       next: (response: ResponseResult) => {
-        if (response.statusCode == 0) {
+        if (
+          response.statusCode == StatusCodes.success ||
+          StatusCodes.add ||
+          StatusCodes.update
+        ) {
           this.modalRef?.hide();
           this.tosterService.success(response.message);
           this.reInitilizeDataTable();

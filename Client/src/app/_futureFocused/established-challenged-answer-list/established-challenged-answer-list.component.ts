@@ -1,8 +1,12 @@
 import { CommonModule } from '@angular/common';
+import { NotExpr } from '@angular/compiler';
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Route } from '@angular/router';
+import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
+import { GlobalServiceService } from 'src/app/_global/-global-service.service';
+import { WorkFlowStatus } from 'src/app/_models/Common/workflowStatus';
 import { EstablishedAsnswerdModel } from 'src/app/_models/FutureFocused/establishedAsnswerdModel';
 import { ResponseResult, StatusCodes } from 'src/app/_models/responseResult';
 import { EstablishedChallengedAnswerService } from 'src/app/_services/_futureFocused/established-challenged-answer.service';
@@ -10,7 +14,7 @@ import { EstablishedChallengedAnswerService } from 'src/app/_services/_futureFoc
 @Component({
   selector: 'app-established-challenged-answer-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, AccordionModule],
   templateUrl: './established-challenged-answer-list.component.html',
   styleUrl: './established-challenged-answer-list.component.css',
 })
@@ -18,7 +22,7 @@ export class EstablishedChallengedAnswerListComponent implements OnInit {
   establishedAsnswerdModels: EstablishedAsnswerdModel[] = [];
   @ViewChild('templateDetails') templateDetails: TemplateRef<any> | undefined;
   modalRef: any;
-
+  oneAtATime: any = true;
   establishingDubaiForTheFutureModel: any;
   establishingDubaiForTheFutureDetailModel: any;
   requirmentsHeadingPointModel: any;
@@ -26,11 +30,14 @@ export class EstablishedChallengedAnswerListComponent implements OnInit {
 
   establishedAsnswerdModel: any;
 
+  enum: typeof WorkFlowStatus = WorkFlowStatus;
+
   constructor(
     private route: ActivatedRoute,
     private establisehdChallengedService: EstablishedChallengedAnswerService,
     private modalService: BsModalService,
-    private tosterService: ToastrService
+    private tosterService: ToastrService,
+    public globalService: GlobalServiceService
   ) {
     this.establishingDubaiForTheFutureModel = {
       id: 0,
@@ -85,7 +92,10 @@ export class EstablishedChallengedAnswerListComponent implements OnInit {
             data: this.establishedAsnswerdModels,
             columns: [
               { data: 'id' },
-
+              {
+                data: (row: any) =>
+                  this.globalService.getWorkFlowStatusName(row.workFlowStatus),
+              },
               {
                 data: 'data',
                 defaultContent: `
@@ -145,5 +155,21 @@ export class EstablishedChallengedAnswerListComponent implements OnInit {
     this.modalRef = this.modalService.show(template, {
       class: 'gray modal-lg',
     });
+  }
+
+  workFlowAction(workflowStatus: WorkFlowStatus, id: number) {
+    this.establisehdChallengedService
+      .updateWorkflowStatus(workflowStatus, id)
+      .subscribe({
+        next: (response: ResponseResult) => {
+          if (response.statusCode == StatusCodes.success) {
+            this.tosterService.success(response.message);
+            this.modalRef?.hide();
+            this.initilizeDataTable();
+          } else {
+            this.tosterService.error(response.message);
+          }
+        },
+      });
   }
 }

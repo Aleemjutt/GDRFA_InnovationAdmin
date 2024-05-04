@@ -3,6 +3,7 @@ import { Inject, Injectable, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { WorkFlowStatus } from '../_models/Common/workflowStatus';
 
 @Injectable({
   providedIn: 'root',
@@ -129,6 +130,62 @@ export class GlobalServiceService implements OnInit {
         'Accept-Language': this.getCurrentLanguage(),
       }),
     };
+  }
+
+  getWorkFlowStatusName(workFlow: WorkFlowStatus) {
+    let workFlowStatusName = '';
+
+    switch (workFlow) {
+      case WorkFlowStatus.UnderProcesses:
+        workFlowStatusName =
+          this.getCurrentLanguage() == 'en'
+            ? '<span class="badge bg-info">Under Evaluation</span>'
+            : '<span class="badge bg-info">تحت العملية</span>';
+        break;
+      case WorkFlowStatus.Reject:
+        workFlowStatusName =
+          this.getCurrentLanguage() == 'en'
+            ? '<span class="badge bg-danger">Rejected</span>'
+            : '<span class="badge bg-danger">مرفوض</span>';
+        break;
+      case WorkFlowStatus.Approved:
+        workFlowStatusName =
+          this.getCurrentLanguage() == 'en'
+            ? '<span class="badge bg-primary">Approved</span>'
+            : '<span class="badge bg-primary">موافقة</span>';
+        break;
+      case WorkFlowStatus.Accept:
+        workFlowStatusName =
+          this.getCurrentLanguage() == 'en'
+            ? '<span class="badge bg-primary">Accepted</span>'
+            : '<span class="badge bg-primary">مقبول</span>';
+        break;
+
+      default:
+        workFlowStatusName =
+          this.getCurrentLanguage() == 'en'
+            ? '<span class="badge bg-secondary">Submit</span>'
+            : '<span class="badge bg-secondary">تقديم</span>';
+        break;
+    }
+
+    return workFlowStatusName;
+  }
+  getStatusName(status: boolean) {
+    let statuName = '';
+    if (status) {
+      statuName =
+        this.getCurrentLanguage() == 'en'
+          ? '<span class="badge badge-success">Active</span>'
+          : '<span class="badge badge-success">نشيط</span>';
+    } else {
+      statuName =
+        this.getCurrentLanguage() == 'en'
+          ? '<span class="badge badge-info">In-Active</span>'
+          : '<span class="badge badge-info">غير نشط</span>';
+    }
+
+    return statuName;
   }
 
   getImgServerBaseUrl() {

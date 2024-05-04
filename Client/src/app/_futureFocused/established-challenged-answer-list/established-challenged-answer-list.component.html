@@ -3,9 +3,11 @@
     <div class="container-fluid">
       <div class="card">
         <div class="card-header align-items-center d-flex">
-          <h4 class="card-title mb-0 flex-grow-1">Target Compain Answer</h4>
+          <h4 class="card-title mb-0 flex-grow-1">
+            Established Challlenged Compain Answers
+          </h4>
           <div class="flex-shrink-0">
-            <div class="d-flex align-items-center">
+            <!-- <div class="d-flex align-items-center">
               <input
                 type="text"
                 class="form-control me-3"
@@ -30,7 +32,7 @@
               >
                 <i class="ri-search-2-line"></i>
               </button>
-            </div>
+            </div> -->
           </div>
         </div>
         <div class="card-body">
@@ -38,6 +40,7 @@
             <thead>
               <tr>
                 <th>{{ "ID" }}</th>
+                <th>{{ "Status" }}</th>
                 <th>{{ "Actions" }}</th>
               </tr>
             </thead>
@@ -65,76 +68,115 @@
   </div>
   <div class="modal-body">
     <div class="row">
-      <div class="col-md-6">
-        <label for="basiInput" class="form-label text-muted mb-0"
-          >Challenge Title</label
-        >
-        <div>{{ establishedAsnswerdModel.descriptionEn }}</div>
+      <div class="row">
+        <div class="col-md-6">
+          <label for="basiInput" class="form-label text-muted mb-0">
+            Description En
+          </label>
+          <div class="mt-10">
+            {{
+              establishedAsnswerdModel?.establishingDubaiForTheFutureModel
+                ?.descriptionEn
+            }}
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label for="basiInput" class="form-label text-muted mb-0"
+            >Description Ar</label
+          >
+          <div class="mt-10">
+            {{
+              establishedAsnswerdModel?.establishingDubaiForTheFutureModel
+                .descriptionAr
+            }}
+          </div>
+        </div>
       </div>
-      <div class="row mt-0">
+      <div class="row">
         <div class="col-md-12">
-          <!-- Buttons for edit and delete -->
-          <div class="accordion-top-right"></div>
+          <accordion [closeOthers]="oneAtATime" class="" style="padding: 0px">
+            <accordion-group
+              heading="{{ challengedDetails.descriptionEn }}"
+              style="padding-top: 10px"
+              *ngFor="
+                let challengedDetails of establishedAsnswerdModel
+                  ?.establishingDubaiForTheFutureModel
+                  ?.establishingDubaiForTheFutureDetailModels;
+                let i = index
+              "
+            >
+              <div class="row mt-0">
+                <div class="col-md-12">
+                  <!-- Buttons for edit and delete -->
+                  <div class="accordion-top-right"></div>
 
-          <div class="row">
-            <div class="col-md-6">
-              <label for="headingLineEnInput" class="form-label text-muted mb-0"
-                >Description En</label
-              >
-              <div>{{ establishingDubaiForTheFutureModel.descriptionEn }}</div>
-            </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label
+                        for="headingLineEnInput"
+                        class="form-label text-muted mb-0"
+                        >Description En</label
+                      >
+                      <div>{{ challengedDetails?.descriptionEn }}</div>
+                    </div>
 
-            <div class="col-md-6">
-              <label for="headingLineArInput" class="form-label text-muted mb-0"
-                >Description Ar</label
-              >
-              <div>{{ establishingDubaiForTheFutureModel.descriptionAr }}</div>
-            </div>
-          </div>
+                    <div class="col-md-6">
+                      <label
+                        for="headingLineArInput"
+                        class="form-label text-muted mb-0"
+                        >Description Ar</label
+                      >
+                      <div>{{ challengedDetails?.descriptionAr }}</div>
+                    </div>
+                  </div>
 
-          <div class="table-responsive mt-20">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th scope="col">Heading Point Ar</th>
-                  <th scope="col">Heading Point En</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr
-                  *ngFor="
-                    let item of establishingDubaiForTheFutureModel.requirmentsHeadingPointModels;
-                    let i = index
-                  "
-                >
-                  <td>{{ item.textAr }}</td>
-                  <td>{{ item.textEn }}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <hr />
-          <div class="table-responsive">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th scope="col">Point Ar</th>
-                  <th scope="col">Point En</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr
-                  *ngFor="
-                    let item of establishingDubaiForTheFutureModel.requirmentsPointsModels;
-                    let i = index
-                  "
-                >
-                  <td>{{ item.textAr }}</td>
-                  <td>{{ item.textEn }}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+                  <div class="table-responsive mt-20">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th scope="col">Heading Point Ar</th>
+                          <th scope="col">Heading Point En</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr
+                          *ngFor="
+                            let item of challengedDetails?.requirmentsHeadingPointModels;
+                            let i = index
+                          "
+                        >
+                          <td>{{ item?.textAr }}</td>
+                          <td>{{ item?.textEn }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <hr />
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th scope="col">Point Ar</th>
+                          <th scope="col">Point En</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr
+                          *ngFor="
+                            let item of challengedDetails?.requirmentsPointsModels;
+                            let i = index
+                          "
+                        >
+                          <td>{{ item?.textAr }}</td>
+                          <td>{{ item?.textEn }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </accordion-group>
+          </accordion>
         </div>
       </div>
 
@@ -149,40 +191,44 @@
           <table class="table">
             <thead>
               <tr>
-                <th scope="col">File</th>
+                <th scope="col">Title</th>
+                <th scope="col">File Type</th>
                 <th scope="col">Download</th>
               </tr>
             </thead>
             <tbody>
               <tr
                 *ngFor="
-                  let attachment of establishingDubaiForTheFutureModel
-                    .establishedAsnswerdModel
-                    .establishedAsnswerdAttachmentModels
+                  let attachment of establishedAsnswerdModel?.establishedAsnswerdAttachmentModels
                 "
               >
                 <td>
+                  <span>{{ attachment?.title }}</span>
+                </td>
+                <td>
                   <!-- Display file icon based on extension -->
                   <i
-                    *ngIf="attachment.extension === '.jpg'"
+                    *ngIf="attachment?.extension === '.jpg'"
                     class="bi bi-file-image"
                   ></i>
                   <i
-                    *ngIf="attachment.extension === '.png'"
+                    *ngIf="attachment?.extension === '.png'"
                     class="bi bi-file-image"
                   ></i>
                   <i
-                    *ngIf="attachment.extension === '.pdf'"
+                    *ngIf="attachment?.extension === '.pdf'"
                     class="bi bi-file-pdf"
                   ></i>
                   <!-- Add more conditions for other file types as needed -->
                   <!-- Display attachment title -->
-                  <span>{{ attachment.title }}</span>
                 </td>
+
                 <td>
                   <!-- Download button with download icon -->
                   <a
-                    href="{{ attachment.url }}"
+                    href="{{
+                      globalService.getImgServerBaseUrl() + attachment.url
+                    }}"
                     class="btn btn-primary btn-sm"
                     download
                   >
@@ -204,7 +250,41 @@
       <div class="button-container">
         <button
           type="button"
-          class="btn btn-default button"
+          class="btn btn-success button mr-2"
+          (click)="workFlowAction(enum.Accept, establishedAsnswerdModel.id)"
+          *ngIf="
+            establishedAsnswerdModel.workFlowStatus === enum.Submit ||
+            establishedAsnswerdModel.workFlowStatus === enum.UnderProcesses
+          "
+        >
+          Accept
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger button mr-2"
+          (click)="workFlowAction(enum.Reject, establishedAsnswerdModel.id)"
+          *ngIf="
+            establishedAsnswerdModel.workFlowStatus === enum.Submit ||
+            establishedAsnswerdModel.workFlowStatus === enum.UnderProcesses
+          "
+        >
+          Reject
+        </button>
+
+        <button
+          type="button"
+          class="btn btn-warning button mr-2"
+          (click)="
+            workFlowAction(enum.UnderProcesses, establishedAsnswerdModel.id)
+          "
+          *ngIf="establishedAsnswerdModel.workFlowStatus === enum.Submit"
+        >
+          Under Evaluation
+        </button>
+
+        <button
+          type="button"
+          class="btn btn-light button"
           aria-label="Close"
           (click)="modalRef?.hide()"
         >
