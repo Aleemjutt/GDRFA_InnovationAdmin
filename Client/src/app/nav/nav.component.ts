@@ -6,6 +6,9 @@ import { BsDropdownConfig } from 'ngx-bootstrap/dropdown';
 import { TranslateService } from '@ngx-translate/core';
 import { GlobalServiceService } from '../_global/-global-service.service';
 import { DOCUMENT } from '@angular/common';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { User, UserModel } from '../_models/user';
+import { LoginResponse } from '../_models/loginResponse';
 
 @Component({
   selector: 'app-nav',
@@ -21,7 +24,10 @@ import { DOCUMENT } from '@angular/common';
 export class NavComponent implements OnInit {
   model: any = {};
   currentLang: any;
-  //currentUser$: Observable<User | null> = of(null);
+  userLoginModel: any;
+  //private currentUserSource = new BehaviorSubject<LoginResponse | null>(null);
+
+  //_currentUser$ = this.currentUserSource.asObservable();
   constructor(
     public accountservice: AccountService,
     private router: Router,
@@ -35,7 +41,8 @@ export class NavComponent implements OnInit {
     this.globalService.getCurrentLanguage();
 
     //this.getCurrentUser();
-    //this.currentUser$ = this.accountservice.currentUsre$;
+
+    this.userLoginModel = this.globalService.getUserLogin();
   }
 
   // changeLanguage() {

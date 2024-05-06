@@ -13,4 +13,9 @@ export class LoginResponse {
   issued: string | undefined;
   expires: string | undefined;
   userRole: string | undefined;
+  url: string | undefined;
+  firstNameEn: string | undefined;
+  firstNameAr: string | undefined;
+  lastNameEn: string | undefined;
+  lastNameAr: string | undefined;
 }

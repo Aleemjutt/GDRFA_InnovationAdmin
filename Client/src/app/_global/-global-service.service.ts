@@ -118,6 +118,14 @@ export class GlobalServiceService implements OnInit {
     return user.value.roles;
   }
 
+  getUserLogin() {
+    const userString = localStorage.getItem('user');
+    if (!userString) return null;
+    const user = JSON.parse(userString);
+
+    return user.value;
+  }
+
   getHttpOptions() {
     const userString = localStorage.getItem('user');
     if (!userString) return;
