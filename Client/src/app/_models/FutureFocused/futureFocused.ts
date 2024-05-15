@@ -8,6 +8,7 @@ export interface EstablishingDubaiForTheFutureModel {
     | null;
 
   establishedAsnswerdModels: EstablishedAsnswerdModel[] | null;
+  status: boolean | false;
 }
 
 export interface EstablishingDubaiForTheFutureDetailModel {

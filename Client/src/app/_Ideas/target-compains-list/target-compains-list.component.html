@@ -6,23 +6,21 @@
           <h4 class="card-title mb-0 flex-grow-1">Target Compain List</h4>
           <div class="flex-shrink-0">
             <div class="d-flex align-items-center">
-              <input
+              <!-- <input
                 type="text"
                 class="form-control me-3"
                 data-provider="flatpickr"
                 data-date-format="d M, Y"
                 data-range-date="true"
                 placeholder="Select Date Range"
-              />
+              /> -->
               <select
                 class="form-select mb-0 me-2"
                 aria-label="Default select example"
               >
                 <option selected>Status</option>
-                <option value="1">Submitted</option>
-                <option value="2">In Review</option>
-                <option value="3">Approved</option>
-                <option value="4">Rejected</option>
+                <option value="1">Active</option>
+                <option value="2">In-Active</option>
               </select>
               <button
                 type="button"
@@ -33,7 +31,7 @@
               |
               <a
                 type="button"
-                class="btn btn-danger waves-effect waves-light ms-2 col-3"
+                class="btn btn-danger waves-effect waves-light me-2 col-4"
                 id="btnAdd"
                 style="float: inline-end"
                 (click)="openModal(template)"
@@ -149,9 +147,25 @@
             />
           </div>
         </div>
+
+        <div class="col-md-6">
+          <div class="" style="margin-top: 30px">
+            <label for="userStatusInput" class="form-label">Status</label>
+            <div class="form-check form-switch">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                id="userStatusInput"
+                [(ngModel)]="targetCompainModel.isActiveStatus"
+              />
+              <label class="form-check-label" for="userStatusInput"></label>
+            </div>
+          </div>
+        </div>
+
         <div style="margin-top: 20px">
           <button
-            class="btn btn-outline-secondary pull-right"
+            class="btn btn-danger waves-effect waves-light pull-right"
             type="button"
             id="ourValuesEnButton"
             (click)="addOption()"
@@ -159,7 +173,7 @@
             Add
           </button>
         </div>
-        <div class="table-responsive">
+        <div class="table-responsive mt-4">
           <table class="table">
             <thead>
               <tr>

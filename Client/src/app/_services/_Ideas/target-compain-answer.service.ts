@@ -26,7 +26,7 @@ export class TargetCompainAnswerService {
 
   getTargetAnswerDetails(id: number) {
     return this.httpClient.get<ResponseResult>(
-      this.baseUrl + 'idea/TargetCompainAnswer/details/?id=' + id,
+      this.baseUrl + 'idea/TargetCompainAnswer/details?id=' + id,
       this.globalService.getHttpOptions()
     );
   }

@@ -1,3 +1,5 @@
+import { WorkFlowStatus } from '../Common/workflowStatus';
+
 export interface InnovationConsultingRequestModel {
   id: number | null;
   name: string | null;
@@ -5,4 +7,5 @@ export interface InnovationConsultingRequestModel {
   subject: string | null;
   message: string | null;
   replyMessage: string | null;
+  status: WorkFlowStatus | null;
 }

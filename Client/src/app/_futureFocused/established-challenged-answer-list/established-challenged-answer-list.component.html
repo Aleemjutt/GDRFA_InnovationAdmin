@@ -227,7 +227,7 @@
                   <!-- Download button with download icon -->
                   <a
                     href="{{
-                      globalService.getImgServerBaseUrl() + attachment.url
+                      globalService.getImgServerBaseUrl(attachment.urlBase64)
                     }}"
                     class="btn btn-primary btn-sm"
                     download

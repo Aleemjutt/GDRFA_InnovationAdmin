@@ -59,7 +59,7 @@ export class AboutInnovatonCenterAddEditComponent implements OnInit {
   progress: number = 0;
   attachmentList: any = [];
   fileInfos?: Observable<any>;
-
+  imgServerBaseUrl: string = '';
   message: any;
   constructor(
     private aboutInnovationCenterservice: AboutService,
@@ -96,6 +96,10 @@ export class AboutInnovatonCenterAddEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.getDetails();
+
+    // this.globalService.getImgServerBaseUrl().subscribe((baseUrl) => {
+    //   this.imgServerBaseUrl = baseUrl;
+    // });
   }
   @HostListener('window:beforeunload', ['$event']) unloadNotification(
     $event: any
@@ -115,14 +119,7 @@ export class AboutInnovatonCenterAddEditComponent implements OnInit {
     allowReorder: true,
   };
 
-  pondFiles: FilePondOptions['files'] = [
-    // {
-    //   source: 'assets/photo.jpeg',
-    //   options: {
-    //     type: 'local',
-    //   },
-    // },
-  ];
+  pondFiles: FilePondOptions['files'] = [];
 
   pondHandleInit() {}
 
@@ -204,21 +201,10 @@ export class AboutInnovatonCenterAddEditComponent implements OnInit {
       };
       //this.ourGoalModel = OurGloaModel; // Clear the input field after adding
     }
-    // } else
-    // {
-    //   if (this.ourValuesArInput.trim() !== '') {
-    //     this.ourValuesArList.push(this.ourValuesArInput);
-    //     this.ourValuesArInput = ''; // Clear the input field after adding
-    //   }
-    // }
   }
 
   removeItem(index: number): void {
-    // if (language === 'en') {
     this.aboutInnovationCenterModel?.ourGoalsModel?.splice(index, 1);
-    // } else if (language === 'ar') {
-    //   this.aboutInnovationCenterModel?.ourGoalsModel?.splice(index, 1);
-    // }
   }
 
   addItemValues(): void {
@@ -315,11 +301,11 @@ export class AboutInnovatonCenterAddEditComponent implements OnInit {
             break;
 
           case 'StrategyEnInstance':
-            this.aboutInnovationCenterModel.strategyImageUrlAr = imageUrl;
+            this.aboutInnovationCenterModel.strategyImageUrlEn = imageUrl;
             break;
 
           case 'StrategyArInstance':
-            this.aboutInnovationCenterModel.strategyImageUrlEn = imageUrl;
+            this.aboutInnovationCenterModel.strategyImageUrlAr = imageUrl;
             break;
 
           case 'VisionEnInstance':
@@ -406,130 +392,5 @@ export class AboutInnovatonCenterAddEditComponent implements OnInit {
           this.aboutInnovationCenterModel.directorImgUrl = '';
           break;
       }
-    // if (type === 'en') {
-    //   this.aboutInnovationCenterModel.orgStractureUrlEn = '';
-    // } else if (type === 'ar') {
-    //   this.aboutInnovationCenterModel.orgStractureUrlAr = '';
-    // }
   }
-  // upload(): void {
-  //   this.progress = 0;
-  //   for (let index = 0; index < this.imagesArray.length; index++) {
-  //     this.uploadService
-  //       .upload(this.imagesArray[index].fileName, 'AboutInnovationCenter')
-  //       .pipe(
-  //         finalize(() => {
-  //           if (this.attachmentList.length > 0) {
-  //             if (this.aboutInnovationCenterModel != null) {
-  //               const imageUrl_OrganizationEnInstance = this.returnImageUrl(
-  //                 'OrganizationEnInstance'
-  //               );
-  //               this.aboutInnovationCenterModel.orgStractureUrlEn =
-  //                 imageUrl_OrganizationEnInstance !== undefined
-  //                   ? imageUrl_OrganizationEnInstance
-  //                   : null;
-
-  //               const imageUrl_OrganizationArInstance = this.returnImageUrl(
-  //                 'OrganizationArInstance'
-  //               );
-  //               this.aboutInnovationCenterModel.orgStractureUrlAr =
-  //                 imageUrl_OrganizationArInstance !== undefined
-  //                   ? imageUrl_OrganizationArInstance
-  //                   : null;
-  //               const imageUrl_DirectorEnInstance =
-  //                 this.returnImageUrl('DirectorEnInstance');
-  //               this.aboutInnovationCenterModel.orgStractureUrlEn =
-  //                 imageUrl_DirectorEnInstance !== undefined
-  //                   ? imageUrl_DirectorEnInstance
-  //                   : null;
-  //               const imageUrl_StrategyEnInstance =
-  //                 this.returnImageUrl('StrategyEnInstance');
-  //               this.aboutInnovationCenterModel.strategyImageUrlEn =
-  //                 imageUrl_StrategyEnInstance !== undefined
-  //                   ? imageUrl_StrategyEnInstance
-  //                   : null;
-  //               const imageUrl_StrategyArInstance =
-  //                 this.returnImageUrl('StrategyArInstance');
-  //               this.aboutInnovationCenterModel.orgStractureUrlEn =
-  //                 imageUrl_StrategyArInstance !== undefined
-  //                   ? imageUrl_StrategyArInstance
-  //                   : null;
-  //               const imageUrl_VisionEnInstance =
-  //                 this.returnImageUrl('VisionEnInstance');
-  //               this.aboutInnovationCenterModel.ourVisionImageUrlEn =
-  //                 imageUrl_VisionEnInstance !== undefined
-  //                   ? imageUrl_VisionEnInstance
-  //                   : null;
-  //               const imageUrl_VisionArInstance =
-  //                 this.returnImageUrl('VisionArInstance');
-  //               this.aboutInnovationCenterModel.ourVisionImageUrlAr =
-  //                 imageUrl_VisionArInstance !== undefined
-  //                   ? imageUrl_VisionArInstance
-  //                   : null;
-
-  //               const imageUrl_MissionEnInstance =
-  //                 this.returnImageUrl('MissionEnInstance');
-  //               this.aboutInnovationCenterModel.ourVisionImageUrlAr =
-  //                 imageUrl_MissionEnInstance !== undefined
-  //                   ? imageUrl_MissionEnInstance
-  //                   : null;
-
-  //               const imageUrl_MissionArInstance =
-  //                 this.returnImageUrl('MissionArInstance');
-  //               this.aboutInnovationCenterModel.ourVisionImageUrlAr =
-  //                 imageUrl_MissionArInstance !== undefined
-  //                   ? imageUrl_MissionArInstance
-  //                   : null;
-  //             }
-
-  //             this._addAboutInnovation();
-  //             this.imagesArray = [];
-  //           } else {
-  //             this._addAboutInnovation();
-  //             this.imagesArray = [];
-  //           }
-  //         })
-  //       )
-
-  //       .subscribe({
-  //         next: (event: any) => {
-  //           if (event.type === HttpEventType.UploadProgress) {
-  //             this.progress = Math.round((100 * event.loaded) / event.total);
-  //           } else if (event instanceof HttpResponse) {
-  //             this.message = event.body.message;
-  //             for (let attm of event.body.data as { url: string }[]) {
-  //               const attachment = {
-  //                 imageUrl: attm.url,
-  //                 instanceName: this.imagesArray[index].instanceName,
-  //               };
-  //               this.attachmentList.push(attachment);
-  //             }
-  //             //this.fileInfos = this.uploadService.getFiles();
-  //           }
-  //         },
-  //         error: (err: any) => {
-  //           this.progress = 0;
-  //           if (err.error && err.error.message) {
-  //             this.message = err.error.message;
-  //           } else {
-  //             this.message = 'Could not upload the file!';
-  //           }
-  //         },
-  //       });
-  //   }
-  // }
-
-  // returnImageUrl(instanceName: string): string | undefined {
-  //   let imageUrl: string | undefined;
-
-  //   this.attachmentList.forEach(
-  //     (element: { instanceName: string; imageUrl: string | undefined }) => {
-  //       if (element.instanceName === instanceName) {
-  //         imageUrl = element.imageUrl; // Assuming imageUrl is the property representing the URL
-  //       }
-  //     }
-  //   );
-
-  //   return imageUrl;
-  // }
 }

@@ -22,7 +22,7 @@ export class InnovationConsultingService {
   addinnovationConsultingModel(
     innovationConsultingModel: InnovationConsultingModel | null
   ) {
-    console.log(innovationConsultingModel, 'member on service');
+    console.log(innovationConsultingModel, 'innovation Consulting service');
     return this.httpClient.post<ResponseResult>(
       this.baseUrl + 'innovationConsulting/innovationConsulting/add/',
       innovationConsultingModel,
@@ -47,15 +47,10 @@ export class InnovationConsultingService {
     );
   }
 
-
-
-
-
-
   addinnovationConsulting(
     innovationConsultingModel: InnovationConsultingModel | null
   ) {
-    console.log(innovationConsultingModel, 'member on service');
+    console.log(innovationConsultingModel, 'innovationConsulting');
     return this.httpClient.post<ResponseResult>(
       this.baseUrl + 'innovationConsulting/addInnovationConsulting/',
       innovationConsultingModel,
@@ -79,7 +74,6 @@ export class InnovationConsultingService {
       this.globalService.getHttpOptions()
     );
   }
-
 
   // deleteinnovationConsultingModel(id: number) {
   //   return this.httpClient.delete<ResponseResult>(

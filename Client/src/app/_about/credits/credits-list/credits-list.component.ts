@@ -80,13 +80,13 @@ export class CreditsListComponent implements OnInit {
   }
 
   initilizeDataTable(): void {
+    const datatable: any = $('#creditsDataTable').DataTable();
     this.creditService.getCreditList().subscribe((response: ResponseResult) => {
       // ////console.log(response.data, 'Data Table values');
-      ////console.log(response.data);
       console.log(response, 'response');
       this.creditList = response.data;
-
-      // ////console.log(this.creditList, 'List Data');
+      // Datatable reloading
+      datatable.destroy();
 
       setTimeout(() => {
         $('#creditsDataTable').DataTable({
@@ -223,10 +223,12 @@ export class CreditsListComponent implements OnInit {
     this.creditService.addCredit(this.creditModel).subscribe({
       next: (response: ResponseResult) => {
         if (response.statusCode == 0) {
-          this.modalRef?.hide();
           this.tosterService.success(response.message);
           this.file = undefined;
-          this.reInitilizeDataTable();
+          this.initilizeDataTable();
+          this.attachment = null;
+          this.attachmentList = [];
+          this.modalRef?.hide();
         } else {
           this.tosterService.error(response.message);
         }
@@ -250,7 +252,10 @@ export class CreditsListComponent implements OnInit {
           this.modalRef?.hide();
           this.tosterService.success(response.message);
           this.file = undefined;
-          this.reInitilizeDataTable();
+          this.file = undefined;
+          this.initilizeDataTable();
+          this.attachment = null;
+          this.attachmentList = [];
         } else {
           this.tosterService.error(response.message);
         }
@@ -259,6 +264,7 @@ export class CreditsListComponent implements OnInit {
   }
 
   viewCreditDetails(id: number, templateDetails: TemplateRef<any> | undefined) {
+    this.initModel();
     this.creditService.getCreditDetails(id).subscribe({
       next: (response: ResponseResult) => {
         if (response.statusCode == 0) {
@@ -278,27 +284,16 @@ export class CreditsListComponent implements OnInit {
   }
 
   editCreditDetails(id: number, template: TemplateRef<any> | undefined) {
+    this.initModel();
     this.creditService.getCreditDetails(id).subscribe({
       next: (response: ResponseResult) => {
         if (response.statusCode == 0) {
           if (template) {
             this.creditModel = response.data;
-            if (
-              this.creditModel.imageUrlView != null &&
-              this.creditModel.imageUrlView != ''
-            )
-              // this.pondFiles = [
-              //   {
-              //     source: this.creditModel.imageUrlView,
-              //     options: {
-              //       type: 'local',
-              //     },
-              //   },
-              // ];
 
-              this.modalRef = this.modalService.show(template, {
-                class: 'gray modal-lg',
-              });
+            this.modalRef = this.modalService.show(template, {
+              class: 'gray modal-lg',
+            });
           } else {
             console.error('Template is undefined');
           }
@@ -314,7 +309,7 @@ export class CreditsListComponent implements OnInit {
       next: (response: ResponseResult) => {
         if (response.statusCode == 0) {
           this.tosterService.success(response.message);
-          this.reInitilizeDataTable();
+          this.initilizeDataTable();
         } else {
           this.tosterService.error(response.message);
         }
@@ -322,146 +317,17 @@ export class CreditsListComponent implements OnInit {
     });
   }
 
-  reInitilizeDataTable(): void {
-    // Data reload function
-    const datatable: any = $('#creditsDataTable').DataTable();
-    this.creditService.getCreditList().subscribe((response: ResponseResult) => {
-      // ////console.log(response.data, 'Data Table values');
-      console.log(response, 'response');
-      this.creditList = response.data;
-      // Datatable reloading
-      datatable.destroy();
-      setTimeout(() => {
-        $('#creditsDataTable').DataTable({
-          pagingType: 'full_numbers',
-          pageLength: 5,
-          processing: true,
-          data: this.creditList,
-          columns: [
-            { data: 'id' },
-            {
-              data: 'descriptionEn', //(row: any) => this.getDepartmentName(row.requestModel.sID),
-            },
-            {
-              data: 'descriptionAr', //(row: any) => this.getDepartmentName(row.requestModel.sID),
-            },
-            // {
-            //   title: this.translateService.instant('Status'),
-            //   data: (row: any) => this.getStatus(row.saveType),
-            // },
-            // {
-            //   data: 'id',
-            //   render: (id: any) => `
-            //     <a  routerLink="/Credit/${id}/view" class="btn btn-info">View</a>
-            //     <a href="#" [routerLink]="['/Credit/', ${id}, 'edit']" class="btn btn-primary">Edit</a>
-
-            //   `,
-            // },
-
-            {
-              data: 'data',
-              defaultContent: `
-              <button
-              type="button"
-              class="btn btn-light mr-1"
-              data-bs-toggle="modal"
-              data-bs-target="#exampleModal"
-              (click)="viewCreditDetails()"
-              data-backdrop="static"
-              data-keyboard="false"
-            >
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
-            <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
-            <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
-            </svg>
-            </button>
-
-            <button
-            type="button"
-            class="btn btn-light mr-1"
-            data-bs-toggle="modal"
-            data-bs-target="#exampleModal"
-            (click)="editCreditDetails(id, template)"
-            data-backdrop="static"
-            data-keyboard="false"
-          >
-            <svg
-              width="1em"
-              height="1em"
-              viewBox="0 0 16 16"
-              class="bi bi-pencil-square"
-              fill="currentColor"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"
-              />
-              <path
-                fill-rule="evenodd"
-                d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"
-              />
-            </svg>
-          </button>
-           
-            <button
-                type="button"
-                class="btn btn-outline-danger  mr-1 "
-                data-bs-toggle="modal"
-                data-bs-target="#exampleModal"
-                (click)="deleteCredit(id)"
-                data-backdrop="static"
-                data-keyboard="false"
-              >
-              <svg
-              width="1em"
-              height="1em"
-              viewBox="0 0 16 16"
-              class="bi bi-trash-fill"
-              fill="currentColor"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"
-              />
-            </svg>
-              </button>
-            `,
-            },
-          ],
-          rowCallback: (row: Node, data: any, index: number) => {
-            const viewCreditDetails = $('button:first', row);
-            const editCredit = $('button:eq(1)', row);
-            const deleteCredit = $('button:last', row);
-            // Attach click event handlers to the buttons
-            viewCreditDetails.on('click', () => {
-              this.viewCreditDetails(data.id, this.templateDetails);
-            });
-
-            editCredit.on('click', () => {
-              this.editCreditDetails(data.id, this.template);
-            });
-
-            deleteCredit.on('click', () => {
-              this.deleteCredit(data.id);
-            });
-
-            return row;
-          },
-
-          lengthMenu: [5, 10, 25],
-        });
-      }, 1);
-    });
-  }
-
-  openModal(template: TemplateRef<void>) {
+  initModel() {
     this.creditModel = {
       id: 0,
       descriptionEn: '',
       descriptionAr: '',
-      url: '',
+      imageUrl: '',
+      urlBase64: '',
     };
+  }
+  openModal(template: TemplateRef<void>) {
+    this.initModel();
     this.modalRef = this.modalService.show(
       template,
       Object.assign({}, { class: 'modal-lg' })

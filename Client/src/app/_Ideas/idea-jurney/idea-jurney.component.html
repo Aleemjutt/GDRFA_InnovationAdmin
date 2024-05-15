@@ -24,8 +24,9 @@
             <div *ngIf="ideaJurneyModel.ideaJurnyEnUrl">
               <img
                 [src]="
-                  globalService.getImgServerBaseUrl() +
-                  ideaJurneyModel.ideaJurnyEnUrl
+                  globalService.getImgServerBaseUrl(
+                    ideaJurneyModel.urlBase64En
+                  )
                 "
                 style="height: 364px; width: 603px; margin-left: 198px"
                 alt="Organization Image"
@@ -54,8 +55,9 @@
             <div *ngIf="ideaJurneyModel.ideaJurnyArUrl">
               <img
                 [src]="
-                  globalService.getImgServerBaseUrl() +
-                  ideaJurneyModel.ideaJurnyArUrl
+                  globalService.getImgServerBaseUrl(
+                    ideaJurneyModel.urlBase64Ar
+                  )
                 "
                 style="height: 364px; width: 603px; margin-left: 198px"
                 alt="Organization Image"
@@ -79,6 +81,7 @@
               type="submit"
               class="btn btn-danger waves-effect waves-light ms-2 col-3 pull-right"
               *ngIf="ideaJurneyModel.id != 0"
+              
             >
               Update
             </button>

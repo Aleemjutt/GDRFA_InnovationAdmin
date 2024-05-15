@@ -453,6 +453,7 @@ export class IdeaPoineerssListComponent {
       descriptionAr: '',
       imageUrl: '',
       imageUrlView: '',
+      url: '',
     };
     this.modalRef = this.modalService.show(
       template,
@@ -570,7 +571,10 @@ export class IdeaPoineerssListComponent {
       .addPionnerPoints(this.ideaPionnerPointsListModel)
       .subscribe({
         next: (response: ResponseResult) => {
-          if (response.statusCode == StatusCodes.success) {
+          if (
+            response.statusCode == StatusCodes.success ||
+            StatusCodes.update
+          ) {
             this.tosterService.success(response.message);
             this.modalRef?.hide();
           } else {

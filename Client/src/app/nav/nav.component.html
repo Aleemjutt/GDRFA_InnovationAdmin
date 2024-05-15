@@ -548,7 +548,9 @@
                 class="rounded-circle header-profile-user"
                 [src]="
                   userLoginModel.url != null
-                    ? globalService.getImgServerBaseUrl() + userLoginModel.url
+                    ? globalService.getImgServerBaseUrl(
+                        userLoginModel.urlBase64
+                      )
                     : 'assets/images/users/avatar-1.jpg'
                 "
                 alt="Header Avatar"

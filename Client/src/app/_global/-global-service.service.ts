@@ -1,15 +1,18 @@
 import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, map, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { WorkFlowStatus } from '../_models/Common/workflowStatus';
+import { environment } from 'src/environments/environment.development';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GlobalServiceService implements OnInit {
   currentLang: any = 'en';
+  baseUrl = environment.apiUrl;
+  imgServerBaseUrl: string = '';
   private languageSubject: BehaviorSubject<string> =
     new BehaviorSubject<string>('en');
   public languageChange$: Observable<string> =
@@ -22,7 +25,8 @@ export class GlobalServiceService implements OnInit {
   constructor(
     @Inject(DOCUMENT) private document: Document,
 
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private httpClient: HttpClient //private globalService : GlobalServiceService
   ) {
     this.bindLabel = '';
   }
@@ -195,8 +199,71 @@ export class GlobalServiceService implements OnInit {
 
     return statuName;
   }
+  getImgServerBaseUrl(base64String: string | null): string {
+    //console.log(base64String, 'Base 64');
+    this.imgServerBaseUrl = '';
+    if (base64String) {
+      this.imgServerBaseUrl = 'data:image/*;base64,' + base64String;
+    }
+    // console.log(base64String, 'Combined Base 64');
+    // this.httpClient.get<string>(this.baseUrl + 'FilePath?url=' + url).subscribe(
+    //   (response) => {
+    //     this.imgServerBaseUrl = 'data:image/jpeg;base64,' + response;
+    //   },
+    //   (error) => {
+    //     console.error('Error fetching image:', error);
+    //   }
+    // );
 
-  getImgServerBaseUrl() {
-    return 'http:\\localhost:44350\\InnovationImages\\';
+    return this.imgServerBaseUrl;
   }
+
+  isBase64Image(base64String: string): Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => resolve(true); // Image loaded successfully
+      img.onerror = () => resolve(false); // Error loading image
+
+      // Set the Base64 string as the image source
+      img.src = base64String;
+    });
+  }
+
+  async checkImage(base64String: string) {
+    const isValid = await this.isBase64Image(base64String);
+    console.log(isValid ? 'Valid image' : 'Invalid image');
+
+    return isValid;
+  }
+  // getImgServerBaseUrl(): Observable<string> {
+  //   return this.getFromServerBaseUrl().pipe(
+  //     map(() => 'http://localhost:44350/InnovationImages/'),
+  //     catchError(() => 'http://localhost:44350/InnovationImages/')
+  //   );
+  // }
+
+  // getFromServerBaseUrl(): Observable<any> {
+  //   return this.httpClient.get<any>(
+  //     this.baseUrl + 'FilePath',
+  //     this.getHttpOptions()
+  //   );
+  // }
+  // getImgServerBaseUrl() {
+  //   const fromServer = this.getFromServerBaseUrl();
+  //   console.log('server file path', fromServer);
+  //   if (fromServer) {
+  //     return 'http:\\localhost:44350\\InnovationImages\\';
+  //   } else {
+  //     return fromServer; //'http:\\localhost:44350\\InnovationImages\\';
+  //   }
+  // }
+
+  // getFromServerBaseUrl() {
+  //   // Replace 'http:\\localhost:44350\\InnovationImages\\' with your default string value
+  //   //const defaultValue = 'htpps//:';
+  //   return this.httpClient.put<any>(
+  //     this.baseUrl + 'FilePath',
+  //     this.getHttpOptions()
+  //   );
+  // }
 }

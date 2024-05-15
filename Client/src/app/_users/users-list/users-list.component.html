@@ -257,7 +257,9 @@
             </div>
             <div *ngIf="userModel.url">
               <img
-                [src]="globalService.getImgServerBaseUrl() + userModel.url"
+                [src]="
+                  globalService.getImgServerBaseUrl(userModel.base64string)
+                "
                 alt="Membership Image"
                 style="height: 200px; width: auto"
                 class="mt-2"
@@ -386,9 +388,9 @@
           <label for="basiInput" class="form-label text-muted mb-0"
             >Attachment</label
           >
-          <div class="fs-15">
+          <div class="fs-15" *ngIf="userModel.url">
             <img
-              [src]="globalService.getImgServerBaseUrl() + userModel.url"
+              [src]="globalService.getImgServerBaseUrl(userModel.base64string)"
               class="card-img-top img-thumnail"
               style="height: 200px; width: auto"
             />

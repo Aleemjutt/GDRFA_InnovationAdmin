@@ -6,7 +6,7 @@
           <h4 class="card-title mb-0 flex-grow-1">Awards List</h4>
           <div class="flex-shrink-0">
             <div class="d-flex align-items-center">
-              <input
+              <!-- <input
                 type="text"
                 class="form-control me-3"
                 data-provider="flatpickr"
@@ -29,11 +29,11 @@
                 class="btn btn-light waves-effect waves-light ms-2 me-2 col-1"
               >
                 <i class="ri-search-2-line"></i>
-              </button>
-              |
+              </button> -->
+
               <a
                 type="button"
-                class="btn btn-danger waves-effect waves-light ms-2 col-3"
+                class="btn btn-danger waves-effect waves-light ms-2 col-4"
                 id="btnAdd"
                 style="float: inline-end"
                 (click)="openModal(template)"
@@ -43,7 +43,7 @@
 
               <a
                 type="button"
-                class="btn btn-danger waves-effect waves-light ms-2 col-3"
+                class="btn btn-danger waves-effect waves-light ms-2 col-6"
                 id="btnAdd"
                 style="float: inline-end"
                 (click)="openMainModal(templateMainAddEdit)"
@@ -141,16 +141,16 @@
           <div *ngIf="awardDetailModel.imageUrl">
             <img
               [src]="
-                globalService.getImgServerBaseUrl() + awardDetailModel.imageUrl
+                globalService.getImgServerBaseUrl(awardDetailModel.urlBase64)
               "
               alt="Membership Image"
-              style="height: 200px; width: auto"
+              style="height: 200px; width: 250px"
               class="mt-2"
             />
             <a
               (click)="removeImage()"
               class="btn btn-danger"
-              style="display: block; margin-top: 10px"
+              style="display: block; margin-top: 10px; width: 150px"
               >Remove</a
             >
           </div>
@@ -222,9 +222,11 @@
         <label for="basiInput" class="form-label text-muted mb-0"
           >Attachment</label
         >
-        <div class="fs-15">
+        <div class="fs-15" *ngIf="awardDetailModel.imageUrl">
           <img
-            src="{{ awardDetailModel.imageUrlView || './assests/default.png' }}"
+            [src]="
+              globalService.getImgServerBaseUrl(awardDetailModel.urlBase64)
+            "
             class="card-img-top img-thumnail"
             style="height: 200px; width: auto"
           />
@@ -301,7 +303,7 @@
         <div class="button-container">
           <button
             type="button"
-            class="btn btn-danger waves-effect waves-light"
+            class="btn btn-danger waves-effect waves-light mr-2"
             (click)="addMainDescriptionAddUpdate()"
             *ngIf="awardMainModel.id == 0"
           >
@@ -310,7 +312,7 @@
 
           <button
             type="button"
-            class="btn btn-danger waves-effect waves-light"
+            class="btn btn-danger waves-effect waves-light mr-2"
             (click)="addMainDescriptionAddUpdate()"
             *ngIf="awardMainModel.id != 0"
           >
@@ -318,7 +320,7 @@
           </button>
           <button
             type="button"
-            class="btn btn-light button"
+            class="btn btn-light button mr-2"
             aria-label="Close"
             (click)="modalRef?.hide()"
           >

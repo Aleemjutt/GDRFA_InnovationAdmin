@@ -81,6 +81,7 @@ export class UsersListComponent {
       userStatus: false,
       roleId: null,
       url: '',
+      urlBase64: '',
     };
     this.modalRef = this.modalService.show(
       templete,

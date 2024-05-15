@@ -315,7 +315,7 @@
           <label for="basiInput" class="form-label text-muted mb-0"
             >Status</label
           >
-          <div *ngIf="ideaSubmitModel?.workFlowStatus == 0">
+          <div *ngIf="ideaSubmitModel?.workFlowStatus == 6">
             <div class="text-success badge badge-soft-success fs-12 fw-regular">
               {{ ideaSubmitModel?.workFlowStatusName }}
             </div>
@@ -336,6 +336,14 @@
           <div *ngIf="ideaSubmitModel?.workFlowStatus == 4">
             <div
               class="text-secondary badge badge-soft-secondary fs-12 fw-regular"
+            >
+              {{ ideaSubmitModel?.workFlowStatusName }}
+            </div>
+          </div>
+
+          <div *ngIf="ideaSubmitModel?.workFlowStatus == 0">
+            <div
+              class="text-secondary badge badge-soft-default fs-12 fw-regular"
             >
               {{ ideaSubmitModel?.workFlowStatusName }}
             </div>
@@ -590,7 +598,10 @@
 
   <div class="row">
     <div class="modal-footer">
-      <div class="button-container">
+      <div
+        class="button-container"
+        *ngIf="ideaSubmitModel?.workFlowStatus == enum.UnderProcesses"
+      >
         <button
           type="button"
           class="btn btn-success button mr-2"
@@ -612,6 +623,21 @@
         >
           Modify
         </button>
+
+        <button
+          type="button"
+          class="btn btn-light button"
+          aria-label="Close"
+          (click)="modalRef?.hide()"
+        >
+          Close
+        </button>
+      </div>
+
+      <div
+        class="button-container"
+        *ngIf="ideaSubmitModel?.status != enum.UnderProcesses"
+      >
         <button
           type="button"
           class="btn btn-light button"

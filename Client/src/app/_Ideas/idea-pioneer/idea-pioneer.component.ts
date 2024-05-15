@@ -19,4 +19,6 @@ import { DubaiResidencayService } from 'src/app/_services/_futureFocused/dubai-r
   templateUrl: './idea-pioneer.component.html',
   styleUrl: './idea-pioneer.component.css',
 })
-export class IdeaPioneerComponent {}
+export class IdeaPioneerComponent {
+  ideaPionnerModel: any;
+}

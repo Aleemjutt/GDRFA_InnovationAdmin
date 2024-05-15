@@ -12,7 +12,7 @@ export interface AgendaModel {
   time: string | null;
   locationDescriptionEn: string | null;
   locationDescriptionAr: string | null;
-  imageUrlView: string | null;
+  urlBase64: string | null;
   imageUrl: string | null;
   agendaVenue: AgendaVenue;
   agendaAttachmentModels: AgendaAttachmentModel[];

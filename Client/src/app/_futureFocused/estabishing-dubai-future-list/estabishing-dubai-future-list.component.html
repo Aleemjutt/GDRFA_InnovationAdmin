@@ -117,7 +117,21 @@
             </div>
           </div>
         </div>
-        <hr style="margin-top: 20px" />
+        <div class="col-md-6">
+          <div class="" style="margin-top: 30px">
+            <label for="userStatusInput" class="form-label">Status</label>
+            <div class="form-check form-switch">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                id="userStatusInput"
+                [(ngModel)]="establishingDubaiForTheFutureModel.status"
+              />
+              <label class="form-check-label" for="userStatusInput"></label>
+            </div>
+          </div>
+        </div>
+        <hr style="margin-top: 25px" />
         <div class="row mt-3">
           <div class="col-md-6"></div>
           <div class="col-md-6 text-right">

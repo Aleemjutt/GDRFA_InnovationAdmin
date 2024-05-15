@@ -131,7 +131,9 @@
 
           <div *ngIf="membershipModel.url">
             <img
-              [src]="membershipModel.url"
+              [src]="
+                globalService.getImgServerBaseUrl(membershipModel.urlBase64)
+              "
               alt="Membership Image"
               style="height: 200px; width: auto"
               class="mt-2"
@@ -139,7 +141,7 @@
             <a
               (click)="removeImage()"
               class="btn btn-danger"
-              style="display: block; margin-top: 10px"
+              style="display: block; margin-top: 10px; width: 120px"
               >Remove</a
             >
           </div>
@@ -214,11 +216,14 @@
           <label for="basiInput" class="form-label text-muted mb-0"
             >Attachment</label
           >
-          <div class="fs-15">
+          <div class="fs-15" *ngIf="membershipModel.url">
             <img
-              src="{{ membershipModel.url || './assests/default.png' }}"
-              class="card-img-top img-thumnail mt-2"
+              [src]="
+                globalService.getImgServerBaseUrl(membershipModel.urlBase64)
+              "
+              alt="Membership Image"
               style="height: 200px; width: auto"
+              class="mt-2"
             />
           </div>
         </div>

@@ -46,17 +46,28 @@ export class IdeaJurneyComponent implements OnInit {
       id: 0,
       ideaJurnyArUrl: '',
       ideaJurnyEnUrl: '',
-      ideaJurnyEnUrlView: '',
-      ideaJurnyArUrlView: '',
+      urlBase64Ar: '',
+      urlBase64En: '',
+    };
+  }
+
+  objInit() {
+    this.ideaJurneyModel = {
+      id: 0,
+      ideaJurnyArUrl: '',
+      ideaJurnyEnUrl: '',
+      urlBase64Ar: '',
+      urlBase64En: '',
     };
   }
 
   addIdeaJurney() {
     if (this.imagesArray.length > 0) {
       this.upload();
+    } else {
+      this._addIdeaJurney();
+      this.getDetails();
     }
-
-    this.getDetails();
   }
   _addIdeaJurney() {
     console.log(this.ideaJurneyModel);
@@ -64,6 +75,9 @@ export class IdeaJurneyComponent implements OnInit {
       next: (response: ResponseResult) => {
         if (response.statusCode == 0) {
           this.tosterService.success(response.message);
+          this.imagesArray = [];
+          this.objInit();
+          this.getDetails();
         }
       },
     });
@@ -112,24 +126,8 @@ export class IdeaJurneyComponent implements OnInit {
     this.ideaJurneyService.getIdeaJurneyDetails().subscribe({
       next: (response: ResponseResult) => {
         if (response.statusCode === 0) {
+          this.objInit();
           this.ideaJurneyModel = response.data;
-          const data = response.data;
-          const sourceUrl = this.ideaJurneyModel?.ideaJurnyEnUrlView;
-          if (sourceUrl) {
-            this.pondFiles.push({
-              source: sourceUrl,
-              options: { type: 'local' },
-            });
-
-            // Add Arabic image URL to pondFiles
-            if (data.ideaJurnyArUrlView) {
-              this.pondFiles.push({
-                source: data.ideaJurnyArUrlView,
-                options: { type: 'local' },
-              });
-            }
-          }
-          this.ideaJurneyImgEn?.oninit;
         }
       },
       error: (error) => {
@@ -145,7 +143,7 @@ export class IdeaJurneyComponent implements OnInit {
 
     for (let index = 0; index < totalImages; index++) {
       this.uploadService
-        .upload(this.imagesArray[index].fileName, 'AboutInnovationCenter')
+        .upload(this.imagesArray[index].fileName, 'IdeaJurney')
         .pipe(
           finalize(() => {
             uploadedImages++;
@@ -153,6 +151,7 @@ export class IdeaJurneyComponent implements OnInit {
               // All images have been uploaded, set URLs and call _addIdeaJurney
               this.setUrlsForInstanceNames();
               this._addIdeaJurney();
+              this.attachmentList = [];
             }
           })
         )
@@ -184,10 +183,10 @@ export class IdeaJurneyComponent implements OnInit {
       // Set URLs based on instance names
       if (this.ideaJurneyModel != null) {
         switch (instanceName) {
-          case 'ideaJurneyEnInstance':
+          case 'ideaJurneyArInstance':
             this.ideaJurneyModel.ideaJurnyArUrl = imageUrl;
             break;
-          case 'ideaJurneyArInstance':
+          case 'ideaJurneyEnInstance':
             this.ideaJurneyModel.ideaJurnyEnUrl = imageUrl;
             break;
           // Add cases for other instance names

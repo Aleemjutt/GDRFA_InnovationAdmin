@@ -5,6 +5,7 @@ export interface TargetCompainModel {
   targetCompainsOptionModels: TargetCompainsOptionModel[] | null;
   noteEn: string | null;
   noteAr: string | null;
+  isActiveStatus: boolean | null;
 }
 
 export interface TargetCompainsOptionModel {

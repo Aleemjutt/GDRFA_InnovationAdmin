@@ -132,11 +132,9 @@
 
             <div *ngIf="creditModel.imageUrl">
               <img
-                [src]="
-                  globalService.getImgServerBaseUrl() + creditModel.imageUrl
-                "
+                [src]="globalService.getImgServerBaseUrl(creditModel.urlBase64)"
                 alt="Membership Image"
-                style="height: 200px; width: auto"
+                style="height: 200px; width: 250px"
                 class="mt-2"
               />
               <a
@@ -202,7 +200,7 @@
 
 <ng-template #templateDetails class="modal-lg">
   <div class="modal-header">
-    <h4 class="modal-title pull-left">Membership Details</h4>
+    <h4 class="modal-title pull-left">Credit Details</h4>
     <button
       type="button"
       class="btn-close close pull-right"
@@ -236,7 +234,7 @@
           >
           <div class="fs-15">
             <img
-              src="{{ creditModel.imageUrlView || './assests/default.png' }}"
+              [src]="globalService.getImgServerBaseUrl(creditModel.urlBase64)"
               class="card-img-top img-thumnail"
               style="height: 200px; width: auto"
             />

@@ -7,6 +7,7 @@ import { ResponseResult } from 'src/app/_models/responseResult';
 import { ConsultingRequestService } from 'src/app/_services/_consultingRequst/consulting-request.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { GlobalServiceService } from 'src/app/_global/-global-service.service';
 @Component({
   selector: 'app-reqeust-list',
   standalone: true,
@@ -26,7 +27,8 @@ export class ReqeustListComponent implements OnInit {
     private consultingRequestService: ConsultingRequestService,
     private modalService: BsModalService,
 
-    private tosterService: ToastrService
+    private tosterService: ToastrService,
+    public globalService: GlobalServiceService
   ) {}
 
   ngOnInit(): void {
@@ -127,7 +129,8 @@ export class ReqeustListComponent implements OnInit {
                 data: 'subject', //(row: any) => this.getDepartmentName(row.requestModel.sID),
               },
               {
-                data: 'message', //(row: any) => this.getDepartmentName(row.requestModel.sID),
+                data: (row: any) =>
+                  this.globalService.getWorkFlowStatusName(row.status),
               },
 
               {
