@@ -7,3 +7,8 @@ export enum WorkFlowStatus {
   Returned = 5,
   Accept = 6,
 }
+
+export enum ReplyedStatus {
+  Done = 1,
+  Pending = 2,
+}

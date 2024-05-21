@@ -7,30 +7,35 @@ import { environment } from 'src/environments/environment.development';
 @Injectable({
   providedIn: 'root',
 })
-export class InnovativeEntrepreneurshipProgramService {
+export class CreativeSupportService {
   baseUrl = environment.apiUrl;
 
+  responseReuslt = new ResponseResult();
+  //Agenda = new AgendaModel;
   constructor(
     private httpClient: HttpClient,
     private globalService: GlobalServiceService
   ) {}
 
-  getList() {
-    return this.httpClient.get<ResponseResult>(
-      this.baseUrl + 'innovationPossiblities/list',
-      this.globalService.getHttpOptions()
-    );
-  }
-  details(id: number) {
-    return this.httpClient.get<ResponseResult>(
-      this.baseUrl + 'innovationPossiblities/details?id=' + id,
-      this.globalService.getHttpOptions()
-    );
-  }
-  update(model: any) {
-    return this.httpClient.put<ResponseResult>(
-      this.baseUrl + 'innovationPossiblities/update',
+  add(model: any) {
+    return this.httpClient.post<ResponseResult>(
+      this.baseUrl + 'creativeSupport/add',
       model,
+      this.globalService.getHttpOptions()
+    );
+  }
+
+  update(model: any | null) {
+    return this.httpClient.put<ResponseResult>(
+      this.baseUrl + 'creativeSupport/add',
+      model,
+      this.globalService.getHttpOptions()
+    );
+  }
+
+  getIdeaDetails() {
+    return this.httpClient.get<ResponseResult>(
+      this.baseUrl + 'creativeSupport/details',
       this.globalService.getHttpOptions()
     );
   }

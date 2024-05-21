@@ -3,7 +3,10 @@ import { Inject, Injectable, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { BehaviorSubject, Observable, catchError, map, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { WorkFlowStatus } from '../_models/Common/workflowStatus';
+import {
+  ReplyedStatus,
+  WorkFlowStatus,
+} from '../_models/Common/workflowStatus';
 import { environment } from 'src/environments/environment.development';
 
 @Injectable({
@@ -183,6 +186,23 @@ export class GlobalServiceService implements OnInit {
 
     return workFlowStatusName;
   }
+  getReplyStatusName(status: ReplyedStatus) {
+    let statuName = '';
+    if (status == ReplyedStatus.Done) {
+      statuName =
+        this.getCurrentLanguage() == 'en'
+          ? '<span class="badge badge-success">Done</span>'
+          : '<span class="badge badge-success">منتهي</span>';
+    } else {
+      statuName =
+        this.getCurrentLanguage() == 'en'
+          ? '<span class="badge badge-info">Pending</span>'
+          : '<span class="badge badge-info">قيد الانتظار</span>';
+    }
+
+    return statuName;
+  }
+
   getStatusName(status: boolean) {
     let statuName = '';
     if (status) {
@@ -235,6 +255,41 @@ export class GlobalServiceService implements OnInit {
 
     return isValid;
   }
+
+  convertDatetime(datetime: string) {
+    let formattedDate = '';
+    const _datetime = new Date(datetime);
+
+    const year = _datetime.getFullYear();
+    const monthNumber = _datetime.getMonth() + 1;
+    const dayNumber = _datetime.getDate();
+    let hour = _datetime.getHours();
+    const minute = _datetime.getMinutes();
+
+    // Zero-padding for month and day
+    const month = monthNumber < 10 ? '0' + monthNumber : monthNumber;
+    const day = dayNumber < 10 ? '0' + dayNumber : dayNumber;
+
+    // Convert 24-hour format to 12-hour format and determine AM/PM
+    const amPm = hour >= 12 ? 'PM' : 'AM';
+    hour = hour % 12 || 12; // Convert 0 to 12 for 12-hour format
+
+    // Format the time string
+    const formattedTime = `${hour}:${
+      minute < 10 ? '0' + minute : minute
+    } ${amPm}`;
+
+    // Construct the final formatted date string
+
+    // Zero-padding for month and day
+
+    formattedDate = `${year}-${month}-${day} ${formattedTime}`;
+
+    console.log(formattedDate); // Output: "2024-5-21 9:25 AM"
+
+    return formattedDate;
+  }
+
   // getImgServerBaseUrl(): Observable<string> {
   //   return this.getFromServerBaseUrl().pipe(
   //     map(() => 'http://localhost:44350/InnovationImages/'),

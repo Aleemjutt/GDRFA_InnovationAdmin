@@ -1,16 +1,20 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { GlobalServiceService } from 'src/app/_global/-global-service.service';
-import { WorkFlowStatus } from 'src/app/_models/Common/workflowStatus';
-import { ResponseResult } from 'src/app/_models/responseResult';
+import {
+  ReplyedStatus,
+  WorkFlowStatus,
+} from 'src/app/_models/Common/workflowStatus';
+import { ResponseResult, StatusCodes } from 'src/app/_models/responseResult';
 import { InnovativeEntrepreneurshipProgramService } from 'src/app/_services/_innovationPossiblities/innovative-entrepreneurship-program.service';
 
 @Component({
   selector: 'app-innovative-entrepreneurship-program-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './innovative-entrepreneurship-program-list.component.html',
   styleUrl: './innovative-entrepreneurship-program-list.component.css',
 })
@@ -22,16 +26,18 @@ export class InnovativeEntrepreneurshipProgramListComponent implements OnInit {
   entrepreneureshipModel: any;
   @ViewChild('template') template: TemplateRef<any> | undefined;
   @ViewChild('templateDetails') templateDetails: TemplateRef<any> | undefined;
-  enum: typeof WorkFlowStatus = WorkFlowStatus;
+  enum: typeof ReplyedStatus = ReplyedStatus;
   modalRef: any;
   constructor(
     private modalService: BsModalService,
-    private globalService: GlobalServiceService,
+    public globalService: GlobalServiceService,
     private tosterService: ToastrService,
     private innovationEntureship: InnovativeEntrepreneurshipProgramService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.initilizeDataTable();
+  }
 
   initilizeDataTable(): void {
     //const datatable: any = $('#consultingRequestDataTable').DataTable();
@@ -61,47 +67,20 @@ export class InnovativeEntrepreneurshipProgramListComponent implements OnInit {
             columns: [
               { data: 'id' },
               {
-                data: 'title', //(row: any) => this.getDepartmentName(row.requestModel.sID),
+                data: 'companyName', //(row: any) => this.getDepartmentName(row.requestModel.sID),
               },
               {
-                data: 'sectorName', //(row: any) => this.getDepartmentName(row.requestModel.sID),
+                data: 'fullName', //(row: any) => this.getDepartmentName(row.requestModel.sID),
               },
               {
-                data: 'administrationName', //(row: any) => this.getDepartmentName(row.requestModel.sID),
+                data: 'directContactNumber', //(row: any) => this.getDepartmentName(row.requestModel.sID),
               },
-
               {
-                data: function (row: any) {
-                  if (row.workFlowStatus === WorkFlowStatus.Accept) {
-                    return (
-                      '<span style="color:green;font-weight: 600">' +
-                      row.workFlowStatusName +
-                      '</span>'
-                    );
-                  } else if (row.workFlowStatus === WorkFlowStatus.Reject) {
-                    return (
-                      '<span style="color:red;font-weight: 600">' +
-                      row.workFlowStatusName +
-                      '</span>'
-                    );
-                  } else if (row.workFlowStatus === WorkFlowStatus.Returned) {
-                    return (
-                      '<span style="color:blue;font-weight: 600">' +
-                      row.workFlowStatusName +
-                      '</span>'
-                    );
-                  } else if (
-                    row.workFlowStatus === WorkFlowStatus.UnderProcesses
-                  ) {
-                    return (
-                      '<span style="color:#a78e8e;font-weight: 600">' +
-                      row.workFlowStatusName +
-                      '</span>'
-                    );
-                  }
-
-                  return '';
-                },
+                data: 'email', //(row: any) => this.getDepartmentName(row.requestModel.sID),
+              },
+              {
+                data: (row: any) =>
+                  this.globalService.getReplyStatusName(row.replyedStatus),
               },
 
               {
@@ -133,10 +112,6 @@ export class InnovativeEntrepreneurshipProgramListComponent implements OnInit {
                 this.viewDetails(data.id, this.templateDetails);
               });
 
-              editpartner.on('click', () => {
-                this.edit(data.id, this.template);
-              });
-
               return row;
             },
 
@@ -146,10 +121,36 @@ export class InnovativeEntrepreneurshipProgramListComponent implements OnInit {
       });
   }
 
-  viewDetails(id: number, template: TemplateRef<any> | undefined) {}
-  edit(id: number, template: TemplateRef<any> | undefined) {}
+  viewDetails(id: number, template: TemplateRef<any> | undefined) {
+    this.innovationEntureship.details(id).subscribe({
+      next: (result: ResponseResult) => {
+        if (result.statusCode == StatusCodes.success) {
+          this.entrepreneureshipModel = result.data;
+        } else {
+          this.tosterService.error(result.message);
+        }
+      },
+    });
 
-  workFlowUpdate(workFlowStatus: WorkFlowStatus) {}
+    if (template)
+      this.modalRef = this.modalService.show(
+        template,
+        Object.assign({}, { class: 'modal-lg' })
+      );
+  }
 
-  Update() {}
+  update() {
+    this.innovationEntureship.update(this.entrepreneureshipModel).subscribe({
+      next: (response: ResponseResult) => {
+        if (response.statusCode == StatusCodes.success || StatusCodes.update) {
+          this.tosterService.success(response.message);
+          this.entrepreneureshipModel = {};
+          this.initilizeDataTable();
+          this.modalRef?.hide();
+        } else {
+          this.tosterService.error(response.message);
+        }
+      },
+    });
+  }
 }
