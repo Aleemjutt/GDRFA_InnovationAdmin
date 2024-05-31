@@ -26,14 +26,15 @@ export class CreativeSupportService {
   }
 
   update(model: any | null) {
-    return this.httpClient.put<ResponseResult>(
+    return this.httpClient.post<ResponseResult>(
       this.baseUrl + 'creativeSupport/add',
       model,
       this.globalService.getHttpOptions()
     );
   }
 
-  getIdeaDetails() {
+  _getDetails() {
+    console.log('i am at network side');
     return this.httpClient.get<ResponseResult>(
       this.baseUrl + 'creativeSupport/details',
       this.globalService.getHttpOptions()

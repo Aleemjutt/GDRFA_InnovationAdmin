@@ -3,7 +3,9 @@
     <div class="container-fluid">
       <div class="card">
         <div class="card-header align-items-center d-flex">
-          <h4 class="card-title mb-0 flex-grow-1">Consulting Request List</h4>
+          <h4 class="card-title mb-0 flex-grow-1">
+            {{ "ConsultingRequestList" | translate }}
+          </h4>
           <div class="flex-shrink-0">
             <div class="d-flex align-items-center">
               <input
@@ -47,28 +49,15 @@
           <table class="table table-nowrap" id="consultingRequestDataTable">
             <thead>
               <tr>
-                <th>{{ "ID" }}</th>
-                <th>{{ "Requester Name" }}</th>
-                <th>{{ "Email" }}</th>
-                <th>{{ "Subjecct" }}</th>
-                <th>{{ "Status" }}</th>
-
-                <!-- <th>{{ "Actions" }}</th> -->
-                <th>{{ "Actions" }}</th>
+                <th>{{ "ID" | translate }}</th>
+                <th>{{ "RequesterName" | translate }}</th>
+                <th>{{ "Email" | translate }}</th>
+                <th>{{ "Subjecct" | translate }}</th>
+                <th>{{ "Status" | translate }}</th>
+                <th>{{ "Actions" | translate }}</th>
               </tr>
             </thead>
-            <tbody>
-              <!-- <tr>
-                <th scope="row"><a href="#" class="fw-semibold">#VZ2110</a></th>
-                <td>Lorem ipsum dolor sit amet consectetur adipiscing elit.</td>
-                <td>
-                  <a href="details.html" class="link-warning"
-                    >View in Detail
-                    <i class="ri-arrow-right-line align-middle"></i
-                  ></a>
-                </td>
-              </tr> -->
-            </tbody>
+            <tbody></tbody>
           </table>
         </div>
       </div>
@@ -79,7 +68,9 @@
 </div>
 <ng-template #template class="modal-lg">
   <div class="modal-header">
-    <h4 class="modal-title pull-left">Consulting Request Details</h4>
+    <h4 class="modal-title pull-left">
+      {{ "ConsultingRequestDetails" | translate }}
+    </h4>
     <button
       type="button"
       class="btn-close close pull-right"
@@ -99,37 +90,37 @@
           <div class="row">
             <div class="col-md-4">
               <label for="basiInput" class="form-label text-muted mb-0"
-                >Requester Name</label
+                >{{ "ConsultingRequestList" | translate }}Requester Name</label
               >
               <div class="fs-15">{{ consultingRequestModel.name }}</div>
             </div>
 
             <div class="col-md-4">
-              <label for="basiInput" class="form-label text-muted mb-0"
-                >Email</label
-              >
+              <label for="basiInput" class="form-label text-muted mb-0">{{
+                "Email" | translate
+              }}</label>
               <div class="fs-15">{{ consultingRequestModel.email }}</div>
             </div>
 
             <div class="col-md-4">
-              <label for="basiInput" class="form-label text-muted mb-0"
-                >Subject</label
-              >
+              <label for="basiInput" class="form-label text-muted mb-0">{{
+                "Subject" | translate
+              }}</label>
               <div class="fs-15">{{ consultingRequestModel.subject }}</div>
             </div>
           </div>
           <div class="col-md-12 mt-3">
-            <label for="basiInput" class="form-label text-muted mb-0"
-              >Message</label
-            >
+            <label for="basiInput" class="form-label text-muted mb-0">{{
+              "Message" | translate
+            }}</label>
             <div class="fs-15">{{ consultingRequestModel.message }}</div>
           </div>
 
           <br />
           <div class="col-md-12 mt-3">
-            <label for="basiInput" class="form-label text-muted mb-1"
-              >Reply</label
-            >
+            <label for="basiInput" class="form-label text-muted mb-1">{{
+              "Reply" | translate
+            }}</label>
             <textarea
               type="text"
               placeholder="Reply"
@@ -151,7 +142,7 @@
           class="btn btn-success button mr-2"
           (click)="Update()"
         >
-          Reply
+          {{ "Reply" | translate }}
         </button>
 
         <button
@@ -160,7 +151,7 @@
           aria-label="Close"
           (click)="modalRef?.hide()"
         >
-          Close
+          {{ "Close" | translate }}
         </button>
       </div>
     </div>
@@ -169,7 +160,9 @@
 
 <ng-template #templateDetails class="modal-lg">
   <div class="modal-header">
-    <h4 class="modal-title pull-left">Consulting Request Details</h4>
+    <h4 class="modal-title pull-left">
+      {{ "ConsultingRequestDetails" | translate }}
+    </h4>
     <button
       type="button"
       class="btn-close close pull-right"
@@ -188,38 +181,38 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-4">
-              <label for="basiInput" class="form-label text-muted mb-0"
-                >Requester Name</label
-              >
+              <label for="basiInput" class="form-label text-muted mb-0">{{
+                "RequesterName" | translate
+              }}</label>
               <div class="fs-15">{{ consultingRequestModel.name }}</div>
             </div>
 
             <div class="col-md-4">
-              <label for="basiInput" class="form-label text-muted mb-0"
-                >Email</label
-              >
+              <label for="basiInput" class="form-label text-muted mb-0">{{
+                "Email" | translate
+              }}</label>
               <div class="fs-15">{{ consultingRequestModel.email }}</div>
             </div>
 
             <div class="col-md-4">
-              <label for="basiInput" class="form-label text-muted mb-0"
-                >Subject</label
-              >
+              <label for="basiInput" class="form-label text-muted mb-0">{{
+                "Subject" | translate
+              }}</label>
               <div class="fs-15">{{ consultingRequestModel.subject }}</div>
             </div>
           </div>
           <div class="col-md-12 mt-3">
-            <label for="basiInput" class="form-label text-muted mb-0"
-              >Message</label
-            >
+            <label for="basiInput" class="form-label text-muted mb-0">{{
+              "Message" | translate
+            }}</label>
             <div class="fs-15">{{ consultingRequestModel.message }}</div>
           </div>
 
           <br />
           <div class="col-md-12 mt-3">
-            <label for="basiInput" class="form-label text-muted mb-1"
-              >Reply</label
-            >
+            <label for="basiInput" class="form-label text-muted mb-1">{{
+              "Reply" | translate
+            }}</label>
 
             <div class="fs-15 row-3">
               {{ consultingRequestModel.replyMessage }}
@@ -240,7 +233,7 @@
           aria-label="Close"
           (click)="modalRef?.hide()"
         >
-          Close
+          {{ "Close" | translate }}
         </button>
       </div>
     </div>

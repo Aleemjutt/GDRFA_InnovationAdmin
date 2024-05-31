@@ -8,10 +8,11 @@ import { ConsultingRequestService } from 'src/app/_services/_consultingRequst/co
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { GlobalServiceService } from 'src/app/_global/-global-service.service';
+import { TranslateModule } from '@ngx-translate/core';
 @Component({
   selector: 'app-reqeust-list',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, TranslateModule],
   templateUrl: './reqeust-list.component.html',
   styleUrl: './reqeust-list.component.css',
 })

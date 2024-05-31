@@ -1,0 +1,120 @@
+<div class="main-content">
+  <div class="page-content">
+    <div class="container-fluid">
+      <div class="card">
+        <div class="card-header align-items-center d-flex">
+          <h4 class="card-title mb-0 flex-grow-1">Goverment 01</h4>
+        </div>
+        <div class="card-body">
+          <div class="row" *ngIf="govermentModel">
+            <div class="mt-3 col-md-12">
+              <label for="basiInput" class="form-label">Link Url </label>
+              <input
+                type="input"
+                [(ngModel)]="govermentModel.link"
+                class="form-control"
+                id="basiInput"
+              />
+            </div>
+
+            <div class="mt-3 col-md-6">
+              <div class="mb-3">
+                <div *ngIf="!govermentModel.urlEnBase64">
+                  <label for="formFile" class="form-label">Choose file</label>
+                  <file-pond
+                    #myPond
+                    label-idle='Drag & Drop your files or <span class="filepond--label-action"> Browse </span><br> <b>Maximum 5 files upload</b>'
+                    allow-multiple="true"
+                    [options]="pondOptions"
+                    [files]="pondFiles"
+                    (oninit)="pondHandleInit()"
+                    (onaddfile)="pondHandleAddFile($event, 'BannerEn')"
+                  >
+                  </file-pond>
+                </div>
+
+                <div *ngIf="govermentModel.urlEnBase64">
+                  <img
+                    [src]="
+                      globalService.getImgServerBaseUrl(
+                        govermentModel.urlEnBase64
+                      )
+                    "
+                    alt="Membership Image"
+                    style="height: 200px; width: 250px"
+                    class="mt-2"
+                  />
+                  <a
+                    (click)="removeImage('BannerEn')"
+                    class="btn btn-danger"
+                    style="display: block; margin-top: 10px; width: 150px"
+                    >Remove</a
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-3 col-md-6">
+              <div class="mb-3">
+                <div *ngIf="!govermentModel.urlArBase64">
+                  <label for="formFile" class="form-label">Choose file</label>
+                  <file-pond
+                    #myPond
+                    label-idle='Drag & Drop your files or <span class="filepond--label-action"> Browse </span><br> <b>Maximum 5 files upload</b>'
+                    allow-multiple="true"
+                    [options]="pondOptions"
+                    [files]="pondFiles"
+                    (oninit)="pondHandleInit()"
+                    (onaddfile)="pondHandleAddFile($event, 'BannerAr')"
+                  >
+                  </file-pond>
+                </div>
+
+                <div *ngIf="govermentModel.urlArBase64">
+                  <img
+                    [src]="
+                      globalService.getImgServerBaseUrl(
+                        govermentModel.urlArBase64
+                      )
+                    "
+                    alt="Membership Image"
+                    style="height: 200px; width: 250px"
+                    class="mt-2"
+                  />
+                  <a
+                    (click)="removeImage('BannerAr')"
+                    class="btn btn-danger"
+                    style="display: block; margin-top: 10px; width: 150px"
+                    >Remove</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            class="btn btn-danger waves-effect waves-light ms-2 col-3 pull-right mt-2"
+            (click)="add()"
+            *ngIf="govermentModel.id == 0"
+          >
+            Save
+          </button>
+
+          <button
+            type="submit"
+            class="btn btn-danger waves-effect waves-light ms-2 col-3 pull-right mt-2"
+            (click)="update()"
+            *ngIf="govermentModel.id != 0"
+          >
+            Update
+          </button>
+        </div>
+      </div>
+
+      <!-- container-fluid -->
+    </div>
+    <!-- End Page-content -->
+  </div>
+  <!-- end main content-->
+</div>

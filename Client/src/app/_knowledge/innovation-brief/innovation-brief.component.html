@@ -1,0 +1,281 @@
+<div class="main-content">
+  <div class="page-content">
+    <div class="container-fluid">
+      <div class="card">
+        <div class="card-header align-items-center d-flex">
+          <h4 class="card-title mb-0 flex-grow-1">Innovation Brief List</h4>
+          <div class="flex-shrink-0">
+            <div class="d-flex align-items-center"></div>
+            <a
+              type="button"
+              class="btn btn-danger waves-effect waves-light"
+              id="btnAdd"
+              style="float: inline-end"
+              (click)="openModal(template)"
+            >
+              Add New
+            </a>
+          </div>
+        </div>
+        <div class="card-body">
+          <table class="table table-nowrap" id="innovationBriefDataTable">
+            <thead>
+              <tr>
+                <th>{{ "ID" }}</th>
+                <th>{{ "Book Name En" }}</th>
+                <th>{{ "Book Name Ar" }}</th>
+                <!-- <th>{{ "Actions" }}</th> -->
+                <th>{{ "Actions" }}</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!-- container-fluid -->
+  </div>
+  <!-- End Page-content -->
+</div>
+<ng-template #template class="modal-lg">
+  <div class="modal-header">
+    <h4 class="modal-title pull-left" *ngIf="innovationInBriefModel.id == 0">
+      Add
+    </h4>
+    <h4 class="modal-title pull-left" *ngIf="innovationInBriefModel.id != 0">
+      Update
+    </h4>
+    <button
+      type="button"
+      class="btn-close close pull-right"
+      aria-label="Close"
+      (click)="modalRef?.hide()"
+    >
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="row mt-3">
+        <div class="col-md-6 mt-3">
+          <label for="basiInput" class="form-label">Book Name En</label>
+          <input
+            type="input"
+            class="form-control"
+            id="basiInput"
+            [(ngModel)]="innovationInBriefModel.bookNameEn"
+          />
+        </div>
+
+        <div class="col-md-6 mt-3">
+          <label for="basiInput" class="form-label">Book Name Ar</label>
+          <input
+            type="input"
+            class="form-control"
+            id="basiInput"
+            [(ngModel)]="innovationInBriefModel.bookNameAr"
+          />
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-md-12">
+          <div class="mt-3">
+            <label> Book Cover Image</label>
+            <div *ngIf="!innovationInBriefModel.urlBase64">
+              <label for="formFile" class="form-label">Choose file</label>
+              <file-pond
+                #myPond
+                label-idle='Drag & Drop your files or <span class="filepond--label-action"> Browse </span><br> <b>Maximum 5 files upload</b>'
+                allow-multiple="true"
+                [options]="pondOptions"
+                [files]="pondFiles"
+                (oninit)="pondHandleInit()"
+                (onaddfile)="pondHandleAddFile($event, 'bookCoverImage')"
+              >
+              </file-pond>
+            </div>
+            <div *ngIf="innovationInBriefModel.urlBase64">
+              <img
+                [src]="
+                  globalService.getImgServerBaseUrl(
+                    innovationInBriefModel.urlBase64
+                  )
+                "
+                alt="Membership Image"
+                style="height: 200px; width: 250px"
+                class="mt-2"
+              />
+              <a
+                (click)="removeImage('bookCoverImage')"
+                class="btn btn-danger"
+                style="display: block; margin-top: 10px"
+                >Remove</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="mt-3">
+            <label>Book File</label>
+            <div *ngIf="!innovationInBriefModel.bookUrlBase64">
+              <label for="formFile" class="form-label">Choose file</label>
+              <file-pond
+                #myPond
+                label-idle='Drag & Drop your files or <span class="filepond--label-action"> Browse </span><br> <b>Maximum 5 files upload</b>'
+                allow-multiple="true"
+                [options]="pondOptionsBook"
+                [files]="pondFiles"
+                (oninit)="pondHandleInit()"
+                (onaddfile)="pondHandleAddFile($event, 'bookfile')"
+              >
+              </file-pond>
+            </div>
+            <div *ngIf="innovationInBriefModel.bookUrlBase64">
+              <button
+                (click)="
+                  globalService.downloadPdf(
+                    innovationInBriefModel.bookUrlBase64,
+                    'FileName'
+                  )
+                "
+                href="#"
+                download="image.png"
+                class="mt-2 btn btn-danger"
+              >
+                <i class="ri-file-download-line"> Download File</i>
+              </button>
+              <a
+                (click)="removeImage('bookfile')"
+                class="btn btn-danger"
+                style="display: block; margin-top: 10px"
+                >Remove</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="modal-footer">
+      <div class="button-container">
+        <button
+          type="button"
+          class="btn btn-danger waves-effect waves-light mr-2"
+          (click)="add()"
+          *ngIf="innovationInBriefModel.id == 0"
+        >
+          Save
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger waves-effect waves-light mr-2"
+          (click)="update()"
+          *ngIf="innovationInBriefModel.id != 0"
+        >
+          Update
+        </button>
+        <button
+          type="button"
+          class="btn btn-light button"
+          aria-label="Close"
+          (click)="modalRef?.hide()"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #templateDetails class="modal-lg">
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Innovation Brief Details</h4>
+    <button
+      type="button"
+      class="btn-close close pull-right"
+      aria-label="Close"
+      (click)="modalRef?.hide()"
+    >
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6 mt-3">
+          <label for="basiInput" class="form-label text-muted mb-0"
+            >Book Name En
+          </label>
+          <div>
+            {{ innovationInBriefModel.bookNameEn }}
+          </div>
+        </div>
+
+        <div class="col-md-6 mt-3">
+          <label for="basiInput" class="form-label text-muted mb-0"
+            >Book Name Ar</label
+          >
+          <div>{{ innovationInBriefModel.bookNameAr }}</div>
+        </div>
+
+        <div class="col-md-12 mt-3">
+          <label for="basiInput" class="form-label text-muted mb-0"
+            >Book Conver Image</label
+          >
+          <div class="fs-15 mt-3">
+            <img
+              [src]="
+                globalService.getImgServerBaseUrl(
+                  innovationInBriefModel.urlBase64
+                )
+              "
+              class="card-img-top img-thumnail"
+              style="height: 200px; width: auto"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12 mt-3">
+          <label for="basiInput" class="form-label text-muted mb-0">Book</label>
+          <div class="fs-15" *ngIf="innovationInBriefModel.bookUrlBase64">
+            <button
+              (click)="
+                globalService.downloadPdf(
+                  innovationInBriefModel.bookUrlBase64,
+                  'FileName'
+                )
+              "
+              href="#"
+              download="image.png"
+              class="mt-2 btn btn-danger"
+            >
+              <i class="ri-file-download-line"> Download File</i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- container-fluid -->
+  <!-- End Page-content -->
+  <div class="row">
+    <div class="modal-footer">
+      <div class="button-container">
+        <button
+          type="button"
+          class="btn btn-light button"
+          aria-label="Close"
+          (click)="modalRef?.hide()"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>

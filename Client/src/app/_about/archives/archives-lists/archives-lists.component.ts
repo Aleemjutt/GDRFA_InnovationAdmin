@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { FormGroup, FormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { FilePondModule } from 'ngx-filepond';
 import { ToastrService } from 'ngx-toastr';
@@ -11,7 +12,7 @@ import { ArchivesService } from 'src/app/_services/_about/archives.service';
 @Component({
   selector: 'app-archives-lists',
   standalone: true,
-  imports: [FormsModule, FilePondModule, CommonModule],
+  imports: [FormsModule, FilePondModule, CommonModule, TranslateModule],
   templateUrl: './archives-lists.component.html',
   styleUrl: './archives-lists.component.css',
 })

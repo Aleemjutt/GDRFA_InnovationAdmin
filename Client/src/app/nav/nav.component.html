@@ -81,6 +81,7 @@
               class="dropdown-item notify-item language py-2"
               data-lang="en"
               title="English"
+              (click)="globalService.changeLangage('en')"
             >
               <img
                 src="assets/images/flags/us.svg"
@@ -96,7 +97,8 @@
               href="javascript:void(0);"
               class="dropdown-item notify-item language"
               data-lang="sp"
-              title="Spanish"
+              title="Arabic"
+              (click)="globalService.changeLangage('ar')"
             >
               <img
                 src="assets/images/flags/spain.svg"

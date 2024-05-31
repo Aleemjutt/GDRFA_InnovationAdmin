@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { FormGroup, FormsModule, NgModel } from '@angular/forms';
+import { FormGroup, FormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 import { FilePond, FilePondOptions } from 'filepond';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { FilePondModule } from 'ngx-filepond';
@@ -16,7 +17,7 @@ import { UploadServiceService } from 'src/app/_services/upload-service.service';
 @Component({
   selector: 'app-credits-list',
   standalone: true,
-  imports: [FilePondModule, CommonModule, FormsModule],
+  imports: [FilePondModule, CommonModule, FormsModule, TranslateModule],
   templateUrl: './credits-list.component.html',
   styleUrl: './credits-list.component.css',
 })

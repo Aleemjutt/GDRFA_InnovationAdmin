@@ -72,12 +72,6 @@ export class AboutInnovatonCenterAddEditComponent implements OnInit {
       ourGoalEn: '',
       innovationAboutCenterId: 0,
       id: 0,
-      //createdDate: '',
-      //createdBy: null,
-      //updatedDate: '',
-      // updatedBy: 0,
-      //isDeleted: false,
-      // isActive: true,
     };
 
     this.ourValueModel = {
@@ -85,12 +79,6 @@ export class AboutInnovatonCenterAddEditComponent implements OnInit {
       ourValuesEn: '',
       innovationAboutCenterId: 0,
       id: 0,
-      //  createdDate: '',
-      // createdBy: null,
-      // updatedDate: '',
-      // updatedBy: 0,
-      //isDeleted: false,
-      //isActive: true,
     };
   }
 
@@ -172,7 +160,6 @@ export class AboutInnovatonCenterAddEditComponent implements OnInit {
   }
 
   addItem(): void {
-    //if (type === 'en') {
     const datePipe = new DatePipe('en-US');
     const isoFormattedDate = datePipe.transform(
       new Date(),
@@ -184,22 +171,13 @@ export class AboutInnovatonCenterAddEditComponent implements OnInit {
         this.ourGoalModel !== null)
     ) {
       if (this.ourGoalModel != null)
-        // this.ourGoalModel.createdDate = isoFormattedDate; //Date();
-        // this.ourGoalModel.updatedDate = isoFormattedDate;
         this.aboutInnovationCenterModel?.ourGoalsModel?.push(this.ourGoalModel);
       this.ourGoalModel = {
         ourGoalAr: '',
         ourGoalEn: '',
         innovationAboutCenterId: 0,
         id: 0,
-        //createdDate: isoFormattedDate,
-        // createdBy: 0,
-        // updatedDate: isoFormattedDate,
-        // updatedBy: 0,
-        // isDeleted: false,
-        // isActive: true,
       };
-      //this.ourGoalModel = OurGloaModel; // Clear the input field after adding
     }
   }
 

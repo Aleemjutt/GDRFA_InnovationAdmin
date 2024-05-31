@@ -1,0 +1,11 @@
+{
+  "ID": "ID",
+  "RequesterName": "Requester Name",
+  "Email": "Email",
+  "Subject": "Subject",
+  "Status": "Status",
+  "Actions": "Actions",
+  "ConsultingRequestList": "Consulting Request List",
+  "Messsage": "Message",
+  "Reply": "Reply"
+}

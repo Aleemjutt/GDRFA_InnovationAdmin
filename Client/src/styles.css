@@ -75,8 +75,50 @@ th {
 }
 
 thead {
-  background-color: #f3f3f9;
+  background-color: #e19a40de;
   color: white;
+}
+
+.page-item.active .page-link {
+  background-color: #e19a40de !important;
+  border-color: #e19a40de !important;
+  color: black !important;
+}
+.btn-danger {
+  background-color: #e19a40de !important;
+  border-color: #e19a40de !important;
+  color: black !important;
+  border: 1px;
+}
+.btn-light {
+  border-color: #e19a40de !important;
+  color: black !important;
+  background-color: transparent !important;
+}
+.btn-outline-secondary {
+  border-color: #e19a40de !important;
+  background-color: transparent !important;
+  border-color: #e19a40de !important;
+  color: black !important;
+}
+.bi {
+  color: #f2a452cc !important;
+  font-size: 1.2em; /* Adjust size */
+}
+.bi :hover {
+  color: #f18008 !important;
+  font-size: 1.2em;
+}
+
+.btn-light:hover {
+  color: #000 !important;
+  background-color: #d5751040 !important;
+  border-color: #c36400 !important;
+}
+
+.form-check-input:checked {
+  border-color: #e19a40de !important;
+  background-color: #e19a40de !important;
 }
 .mt-40 {
   margin-top: 40px;
@@ -90,4 +132,19 @@ thead {
 
 .mt-10 {
   margin-top: 10px;
+}
+.row-4 {
+  height: 194px;
+}
+
+.csm-icon-color {
+  color: #966f2e !important;
+}
+
+.navbar-menu .navbar-nav .nav-link.active {
+  color: #a87935 !important;
+}
+
+.navbar-menu .navbar-nav .nav-link:hover {
+  color: #a87935 !important;
 }

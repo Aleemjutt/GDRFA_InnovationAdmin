@@ -12,6 +12,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FilePondModule } from 'ngx-filepond';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
+import { RecursiveMenuComponent } from '../recursive-menu/recursive-menu.component';
 
 @NgModule({
   declarations: [],
@@ -28,13 +29,15 @@ import { AccordionModule } from 'ngx-bootstrap/accordion';
     }),
 
     NgxSpinnerModule.forRoot({
-      type: 'line-scale-party',
+      //type: 'line-scale-party',
+      type: 'custom',
     }),
     NgxChartsModule,
     BrowserAnimationsModule,
     FilePondModule,
     BsDatepickerModule.forRoot(),
     AccordionModule.forRoot(),
+    CommonModule,
   ],
 
   exports: [

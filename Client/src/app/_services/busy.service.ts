@@ -11,7 +11,9 @@ export class BusyService {
   busy() {
     this.busyRequestCount++;
     this.spinerService.show(undefined, {
-      type: 'line-scale-party',
+      // type: 'line-scale-party',
+      type: 'custom',
+      template: '<img src="assets/images/loader.gif" alt="Loading...">',
       bdColor: 'rgba(255,255,255,0)',
       color: '#333333',
     });

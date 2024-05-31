@@ -1,1 +1,531 @@
-<p>register-intellectual-property-list works!</p>
+<div class="main-content">
+  <div class="page-content">
+    <div class="container-fluid">
+      <div class="card">
+        <div class="card-header align-items-center d-flex">
+          <h4 class="card-title mb-0 flex-grow-1">
+            Intellectual Property List
+          </h4>
+          <div class="flex-shrink-0">
+            <div class="d-flex align-items-center">
+              <input
+                type="text"
+                class="form-control me-3"
+                data-provider="flatpickr"
+                data-date-format="d M, Y"
+                data-range-date="true"
+                placeholder="Select Date Range"
+              />
+
+              <!-- <button
+                type="button"
+                class="btn btn-light waves-effect waves-light ms-2 me-2 col-1"
+              >
+                <i class="ri-search-2-line"></i>
+              </button>
+              |
+              <a
+                type="button"
+                class="btn btn-danger waves-effect waves-light ms-2 col-3"
+                id="btnAdd"
+                style="float: inline-end"
+                (click)="openModal(template)"
+              >
+                Add New
+              </a> -->
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <table class="table table-nowrap" id="propertiesTypeDataTable">
+            <thead>
+              <tr>
+                <th>{{ "ID" }}</th>
+                <th>{{ "Type En" }}</th>
+                <th>{{ "Type Ar" }}</th>
+                <!-- <th>{{ "Actions" }}</th> -->
+                <th>{{ "Actions" }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- <tr>
+                <th scope="row"><a href="#" class="fw-semibold">#VZ2110</a></th>
+                <td>Lorem ipsum dolor sit amet consectetur adipiscing elit.</td>
+                <td>
+                  <a href="details.html" class="link-warning"
+                    >View in Detail
+                    <i class="ri-arrow-right-line align-middle"></i
+                  ></a>
+                </td>
+              </tr> -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!-- container-fluid -->
+  </div>
+  <!-- End Page-content -->
+</div>
+
+<ng-template #templateDetails class="modal-lg">
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Property Detail</h4>
+    <button
+      type="button"
+      class="btn-close close pull-right"
+      aria-label="Close"
+      (click)="modalRef?.hide()"
+    >
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <tabset>
+      <tab heading="Basic Information">
+        <h5>Full Name</h5>
+        <div class="row mt-3">
+          <div class="col-md-6">
+            <label for="basiInput" class="form-label text-muted mb-0"
+              >Full name in Arabic</label
+            >
+            <div class="mt-2">
+              {{ registerIntecllectualPropertyModel?.fullNameAr }}
+            </div>
+          </div>
+          <div class="col-md-6">
+            <label for="basiInput" class="form-label text-muted mb-0"
+              >Full name in English</label
+            >
+
+            <div class="mt-2">
+              {{ registerIntecllectualPropertyModel?.fullNameEn }}
+            </div>
+          </div>
+        </div>
+
+        <hr class="bg-soft-dark" />
+
+        <h5>The name is in Arabic</h5>
+
+        <div class="row mt-3">
+          <div class="col-md-4">
+            <label for="basiInput" class="form-label text-muted mb-0"
+              >First Name</label
+            >
+            <div class="mt-2">
+              {{ registerIntecllectualPropertyModel?.firstNameAr }}
+            </div>
+          </div>
+          <div class="col-md-4">
+            <label for="basiInput" class="form-label text-muted mb-0"
+              >Second name</label
+            >
+
+            <div class="mt-2">
+              {{ registerIntecllectualPropertyModel?.secondNameAr }}
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <label for="basiInput" class="form-label text-muted mb-0"
+              >Third name</label
+            >
+
+            <div class="mt-2">
+              {{ registerIntecllectualPropertyModel?.thirdNameAr }}
+            </div>
+          </div>
+        </div>
+
+        <hr class="bg-soft-dark" />
+
+        <h5>The name is in English</h5>
+
+        <div class="row mt-3">
+          <div class="col-md-4">
+            <label for="basiInput" class="form-label text-muted mb-0"
+              >First Name</label
+            >
+            <div class="mt-2">
+              {{ registerIntecllectualPropertyModel?.firstNameEn }}
+            </div>
+          </div>
+          <div class="col-md-4">
+            <label for="basiInput" class="form-label text-muted mb-0"
+              >Second name</label
+            >
+
+            <div class="mt-2">
+              {{ registerIntecllectualPropertyModel?.secondNameEn }}
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <label for="basiInput" class="form-label text-muted mb-0"
+              >Third name</label
+            >
+
+            <div class="mt-2">
+              {{ registerIntecllectualPropertyModel?.thirdNameEn }}
+            </div>
+          </div>
+        </div>
+
+        <div class="row mt-3">
+          <div class="col-md-4">
+            <label for="basiInput" class="form-label text-muted mb-0"
+              >Family Name</label
+            >
+            <div class="mt-2">
+              {{ registerIntecllectualPropertyModel?.familyNameEn }}
+            </div>
+          </div>
+          <div class="col-md-4">
+            <label for="basiInput" class="form-label text-muted mb-0"
+              >Date of birth</label
+            >
+
+            <div class="mt-2">
+              {{ registerIntecllectualPropertyModel?.dateofBirth }}
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <label for="sex" class="form-label text-muted mb-0">Sex</label>
+            <div class="mt-2">
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  id="male"
+                  formControlName="sex"
+                  value="Male"
+                  [checked]="registerIntecllectualPropertyModel?.gender === 1"
+                />
+                <label class="form-check-label" for="male">Male</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  id="female"
+                  formControlName="sex"
+                  value="Female"
+                  [checked]="registerIntecllectualPropertyModel?.gender === 2"
+                />
+                <label class="form-check-label" for="female">Female</label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mt-3">
+          <div class="col-md-4">
+            <label for="sex" class="form-label text-muted mb-0"
+              >The person of determination</label
+            >
+            <div class="mt-2">
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  id="yes"
+                  [checked]="
+                    registerIntecllectualPropertyModel?.personsofDetermination ===
+                    true
+                  "
+                />
+                <label class="form-check-label" for="male">Yes</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  id="no"
+                  [checked]="
+                    registerIntecllectualPropertyModel?.personsofDetermination ===
+                    false
+                  "
+                />
+                <label class="form-check-label" for="female">No</label>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <label for="basiInput" class="form-label text-muted mb-0"
+              >Mobile</label
+            >
+            <div class="mt-2">
+              {{ registerIntecllectualPropertyModel?.mobile }}
+            </div>
+          </div>
+          <div class="col-md-4">
+            <label for="basiInput" class="form-label text-muted mb-0"
+              >E-mail</label
+            >
+
+            <div class="mt-2">
+              {{ registerIntecllectualPropertyModel?.email }}
+            </div>
+          </div>
+        </div>
+
+        <div class="row mt-3">
+          <div class="col-md-4">
+            <label for="basiInput" class="form-label text-muted mb-0"
+              >Emirates ID number</label
+            >
+            <div class="mt-2">
+              {{ registerIntecllectualPropertyModel?.emiratesIDNumber }}
+            </div>
+          </div>
+          <div class="col-md-4">
+            <label for="basiInput" class="form-label text-muted mb-0"
+              >Passport number</label
+            >
+
+            <div class="mt-2">
+              {{ registerIntecllectualPropertyModel?.passportNumber }}
+            </div>
+          </div>
+        </div>
+      </tab>
+
+      <tab heading="Classifer Data">
+        <div class="row">
+          <div class="row mt-3">
+            <div class="col-md-4">
+              <label for="basiInput" class="form-label text-muted mb-0"
+                >اسم المصنف In the arabic language*</label
+              >
+              <div class="mt-2">
+                {{
+                  registerIntecllectualPropertyModel?.classifierData
+                    ?.nameofworkAr
+                }}
+              </div>
+            </div>
+            <div class="col-md-4">
+              <label for="basiInput" class="form-label text-muted mb-0"
+                >The name of the work in English</label
+              >
+
+              <div class="mt-6">
+                {{
+                  registerIntecllectualPropertyModel?.classifierData
+                    ?.nameofworkEn
+                }}
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <label for="basiInput" class="form-label text-muted mb-0"
+                >Workbook type*</label
+              >
+
+              <div class="mt-2">
+                {{
+                  globalService.getWorkbookType(
+                    registerIntecllectualPropertyModel?.classifierData
+                      ?.workbookType
+                  )
+                }}
+              </div>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-md-6">
+              <label for="basiInput" class="form-label text-muted mb-0"
+                >Description of the workbook</label
+              >
+              <div class="mt-2">
+                {{
+                  registerIntecllectualPropertyModel?.classifierData
+                    ?.descriptionWorkbook
+                }}
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label for="basiInput" class="form-label text-muted mb-0">
+                Workbook content</label
+              >
+              <div class="mt-2">
+                {{
+                  registerIntecllectualPropertyModel?.classifierData
+                    ?.workbookContent
+                }}
+              </div>
+            </div>
+          </div>
+
+          <hr class="bg-soft-dark" />
+
+          <div class="row mt-3">
+            <h5>Attachments</h5>
+          </div>
+
+          <div class="row mt-2">
+            <div class="col-md-12">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">File</th>
+                    <th scope="col">Download</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    *ngFor="
+                      let attachment of registerIntecllectualPropertyModel
+                        ?.classifierData?.attachmentClassifiers
+                    "
+                  >
+                    <td>
+                      <!-- Display file icon based on extension -->
+                      <i
+                        *ngIf="attachment.extension === '.jpg'"
+                        class="bi bi-file-image"
+                      ></i>
+                      <i
+                        *ngIf="attachment.extension === '.png'"
+                        class="bi bi-file-image"
+                      ></i>
+                      <i
+                        *ngIf="attachment.extension === '.pdf'"
+                        class="bi bi-file-pdf"
+                      ></i>
+                      <!-- Add more conditions for other file types as needed -->
+                      <!-- Display attachment title -->
+                      <span>{{ attachment.title }}</span>
+                    </td>
+                    <td>
+                      <!-- Download button with download icon -->
+                      <button
+                        class="btn btn-primary btn-sm"
+                        (click)="downloadFile(attachment.url)"
+                      >
+                        <i class="bi bi-download"></i> Download
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </tab>
+
+      <tab heading="Author Data">
+        <div class="row">
+          <div class="row mt-3">
+            <div class="col-md-6">
+              <label for="basiInput" class="form-label text-muted mb-0"
+                >Nature of the author</label
+              >
+              <div class="mt-2">
+                {{
+                  globalService.getAuthorNature(
+                    registerIntecllectualPropertyModel?.authorData?.authorNature
+                  )
+                }}
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label for="basiInput" class="form-label text-muted mb-0"
+                >Author type
+              </label>
+
+              <div class="mt-2">
+                {{
+                  globalService.getAuthorType(
+                    registerIntecllectualPropertyModel?.authorData?.authorType
+                  )
+                }}
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-3">
+            <div class="col-md-6">
+              <label for="basiInput" class="form-label text-muted mb-0"
+                >The name is in Arabic</label
+              >
+              <div class="mt-2">
+                {{ registerIntecllectualPropertyModel?.authorData?.authorType }}
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label for="basiInput" class="form-label text-muted mb-0"
+                >Name in English
+              </label>
+
+              <div class="mt-2">
+                {{ registerIntecllectualPropertyModel?.authorData?.authorType }}
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-3">
+            <div class="col-md-6">
+              <label for="basiInput" class="form-label text-muted mb-0"
+                >Accommodation type</label
+              >
+              <div class="mt-2">
+                {{ registerIntecllectualPropertyModel?.authorData?.authorType }}
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label for="basiInput" class="form-label text-muted mb-0"
+                >Nationality
+              </label>
+
+              <div class="mt-2">
+                {{
+                  globalService.getCountryName(
+                    registerIntecllectualPropertyModel?.authorData?.nationality
+                  )
+                }}
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-3">
+            <div class="col-md-6">
+              <label for="basiInput" class="form-label text-muted mb-0"
+                >Mobile</label
+              >
+              <div class="mt-2">
+                {{ registerIntecllectualPropertyModel?.authorData?.mobile }}
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label for="basiInput" class="form-label text-muted mb-0"
+                >E-mail
+              </label>
+
+              <div class="mt-2">
+                {{ registerIntecllectualPropertyModel?.authorData?.email }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </tab>
+    </tabset>
+  </div>
+
+  <div class="row">
+    <div class="modal-footer">
+      <div class="button-container">
+        <button
+          type="button"
+          class="btn btn-light button"
+          aria-label="Close"
+          (click)="modalRef?.hide()"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>

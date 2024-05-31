@@ -37,6 +37,16 @@ import { DubaiResidencyListsComponent } from './_futureFocused/dubai-residency-l
 import { EstablishedChallengedAnswerListComponent } from './_futureFocused/established-challenged-answer-list/established-challenged-answer-list.component';
 import { InnovativeEntrepreneurshipProgramListComponent } from './_innovationPossiblities/innovative-entrepreneurship-program-list/innovative-entrepreneurship-program-list.component';
 import { UsersListComponent } from './_users/users-list/users-list.component';
+import { DiplomaCreativeSupportComponent } from './_creativeSupport/diploma-creative-support/diploma-creative-support.component';
+import { OverintellectualPropertyIndexComponent } from './_intellectualProperty/overintellectual-property-index/overintellectual-property-index.component';
+import { TypeOfPropertiesComponent } from './_intellectualProperty/type-of-properties/type-of-properties.component';
+import { RegisterIntellectualPropertyListComponent } from './_intellectualProperty/register-intellectual-property-list/register-intellectual-property-list.component';
+import { ResearchAndStudiesComponent } from './_knowledge/research-and-studies/research-and-studies.component';
+import { InnovationBriefComponent } from './_knowledge/innovation-brief/innovation-brief.component';
+import { InnovationversionsComponent } from './_knowledge/innovationversions/innovationversions.component';
+import { GovermentComponent } from './_knowledge/goverment/goverment.component';
+import { ResearchCenterComponent } from './_researchCenter/research-center/research-center.component';
+import { PresentationListComponent } from './_researchCenter/presentation-list/presentation-list.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -264,10 +274,74 @@ const routes: Routes = [
   ///******** Idea End********///
 
   {
+    path: 'creativeSupport/diplomaInCreativeSupport',
+    component: DiplomaCreativeSupportComponent,
+    //canDeactivate: [preventUnsavedChangesGuard],
+  },
+
+  ///******** Intellectual Properties Start********///
+
+  {
+    path: 'intellectualProperty/overView',
+    component: OverintellectualPropertyIndexComponent,
+    //canDeactivate: [preventUnsavedChangesGuard],
+  },
+  {
+    path: 'intellectualProperty/type',
+    component: TypeOfPropertiesComponent,
+    //canDeactivate: [preventUnsavedChangesGuard],
+  },
+  {
+    path: 'intellectualProperty/registeredList',
+    component: RegisterIntellectualPropertyListComponent,
+    //canDeactivate: [preventUnsavedChangesGuard],
+  },
+  ///******** Intellectual Properties End********///
+  {
+    path: 'knowlege/researchAndStudies',
+    component: ResearchAndStudiesComponent,
+    //canDeactivate: [preventUnsavedChangesGuard],
+  },
+
+  {
+    path: 'knowlege/innovationBrief',
+    component: InnovationBriefComponent,
+    //canDeactivate: [preventUnsavedChangesGuard],
+  },
+
+  {
+    path: 'knowlege/versions',
+    component: InnovationversionsComponent,
+    //canDeactivate: [preventUnsavedChangesGuard],
+  },
+
+  {
+    path: 'knowlege/goverment',
+    component: GovermentComponent,
+    //canDeactivate: [preventUnsavedChangesGuard],
+  },
+
+  {
+    path: 'researchCeneter',
+    component: ResearchCenterComponent,
+    //canDeactivate: [preventUnsavedChangesGuard],
+  },
+
+  {
+    path: 'presentationList',
+    component: PresentationListComponent,
+    //canDeactivate: [preventUnsavedChangesGuard],
+  },
+
+  ///****** Knowledge Start*******///
+
+  {
     path: 'users/userList',
     component: UsersListComponent,
     //canDeactivate: [preventUnsavedChangesGuard],
   },
+
+  ///****** Knowledge End*******///
 
   { path: '**', component: HomeComponent, pathMatch: 'full' },
   // {

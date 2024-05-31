@@ -1,0 +1,33 @@
+<ul class="navbar-nav">
+  <ng-container *ngFor="let menuItem of menuItems">
+    <li class="nav-item">
+      <a
+        class="nav-link menu-link"
+        (click)="toggleMenu(menuItem)"
+        [routerLink]="menuItem.routerLink ? menuItem.routerLink : null"
+        [attr.data-bs-toggle]="menuItem.subMenuId ? 'collapse' : null"
+        [attr.href]="'#' + menuItem.subMenuId"
+        role="button"
+        [attr.aria-expanded]="menuItem === openMenu ? 'true' : 'false'"
+        [attr.aria-controls]="menuItem.subMenuId ? menuItem.subMenuId : null"
+        [ngClass]="{ active: menuItem === openMenu }"
+      >
+        <i *ngIf="menuItem.icon" [class]="menuItem.icon"></i>
+        <span>{{ menuItem.label }}</span>
+      </a>
+      <div
+        class="collapse"
+        [id]="menuItem.subMenuId"
+        *ngIf="menuItem.subMenuId"
+        [class.show]="openSubMenus[menuItem.subMenuId]"
+      >
+        <app-recursive-menu
+          *ngIf="menuItem.subMenuItems"
+          [menuItems]="menuItem.subMenuItems"
+          [openMenu]="openMenu"
+          (menuToggled)="onMenuToggled($event)"
+        ></app-recursive-menu>
+      </div>
+    </li>
+  </ng-container>
+</ul>

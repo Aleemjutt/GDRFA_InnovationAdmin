@@ -1,0 +1,58 @@
+#scrollbar {
+  max-height: 100vh; /* Ensure the sidebar takes full height of the viewport */
+  overflow-y: auto; /* Enable vertical scrolling */
+}
+
+#scrollbar .container-fluid {
+  padding-right: 0.5rem; /* Optional: Adjust padding to ensure no horizontal scroll */
+  padding-left: 0.5rem; /* Optional: Adjust padding to ensure no horizontal scroll */
+}
+
+#scrollbar .navbar-nav {
+  padding-right: 0.5rem; /* Optional: Adjust padding to ensure no horizontal scroll */
+}
+
+/* For Webkit-based browsers (Chrome, Safari) */
+#scrollbar::-webkit-scrollbar {
+  width: 8px; /* Slim width for the scrollbar */
+}
+
+#scrollbar::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Background color of the track */
+  border-radius: 10px; /* Rounded corners */
+}
+
+#scrollbar::-webkit-scrollbar-thumb {
+  background: #888; /* Color of the scrollbar thumb */
+  border-radius: 10px; /* Rounded corners */
+}
+
+#scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #9ea1ab; /* Darker color when hovered */
+}
+
+/* For Firefox */
+#scrollbar {
+  scrollbar-width: thin; /* Slim width */
+  scrollbar-color: #9ea1ab #f1f1f1; /* Thumb and track colors */
+}
+
+/* General styles for the scrollbar container */
+#scrollbar {
+  max-height: 100vh;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+}
+
+#scrollbar .container-fluid {
+  padding-right: 0.5rem;
+  padding-left: 0.5rem;
+}
+
+#scrollbar .navbar-nav {
+  padding-right: 0.5rem;
+}
+
+.csm-icon-color {
+  color: #966f2e;
+}

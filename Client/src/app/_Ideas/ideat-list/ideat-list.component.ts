@@ -193,6 +193,12 @@ export class IdeatListComponent implements OnInit {
                     row.workFlowStatusName +
                     '</span>'
                   );
+                } else if (row.workFlowStatus === WorkFlowStatus.Modification) {
+                  return (
+                    '<span style="color:blue;font-weight: 600">' +
+                    row.workFlowStatusName +
+                    '</span>'
+                  );
                 } else if (
                   row.workFlowStatus === WorkFlowStatus.UnderProcesses
                 ) {

@@ -6,11 +6,12 @@ import { CommonModule } from '@angular/common';
 import { InnovationConsultingModel } from 'src/app/_models/About/innovatoinConsulting';
 import { InnovationConsultingService } from 'src/app/_services/_about/innovation-consulting.service';
 import { ResponseResult } from 'src/app/_models/responseResult';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-innovation-consulting-lists',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, TranslateModule],
   templateUrl: './innovation-consulting-lists.component.html',
   styleUrl: './innovation-consulting-lists.component.css',
 })

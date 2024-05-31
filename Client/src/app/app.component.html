@@ -1,5 +1,8 @@
 <ngx-spinner type="line-scale-party">
-  <h3>{{ "Loading..." | translate }}</h3>
+  <h3>
+    <!-- {{ "Loading..." | translate }} -->
+    <img src="assets/images/loader.gif" alt="Loading..." />
+  </h3>
 </ngx-spinner>
 <app-log-in
   *ngIf="!(accountServices.currentUser$ | async)"

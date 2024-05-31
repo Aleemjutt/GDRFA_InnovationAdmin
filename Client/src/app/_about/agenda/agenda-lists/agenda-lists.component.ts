@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormGroup, FormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 import { FilePondOptions } from 'filepond';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { FilePondModule } from 'ngx-filepond';
@@ -17,7 +18,7 @@ import { UploadServiceService } from 'src/app/_services/upload-service.service';
 @Component({
   selector: 'app-agenda-lists',
   standalone: true,
-  imports: [FormsModule, FilePondModule, CommonModule],
+  imports: [FormsModule, FilePondModule, CommonModule, TranslateModule],
   templateUrl: './agenda-lists.component.html',
   styleUrl: './agenda-lists.component.css',
 })
@@ -389,13 +390,6 @@ export class AgendaListsComponent implements OnInit {
   }
 
   openModal(template: TemplateRef<void>) {
-    // this.agendaModel = {
-    //   id: 0,
-    //   descriptionEn: '',
-    //   descriptionAr: '',
-    //   imageUrl: '',
-    //   imageUrlView: '',
-    // };
     this.objeInit();
 
     this.modalRef = this.modalService.show(

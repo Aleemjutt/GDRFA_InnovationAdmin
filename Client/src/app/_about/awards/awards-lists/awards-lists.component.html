@@ -3,34 +3,11 @@
     <div class="container-fluid">
       <div class="card">
         <div class="card-header align-items-center d-flex">
-          <h4 class="card-title mb-0 flex-grow-1">Awards List</h4>
+          <h4 class="card-title mb-0 flex-grow-1">
+            {{ "AwardsList" | translate }}
+          </h4>
           <div class="flex-shrink-0">
             <div class="d-flex align-items-center">
-              <!-- <input
-                type="text"
-                class="form-control me-3"
-                data-provider="flatpickr"
-                data-date-format="d M, Y"
-                data-range-date="true"
-                placeholder="Select Date Range"
-              />
-              <select
-                class="form-select mb-0 me-2"
-                aria-label="Default select example"
-              >
-                <option selected>Status</option>
-                <option value="1">Submitted</option>
-                <option value="2">In Review</option>
-                <option value="3">Approved</option>
-                <option value="4">Rejected</option>
-              </select>
-              <button
-                type="button"
-                class="btn btn-light waves-effect waves-light ms-2 me-2 col-1"
-              >
-                <i class="ri-search-2-line"></i>
-              </button> -->
-
               <a
                 type="button"
                 class="btn btn-danger waves-effect waves-light ms-2 col-4"
@@ -38,7 +15,7 @@
                 style="float: inline-end"
                 (click)="openModal(template)"
               >
-                Add New
+                {{ "AddNew" | translate }}
               </a>
 
               <a
@@ -48,7 +25,7 @@
                 style="float: inline-end"
                 (click)="openMainModal(templateMainAddEdit)"
               >
-                Add Update Main Details
+                {{ "AddUpdateMainDetails" | translate }}
               </a>
             </div>
           </div>
@@ -57,10 +34,10 @@
           <table class="table table-nowrap" id="awardsDataTable">
             <thead>
               <tr>
-                <th>{{ "ID" }}</th>
-                <th>{{ "Year" }}</th>
-                <th>{{ "Classification" }}</th>
-                <th>{{ "Actions" }}</th>
+                <th>{{ "ID" | translate }}</th>
+                <th>{{ "Year" | translate }}</th>
+                <th>{{ "Classification" | translate }}</th>
+                <th>{{ "Actions" | translate }}</th>
               </tr>
             </thead>
             <tbody></tbody>
@@ -75,10 +52,10 @@
 <ng-template #template class="modal-lg">
   <div class="modal-header">
     <h4 class="modal-title pull-left" *ngIf="awardDetailModel.id == 0">
-      Add New Awards
+      {{ "AddNewAwards" | translate }}
     </h4>
     <h4 class="modal-title pull-left" *ngIf="awardDetailModel.id != 0">
-      Update Awards
+      {{ "UpdateAwards" | translate }}
     </h4>
     <button
       type="button"
@@ -94,21 +71,33 @@
       <div class="row">
         <div class="col-md-6">
           <div class="mt-3">
-            <label for="basiInput" class="form-label">Classification</label>
+            <label for="basiInput" class="form-label">{{
+              "Classification" | translate
+            }}</label>
             <select
               class="form-control"
               [(ngModel)]="awardDetailModel.awardClassification"
             >
-              <option [ngValue]="1">Everyone</option>
-              <option [ngValue]="2">International</option>
-              <option [ngValue]="3">Climatic</option>
-              <option [ngValue]="4">Local</option>
+              <option [ngValue]="1">
+                {{ "Everyone" | translate }}
+              </option>
+              <option [ngValue]="2">
+                {{ "International" | translate }}
+              </option>
+              <option [ngValue]="3">
+                {{ "Climatic" | translate }}
+              </option>
+              <option [ngValue]="4">
+                {{ "Local" | translate }}
+              </option>
             </select>
           </div>
         </div>
         <div class="col-md-6">
           <div class="mt-3">
-            <label for="basiInput" class="form-label">Year</label>
+            <label for="basiInput" class="form-label">{{
+              "Year" | translate
+            }}</label>
             <select class="form-control" [(ngModel)]="awardDetailModel.year">
               <option [ngValue]="2023">2023</option>
               <option [ngValue]="2024">2024</option>
@@ -125,7 +114,9 @@
       <div class="mt-3">
         <div class="mb-3">
           <div *ngIf="!awardDetailModel.imageUrl">
-            <label for="formFile" class="form-label">Choose file</label>
+            <label for="formFile" class="form-label">{{
+              "Choosefile" | translate
+            }}</label>
             <file-pond
               #myPond
               label-idle='Drag & Drop your files or <span class="filepond--label-action"> Browse </span><br> <b>Maximum 5 files upload</b>'
@@ -151,7 +142,7 @@
               (click)="removeImage()"
               class="btn btn-danger"
               style="display: block; margin-top: 10px; width: 150px"
-              >Remove</a
+              >{{ "Remove" | translate }}</a
             >
           </div>
         </div>
@@ -168,7 +159,7 @@
           (click)="add()"
           *ngIf="awardDetailModel.id == 0"
         >
-          Save
+          {{ "Save" | translate }}
         </button>
 
         <button
@@ -177,7 +168,7 @@
           (click)="update()"
           *ngIf="awardDetailModel.id != 0"
         >
-          Update
+          {{ "Update" | translate }}
         </button>
         <button
           type="button"
@@ -185,7 +176,7 @@
           aria-label="Close"
           (click)="modalRef?.hide()"
         >
-          Close
+          {{ "Close" | translate }}
         </button>
       </div>
     </div>
@@ -194,7 +185,9 @@
 
 <ng-template #templateDetails class="modal-lg">
   <div class="modal-header">
-    <h4 class="modal-title pull-left">Awards Details</h4>
+    <h4 class="modal-title pull-left">
+      {{ "AwardsDetails" | translate }}
+    </h4>
     <button
       type="button"
       class="btn-close close pull-right"
@@ -208,20 +201,22 @@
     <div class="row">
       <div class="col-md-6">
         <label for="basiInput" class="form-label text-muted mb-0">
-          Classificassion
+          {{ "Classificassion" | translate }}
         </label>
         <div>{{ awardDetailModel.classificationValue }}</div>
       </div>
       <div class="col-md-6">
-        <label for="basiInput" class="form-label text-muted mb-0">Year</label>
+        <label for="basiInput" class="form-label text-muted mb-0">{{
+          "Year" | translate
+        }}</label>
         <div>{{ awardDetailModel.year }}</div>
       </div>
     </div>
     <div class="row">
       <div class="col-md-6">
-        <label for="basiInput" class="form-label text-muted mb-0"
-          >Attachment</label
-        >
+        <label for="basiInput" class="form-label text-muted mb-0">{{
+          "Attachment" | translate
+        }}</label>
         <div class="fs-15" *ngIf="awardDetailModel.imageUrl">
           <img
             [src]="
@@ -246,7 +241,7 @@
           aria-label="Close"
           (click)="modalRef?.hide()"
         >
-          Close
+          {{ "Close" | translate }}
         </button>
       </div>
     </div>
@@ -257,7 +252,9 @@
 
 <ng-template #templateMainAddEdit class="modal-lg">
   <div class="modal-header bg-light">
-    <h4 class="modal-title pull-left">Add Awards Main Text</h4>
+    <h4 class="modal-title pull-left">
+      {{ "AddAwardsMainText" | translate }}
+    </h4>
     <button
       type="button"
       class="btn-close close pull-right"
@@ -276,7 +273,9 @@
 
             <div class="col-md-6">
               <div class="mt-3">
-                <label for="basiInput" class="form-label">Description En</label>
+                <label for="basiInput" class="form-label">{{
+                  "DescriptionEn" | translate
+                }}</label>
                 <textarea
                   class="form-control"
                   [(ngModel)]="awardMainModel.descriptionEn"
@@ -286,7 +285,9 @@
             </div>
             <div class="col-md-6">
               <div class="mt-3">
-                <label for="basiInput" class="form-label">Description Ar</label>
+                <label for="basiInput" class="form-label">{{
+                  "DescriptionAr" | translate
+                }}</label>
                 <textarea
                   class="form-control"
                   [(ngModel)]="awardMainModel.descriptionAr"
@@ -307,7 +308,7 @@
             (click)="addMainDescriptionAddUpdate()"
             *ngIf="awardMainModel.id == 0"
           >
-            Save
+            {{ "Save" | translate }}
           </button>
 
           <button
@@ -316,7 +317,7 @@
             (click)="addMainDescriptionAddUpdate()"
             *ngIf="awardMainModel.id != 0"
           >
-            Update
+            {{ "Update" | translate }}
           </button>
           <button
             type="button"
@@ -324,7 +325,7 @@
             aria-label="Close"
             (click)="modalRef?.hide()"
           >
-            Close
+            {{ "Close" | translate }}
           </button>
         </div>
       </div>
@@ -347,20 +348,22 @@
   <div class="modal-body">
     <div class="container-fluid">
       <div class="card-header align-items-center d-flex">
-        <h4 class="card-title mb-0 flex-grow-1">Awards Details</h4>
+        <h4 class="card-title mb-0 flex-grow-1">
+          {{ "AwardsDetails" | translate }}
+        </h4>
       </div>
       <div class="card-body">
         <div class="row">
           <div class="col-md-6">
             <label for="basiInput" class="form-label text-muted mb-0">
-              Description En
+              {{ "DescriptionEn" | translate }} Description En
             </label>
             <div>{{ awardMainModel.descriptionEn }}</div>
           </div>
           <div class="col-md-6">
-            <label for="basiInput" class="form-label text-muted mb-0"
-              >Description Ar</label
-            >
+            <label for="basiInput" class="form-label text-muted mb-0">{{
+              "DescriptionAr" | translate
+            }}</label>
             <div>{{ awardMainModel.descriptionAr }}</div>
           </div>
         </div>
@@ -377,7 +380,7 @@
             aria-label="Close"
             (click)="modalRef?.hide()"
           >
-            Close
+            {{ "Close" | translate }}
           </button>
         </div>
       </div>

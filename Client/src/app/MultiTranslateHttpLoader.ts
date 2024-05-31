@@ -25,14 +25,84 @@ export class MultiTranslateHttpLoader implements TranslateLoader {
 
     if (this.withCommon) {
       // order matters! like this, all translations from common can be overrode with features' translations
-      resources = [
+      resources: [
         { prefix: './assets/il8n/common/', suffix: '.json' },
         { prefix: './assets/il8n/login/', suffix: '.json' },
         { prefix: './assets/il8n/menu/', suffix: '.json' },
-        { prefix: './assets/il8n/operation/', suffix: '.json' },
-        { prefix: './assets/il8n/request/', suffix: '.json' },
+        {
+          prefix: './assets/il8n/aboutUs/aboutInnovationCenter/',
+          suffix: '.json',
+        },
+        { prefix: './assets/il8n/aboutUs/agenda/', suffix: '.json' },
+        { prefix: './assets/il8n/aboutUs/archives/', suffix: '.json' },
+        { prefix: './assets/il8n/aboutUs/awards/', suffix: '.json' },
+        { prefix: './assets/il8n/aboutUs/credits/', suffix: '.json' },
+        {
+          prefix: './assets/il8n/aboutUs/innovationConsulting/',
+          suffix: '.json',
+        },
+        { prefix: './assets/il8n/aboutUs/membership/', suffix: '.json' },
+        { prefix: './assets/il8n/aboutUs/partners/', suffix: '.json' },
+        { prefix: './assets/il8n/consultingRequest/', suffix: '.json' },
+        {
+          prefix: './assets/il8n/creativeSupport/DiplomaInCreativeSupport/',
+          suffix: '.json',
+        },
+        {
+          prefix: './assets/il8n/futureFocused/dubaiResidancy/',
+          suffix: '.json',
+        },
+        {
+          prefix: './assets/il8n/futureFocused/establishedChallengies/',
+          suffix: '.json',
+        },
+        { prefix: './assets/il8n/idea/ideaJurney/', suffix: '.json' },
+        { prefix: './assets/il8n/idea/ideaPioneers/', suffix: '.json' },
+        { prefix: './assets/il8n/idea/myThoughts/', suffix: '.json' },
+        { prefix: './assets/il8n/idea/targetCompain/', suffix: '.json' },
+        {
+          prefix: './assets/il8n/innovationPossiblities/',
+          suffix: '.json',
+        },
 
-        //#endregion *** End***
+        {
+          prefix:
+            './assets/il8n/intellectualProperty/overViewofIntelllectualProperty/',
+          suffix: '.json',
+        },
+        {
+          prefix: './assets/il8n/intellectualProperty/registerPropertiesList/',
+          suffix: '.json',
+        },
+        {
+          prefix:
+            './assets/il8n/intellectualProperty/typeofIntellectualProperty/',
+          suffix: '.json',
+        },
+        { prefix: './assets/il8n/knowledge/goverment/', suffix: '.json' },
+        {
+          prefix: './assets/il8n/knowledge/innovationBrief/',
+          suffix: '.json',
+        },
+        {
+          prefix: './assets/il8n/knowledge/researchCenterAndStudies/',
+          suffix: '.json',
+        },
+        {
+          prefix: './assets/il8n/knowledge/version/',
+          suffix: '.json',
+        },
+
+        {
+          prefix: './assets/il8n/researchCenter/',
+          suffix: '.json',
+        },
+
+        {
+          prefix: './assets/il8n/settings/users/',
+          suffix: '.json',
+        },
+        //#endregion User Profile *** End***
       ];
     }
 

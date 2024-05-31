@@ -8,6 +8,11 @@ import {
   WorkFlowStatus,
 } from '../_models/Common/workflowStatus';
 import { environment } from 'src/environments/environment.development';
+import {
+  Discuss,
+  ResearchAndStudiesCategories,
+} from '../_models/knowledge/researchAndStudies';
+import { ResearchAreaCategory } from '../_models/ResearchCenter/presentation';
 
 @Injectable({
   providedIn: 'root',
@@ -219,6 +224,249 @@ export class GlobalServiceService implements OnInit {
 
     return statuName;
   }
+
+  getWorkbookType(workbookType: number) {
+    let workbookTypeName = '';
+    const language = this.getCurrentLanguage();
+
+    switch (workbookType) {
+      case 1:
+        workbookTypeName =
+          language === 'en' ? 'Written Works' : 'الأعمال المكتوبة';
+        break;
+      case 2:
+        workbookTypeName =
+          language === 'en' ? 'Audio Works' : 'الأعمال الصوتية';
+        break;
+      case 3:
+        workbookTypeName =
+          language === 'en' ? 'Computer Programs' : 'برامج الكمبيوتر';
+        break;
+      case 4:
+        workbookTypeName =
+          language === 'en' ? 'Visual Workbooks' : 'كتب العمل المرئية';
+        break;
+      case 5:
+        workbookTypeName =
+          language === 'en' ? 'Drawing Workbooks' : 'كتب الرسم';
+        break;
+      case 6:
+        workbookTypeName =
+          language === 'en'
+            ? 'Engineering Drawings Workbooks'
+            : 'كتب الرسومات الهندسية';
+        break;
+      case 7:
+        workbookTypeName =
+          language === 'en' ? 'Photographic Works' : 'الأعمال الفوتوغرافية';
+        break;
+      case 8:
+        workbookTypeName =
+          language === 'en' ? 'Musical Notes' : 'النوتات الموسيقية';
+        break;
+      case 9:
+        workbookTypeName = language === 'en' ? 'Fine Art' : 'الفن الجميل';
+        break;
+      default:
+        workbookTypeName = language === 'en' ? 'Unknown' : 'غير معروف';
+    }
+
+    return workbookTypeName;
+  }
+
+  getAuthorNature(authorNature: number) {
+    let authorNatureName = '';
+    const language = this.getCurrentLanguage();
+
+    switch (authorNature) {
+      case 1:
+        authorNatureName = language === 'en' ? 'Individual' : 'فرد';
+        break;
+      case 2:
+        authorNatureName = language === 'en' ? 'Corporation' : 'مؤسسة';
+        break;
+      default:
+        authorNatureName = language === 'en' ? 'Unknown' : 'غير معروف';
+    }
+
+    return authorNatureName;
+  }
+
+  getAuthorType(authorType: number) {
+    let authorTypeName = '';
+    const language = this.getCurrentLanguage();
+
+    switch (authorType) {
+      case 1:
+        authorTypeName = language === 'en' ? 'Writer' : 'الكاتب';
+        break;
+      case 2:
+        authorTypeName = language === 'en' ? 'Translator' : 'المترجم';
+        break;
+      case 3:
+        authorTypeName = language === 'en' ? 'Artist' : 'الفنان';
+        break;
+      case 4:
+        authorTypeName = language === 'en' ? 'Photographer' : 'المصور';
+        break;
+      case 5:
+        authorTypeName = language === 'en' ? 'Fine Artist' : 'الفنان الجميل';
+        break;
+      case 6:
+        authorTypeName =
+          language === 'en' ? 'Applied Artist' : 'الفنان التطبيقي';
+        break;
+      case 7:
+        authorTypeName = language === 'en' ? 'Calligrapher' : 'الخطاط';
+        break;
+      case 8:
+        authorTypeName =
+          language === 'en' ? 'Structural Engineer' : 'المهندس الإنشائي';
+        break;
+      case 9:
+        authorTypeName = language === 'en' ? 'Designer' : 'المصمم';
+        break;
+      case 10:
+        authorTypeName = language === 'en' ? 'Programmer' : 'المبرمج';
+        break;
+      case 11:
+        authorTypeName = language === 'en' ? 'Leading To' : 'المؤدي إلى';
+        break;
+      default:
+        authorTypeName = language === 'en' ? 'Unknown' : 'غير معروف';
+    }
+
+    return authorTypeName;
+  }
+
+  getCountryName(countryValue: number) {
+    let countryName = '';
+    const language = this.getCurrentLanguage();
+
+    switch (countryValue) {
+      case 1:
+        countryName = language === 'en' ? 'United Kingdom' : 'المملكة المتحدة';
+        break;
+      case 2:
+        countryName = language === 'en' ? 'France' : 'فرنسا';
+        break;
+      case 3:
+        countryName = language === 'en' ? 'Germany' : 'ألمانيا';
+        break;
+      case 4:
+        countryName = language === 'en' ? 'Italy' : 'إيطاليا';
+        break;
+      case 5:
+        countryName = language === 'en' ? 'Japan' : 'اليابان';
+        break;
+      case 6:
+        countryName = language === 'en' ? 'Spain' : 'إسبانيا';
+        break;
+      case 7:
+        countryName = language === 'en' ? 'United States' : 'الولايات المتحدة';
+        break;
+      case 8:
+        countryName = language === 'en' ? 'India' : 'الهند';
+        break;
+      case 9:
+        countryName = language === 'en' ? 'Pakistan' : 'باكستان';
+        break;
+      case 10:
+        countryName =
+          language === 'en'
+            ? 'The United Arab Emirates'
+            : 'الإمارات العربية المتحدة';
+        break;
+      case 11:
+        countryName =
+          language === 'en'
+            ? 'Kingdom of Saudi Arabia'
+            : 'المملكة العربية السعودية';
+        break;
+      default:
+        countryName = language === 'en' ? 'Unknown' : 'غير معروف';
+    }
+
+    return countryName;
+  }
+
+  getDiscuss(discussValue: number | null): string {
+    let discussName = '';
+    const language = this.getCurrentLanguage(); // Assume this function returns 'en' or 'ar'
+
+    switch (discussValue) {
+      case Discuss.InstitutionalSupportSector:
+        discussName =
+          language === 'en'
+            ? 'Institutional Support Sector'
+            : 'قطاع الدعم المؤسسي';
+        break;
+      case Discuss.ViolatorsAndForeignersFollowupSector:
+        discussName =
+          language === 'en'
+            ? 'Violators and Foreigners Follow-up Sector'
+            : 'قطاع متابعة المخالفين والأجانب';
+        break;
+      case Discuss.LandandAirPortssector:
+        discussName =
+          language === 'en'
+            ? 'Land and Air Ports Sector'
+            : 'قطاع الموانئ البرية والجوية';
+        break;
+      case Discuss.HumanAndFinancialResourcessector:
+        discussName =
+          language === 'en'
+            ? 'Human and Financial Resources Sector'
+            : 'قطاع الموارد البشرية والمالية';
+        break;
+      case Discuss.EntryandResidencePermitssector:
+        discussName =
+          language === 'en'
+            ? 'Entry and Residence Permits Sector'
+            : 'قطاع تصاريح الدخول والإقامة';
+        break;
+      case Discuss.NationalityAffairsSector:
+        discussName =
+          language === 'en'
+            ? 'Nationality Affairs Sector'
+            : 'قطاع شؤون الجنسية';
+        break;
+      case Discuss.Airportssector:
+        discussName = language === 'en' ? 'Airports Sector' : 'قطاع المطارات';
+        break;
+      default:
+        discussName = language === 'en' ? 'Unknown' : 'غير معروف';
+    }
+
+    return discussName;
+  }
+
+  getResearchAndStudiesCategory(categoryValue: number | null): string {
+    let categoryName = '';
+    const language = this.getCurrentLanguage(); // Assume this function returns 'en' or 'ar'
+
+    switch (categoryValue) {
+      case ResearchAndStudiesCategories.ScholarsResearchMastersAndPhD:
+        categoryName =
+          language === 'en'
+            ? 'Scholars Research Masters and PhD'
+            : 'أبحاث العلماء الماجستير والدكتوراه';
+        break;
+      case ResearchAndStudiesCategories.InnovativeResearch:
+        categoryName =
+          language === 'en' ? 'Innovative Research' : 'أبحاث مبتكرة';
+        break;
+      case ResearchAndStudiesCategories.AccreditedResearch:
+        categoryName =
+          language === 'en' ? 'Accredited Research' : 'أبحاث معتمدة';
+        break;
+      default:
+        categoryName = language === 'en' ? 'Unknown' : 'غير معروف';
+    }
+
+    return categoryName;
+  }
+
   getImgServerBaseUrl(base64String: string | null): string {
     //console.log(base64String, 'Base 64');
     this.imgServerBaseUrl = '';
@@ -290,6 +538,40 @@ export class GlobalServiceService implements OnInit {
     return formattedDate;
   }
 
+  getResearchAreaName(researchArea: ResearchAreaCategory | null): string {
+    let researchAreaName = '';
+    const language = this.getCurrentLanguage();
+
+    switch (researchArea) {
+      case 1:
+        researchAreaName =
+          language === 'en'
+            ? 'Forgery and document examination'
+            : 'تزوير وفحص المستندات';
+        break;
+      case 2:
+        researchAreaName =
+          language === 'en' ? 'Institutional innovation' : 'الابتكار المؤسسي';
+        break;
+      case 3:
+        researchAreaName =
+          language === 'en'
+            ? 'Nationality and Passport Affairs'
+            : 'شؤون الجنسية وجواز السفر';
+        break;
+      case 4:
+        researchAreaName =
+          language === 'en'
+            ? 'Affairs of violators of residency laws and entry permits'
+            : 'شؤون مخالفي قوانين الإقامة وتصاريح الدخول';
+        break;
+      default:
+        researchAreaName = language === 'en' ? 'Unknown' : 'غير معروف';
+    }
+
+    return researchAreaName;
+  }
+
   // getImgServerBaseUrl(): Observable<string> {
   //   return this.getFromServerBaseUrl().pipe(
   //     map(() => 'http://localhost:44350/InnovationImages/'),
@@ -321,4 +603,24 @@ export class GlobalServiceService implements OnInit {
   //     this.getHttpOptions()
   //   );
   // }
+
+  downloadPdf(base64String: string, fileName: string): void {
+    const linkSource = `data:application/pdf;base64,${base64String}`;
+    const downloadLink = document.createElement('a');
+    const fileNameWithExtension = `${fileName}.pdf`;
+
+    downloadLink.href = linkSource;
+    downloadLink.download = fileNameWithExtension;
+    downloadLink.click();
+  }
+
+  downloadjpg(base64String: string, fileName: string): void {
+    const linkSource = `data:application/jpg;base64,${base64String}`;
+    const downloadLink = document.createElement('a');
+    const fileNameWithExtension = `${fileName}.pdf`;
+
+    downloadLink.href = linkSource;
+    downloadLink.download = fileNameWithExtension;
+    downloadLink.click();
+  }
 }
