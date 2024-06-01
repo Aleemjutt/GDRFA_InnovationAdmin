@@ -1,9 +1,9 @@
 {
-  "MembershipsList": "Memberships List",
-  "DescriptionEn": "Description En",
-  "DescriptionAr": "Description Ar",
-  "ID": "ID",
-  "Actions": "Actions",
-  "AddNew": "Add New",
-  "ChooseFile": "Choose file"
+  "MembershipsList": "قائمة الأعضاء",
+  "DescriptionEn": "التفاصيل باللغه الانجليزيه",
+  "DescriptionAr": "التفاصيل باللغه العربيه",
+  "ID": "رقم المرجع",
+  "Actions": "اجراء",
+  "AddNew": "اضافه جديده",
+  "ChooseFile": "اختر الملف"
 }

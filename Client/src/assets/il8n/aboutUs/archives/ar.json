@@ -1,9 +1,9 @@
 {
-  "ID": "ID",
-  "DescriptionEn": "Description En",
-  "DescriptionAr": "Description Ar",
-  "Actions": "Actions",
-  "TitleEN": "TitleEn",
-  "TitleAr": "TitleAr",
-  "AddNewArchives": "Add New Archives"
+  "ID": "رقم المرجع",
+  "DescriptionEn": "الوصف باللغه الانجليزيه",
+  "DescriptionAr": "الوصف باللغة العربيه",
+  "Actions": "اجراء",
+  "TitleEN": "العنوان باللغه الانجليزيه",
+  "TitleAr": "العنوان باللغه العربيه",
+  "AddNewArchives": "اضافه ارشيف جديد"
 }

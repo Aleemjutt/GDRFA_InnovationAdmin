@@ -4,44 +4,17 @@
       <div class="card">
         <div class="card-header align-items-center d-flex">
           <h4 class="card-title mb-0 flex-grow-1">
-            Established Challlenged Compain Answers
+            {{ "EstablishedChalllengedCompainAnswers" | translate }}
           </h4>
-          <div class="flex-shrink-0">
-            <!-- <div class="d-flex align-items-center">
-              <input
-                type="text"
-                class="form-control me-3"
-                data-provider="flatpickr"
-                data-date-format="d M, Y"
-                data-range-date="true"
-                placeholder="Select Date Range"
-              />
-              <select
-                class="form-select mb-0 me-2"
-                aria-label="Default select example"
-              >
-                <option selected>Status</option>
-                <option value="1">Submitted</option>
-                <option value="2">In Review</option>
-                <option value="3">Approved</option>
-                <option value="4">Rejected</option>
-              </select>
-              <button
-                type="button"
-                class="btn btn-light waves-effect waves-light ms-2 me-2 col-1"
-              >
-                <i class="ri-search-2-line"></i>
-              </button>
-            </div> -->
-          </div>
+          <div class="flex-shrink-0"></div>
         </div>
         <div class="card-body">
           <table class="table table-nowrap" id="establishedAnswerDataTable">
             <thead>
               <tr>
-                <th>{{ "ID" }}</th>
-                <th>{{ "Status" }}</th>
-                <th>{{ "Actions" }}</th>
+                <th>{{ "ID" | translate }}</th>
+                <th>{{ "Status" | translate }}</th>
+                <th>{{ "Actions" | translate }}</th>
               </tr>
             </thead>
             <tbody></tbody>
@@ -56,7 +29,9 @@
 
 <ng-template #templateDetails class="modal-lg">
   <div class="modal-header">
-    <h4 class="modal-title pull-left">Establised Challenged Details</h4>
+    <h4 class="modal-title pull-left">
+      {{ "EstablisedChallengedDetails" | translate }}
+    </h4>
     <button
       type="button"
       class="btn-close close pull-right"
@@ -71,7 +46,7 @@
       <div class="row">
         <div class="col-md-6">
           <label for="basiInput" class="form-label text-muted mb-0">
-            Description En
+            {{ "DescriptionEn" | translate }}
           </label>
           <div class="mt-10">
             {{
@@ -81,9 +56,9 @@
           </div>
         </div>
         <div class="col-md-6">
-          <label for="basiInput" class="form-label text-muted mb-0"
-            >Description Ar</label
-          >
+          <label for="basiInput" class="form-label text-muted mb-0">{{
+            "DescriptionAr" | translate
+          }}</label>
           <div class="mt-10">
             {{
               establishedAsnswerdModel?.establishingDubaiForTheFutureModel
@@ -115,7 +90,7 @@
                       <label
                         for="headingLineEnInput"
                         class="form-label text-muted mb-0"
-                        >Description En</label
+                        >{{ "DescriptionEn" | translate }}</label
                       >
                       <div>{{ challengedDetails?.descriptionEn }}</div>
                     </div>
@@ -124,7 +99,7 @@
                       <label
                         for="headingLineArInput"
                         class="form-label text-muted mb-0"
-                        >Description Ar</label
+                        >{{ "DescriptionAr" | translate }}</label
                       >
                       <div>{{ challengedDetails?.descriptionAr }}</div>
                     </div>
@@ -134,8 +109,12 @@
                     <table class="table">
                       <thead>
                         <tr>
-                          <th scope="col">Heading Point Ar</th>
-                          <th scope="col">Heading Point En</th>
+                          <th scope="col">
+                            {{ "HeadingPointAr" | translate }}
+                          </th>
+                          <th scope="col">
+                            {{ "HeadingPointEn" | translate }}
+                          </th>
                         </tr>
                       </thead>
                       <tbody>
@@ -156,8 +135,8 @@
                     <table class="table">
                       <thead>
                         <tr>
-                          <th scope="col">Point Ar</th>
-                          <th scope="col">Point En</th>
+                          <th scope="col">{{ "PointAr" | translate }}</th>
+                          <th scope="col">{{ "PointEn" | translate }}</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -181,9 +160,9 @@
       </div>
 
       <div class="row mt-3">
-        <label for="basicInput" class="form-label text-muted mb-0"
-          >Attachments</label
-        >
+        <label for="basicInput" class="form-label text-muted mb-0">{{
+          "Attachments" | translate
+        }}</label>
       </div>
 
       <div class="row mt-2">
@@ -191,9 +170,9 @@
           <table class="table">
             <thead>
               <tr>
-                <th scope="col">Title</th>
-                <th scope="col">File Type</th>
-                <th scope="col">Download</th>
+                <th scope="col">{{ "Title" | translate }}</th>
+                <th scope="col">{{ "FileType" | translate }}</th>
+                <th scope="col">{{ "Download" | translate }}</th>
               </tr>
             </thead>
             <tbody>
@@ -232,7 +211,7 @@
                     class="btn btn-primary btn-sm"
                     download
                   >
-                    <i class="bi bi-download"></i> Download
+                    <i class="bi bi-download"></i>{{ "Download" | translate }}
                   </a>
                 </td>
               </tr>
@@ -257,7 +236,7 @@
             establishedAsnswerdModel.workFlowStatus === enum.UnderProcesses
           "
         >
-          Accept
+          {{ "Accept" | translate }}
         </button>
         <button
           type="button"
@@ -268,7 +247,7 @@
             establishedAsnswerdModel.workFlowStatus === enum.UnderProcesses
           "
         >
-          Reject
+          {{ "Reject" | translate }}
         </button>
 
         <button
@@ -279,7 +258,7 @@
           "
           *ngIf="establishedAsnswerdModel.workFlowStatus === enum.Submit"
         >
-          Under Evaluation
+          {{ "UnderEvaluation" | translate }}
         </button>
 
         <button
@@ -288,7 +267,7 @@
           aria-label="Close"
           (click)="modalRef?.hide()"
         >
-          Close
+          {{ "Close" | translate }}
         </button>
       </div>
     </div>

@@ -3,7 +3,9 @@
     <div class="container-fluid">
       <div class="card">
         <div class="card-header align-items-center d-flex">
-          <h4 class="card-title mb-0 flex-grow-1">Version List</h4>
+          <h4 class="card-title mb-0 flex-grow-1">
+            {{ "VersionList" | translate }}
+          </h4>
           <div class="flex-shrink-0">
             <div class="d-flex align-items-center"></div>
             <a
@@ -13,7 +15,7 @@
               style="float: inline-end"
               (click)="openModal(template)"
             >
-              Add New
+              {{ "AddNew" | translate }}
             </a>
           </div>
         </div>
@@ -21,11 +23,10 @@
           <table class="table table-nowrap" id="innovationBriefDataTable">
             <thead>
               <tr>
-                <th>{{ "ID" }}</th>
-                <th>{{ "Book Name En" }}</th>
-                <th>{{ "Book Name Ar" }}</th>
-                <!-- <th>{{ "Actions" }}</th> -->
-                <th>{{ "Actions" }}</th>
+                <th>{{ "ID" | translate }}</th>
+                <th>{{ "BookNameEn" | translate }}</th>
+                <th>{{ "BookNameAr" | translate }}</th>
+                <th>{{ "Actions" | translate }}</th>
               </tr>
             </thead>
             <tbody></tbody>
@@ -40,10 +41,10 @@
 <ng-template #template class="modal-lg">
   <div class="modal-header">
     <h4 class="modal-title pull-left" *ngIf="versionModel.id == 0">
-      Add
+      {{ "Add" | translate }}
     </h4>
     <h4 class="modal-title pull-left" *ngIf="versionModel.id != 0">
-      Update
+      {{ "Update" | translate }}
     </h4>
     <button
       type="button"
@@ -58,7 +59,9 @@
     <div class="row">
       <div class="row mt-3">
         <div class="col-md-6 mt-3">
-          <label for="basiInput" class="form-label">Book Name En</label>
+          <label for="basiInput" class="form-label">{{
+            "BookNameEn" | translate
+          }}</label>
           <input
             type="input"
             class="form-control"
@@ -68,7 +71,9 @@
         </div>
 
         <div class="col-md-6 mt-3">
-          <label for="basiInput" class="form-label">Book Name Ar</label>
+          <label for="basiInput" class="form-label">{{
+            "BookNameAr" | translate
+          }}</label>
           <input
             type="input"
             class="form-control"
@@ -80,9 +85,11 @@
       <div class="row mt-3">
         <div class="col-md-12">
           <div class="mt-3">
-            <label> Book Cover Image</label>
+            <label>{{ "BookCoverImage" | translate }} </label>
             <div *ngIf="!versionModel.urlBase64">
-              <label for="formFile" class="form-label">Choose file</label>
+              <label for="formFile" class="form-label">{{
+                "Choosefile" | translate
+              }}</label>
               <file-pond
                 #myPond
                 label-idle='Drag & Drop your files or <span class="filepond--label-action"> Browse </span><br> <b>Maximum 5 files upload</b>'
@@ -97,9 +104,7 @@
             <div *ngIf="versionModel.urlBase64">
               <img
                 [src]="
-                  globalService.getImgServerBaseUrl(
-                    versionModel.urlBase64
-                  )
+                  globalService.getImgServerBaseUrl(versionModel.urlBase64)
                 "
                 alt="Membership Image"
                 style="height: 200px; width: 250px"
@@ -109,7 +114,7 @@
                 (click)="removeImage('bookCoverImage')"
                 class="btn btn-danger"
                 style="display: block; margin-top: 10px"
-                >Remove</a
+                >{{ "Remove" | translate }}</a
               >
             </div>
           </div>
@@ -119,9 +124,11 @@
       <div class="row">
         <div class="col-md-12">
           <div class="mt-3">
-            <label>Book File</label>
+            <label>{{ "BookFile" | translate }}</label>
             <div *ngIf="!versionModel.bookUrlBase64">
-              <label for="formFile" class="form-label">Choose file</label>
+              <label for="formFile" class="form-label">{{
+                "Choosefile" | translate
+              }}</label>
               <file-pond
                 #myPond
                 label-idle='Drag & Drop your files or <span class="filepond--label-action"> Browse </span><br> <b>Maximum 5 files upload</b>'
@@ -145,13 +152,15 @@
                 download="image.png"
                 class="mt-2 btn btn-danger"
               >
-                <i class="ri-file-download-line"> Download File</i>
+                <i class="ri-file-download-line">
+                  {{ "DownloadFile" | translate }}</i
+                >
               </button>
               <a
                 (click)="removeImage('bookfile')"
                 class="btn btn-danger"
                 style="display: block; margin-top: 10px"
-                >Remove</a
+                >{{ "Remove" | translate }}</a
               >
             </div>
           </div>
@@ -168,7 +177,7 @@
           (click)="add()"
           *ngIf="versionModel.id == 0"
         >
-          Save
+          {{ "Save" | translate }}
         </button>
         <button
           type="button"
@@ -176,7 +185,7 @@
           (click)="update()"
           *ngIf="versionModel.id != 0"
         >
-          Update
+          {{ "Update" | translate }}
         </button>
         <button
           type="button"
@@ -184,7 +193,7 @@
           aria-label="Close"
           (click)="modalRef?.hide()"
         >
-          Close
+          {{ "Close" | translate }}
         </button>
       </div>
     </div>
@@ -193,7 +202,7 @@
 
 <ng-template #templateDetails class="modal-lg">
   <div class="modal-header">
-    <h4 class="modal-title pull-left">Version Details</h4>
+    <h4 class="modal-title pull-left">{{ "VersionDetails" | translate }}</h4>
     <button
       type="button"
       class="btn-close close pull-right"
@@ -208,7 +217,7 @@
       <div class="row">
         <div class="col-md-6 mt-3">
           <label for="basiInput" class="form-label text-muted mb-0"
-            >Book Name En
+            >{{ "BookNameEn" | translate }}
           </label>
           <div>
             {{ versionModel.bookNameEn }}
@@ -216,23 +225,19 @@
         </div>
 
         <div class="col-md-6 mt-3">
-          <label for="basiInput" class="form-label text-muted mb-0"
-            >Book Name Ar</label
-          >
+          <label for="basiInput" class="form-label text-muted mb-0">{{
+            "BookNameAr" | translate
+          }}</label>
           <div>{{ versionModel.bookNameAr }}</div>
         </div>
 
         <div class="col-md-12 mt-3">
-          <label for="basiInput" class="form-label text-muted mb-0"
-            >Book Conver Image</label
-          >
+          <label for="basiInput" class="form-label text-muted mb-0">{{
+            "BookConverImage" | translate
+          }}</label>
           <div class="fs-15 mt-3">
             <img
-              [src]="
-                globalService.getImgServerBaseUrl(
-                  versionModel.urlBase64
-                )
-              "
+              [src]="globalService.getImgServerBaseUrl(versionModel.urlBase64)"
               class="card-img-top img-thumnail"
               style="height: 200px; width: auto"
             />
@@ -242,7 +247,9 @@
 
       <div class="row">
         <div class="col-md-12 mt-3">
-          <label for="basiInput" class="form-label text-muted mb-0">Book</label>
+          <label for="basiInput" class="form-label text-muted mb-0">{{
+            "Book" | translate
+          }}</label>
           <div class="fs-15" *ngIf="versionModel.bookUrlBase64">
             <button
               (click)="
@@ -255,7 +262,9 @@
               download="image.png"
               class="mt-2 btn btn-danger"
             >
-              <i class="ri-file-download-line"> Download File</i>
+              <i class="ri-file-download-line"
+                >{{ "DownloadFile" | translate }}
+              </i>
             </button>
           </div>
         </div>
@@ -273,7 +282,7 @@
           aria-label="Close"
           (click)="modalRef?.hide()"
         >
-          Close
+          {{ "Close" | translate }}
         </button>
       </div>
     </div>

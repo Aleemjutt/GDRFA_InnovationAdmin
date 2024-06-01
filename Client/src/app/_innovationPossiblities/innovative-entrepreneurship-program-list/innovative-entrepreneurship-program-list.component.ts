@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { GlobalServiceService } from 'src/app/_global/-global-service.service';
@@ -14,7 +15,7 @@ import { InnovativeEntrepreneurshipProgramService } from 'src/app/_services/_inn
 @Component({
   selector: 'app-innovative-entrepreneurship-program-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, TranslateModule],
   templateUrl: './innovative-entrepreneurship-program-list.component.html',
   styleUrl: './innovative-entrepreneurship-program-list.component.css',
 })
@@ -41,7 +42,11 @@ export class InnovativeEntrepreneurshipProgramListComponent implements OnInit {
 
   initilizeDataTable(): void {
     //const datatable: any = $('#consultingRequestDataTable').DataTable();
-
+    const currentLang = this.globalService.getCurrentLanguage();
+    const languageConfig =
+      currentLang === 'ar'
+        ? this.globalService.getArabicLanguageConfig()
+        : this.globalService.getEnglishLanguageConfig();
     this.datatable = $('#ideaDataTable').DataTable();
     if (this.datatable != null && this.datatable != undefined) {
       this.datatable.destroy();
@@ -64,6 +69,7 @@ export class InnovativeEntrepreneurshipProgramListComponent implements OnInit {
             pageLength: 5,
             processing: true,
             data: this.entrepreneureshipList,
+            language: languageConfig,
             columns: [
               { data: 'id' },
               {

@@ -1,7 +1,7 @@
 {
-  "ID": "ID",
-  "DescriptionEn": "Description En",
-  "DescriptionAr": "Description Ar",
-  "Actions": "Actions",
-  "PartnerType": "Partner Type"
+  "ID": "رقم المرجع",
+  "DescriptionEn": "الوصف باللغه الانجليزيه",
+  "DescriptionAr": "الوصف باللغه العربيه",
+  "Actions": "اجراء",
+  "PartnerType": "نوع الشراكه"
 }

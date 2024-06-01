@@ -17,7 +17,7 @@ import { UploadServiceService } from 'src/app/_services/upload-service.service';
 @Component({
   selector: 'app-partners-lists',
   standalone: true,
-  imports: [FormsModule, FilePondModule, CommonModule,TranslateModule],
+  imports: [FormsModule, FilePondModule, CommonModule, TranslateModule],
   templateUrl: './partners-lists.component.html',
   styleUrl: './partners-lists.component.css',
 })
@@ -81,6 +81,11 @@ export class PartnersListsComponent {
   }
 
   initilizeDataTable(): void {
+    const currentLang = this.globalService.getCurrentLanguage();
+    const languageConfig =
+      currentLang === 'ar'
+        ? this.globalService.getArabicLanguageConfig()
+        : this.globalService.getEnglishLanguageConfig();
     const datatable: any = $('#partnersDataTable').DataTable();
     this.partnerService
       .getPartnerList()
@@ -97,6 +102,7 @@ export class PartnersListsComponent {
             pageLength: 5,
             processing: true,
             data: this.partnerList,
+            language: languageConfig,
             columns: [
               { data: 'id' },
               {

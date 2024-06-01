@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormGroup, FormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 import { FilePondOptions } from 'filepond';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { FilePondModule } from 'ngx-filepond';
@@ -19,7 +20,7 @@ import { UploadServiceService } from 'src/app/_services/upload-service.service';
 @Component({
   selector: 'app-research-and-studies',
   standalone: true,
-  imports: [FormsModule, FilePondModule, CommonModule],
+  imports: [FormsModule, FilePondModule, CommonModule, TranslateModule],
   templateUrl: './research-and-studies.component.html',
   styleUrl: './research-and-studies.component.css',
 })
@@ -147,6 +148,11 @@ export class ResearchAndStudiesComponent implements OnInit {
   }
 
   initilizeDataTable(): void {
+    const currentLang = this.globalService.getCurrentLanguage();
+    const languageConfig =
+      currentLang === 'ar'
+        ? this.globalService.getArabicLanguageConfig()
+        : this.globalService.getEnglishLanguageConfig();
     // Data reload function
     const datatable: any = $('#researchAndStudiesDataTable').DataTable();
     this.researchAndStudyService
@@ -164,6 +170,7 @@ export class ResearchAndStudiesComponent implements OnInit {
             pageLength: 5,
             processing: true,
             data: this.researchAndStudiesModelList,
+            language: languageConfig,
             columns: [
               { data: 'id' },
               {

@@ -17,11 +17,12 @@ import {
 import { ResearchCenterService } from 'src/app/_services/_researchCenter/research-center.service';
 import { TabComponent } from 'ngx-tabset';
 import { TabsModule } from 'ngx-bootstrap/tabs';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-research-center',
   standalone: true,
-  imports: [CommonModule, FormsModule, TabsModule],
+  imports: [CommonModule, FormsModule, TabsModule, TranslateModule],
   templateUrl: './research-center.component.html',
   styleUrl: './research-center.component.css',
 })

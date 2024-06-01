@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { GlobalServiceService } from 'src/app/_global/-global-service.service';
 interface MenuItem {
   label: string;
   icon?: string;
@@ -14,245 +15,602 @@ interface MenuItem {
 export class SideBarComponent {
   openMenu: MenuItem | null = null; // Variable to keep track of the currently open menu
   openSubMenus: { [key: string]: boolean } = {}; // Track the state of open submenus
+  constructor(private GlobalService: GlobalServiceService) {}
+
   menuItems: MenuItem[] = [
     {
-      label: 'Dashboards',
+      label:
+        this.GlobalService.getCurrentLanguage() === 'en'
+          ? 'Dashboards'
+          : 'لوحات التحكم',
       icon: 'ri-dashboard-line csm-icon-color',
       subMenuId: 'submenuDashboards',
       subMenuItems: [],
     },
     {
-      label: 'About Us',
+      label:
+        this.GlobalService.getCurrentLanguage() === 'en'
+          ? 'About Us'
+          : 'معلومات عنا',
       icon: 'ri-group-line csm-icon-color',
-      subMenuId: 'submenuAbout', // Unique ID for the submenu
+      subMenuId: 'submenuAbout',
       subMenuItems: [
         {
-          label: 'About the Innovation Center',
+          label:
+            this.GlobalService.getCurrentLanguage() === 'en'
+              ? 'About the Innovation Center'
+              : 'حول مركز الابتكار',
           icon: 'ri-account-box-line csm-icon-color',
-          subMenuId: 'submenuAboutCenter', // Unique ID for the submenu
+          subMenuId: 'submenuAboutCenter',
           subMenuItems: [
-            { label: 'Edit', routerLink: 'about/edit' },
-            { label: 'Details', routerLink: 'about/details' },
-            // Add other submenu items similarly
+            {
+              label:
+                this.GlobalService.getCurrentLanguage() === 'en'
+                  ? 'Edit'
+                  : 'تعديل',
+              routerLink: 'about/edit',
+            },
+            {
+              label:
+                this.GlobalService.getCurrentLanguage() === 'en'
+                  ? 'Details'
+                  : 'تفاصيل',
+              routerLink: 'about/details',
+            },
           ],
         },
         {
-          label: 'Membership',
+          label:
+            this.GlobalService.getCurrentLanguage() === 'en'
+              ? 'Membership'
+              : 'عضوية',
           routerLink: '/memberships',
           icon: 'ri-group-2-line csm-icon-color',
         },
         {
-          label: 'Awards',
+          label:
+            this.GlobalService.getCurrentLanguage() === 'en'
+              ? 'Awards'
+              : 'الجوائز',
           routerLink: '/awards',
           icon: 'ri-trophy-line csm-icon-color',
         },
         {
-          label: 'Credits',
+          label:
+            this.GlobalService.getCurrentLanguage() === 'en'
+              ? 'Credits'
+              : 'ائتمانات',
           routerLink: '/credits',
           icon: 'ri-medal-2-line csm-icon-color',
         },
         {
-          label: 'Partners',
+          label:
+            this.GlobalService.getCurrentLanguage() === 'en'
+              ? 'Partners'
+              : 'شركاء',
           routerLink: '/partners',
           icon: 'ri-folder-user-line csm-icon-color',
         },
         {
-          label: 'Archives',
+          label:
+            this.GlobalService.getCurrentLanguage() === 'en'
+              ? 'Archives'
+              : 'الأرشيف',
           routerLink: '/archives',
           icon: 'ri-archive-drawer-line csm-icon-color',
         },
         {
-          label: 'Agenda',
+          label:
+            this.GlobalService.getCurrentLanguage() === 'en'
+              ? 'Agenda'
+              : 'جدول الأعمال',
           routerLink: '/agenda',
           icon: 'ri-calendar-line csm-icon-color',
         },
         {
-          label: 'Innovation Consulting',
+          label:
+            this.GlobalService.getCurrentLanguage() === 'en'
+              ? 'Innovation Consulting'
+              : 'استشارات الابتكار',
           routerLink: '/consulting/list',
           icon: 'ri-survey-line csm-icon-color',
         },
-        // Add other submenu items similarly
       ],
     },
-
     {
-      label: 'Consulting Requests',
+      label:
+        this.GlobalService.getCurrentLanguage() === 'en'
+          ? 'Consulting Requests'
+          : 'طلبات الاستشارات',
       icon: 'ri-git-pull-request-line csm-icon-color',
       routerLink: '/consultingRequest/List',
     },
     {
-      label: 'Idea',
+      label: this.GlobalService.getCurrentLanguage() === 'en' ? 'Idea' : 'فكرة',
       icon: 'ri-lightbulb-flash-line csm-icon-color',
-      subMenuId: 'submenuIdea', // Unique ID for the submenu
+      subMenuId: 'submenuIdea',
       subMenuItems: [
         {
-          label: 'My Thoughts',
+          label:
+            this.GlobalService.getCurrentLanguage() === 'en'
+              ? 'My Thoughts'
+              : 'أفكاري',
           icon: 'ri-ping-pong-line csm-icon-color',
           routerLink: '/#',
         },
         {
-          label: 'Submit your Idea',
+          label:
+            this.GlobalService.getCurrentLanguage() === 'en'
+              ? 'Submit your Idea'
+              : 'قدم فكرتك',
           icon: 'ri-lightbulb-flash-line csm-icon-color',
           routerLink: '/idea/list',
         },
         {
-          label: 'Targeted Compaigns',
+          label:
+            this.GlobalService.getCurrentLanguage() === 'en'
+              ? 'Targeted Campaigns'
+              : 'الحملات المستهدفة',
           icon: 'ri-focus-3-line csm-icon-color',
           routerLink: '/idea/targetCompainList',
         },
         {
-          label: 'Idea Tools',
+          label:
+            this.GlobalService.getCurrentLanguage() === 'en'
+              ? 'Idea Tools'
+              : 'أدوات الفكرة',
           icon: 'ri-drag-move-line csm-icon-color',
           routerLink: '/idea/tools',
         },
         {
-          label: 'Idea Pioneers',
+          label:
+            this.GlobalService.getCurrentLanguage() === 'en'
+              ? 'Idea Pioneers'
+              : 'رواد الأفكار',
           icon: 'ri-questionnaire-fill csm-icon-color',
           routerLink: '/idea/poineersList',
         },
         {
-          label: 'Idea Journey',
+          label:
+            this.GlobalService.getCurrentLanguage() === 'en'
+              ? 'Idea Journey'
+              : 'رحلة الفكرة',
           icon: 'ri-china-railway-line csm-icon-color',
           routerLink: '/idea/jurney',
         },
       ],
     },
-
     {
-      label: 'Future Focused',
+      label:
+        this.GlobalService.getCurrentLanguage() === 'en'
+          ? 'Future Focused'
+          : 'التركيز على المستقبل',
       icon: 'ri-open-arm-line csm-icon-color',
       subMenuId: 'submenuFF',
       subMenuItems: [
         {
-          label: 'Dubai Residancy',
+          label:
+            this.GlobalService.getCurrentLanguage() === 'en'
+              ? 'Dubai Residency'
+              : 'إقامة دبي',
           icon: 'ri-home-4-line csm-icon-color',
           routerLink: '/futureFocused/dubaiResidencyList',
         },
         {
-          label: 'Challenge Established',
+          label:
+            this.GlobalService.getCurrentLanguage() === 'en'
+              ? 'Challenge Established'
+              : 'تحدي التأسيس',
           icon: 'ri-pencil-ruler-2-line csm-icon-color',
           routerLink: '/futureFocused/establishingFutureFocusedList',
         },
       ],
     },
-
     {
-      label: 'Innovative Possibilities',
+      label:
+        this.GlobalService.getCurrentLanguage() === 'en'
+          ? 'Innovative Possibilities'
+          : 'إمكانيات مبتكرة',
       icon: 'ri-building-3-line csm-icon-color',
       subMenuId: 'submenuIPsb',
       subMenuItems: [
         {
-          label: 'Innovative Entrepreneurship',
+          label:
+            this.GlobalService.getCurrentLanguage() === 'en'
+              ? 'Innovative Entrepreneurship'
+              : 'ريادة الأعمال المبتكرة',
           icon: 'ri-team-line csm-icon-color',
           routerLink: '/innovationPossibilities/innovativeEntrepreneurshipList',
         },
       ],
     },
-
     {
-      label: 'Creative Support',
+      label:
+        this.GlobalService.getCurrentLanguage() === 'en'
+          ? 'Creative Support'
+          : 'الدعم الإبداعي',
       icon: 'ri-creative-commons-by-fill csm-icon-color',
       subMenuId: 'submenuCS',
       subMenuItems: [
         {
-          label: 'Diploma In Creative Support',
+          label:
+            this.GlobalService.getCurrentLanguage() === 'en'
+              ? 'Diploma In Creative Support'
+              : 'دبلوم في الدعم الإبداعي',
           icon: 'ri-award-line csm-icon-color',
           routerLink: '/creativeSupport/diplomaInCreativeSupport',
         },
         {
-          label: 'Innovation Pioneers Club',
+          label:
+            this.GlobalService.getCurrentLanguage() === 'en'
+              ? 'Innovation Pioneers Club'
+              : 'نادي رواد الابتكار',
           icon: 'ri-team-line csm-icon-color',
           routerLink: '#',
         },
       ],
     },
-
     {
-      label: 'Intellectual Property',
+      label:
+        this.GlobalService.getCurrentLanguage() === 'en'
+          ? 'Intellectual Property'
+          : 'الملكية الفكرية',
       icon: 'ri-building-line csm-icon-color',
       subMenuId: 'submenuIP',
       subMenuItems: [
         {
-          label: 'Overview of Intellectual Property',
+          label:
+            this.GlobalService.getCurrentLanguage() === 'en'
+              ? 'Overview of Intellectual Property'
+              : 'نظرة عامة على الملكية الفكرية',
           icon: 'ri-git-repository-line csm-icon-color',
           routerLink: '/intellectualProperty/overView',
         },
         {
-          label: 'Types of Intellectual Properties',
+          label:
+            this.GlobalService.getCurrentLanguage() === 'en'
+              ? 'Types of Intellectual Properties'
+              : 'أنواع الملكيات الفكرية',
           icon: 'ri-hotel-fill csm-icon-color',
           routerLink: '/intellectualProperty/type',
         },
         {
-          label: 'Registered Properties List',
+          label:
+            this.GlobalService.getCurrentLanguage() === 'en'
+              ? 'Registered Properties List'
+              : 'قائمة الملكيات المسجلة',
           icon: 'ri-building-4-line csm-icon-color',
           routerLink: '/intellectualProperty/registeredList',
         },
       ],
     },
-
     {
-      label: 'Knowledge',
+      label:
+        this.GlobalService.getCurrentLanguage() === 'en'
+          ? 'Knowledge'
+          : 'المعرفة',
       icon: 'ri-graduation-cap csm-icon-color',
       subMenuId: 'submenuKwd',
       subMenuItems: [
         {
-          label: 'Research Center and Studies',
+          label:
+            this.GlobalService.getCurrentLanguage() === 'en'
+              ? 'Research Center and Studies'
+              : 'مركز الأبحاث والدراسات',
           icon: 'ri-git-repository-line csm-icon-color',
           routerLink: '/knowlege/researchAndStudies',
         },
         {
-          label: 'Innovation Brief',
+          label:
+            this.GlobalService.getCurrentLanguage() === 'en'
+              ? 'Innovation Brief'
+              : 'موجز الابتكار',
           icon: 'ri-hotel-fill csm-icon-color',
           routerLink: '/knowlege/innovationBrief',
         },
         {
-          label: 'Version',
+          label:
+            this.GlobalService.getCurrentLanguage() === 'en'
+              ? 'Version'
+              : 'الإصدار',
           icon: 'ri-building-4-line csm-icon-color',
           routerLink: '/knowlege/versions',
         },
         {
-          label: 'Goverment 1',
+          label:
+            this.GlobalService.getCurrentLanguage() === 'en'
+              ? 'Government 1'
+              : 'الحكومة 1',
           icon: 'ri-building-4-line csm-icon-color',
           routerLink: 'knowlege/goverment',
         },
       ],
     },
-
     {
-      label: 'Research Ceneter',
+      label:
+        this.GlobalService.getCurrentLanguage() === 'en'
+          ? 'Research Center'
+          : 'مركز البحوث',
       icon: 'ri-align-vertically csm-icon-color',
       subMenuId: 'submenuResCenter',
       subMenuItems: [
         {
-          label: 'Research Center',
+          label:
+            this.GlobalService.getCurrentLanguage() === 'en'
+              ? 'Research Center'
+              : 'مركز البحوث',
           icon: 'ri-align-center csm-icon-color',
           routerLink: '/researchCeneter',
         },
-
         {
-          label: 'Presentations',
+          label:
+            this.GlobalService.getCurrentLanguage() === 'en'
+              ? 'Presentations'
+              : 'العروض التقديمية',
           icon: 'ri-tv-2-line csm-icon-color',
           routerLink: '/presentationList',
         },
-        // Define other submenu items for Settings similarly
       ],
     },
-
     {
-      label: 'Settings',
+      label:
+        this.GlobalService.getCurrentLanguage() === 'en'
+          ? 'Settings'
+          : 'الإعدادات',
       icon: 'ri-list-settings-fill csm-icon-color',
       subMenuId: 'submenuSettings',
       subMenuItems: [
         {
-          label: 'Users',
+          label:
+            this.GlobalService.getCurrentLanguage() === 'en'
+              ? 'Users'
+              : 'المستخدمون',
           icon: 'ri-team-line csm-icon-color',
           routerLink: '/users/userList',
         },
-        // Define other submenu items for Settings similarly
       ],
     },
-    // Define other menu items similarly
   ];
+
+  // menuItems: MenuItem[] = [
+  //   {
+  //     label: this.GlobalService.getCurrentLanguage()=='en' 'Dashboards': "",
+  //     icon: 'ri-dashboard-line csm-icon-color',
+  //     subMenuId: 'submenuDashboards',
+  //     subMenuItems: [],
+  //   },
+  //   {
+  //     label: 'About Us',
+  //     icon: 'ri-group-line csm-icon-color',
+  //     subMenuId: 'submenuAbout', // Unique ID for the submenu
+  //     subMenuItems: [
+  //       {
+  //         label: 'About the Innovation Center',
+  //         icon: 'ri-account-box-line csm-icon-color',
+  //         subMenuId: 'submenuAboutCenter', // Unique ID for the submenu
+  //         subMenuItems: [
+  //           { label: 'Edit', routerLink: 'about/edit' },
+  //           { label: 'Details', routerLink: 'about/details' },
+  //           // Add other submenu items similarly
+  //         ],
+  //       },
+  //       {
+  //         label: 'Membership',
+  //         routerLink: '/memberships',
+  //         icon: 'ri-group-2-line csm-icon-color',
+  //       },
+  //       {
+  //         label: 'Awards',
+  //         routerLink: '/awards',
+  //         icon: 'ri-trophy-line csm-icon-color',
+  //       },
+  //       {
+  //         label: 'Credits',
+  //         routerLink: '/credits',
+  //         icon: 'ri-medal-2-line csm-icon-color',
+  //       },
+  //       {
+  //         label: 'Partners',
+  //         routerLink: '/partners',
+  //         icon: 'ri-folder-user-line csm-icon-color',
+  //       },
+  //       {
+  //         label: 'Archives',
+  //         routerLink: '/archives',
+  //         icon: 'ri-archive-drawer-line csm-icon-color',
+  //       },
+  //       {
+  //         label: 'Agenda',
+  //         routerLink: '/agenda',
+  //         icon: 'ri-calendar-line csm-icon-color',
+  //       },
+  //       {
+  //         label: 'Innovation Consulting',
+  //         routerLink: '/consulting/list',
+  //         icon: 'ri-survey-line csm-icon-color',
+  //       },
+  //       // Add other submenu items similarly
+  //     ],
+  //   },
+
+  //   {
+  //     label: 'Consulting Requests',
+  //     icon: 'ri-git-pull-request-line csm-icon-color',
+  //     routerLink: '/consultingRequest/List',
+  //   },
+  //   {
+  //     label: 'Idea',
+  //     icon: 'ri-lightbulb-flash-line csm-icon-color',
+  //     subMenuId: 'submenuIdea', // Unique ID for the submenu
+  //     subMenuItems: [
+  //       {
+  //         label: 'My Thoughts',
+  //         icon: 'ri-ping-pong-line csm-icon-color',
+  //         routerLink: '/#',
+  //       },
+  //       {
+  //         label: 'Submit your Idea',
+  //         icon: 'ri-lightbulb-flash-line csm-icon-color',
+  //         routerLink: '/idea/list',
+  //       },
+  //       {
+  //         label: 'Targeted Compaigns',
+  //         icon: 'ri-focus-3-line csm-icon-color',
+  //         routerLink: '/idea/targetCompainList',
+  //       },
+  //       {
+  //         label: 'Idea Tools',
+  //         icon: 'ri-drag-move-line csm-icon-color',
+  //         routerLink: '/idea/tools',
+  //       },
+  //       {
+  //         label: 'Idea Pioneers',
+  //         icon: 'ri-questionnaire-fill csm-icon-color',
+  //         routerLink: '/idea/poineersList',
+  //       },
+  //       {
+  //         label: 'Idea Journey',
+  //         icon: 'ri-china-railway-line csm-icon-color',
+  //         routerLink: '/idea/jurney',
+  //       },
+  //     ],
+  //   },
+
+  //   {
+  //     label: 'Future Focused',
+  //     icon: 'ri-open-arm-line csm-icon-color',
+  //     subMenuId: 'submenuFF',
+  //     subMenuItems: [
+  //       {
+  //         label: 'Dubai Residancy',
+  //         icon: 'ri-home-4-line csm-icon-color',
+  //         routerLink: '/futureFocused/dubaiResidencyList',
+  //       },
+  //       {
+  //         label: 'Challenge Established',
+  //         icon: 'ri-pencil-ruler-2-line csm-icon-color',
+  //         routerLink: '/futureFocused/establishingFutureFocusedList',
+  //       },
+  //     ],
+  //   },
+
+  //   {
+  //     label: 'Innovative Possibilities',
+  //     icon: 'ri-building-3-line csm-icon-color',
+  //     subMenuId: 'submenuIPsb',
+  //     subMenuItems: [
+  //       {
+  //         label: 'Innovative Entrepreneurship',
+  //         icon: 'ri-team-line csm-icon-color',
+  //         routerLink: '/innovationPossibilities/innovativeEntrepreneurshipList',
+  //       },
+  //     ],
+  //   },
+
+  //   {
+  //     label: 'Creative Support',
+  //     icon: 'ri-creative-commons-by-fill csm-icon-color',
+  //     subMenuId: 'submenuCS',
+  //     subMenuItems: [
+  //       {
+  //         label: 'Diploma In Creative Support',
+  //         icon: 'ri-award-line csm-icon-color',
+  //         routerLink: '/creativeSupport/diplomaInCreativeSupport',
+  //       },
+  //       {
+  //         label: 'Innovation Pioneers Club',
+  //         icon: 'ri-team-line csm-icon-color',
+  //         routerLink: '#',
+  //       },
+  //     ],
+  //   },
+
+  //   {
+  //     label: 'Intellectual Property',
+  //     icon: 'ri-building-line csm-icon-color',
+  //     subMenuId: 'submenuIP',
+  //     subMenuItems: [
+  //       {
+  //         label: 'Overview of Intellectual Property',
+  //         icon: 'ri-git-repository-line csm-icon-color',
+  //         routerLink: '/intellectualProperty/overView',
+  //       },
+  //       {
+  //         label: 'Types of Intellectual Properties',
+  //         icon: 'ri-hotel-fill csm-icon-color',
+  //         routerLink: '/intellectualProperty/type',
+  //       },
+  //       {
+  //         label: 'Registered Properties List',
+  //         icon: 'ri-building-4-line csm-icon-color',
+  //         routerLink: '/intellectualProperty/registeredList',
+  //       },
+  //     ],
+  //   },
+
+  //   {
+  //     label: 'Knowledge',
+  //     icon: 'ri-graduation-cap csm-icon-color',
+  //     subMenuId: 'submenuKwd',
+  //     subMenuItems: [
+  //       {
+  //         label: 'Research Center and Studies',
+  //         icon: 'ri-git-repository-line csm-icon-color',
+  //         routerLink: '/knowlege/researchAndStudies',
+  //       },
+  //       {
+  //         label: 'Innovation Brief',
+  //         icon: 'ri-hotel-fill csm-icon-color',
+  //         routerLink: '/knowlege/innovationBrief',
+  //       },
+  //       {
+  //         label: 'Version',
+  //         icon: 'ri-building-4-line csm-icon-color',
+  //         routerLink: '/knowlege/versions',
+  //       },
+  //       {
+  //         label: 'Goverment 1',
+  //         icon: 'ri-building-4-line csm-icon-color',
+  //         routerLink: 'knowlege/goverment',
+  //       },
+  //     ],
+  //   },
+
+  //   {
+  //     label: 'Research Ceneter',
+  //     icon: 'ri-align-vertically csm-icon-color',
+  //     subMenuId: 'submenuResCenter',
+  //     subMenuItems: [
+  //       {
+  //         label: 'Research Center',
+  //         icon: 'ri-align-center csm-icon-color',
+  //         routerLink: '/researchCeneter',
+  //       },
+
+  //       {
+  //         label: 'Presentations',
+  //         icon: 'ri-tv-2-line csm-icon-color',
+  //         routerLink: '/presentationList',
+  //       },
+  //       // Define other submenu items for Settings similarly
+  //     ],
+  //   },
+
+  //   {
+  //     label: 'Settings',
+  //     icon: 'ri-list-settings-fill csm-icon-color',
+  //     subMenuId: 'submenuSettings',
+  //     subMenuItems: [
+  //       {
+  //         label: 'Users',
+  //         icon: 'ri-team-line csm-icon-color',
+  //         routerLink: '/users/userList',
+  //       },
+  //       // Define other submenu items for Settings similarly
+  //     ],
+  //   },
+  //   // Define other menu items similarly
+  // ];
 
   toggleMenu(menuItem: MenuItem) {
     if (this.openMenu === menuItem) {

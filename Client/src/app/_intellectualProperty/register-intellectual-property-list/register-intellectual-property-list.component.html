@@ -4,7 +4,7 @@
       <div class="card">
         <div class="card-header align-items-center d-flex">
           <h4 class="card-title mb-0 flex-grow-1">
-            Intellectual Property List
+            {{ "IntellectualPropertyList" | translate }}
           </h4>
           <div class="flex-shrink-0">
             <div class="d-flex align-items-center">
@@ -16,23 +16,6 @@
                 data-range-date="true"
                 placeholder="Select Date Range"
               />
-
-              <!-- <button
-                type="button"
-                class="btn btn-light waves-effect waves-light ms-2 me-2 col-1"
-              >
-                <i class="ri-search-2-line"></i>
-              </button>
-              |
-              <a
-                type="button"
-                class="btn btn-danger waves-effect waves-light ms-2 col-3"
-                id="btnAdd"
-                style="float: inline-end"
-                (click)="openModal(template)"
-              >
-                Add New
-              </a> -->
             </div>
           </div>
         </div>
@@ -40,25 +23,13 @@
           <table class="table table-nowrap" id="propertiesTypeDataTable">
             <thead>
               <tr>
-                <th>{{ "ID" }}</th>
-                <th>{{ "Type En" }}</th>
-                <th>{{ "Type Ar" }}</th>
-                <!-- <th>{{ "Actions" }}</th> -->
-                <th>{{ "Actions" }}</th>
+                <th>{{ "ID" | translate }}</th>
+                <th>{{ "TypeEn" | translate }}</th>
+                <th>{{ "TypeAr" | translate }}</th>
+                <th>{{ "Actions" | translate }}</th>
               </tr>
             </thead>
-            <tbody>
-              <!-- <tr>
-                <th scope="row"><a href="#" class="fw-semibold">#VZ2110</a></th>
-                <td>Lorem ipsum dolor sit amet consectetur adipiscing elit.</td>
-                <td>
-                  <a href="details.html" class="link-warning"
-                    >View in Detail
-                    <i class="ri-arrow-right-line align-middle"></i
-                  ></a>
-                </td>
-              </tr> -->
-            </tbody>
+            <tbody></tbody>
           </table>
         </div>
       </div>
@@ -70,7 +41,7 @@
 
 <ng-template #templateDetails class="modal-lg">
   <div class="modal-header">
-    <h4 class="modal-title pull-left">Property Detail</h4>
+    <h4 class="modal-title pull-left">{{ "PropertyDetail" | translate }}</h4>
     <button
       type="button"
       class="btn-close close pull-right"
@@ -83,20 +54,20 @@
   <div class="modal-body">
     <tabset>
       <tab heading="Basic Information">
-        <h5>Full Name</h5>
+        <h5>{{ "FullName" | translate }}</h5>
         <div class="row mt-3">
           <div class="col-md-6">
-            <label for="basiInput" class="form-label text-muted mb-0"
-              >Full name in Arabic</label
-            >
+            <label for="basiInput" class="form-label text-muted mb-0">{{
+              "FullnameinArabic" | translate
+            }}</label>
             <div class="mt-2">
               {{ registerIntecllectualPropertyModel?.fullNameAr }}
             </div>
           </div>
           <div class="col-md-6">
-            <label for="basiInput" class="form-label text-muted mb-0"
-              >Full name in English</label
-            >
+            <label for="basiInput" class="form-label text-muted mb-0">{{
+              "FullnameinEnglish" | translate
+            }}</label>
 
             <div class="mt-2">
               {{ registerIntecllectualPropertyModel?.fullNameEn }}
@@ -106,21 +77,21 @@
 
         <hr class="bg-soft-dark" />
 
-        <h5>The name is in Arabic</h5>
+        <h5>{{ "ThenameisinArabic" | translate }}</h5>
 
         <div class="row mt-3">
           <div class="col-md-4">
-            <label for="basiInput" class="form-label text-muted mb-0"
-              >First Name</label
-            >
+            <label for="basiInput" class="form-label text-muted mb-0">{{
+              "FirstName" | translate
+            }}</label>
             <div class="mt-2">
               {{ registerIntecllectualPropertyModel?.firstNameAr }}
             </div>
           </div>
           <div class="col-md-4">
-            <label for="basiInput" class="form-label text-muted mb-0"
-              >Second name</label
-            >
+            <label for="basiInput" class="form-label text-muted mb-0">{{
+              "Secondname" | translate
+            }}</label>
 
             <div class="mt-2">
               {{ registerIntecllectualPropertyModel?.secondNameAr }}
@@ -128,9 +99,9 @@
           </div>
 
           <div class="col-md-4">
-            <label for="basiInput" class="form-label text-muted mb-0"
-              >Third name</label
-            >
+            <label for="basiInput" class="form-label text-muted mb-0">{{
+              "Thirdname" | translate
+            }}</label>
 
             <div class="mt-2">
               {{ registerIntecllectualPropertyModel?.thirdNameAr }}
@@ -140,21 +111,21 @@
 
         <hr class="bg-soft-dark" />
 
-        <h5>The name is in English</h5>
+        <h5>{{ "ThenameisinEnglish" | translate }}</h5>
 
         <div class="row mt-3">
           <div class="col-md-4">
-            <label for="basiInput" class="form-label text-muted mb-0"
-              >First Name</label
-            >
+            <label for="basiInput" class="form-label text-muted mb-0">{{
+              "FirstName" | translate
+            }}</label>
             <div class="mt-2">
               {{ registerIntecllectualPropertyModel?.firstNameEn }}
             </div>
           </div>
           <div class="col-md-4">
-            <label for="basiInput" class="form-label text-muted mb-0"
-              >Second name</label
-            >
+            <label for="basiInput" class="form-label text-muted mb-0">{{
+              "Secondname" | translate
+            }}</label>
 
             <div class="mt-2">
               {{ registerIntecllectualPropertyModel?.secondNameEn }}
@@ -162,9 +133,9 @@
           </div>
 
           <div class="col-md-4">
-            <label for="basiInput" class="form-label text-muted mb-0"
-              >Third name</label
-            >
+            <label for="basiInput" class="form-label text-muted mb-0">{{
+              "Thirdname" | translate
+            }}</label>
 
             <div class="mt-2">
               {{ registerIntecllectualPropertyModel?.thirdNameEn }}
@@ -174,17 +145,17 @@
 
         <div class="row mt-3">
           <div class="col-md-4">
-            <label for="basiInput" class="form-label text-muted mb-0"
-              >Family Name</label
-            >
+            <label for="basiInput" class="form-label text-muted mb-0">{{
+              "FamilyName" | translate
+            }}</label>
             <div class="mt-2">
               {{ registerIntecllectualPropertyModel?.familyNameEn }}
             </div>
           </div>
           <div class="col-md-4">
-            <label for="basiInput" class="form-label text-muted mb-0"
-              >Date of birth</label
-            >
+            <label for="basiInput" class="form-label text-muted mb-0">{{
+              "Dateofbirth" | translate
+            }}</label>
 
             <div class="mt-2">
               {{ registerIntecllectualPropertyModel?.dateofBirth }}
@@ -203,7 +174,9 @@
                   value="Male"
                   [checked]="registerIntecllectualPropertyModel?.gender === 1"
                 />
-                <label class="form-check-label" for="male">Male</label>
+                <label class="form-check-label" for="male">{{
+                  "Male" | translate
+                }}</label>
               </div>
               <div class="form-check form-check-inline">
                 <input
@@ -214,7 +187,9 @@
                   value="Female"
                   [checked]="registerIntecllectualPropertyModel?.gender === 2"
                 />
-                <label class="form-check-label" for="female">Female</label>
+                <label class="form-check-label" for="female">{{
+                  "Female" | translate
+                }}</label>
               </div>
             </div>
           </div>
@@ -222,9 +197,9 @@
 
         <div class="row mt-3">
           <div class="col-md-4">
-            <label for="sex" class="form-label text-muted mb-0"
-              >The person of determination</label
-            >
+            <label for="sex" class="form-label text-muted mb-0">{{
+              "Thepersonofdetermination" | translate
+            }}</label>
             <div class="mt-2">
               <div class="form-check form-check-inline">
                 <input
@@ -236,7 +211,9 @@
                     true
                   "
                 />
-                <label class="form-check-label" for="male">Yes</label>
+                <label class="form-check-label" for="male">{{
+                  "Yes" | translate
+                }}</label>
               </div>
               <div class="form-check form-check-inline">
                 <input
@@ -248,22 +225,24 @@
                     false
                   "
                 />
-                <label class="form-check-label" for="female">No</label>
+                <label class="form-check-label" for="female">{{
+                  "No" | translate
+                }}</label>
               </div>
             </div>
           </div>
           <div class="col-md-4">
-            <label for="basiInput" class="form-label text-muted mb-0"
-              >Mobile</label
-            >
+            <label for="basiInput" class="form-label text-muted mb-0">{{
+              "Mobile" | translate
+            }}</label>
             <div class="mt-2">
               {{ registerIntecllectualPropertyModel?.mobile }}
             </div>
           </div>
           <div class="col-md-4">
-            <label for="basiInput" class="form-label text-muted mb-0"
-              >E-mail</label
-            >
+            <label for="basiInput" class="form-label text-muted mb-0">{{
+              "E-mail" | translate
+            }}</label>
 
             <div class="mt-2">
               {{ registerIntecllectualPropertyModel?.email }}
@@ -273,17 +252,17 @@
 
         <div class="row mt-3">
           <div class="col-md-4">
-            <label for="basiInput" class="form-label text-muted mb-0"
-              >Emirates ID number</label
-            >
+            <label for="basiInput" class="form-label text-muted mb-0">{{
+              "EmiratesIDnumber" | translate
+            }}</label>
             <div class="mt-2">
               {{ registerIntecllectualPropertyModel?.emiratesIDNumber }}
             </div>
           </div>
           <div class="col-md-4">
-            <label for="basiInput" class="form-label text-muted mb-0"
-              >Passport number</label
-            >
+            <label for="basiInput" class="form-label text-muted mb-0">{{
+              "Passportnumber" | translate
+            }}</label>
 
             <div class="mt-2">
               {{ registerIntecllectualPropertyModel?.passportNumber }}
@@ -297,7 +276,7 @@
           <div class="row mt-3">
             <div class="col-md-4">
               <label for="basiInput" class="form-label text-muted mb-0"
-                >اسم المصنف In the arabic language*</label
+                >{{ ">اسم المصنفInthearabiclanguage" | translate }}*</label
               >
               <div class="mt-2">
                 {{
@@ -307,9 +286,9 @@
               </div>
             </div>
             <div class="col-md-4">
-              <label for="basiInput" class="form-label text-muted mb-0"
-                >The name of the work in English</label
-              >
+              <label for="basiInput" class="form-label text-muted mb-0">{{
+                "ThenameoftheworkinEnglish" | translate
+              }}</label>
 
               <div class="mt-6">
                 {{
@@ -321,7 +300,7 @@
 
             <div class="col-md-4">
               <label for="basiInput" class="form-label text-muted mb-0"
-                >Workbook type*</label
+                >{{ "Workbooktype" | translate }}*</label
               >
 
               <div class="mt-2">
@@ -336,9 +315,9 @@
           </div>
           <div class="row mt-3">
             <div class="col-md-6">
-              <label for="basiInput" class="form-label text-muted mb-0"
-                >Description of the workbook</label
-              >
+              <label for="basiInput" class="form-label text-muted mb-0">{{
+                "Descriptionoftheworkbook" | translate
+              }}</label>
               <div class="mt-2">
                 {{
                   registerIntecllectualPropertyModel?.classifierData
@@ -348,7 +327,7 @@
             </div>
             <div class="col-md-6">
               <label for="basiInput" class="form-label text-muted mb-0">
-                Workbook content</label
+                {{ "Workbookcontent" | translate }}</label
               >
               <div class="mt-2">
                 {{
@@ -362,7 +341,7 @@
           <hr class="bg-soft-dark" />
 
           <div class="row mt-3">
-            <h5>Attachments</h5>
+            <h5>{{ "Attachments" | translate }}</h5>
           </div>
 
           <div class="row mt-2">
@@ -370,8 +349,8 @@
               <table class="table">
                 <thead>
                   <tr>
-                    <th scope="col">File</th>
-                    <th scope="col">Download</th>
+                    <th scope="col">{{ "File" | translate }}</th>
+                    <th scope="col">{{ "Download" | translate }}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -405,7 +384,8 @@
                         class="btn btn-primary btn-sm"
                         (click)="downloadFile(attachment.url)"
                       >
-                        <i class="bi bi-download"></i> Download
+                        <i class="bi bi-download"></i
+                        >{{ "Download" | translate }}
                       </button>
                     </td>
                   </tr>
@@ -420,9 +400,9 @@
         <div class="row">
           <div class="row mt-3">
             <div class="col-md-6">
-              <label for="basiInput" class="form-label text-muted mb-0"
-                >Nature of the author</label
-              >
+              <label for="basiInput" class="form-label text-muted mb-0">{{
+                "Natureoftheauthor" | translate
+              }}</label>
               <div class="mt-2">
                 {{
                   globalService.getAuthorNature(
@@ -433,7 +413,7 @@
             </div>
             <div class="col-md-6">
               <label for="basiInput" class="form-label text-muted mb-0"
-                >Author type
+                >{{ "Authortype" | translate }}
               </label>
 
               <div class="mt-2">
@@ -448,16 +428,16 @@
 
           <div class="row mt-3">
             <div class="col-md-6">
-              <label for="basiInput" class="form-label text-muted mb-0"
-                >The name is in Arabic</label
-              >
+              <label for="basiInput" class="form-label text-muted mb-0">{{
+                "ThenameisinArabic" | translate
+              }}</label>
               <div class="mt-2">
                 {{ registerIntecllectualPropertyModel?.authorData?.authorType }}
               </div>
             </div>
             <div class="col-md-6">
               <label for="basiInput" class="form-label text-muted mb-0"
-                >Name in English
+                >{{ "NameinEnglish" | translate }}
               </label>
 
               <div class="mt-2">
@@ -468,16 +448,16 @@
 
           <div class="row mt-3">
             <div class="col-md-6">
-              <label for="basiInput" class="form-label text-muted mb-0"
-                >Accommodation type</label
-              >
+              <label for="basiInput" class="form-label text-muted mb-0">{{
+                "Accommodationtype" | translate
+              }}</label>
               <div class="mt-2">
                 {{ registerIntecllectualPropertyModel?.authorData?.authorType }}
               </div>
             </div>
             <div class="col-md-6">
               <label for="basiInput" class="form-label text-muted mb-0"
-                >Nationality
+                >{{ "Nationality" | translate }}
               </label>
 
               <div class="mt-2">
@@ -492,16 +472,16 @@
 
           <div class="row mt-3">
             <div class="col-md-6">
-              <label for="basiInput" class="form-label text-muted mb-0"
-                >Mobile</label
-              >
+              <label for="basiInput" class="form-label text-muted mb-0">{{
+                "Mobile" | translate
+              }}</label>
               <div class="mt-2">
                 {{ registerIntecllectualPropertyModel?.authorData?.mobile }}
               </div>
             </div>
             <div class="col-md-6">
               <label for="basiInput" class="form-label text-muted mb-0"
-                >E-mail
+                >{{ "E-mail" | translate }}
               </label>
 
               <div class="mt-2">
@@ -523,7 +503,7 @@
           aria-label="Close"
           (click)="modalRef?.hide()"
         >
-          Close
+          {{ "Close" | translate }}
         </button>
       </div>
     </div>

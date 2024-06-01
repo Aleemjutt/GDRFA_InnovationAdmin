@@ -1,8 +1,8 @@
 {
-  "IntellectualPropertyTypesList": "Intellectual Property Types List",
-  "TypeEn": "Type En",
-  "TypeAr": "Type Ar",
-  "Actions": "Actions",
-  "DescriptionEn": "DescriptionEn",
-  "DescriptionAr": "DescriptionAr"
+  "IntellectualPropertyTypesList": "قائمة أنواع الملكية الفكرية",
+  "TypeEn": "النوع باللغة الانجليزيه",
+  "TypeAr": "النوع باللغة العربيه",
+  "Actions": "اجراء",
+  "DescriptionEn": "الوصف باللغة الانجليزيه",
+  "DescriptionAr": "الوصف باللغة العربيه"
 }

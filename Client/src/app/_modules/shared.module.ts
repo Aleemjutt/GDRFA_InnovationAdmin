@@ -12,8 +12,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FilePondModule } from 'ngx-filepond';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
-import { RecursiveMenuComponent } from '../recursive-menu/recursive-menu.component';
-
 @NgModule({
   declarations: [],
   imports: [

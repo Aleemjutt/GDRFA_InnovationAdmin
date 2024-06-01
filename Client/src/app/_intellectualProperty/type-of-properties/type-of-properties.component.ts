@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormGroup, FormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 import { FilePond, FilePondOptions } from 'filepond';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { FilePondModule } from 'ngx-filepond';
@@ -15,7 +16,7 @@ import { UploadServiceService } from 'src/app/_services/upload-service.service';
 @Component({
   selector: 'app-type-of-properties',
   standalone: true,
-  imports: [FilePondModule, CommonModule, FormsModule],
+  imports: [FilePondModule, CommonModule, FormsModule, TranslateModule],
   templateUrl: './type-of-properties.component.html',
   styleUrl: './type-of-properties.component.css',
 })
@@ -79,6 +80,11 @@ export class TypeOfPropertiesComponent implements OnInit {
   }
 
   initilizeDataTable(): void {
+    const currentLang = this.globalService.getCurrentLanguage();
+    const languageConfig =
+      currentLang === 'ar'
+        ? this.globalService.getArabicLanguageConfig()
+        : this.globalService.getEnglishLanguageConfig();
     const datatable: any = $('#propertiesTypeDataTable').DataTable();
     this.intecllectualPropertiesService
       ._listType()
@@ -95,6 +101,7 @@ export class TypeOfPropertiesComponent implements OnInit {
             pageLength: 5,
             processing: true,
             data: this.typeOfPropertyModelList,
+            language: languageConfig,
             columns: [
               { data: 'id' },
               {

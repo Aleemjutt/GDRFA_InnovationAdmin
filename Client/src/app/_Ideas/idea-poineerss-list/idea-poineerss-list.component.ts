@@ -12,11 +12,12 @@ import { UploadServiceService } from 'src/app/_services/upload-service.service';
 import { CommonModule } from '@angular/common';
 import { FilePondModule } from 'ngx-filepond';
 import { GlobalServiceService } from 'src/app/_global/-global-service.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-idea-poineerss-list',
   standalone: true,
-  imports: [FormsModule, FilePondModule, CommonModule],
+  imports: [FormsModule, FilePondModule, CommonModule, TranslateModule],
   templateUrl: './idea-poineerss-list.component.html',
   styleUrl: './idea-poineerss-list.component.css',
 })
@@ -74,6 +75,11 @@ export class IdeaPoineerssListComponent {
   }
 
   initilizeDataTable(): void {
+    const currentLang = this.globalService.getCurrentLanguage();
+    const languageConfig =
+      currentLang === 'ar'
+        ? this.globalService.getArabicLanguageConfig()
+        : this.globalService.getEnglishLanguageConfig();
     this.ideaPionnerService
       .getPionnerList()
       .subscribe((response: ResponseResult) => {
@@ -90,6 +96,7 @@ export class IdeaPoineerssListComponent {
             pageLength: 5,
             processing: true,
             data: this.ideaPioneerList,
+            language: languageConfig,
             columns: [
               { data: 'id' },
               {

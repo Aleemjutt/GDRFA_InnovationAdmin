@@ -1,5 +1,5 @@
 {
-  "Actions": "حدث",
+  
   "Add New": "اضافه",
   "Select Department": "اختيار قسم",
   "Select Operation": "اختيار معامله",
@@ -10,10 +10,10 @@
   "Attachment": "مرفقات",
   "Save": "حفظ",
   "Submit": "تسليم",
-  "ENG": "ENG",
+  "ENG": "اللغة الانجليزية",
   "Request": "طلب",
   "Close": "يغلق",
   "Update": "تحديث",
   "Loading...": "تحميل...",
-  "Innovation": "Innovation"
+  "Innovation": "الابتكار"
 }

@@ -1,7 +1,7 @@
 {
-  "Version List": "Version List",
-  "BookNameEn": "Book Name En",
-  "BookNameAr": "Book Name Ar",
-  "BookCoverImage": "Book Cover Image",
-  "BookFile": "Book File"
+  "Version List": "قائمة الإصدارات",
+  "BookNameEn": "اسم الكتاب باللغه الانجليزيه",
+  "BookNameAr": "اسم الكتاب باللغه العربيه",
+  "BookCoverImage": "صورة غلاف الكتاب",
+  "BookFile": "ملف الكتاب"
 }

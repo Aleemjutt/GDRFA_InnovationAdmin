@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
@@ -16,7 +17,7 @@ import { DubaiResidencayService } from 'src/app/_services/_futureFocused/dubai-r
 @Component({
   selector: 'app-dubai-residency-lists',
   standalone: true,
-  imports: [FormsModule, CommonModule, AccordionModule],
+  imports: [FormsModule, CommonModule, AccordionModule, TranslateModule],
   templateUrl: './dubai-residency-lists.component.html',
   styleUrl: './dubai-residency-lists.component.css',
 })

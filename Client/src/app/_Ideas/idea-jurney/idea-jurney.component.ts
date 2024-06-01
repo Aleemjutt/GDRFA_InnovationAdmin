@@ -14,11 +14,12 @@ import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { Observable, finalize } from 'rxjs';
 import { ResponseResult } from 'src/app/_models/responseResult';
 import { GlobalServiceService } from 'src/app/_global/-global-service.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-idea-jurney',
   standalone: true,
-  imports: [FormsModule, CommonModule, FilePondModule],
+  imports: [FormsModule, CommonModule, FilePondModule,TranslateModule],
   templateUrl: './idea-jurney.component.html',
   styleUrl: './idea-jurney.component.css',
 })

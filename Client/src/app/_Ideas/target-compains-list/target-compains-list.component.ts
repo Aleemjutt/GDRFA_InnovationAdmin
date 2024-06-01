@@ -11,10 +11,12 @@ import {
 import { ResponseResult, StatusCodes } from 'src/app/_models/responseResult';
 import { TargetCompainService } from 'src/app/_services/_Ideas/target-compain.service';
 import { NavigationExtras, Route, Router } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
+import { GlobalServiceService } from 'src/app/_global/-global-service.service';
 @Component({
   selector: 'app-target-compains-list',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, TranslateModule],
   templateUrl: './target-compains-list.component.html',
   styleUrl: './target-compains-list.component.css',
 })
@@ -33,7 +35,8 @@ export class TargetCompainsListComponent {
     private tosterService: ToastrService,
     private modalService: BsModalService,
     private targetCompainService: TargetCompainService,
-    private router: Router
+    private router: Router,
+    private globalService : GlobalServiceService
   ) {
     this.targetCompainsOptionModel = {
       id: 0,
@@ -59,6 +62,11 @@ export class TargetCompainsListComponent {
   }
 
   initilizeDataTable(): void {
+    const currentLang = this.globalService.getCurrentLanguage();
+    const languageConfig =
+      currentLang === 'ar'
+        ? this.globalService.getArabicLanguageConfig()
+        : this.globalService.getEnglishLanguageConfig();
     const datatable: any = $('#targetCompainDataTable').DataTable();
     this.targetCompainService
       ._getList()
@@ -75,6 +83,7 @@ export class TargetCompainsListComponent {
             pageLength: 5,
             processing: true,
             data: this.targetCompainList,
+            language: languageConfig,
             columns: [
               { data: 'id' },
               {

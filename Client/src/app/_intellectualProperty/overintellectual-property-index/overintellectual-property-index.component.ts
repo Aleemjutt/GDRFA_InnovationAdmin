@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 import { FilePondOptions } from 'filepond';
 import { FilePondModule } from 'ngx-filepond';
 import { ToastrService } from 'ngx-toastr';
@@ -14,7 +15,7 @@ import { UploadServiceService } from 'src/app/_services/upload-service.service';
 @Component({
   selector: 'app-overintellectual-property-index',
   standalone: true,
-  imports: [CommonModule, FormsModule, FilePondModule],
+  imports: [CommonModule, FormsModule, FilePondModule,TranslateModule],
   templateUrl: './overintellectual-property-index.component.html',
   styleUrl: './overintellectual-property-index.component.css',
 })

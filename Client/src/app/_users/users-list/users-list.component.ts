@@ -90,7 +90,11 @@ export class UsersListComponent {
   }
   initilizeDataTable(): void {
     //const datatable: any = $('#consultingRequestDataTable').DataTable();
-
+    const currentLang = this.globalService.getCurrentLanguage();
+    const languageConfig =
+      currentLang === 'ar'
+        ? this.globalService.getArabicLanguageConfig()
+        : this.globalService.getEnglishLanguageConfig();
     this.datatable = $('#usersDataTable').DataTable();
     if (this.datatable != null && this.datatable != undefined) {
       this.datatable.destroy();
@@ -111,6 +115,7 @@ export class UsersListComponent {
           pageLength: 5,
           processing: true,
           data: this.userModels,
+          language: languageConfig,
           columns: [
             { data: 'id' },
             {

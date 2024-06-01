@@ -4,14 +4,14 @@
       <div class="card">
         <div class="card-header align-items-center d-flex">
           <h4 class="card-title mb-0 flex-grow-1">
-            Overview of Intellectual Property
+            {{ "OverviewofIntellectualProperty" | translate }}
           </h4>
         </div>
         <div class="card-body">
           <div class="row" *ngIf="overViewPropertyModel">
             <div class="mt-3 col-md-6">
               <label for="basiInput" class="form-label"
-                >About intellectual property
+                >{{ "Aboutintellectualproperty" | translate }}
               </label>
               <input
                 type="input"
@@ -23,7 +23,7 @@
 
             <div class="mt-3 col-md-6">
               <label for="basiInput" class="form-label"
-                >About intellectual property
+                >{{ "Aboutintellectualproperty" | translate }}
               </label>
               <input
                 type="input"
@@ -33,9 +33,9 @@
               />
             </div>
             <div class="col-md-6">
-              <label for="basiInput" class="form-label"
-                >What is intellectual property En</label
-              >
+              <label for="basiInput" class="form-label">{{
+                "WhatisintellectualpropertyEn" | translate
+              }}</label>
               <input
                 type="input"
                 class="form-control row-4"
@@ -45,9 +45,9 @@
             </div>
 
             <div class="col-md-6">
-              <label for="basiInput" class="form-label"
-                >What is intellectual property Ar</label
-              >
+              <label for="basiInput" class="form-label">{{
+                "WhatisintellectualpropertyAr" | translate
+              }}</label>
               <input
                 type="input"
                 class="form-control row-4"
@@ -56,31 +56,10 @@
               />
             </div>
 
-            <!-- <div class="mt-3 col-md-6">
-              <label for="basiInput" class="form-label">Description En</label>
-              <textarea
-                type="input"
-                [(ngModel)]="overViewPropertyModel.descriptionEn"
-                class="form-control row-4"
-                id="basiInput"
-              ></textarea>
-            </div>
-
             <div class="mt-3 col-md-6">
-              <label for="basiInput" class="form-label">Description Ar</label>
-              <textarea
-                type="input"
-                [(ngModel)]="overViewPropertyModel.descriptionAr"
-                class="form-control row-4"
-                id="basiInput"
-              >
-              </textarea>
-            </div> -->
-
-            <div class="mt-3 col-md-6">
-              <label for="basiInput" class="form-label"
-                >Ownership Registration Link</label
-              >
+              <label for="basiInput" class="form-label">{{
+                "OwnershipRegistrationLink" | translate
+              }}</label>
               <input
                 type="input"
                 [(ngModel)]="overViewPropertyModel.ownershipRegistrationLink"
@@ -92,7 +71,9 @@
             <div class="mt-3 col-md-6">
               <div class="mb-3">
                 <div *ngIf="!overViewPropertyModel.urlBase64">
-                  <label for="formFile" class="form-label">Choose file</label>
+                  <label for="formFile" class="form-label">{{
+                    "Choosefile" | translate
+                  }}</label>
                   <file-pond
                     #myPond
                     label-idle='Drag & Drop your files or <span class="filepond--label-action"> Browse </span><br> <b>Maximum 5 files upload</b>'
@@ -120,7 +101,7 @@
                     (click)="removeImage()"
                     class="btn btn-danger"
                     style="display: block; margin-top: 10px; width: 150px"
-                    >Remove</a
+                    >{{ "Remove" | translate }}</a
                   >
                 </div>
               </div>
@@ -132,7 +113,7 @@
             class="btn btn-danger waves-effect waves-light ms-2 col-3 pull-right mt-2"
             (click)="add()"
           >
-            Save
+            {{ "Save" | translate }}
           </button>
         </div>
       </div>

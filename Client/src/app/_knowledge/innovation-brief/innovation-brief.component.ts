@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormGroup, FormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 import { FilePondOptions } from 'filepond';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { FilePondModule } from 'ngx-filepond';
@@ -17,7 +18,7 @@ import { UploadServiceService } from 'src/app/_services/upload-service.service';
 @Component({
   selector: 'app-innovation-brief',
   standalone: true,
-  imports: [FormsModule, FilePondModule, CommonModule],
+  imports: [FormsModule, FilePondModule, CommonModule, TranslateModule],
   templateUrl: './innovation-brief.component.html',
   styleUrl: './innovation-brief.component.css',
 })
@@ -123,6 +124,11 @@ export class InnovationBriefComponent implements OnInit {
   }
 
   initilizeDataTable(): void {
+    const currentLang = this.globalService.getCurrentLanguage();
+    const languageConfig =
+      currentLang === 'ar'
+        ? this.globalService.getArabicLanguageConfig()
+        : this.globalService.getEnglishLanguageConfig();
     // Data reload function
     const datatable: any = $('#innovationBriefDataTable').DataTable();
     this.innovationBriefService
@@ -140,6 +146,7 @@ export class InnovationBriefComponent implements OnInit {
             pageLength: 5,
             processing: true,
             data: this.innovationInBriefModelList,
+            language: languageConfig,
             columns: [
               { data: 'id' },
               { data: 'bookNameEn' },

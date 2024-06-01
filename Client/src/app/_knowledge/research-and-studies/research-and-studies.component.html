@@ -3,7 +3,9 @@
     <div class="container-fluid">
       <div class="card">
         <div class="card-header align-items-center d-flex">
-          <h4 class="card-title mb-0 flex-grow-1">Research And Studies List</h4>
+          <h4 class="card-title mb-0 flex-grow-1">
+            {{ "ResearchAndStudiesList" | translate }}
+          </h4>
           <div class="flex-shrink-0">
             <div class="d-flex align-items-center"></div>
             <a
@@ -13,7 +15,7 @@
               style="float: inline-end"
               (click)="openModal(template)"
             >
-              Add New
+              {{ "AddNew" | translate }}
             </a>
           </div>
         </div>
@@ -21,15 +23,15 @@
           <table class="table table-nowrap" id="researchAndStudiesDataTable">
             <thead>
               <tr>
-                <th>{{ "ID" }}</th>
-                <th>{{ "DescrtionEn En" }}</th>
-                <th>{{ "Description Ar" }}</th>
-                <th>{{ "Story Name En " }}</th>
-                <th>{{ "Story Name Ar " }}</th>
-                <th>{{ "Publisher Name En" }}</th>
-                <th>{{ "Publisher Name Ar" }}</th>
+                <th>{{ "ID" | translate }}</th>
+                <th>{{ "DescrtionEnEn" | translate }}</th>
+                <th>{{ "DescriptionAr" | translate }}</th>
+                <th>{{ "StoryNameEn" | translate }}</th>
+                <th>{{ "StoryNameAr" | translate }}</th>
+                <th>{{ "PublisherNameEn" | translate }}</th>
+                <th>{{ "PublisherNameAr" | translate }}</th>
                 <!-- <th>{{ "Actions" }}</th> -->
-                <th>{{ "Actions" }}</th>
+                <th>{{ "Actions" | translate }}</th>
               </tr>
             </thead>
             <tbody></tbody>
@@ -44,10 +46,10 @@
 <ng-template #template class="modal-lg">
   <div class="modal-header">
     <h4 class="modal-title pull-left" *ngIf="researchAndStudiesModel.id == 0">
-      Add
+      {{ "Add" | translate }}
     </h4>
     <h4 class="modal-title pull-left" *ngIf="researchAndStudiesModel.id != 0">
-      Update
+      {{ "Update" | translate }}
     </h4>
     <button
       type="button"
@@ -62,40 +64,58 @@
     <div class="row">
       <div class="row">
         <div class="col-md-6 mt-3">
-          <label for="basiInput" class="form-label">Discuss</label>
+          <label for="basiInput" class="form-label">{{
+            "Discuss" | translate
+          }}</label>
           <select
             class="form-control"
             [(ngModel)]="researchAndStudiesModel.discuss"
           >
-            <option [ngValue]="1">Institutional Support Sector</option>
-            <option [ngValue]="2">
-              Violators And Foreigners Follow up Sector
+            <option [ngValue]="1">
+              {{ "InstitutionalSupportSector" | translate }}
             </option>
-            <option [ngValue]="3">Landand Air Portssector</option>
-            <option [ngValue]="4">Entryand Residence Permitssector</option>
-            <option [ngValue]="5">Nationality Affairs Sector</option>
-            <option [ngValue]="6">Airports Sector</option>
+            <option [ngValue]="2">
+              {{ "ViolatorsAndForeignersFollowupSector" | translate }}
+            </option>
+            <option [ngValue]="3">
+              {{ "LandandAirPortssector" | translate }}
+            </option>
+            <option [ngValue]="4">
+              {{ "EntryandResidencePermitssector" | translate }}
+            </option>
+            <option [ngValue]="5">
+              {{ "NationalityAffairsSector" | translate }}
+            </option>
+            <option [ngValue]="6">{{ "AirportsSector" | translate }}</option>
           </select>
         </div>
 
         <div class="col-md-6 mt-3">
-          <label for="basiInput" class="form-label"
-            >Research And Studies Categories</label
-          >
+          <label for="basiInput" class="form-label">{{
+            "ResearchAndStudiesCategories" | translate
+          }}</label>
           <select
             class="form-control"
             [(ngModel)]="researchAndStudiesModel.researchAndStudiesCategories"
           >
-            <option [ngValue]="1">Scholars Research Masters And PhD</option>
-            <option [ngValue]="2">Innovative Research</option>
-            <option [ngValue]="3">Accredited Research</option>
+            <option [ngValue]="1">
+              {{ "ScholarsResearchMastersAndPhD" | translate }}
+            </option>
+            <option [ngValue]="2">
+              {{ "InnovativeResearch" | translate }}
+            </option>
+            <option [ngValue]="3">
+              {{ "AccreditedResearch" | translate }}
+            </option>
           </select>
         </div>
       </div>
 
       <div class="row">
         <div class="col-md-6 mt-3">
-          <label for="basiInput" class="form-label">Description En</label>
+          <label for="basiInput" class="form-label">{{
+            "DescriptionEn" | translate
+          }}</label>
           <input
             type="input"
             class="form-control"
@@ -105,7 +125,9 @@
         </div>
 
         <div class="col-md-6 mt-3">
-          <label for="basiInput" class="form-label">Description Ar</label>
+          <label for="basiInput" class="form-label">{{
+            "DescriptionAr" | translate
+          }}</label>
           <input
             type="input"
             class="form-control"
@@ -116,7 +138,9 @@
       </div>
       <div class="row">
         <div class="col-md-6 mt-3">
-          <label for="basiInput" class="form-label">Publisher Name En </label>
+          <label for="basiInput" class="form-label"
+            >{{ "PublisherNameEn" | translate }}
+          </label>
           <input
             type="input"
             class="form-control"
@@ -126,7 +150,9 @@
         </div>
 
         <div class="col-md-6 mt-3">
-          <label for="basiInput" class="form-label">Publisher Name Ar</label>
+          <label for="basiInput" class="form-label">{{
+            "PublisherNameAr" | translate
+          }}</label>
           <input
             type="input"
             class="form-control"
@@ -137,7 +163,9 @@
       </div>
       <div class="row">
         <div class="col-md-6 mt-3">
-          <label for="basiInput" class="form-label">Story Name En</label>
+          <label for="basiInput" class="form-label">{{
+            "StoryNameEn" | translate
+          }}</label>
           <input
             type="input"
             class="form-control"
@@ -147,7 +175,9 @@
         </div>
 
         <div class="col-md-6 mt-3">
-          <label for="basiInput" class="form-label">Story Name Ar</label>
+          <label for="basiInput" class="form-label">{{
+            "StoryNameAr" | translate
+          }}</label>
           <input
             type="input"
             class="form-control"
@@ -159,7 +189,9 @@
 
       <div class="row">
         <div class="col-md-4 mt-3">
-          <label for="basiInput" class="form-label">Book Number En</label>
+          <label for="basiInput" class="form-label">{{
+            "BookNumberEn" | translate
+          }}</label>
           <input
             type="input"
             class="form-control"
@@ -168,7 +200,9 @@
           />
         </div>
         <div class="col-md-4 mt-3">
-          <label for="basiInput" class="form-label">Book Number Ar</label>
+          <label for="basiInput" class="form-label">{{
+            "BookNumberAr" | translate
+          }}</label>
           <input
             type="input"
             class="form-control"
@@ -177,7 +211,9 @@
           />
         </div>
         <div class="col-md-4 mt-3">
-          <label for="basiInput" class="form-label">Book Link</label>
+          <label for="basiInput" class="form-label">{{
+            "BookLink" | translate
+          }}</label>
           <input
             type="text"
             placeholder="Book Link"
@@ -193,7 +229,9 @@
           <div class="mt-3">
             <div class="mb-3">
               <div *ngIf="!researchAndStudiesModel.urlBase64">
-                <label for="formFile" class="form-label">Choose file</label>
+                <label for="formFile" class="form-label">{{
+                  "Choosefile" | translate
+                }}</label>
                 <file-pond
                   #myPond
                   label-idle='Drag & Drop your files or <span class="filepond--label-action"> Browse </span><br> <b>Maximum 5 files upload</b>'
@@ -220,7 +258,7 @@
                   (click)="removeImage()"
                   class="btn btn-danger"
                   style="display: block; margin-top: 10px"
-                  >Remove</a
+                  >{{ "Remove" | translate }}</a
                 >
               </div>
             </div>
@@ -238,7 +276,7 @@
           (click)="add()"
           *ngIf="researchAndStudiesModel.id == 0"
         >
-          Save
+          {{ "Save" | translate }}
         </button>
         <button
           type="button"
@@ -246,7 +284,7 @@
           (click)="update()"
           *ngIf="researchAndStudiesModel.id != 0"
         >
-          Update
+          {{ "Update" | translate }}
         </button>
         <button
           type="button"
@@ -254,7 +292,7 @@
           aria-label="Close"
           (click)="modalRef?.hide()"
         >
-          Close
+          {{ "Close" | translate }}
         </button>
       </div>
     </div>
@@ -263,7 +301,9 @@
 
 <ng-template #templateDetails class="modal-lg">
   <div class="modal-header">
-    <h4 class="modal-title pull-left">Research and Studies Details</h4>
+    <h4 class="modal-title pull-left">
+      {{ "ResearchandStudiesDetails" | translate }}
+    </h4>
     <button
       type="button"
       class="btn-close close pull-right"
@@ -278,7 +318,7 @@
       <div class="row">
         <div class="col-md-6 mt-3">
           <label for="basiInput" class="form-label text-muted mb-0"
-            >Dicussion
+            >{{ "Dicussion" | translate }}
           </label>
           <div>
             {{ globalService.getDiscuss(researchAndStudiesModel.discuss) }}
@@ -286,9 +326,9 @@
         </div>
 
         <div class="col-md-6 mt-3">
-          <label for="basiInput" class="form-label text-muted mb-0"
-            >Research And Studies</label
-          >
+          <label for="basiInput" class="form-label text-muted mb-0">{{
+            "ResearchAndStudies" | translate
+          }}</label>
           <div>
             {{
               globalService.getResearchAndStudiesCategory(
@@ -298,58 +338,60 @@
           </div>
         </div>
         <div class="col-md-6 mt-3">
-          <label for="basiInput" class="form-label text-muted mb-0"
-            >Description En</label
-          >
+          <label for="basiInput" class="form-label text-muted mb-0">{{
+            "DescriptionEn" | translate
+          }}</label>
           <div>{{ researchAndStudiesModel.descrtionEn }}</div>
         </div>
         <div class="col-md-6 mt-3">
-          <label for="basiInput" class="form-label text-muted mb-0"
-            >Description Ar</label
-          >
+          <label for="basiInput" class="form-label text-muted mb-0">{{
+            "DescriptionAr" | translate
+          }}</label>
           <div>{{ researchAndStudiesModel.descrtionAr }}</div>
         </div>
 
         <div class="col-md-6 mt-3">
           <label for="basiInput" class="form-label text-muted mb-0"
-            >Publisher Name En
+            >{{ "PublisherNameEn" | translate }}
           </label>
           <div>{{ researchAndStudiesModel.publisherNameEn }}</div>
         </div>
         <div class="col-md-6 mt-3">
           <label for="basiInput" class="form-label text-muted mb-0"
-            >Publisher Name Ar
+            >{{ "PublisherNameAr" | translate }}
           </label>
           <div>{{ researchAndStudiesModel.publisherNameAr }}</div>
         </div>
         <div class="col-md-6 mt-3">
-          <label for="basiInput" class="form-label text-muted mb-0"
-            >New Arrivals</label
-          >
-          <div *ngIf="researchAndStudiesModel.newArrivals === true">Online</div>
+          <label for="basiInput" class="form-label text-muted mb-0">{{
+            "NewArrivals" | translate
+          }}</label>
+          <div *ngIf="researchAndStudiesModel.newArrivals === true">
+            {{ "Online" | translate }}
+          </div>
           <div *ngIf="researchAndStudiesModel.newArrivals === false">
-            On Premises
+            {{ "OnPremises" | translate }}
           </div>
         </div>
         <div class="col-md-6 mt-3">
           <label for="basiInput" class="form-label text-muted mb-0"
-            >Story Name En
+            >{{ "StoryNameEn" | translate }}
           </label>
           <div>{{ researchAndStudiesModel.storyNameEn }}</div>
         </div>
 
         <div class="col-md-6 mt-3">
           <label for="basiInput" class="form-label text-muted mb-0"
-            >Story Name Ar
+            >{{ "StoryNameAr" | translate }}
           </label>
           <div>{{ researchAndStudiesModel.storyNameAr }}</div>
         </div>
       </div>
       <div class="row">
         <div class="col-md-6 mt-3">
-          <label for="basiInput" class="form-label text-muted mb-0"
-            >Attachment</label
-          >
+          <label for="basiInput" class="form-label text-muted mb-0">{{
+            "Attachment" | translate
+          }}</label>
           <div class="fs-15">
             <img
               [src]="
@@ -376,7 +418,7 @@
           aria-label="Close"
           (click)="modalRef?.hide()"
         >
-          Close
+          {{ "Close" | translate }}
         </button>
       </div>
     </div>

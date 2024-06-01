@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormGroup, FormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 import { FilePondOptions } from 'filepond';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { FilePondModule } from 'ngx-filepond';
@@ -17,7 +18,7 @@ import { UploadServiceService } from 'src/app/_services/upload-service.service';
 @Component({
   selector: 'app-goverment',
   standalone: true,
-  imports: [FormsModule, FilePondModule, CommonModule],
+  imports: [FormsModule, FilePondModule, CommonModule,TranslateModule],
   templateUrl: './goverment.component.html',
   styleUrl: './goverment.component.css',
 })

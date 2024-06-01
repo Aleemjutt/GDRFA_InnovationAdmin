@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
@@ -20,7 +21,7 @@ import { FutureFocusedService } from 'src/app/_services/_futureFocused/future-fo
 @Component({
   selector: 'app-estabishing-dubai-future-list',
   standalone: true,
-  imports: [FormsModule, CommonModule, AccordionModule],
+  imports: [FormsModule, CommonModule, AccordionModule, TranslateModule],
   templateUrl: './estabishing-dubai-future-list.component.html',
   styleUrl: './estabishing-dubai-future-list.component.css',
 })
@@ -119,6 +120,11 @@ export class EstabishingDubaiFutureListComponent {
   }
 
   initilizeDataTable(): void {
+    const currentLang = this.globalService.getCurrentLanguage();
+    const languageConfig =
+      currentLang === 'ar'
+        ? this.globalService.getArabicLanguageConfig()
+        : this.globalService.getEnglishLanguageConfig();
     const datatable: any = $('#awardsDataTable').DataTable();
     this.futureFocusedService
       .getList()
@@ -135,6 +141,7 @@ export class EstabishingDubaiFutureListComponent {
             pageLength: 5,
             processing: true,
             data: this.establishingDubaiForTheFutureModels,
+            language: languageConfig,
             columns: [
               { data: 'id' },
               {
@@ -147,7 +154,6 @@ export class EstabishingDubaiFutureListComponent {
               {
                 data: (row: any) =>
                   this.globalService.getStatusName(row.status),
-               
               },
               {
                 data: 'data',

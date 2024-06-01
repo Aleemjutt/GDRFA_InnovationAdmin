@@ -3,35 +3,11 @@
     <div class="container-fluid">
       <div class="card">
         <div class="card-header align-items-center d-flex">
-          <h4 class="card-title mb-0 flex-grow-1">Idea Pionner List</h4>
+          <h4 class="card-title mb-0 flex-grow-1">
+            {{ "IdeaPionnerList" | translate }}
+          </h4>
           <div class="flex-shrink-0">
-            <div class="d-flex align-items-center">
-              <!-- <input
-                type="text"
-                class="form-control me-3"
-                data-provider="flatpickr"
-                data-date-format="d M, Y"
-                data-range-date="true"
-                placeholder="Select Date Range"
-              /> -->
-              <!-- <select
-                class="form-select mb-0 me-2"
-                aria-label="Default select example"
-              >
-                <option selected>Status</option>
-                <option value="1">Submitted</option>
-                <option value="2">In Review</option>
-                <option value="3">Approved</option>
-                <option value="4">Rejected</option>
-              </select> -->
-              <!-- <button
-                type="button"
-                class="btn btn-light waves-effect waves-light ms-2 me-2 col-1"
-              >
-                <i class="ri-search-2-line"></i>
-              </button>
-              | -->
-            </div>
+            <div class="d-flex align-items-center"></div>
 
             <a
               type="button"
@@ -40,7 +16,7 @@
               style="float: inline-end"
               (click)="openModal(template)"
             >
-              Add New
+              {{ "AddNew" | translate }}
             </a>
 
             <a
@@ -50,7 +26,7 @@
               style="float: inline-end"
               (click)="OpenPointsModel(templatePoints)"
             >
-              Add Points
+              {{ "AddPoints" | translate }}
             </a>
           </div>
         </div>
@@ -58,12 +34,12 @@
           <table class="table table-nowrap" id="ideaPionnerDataTable">
             <thead>
               <tr>
-                <th>{{ "ID" }}</th>
-                <th>{{ "Title En" }}</th>
-                <th>{{ "Title Ar" }}</th>
-                <th>{{ "Name En" }}</th>
-                <th>{{ "Name Ar" }}</th>
-                <th>{{ "Actions" }}</th>
+                <th>{{ "ID" | translate }}</th>
+                <th>{{ "TitleEn" | translate }}</th>
+                <th>{{ "TitleAr" | translate }}</th>
+                <th>{{ "NameEn" | translate }}</th>
+                <th>{{ "NameAr" | translate }}</th>
+                <th>{{ "Actions" | translate }}</th>
               </tr>
             </thead>
             <tbody></tbody>
@@ -77,7 +53,7 @@
 </div>
 <ng-template #template class="modal-lg">
   <div class="modal-header">
-    <h4 class="modal-title pull-left">Add New</h4>
+    <h4 class="modal-title pull-left">{{ "AddNew" | translate }}</h4>
     <button
       type="button"
       class="btn-close close pull-right"
@@ -92,7 +68,9 @@
       <div class="row">
         <div class="col-md-6">
           <div>
-            <label for="basiInput" class="form-label">Title Eng</label>
+            <label for="basiInput" class="form-label">{{
+              "TitleEng" | translate
+            }}</label>
             <input
               type="input"
               class="form-control"
@@ -101,7 +79,9 @@
             />
           </div>
           <div class="mt-3">
-            <label for="basiInput" class="form-label">Title Ar</label>
+            <label for="basiInput" class="form-label">{{
+              "TitleAr" | translate
+            }}</label>
             <input
               type="input"
               class="form-control"
@@ -112,7 +92,9 @@
         </div>
         <div class="col-md-6">
           <div>
-            <label for="basiInput" class="form-label">Name Eng</label>
+            <label for="basiInput" class="form-label">{{
+              "NameEng" | translate
+            }}</label>
             <input
               type="input"
               class="form-control"
@@ -121,7 +103,9 @@
             />
           </div>
           <div class="mt-3">
-            <label for="basiInput" class="form-label">Name Ar</label>
+            <label for="basiInput" class="form-label">{{
+              "NameAr" | translate
+            }}</label>
             <input
               type="input"
               class="form-control"
@@ -134,7 +118,9 @@
         <div class="mt-3">
           <div class="mb-3">
             <div *ngIf="!ideaPionnerModel.url">
-              <label for="formFile" class="form-label">Choose file</label>
+              <label for="formFile" class="form-label">{{
+                "Choosefile" | translate
+              }}</label>
               <file-pond
                 #myPond
                 label-idle='Drag & Drop your files or <span class="filepond--label-action"> Browse </span><br> <b>Maximum 5 files upload</b>'
@@ -159,7 +145,7 @@
                 (click)="removeImage()"
                 class="btn btn-danger"
                 style="display: block; margin-top: 10px; width: 140px"
-                >Remove</a
+                >{{ "Remove" | translate }}</a
               >
             </div>
           </div>
@@ -176,7 +162,7 @@
           (click)="add()"
           *ngIf="ideaPionnerModel.id == 0"
         >
-          Save
+          {{ "Save" | translate }}
         </button>
 
         <button
@@ -185,7 +171,7 @@
           (click)="update()"
           *ngIf="ideaPionnerModel.id != 0"
         >
-          Update
+          {{ "Update" | translate }}
         </button>
         <button
           type="button"
@@ -193,7 +179,7 @@
           aria-label="Close"
           (click)="modalRef?.hide()"
         >
-          Close
+          {{ "Close" | translate }}
         </button>
       </div>
     </div>
@@ -202,7 +188,9 @@
 
 <ng-template #templateDetails class="modal-lg">
   <div class="modal-header">
-    <h4 class="modal-title pull-left">Idea Pionner Details</h4>
+    <h4 class="modal-title pull-left">
+      {{ "IdeaPionnerDetails" | translate }}
+    </h4>
     <button
       type="button"
       class="btn-close close pull-right"
@@ -216,33 +204,33 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-6">
-          <label for="basiInput" class="form-label text-muted mb-0"
-            >Name En</label
-          >
+          <label for="basiInput" class="form-label text-muted mb-0">{{
+            "NameEn" | translate
+          }}</label>
           <div>{{ ideaPionnerModel.titleEn }}</div>
         </div>
         <div class="col-md-6">
-          <label for="basiInput" class="form-label text-muted mb-0"
-            >Title Ar</label
-          >
+          <label for="basiInput" class="form-label text-muted mb-0">{{
+            "TitleAr" | translate
+          }}</label>
           <div>{{ ideaPionnerModel.titleAr }}</div>
         </div>
         <div class="col-md-6">
-          <label for="basiInput" class="form-label text-muted mb-0"
-            >Name En</label
-          >
+          <label for="basiInput" class="form-label text-muted mb-0">{{
+            "NameEn" | translate
+          }}</label>
           <div>{{ ideaPionnerModel.nameEn }}</div>
         </div>
         <div class="col-md-6">
-          <label for="basiInput" class="form-label text-muted mb-0"
-            >Name Ar</label
-          >
+          <label for="basiInput" class="form-label text-muted mb-0">{{
+            "NameAr" | translate
+          }}</label>
           <div>{{ ideaPionnerModel.nameAr }}</div>
         </div>
         <div class="col-md-6">
-          <label for="basiInput" class="form-label text-muted mb-0"
-            >Attachment</label
-          >
+          <label for="basiInput" class="form-label text-muted mb-0">{{
+            "Attachment" | translate
+          }}</label>
           <div class="fs-15">
             <img
               [src]="
@@ -267,7 +255,7 @@
           aria-label="Close"
           (click)="modalRef?.hide()"
         >
-          Close
+          {{ "Close" | translate }}
         </button>
       </div>
     </div>
@@ -275,7 +263,9 @@
 </ng-template>
 <ng-template #templatePoints class="modal-lg">
   <div class="modal-header">
-    <h4 class="modal-title pull-left">Membership Application Points</h4>
+    <h4 class="modal-title pull-left">
+      {{ "MembershipApplicationPoints" | translate }}
+    </h4>
     <button
       type="button"
       class="btn-close close pull-right"
@@ -291,7 +281,9 @@
         <div class="row">
           <div class="col-md-12">
             <div class="mb-3">
-              <label for="Enter value for En" class="form-label">Text En</label>
+              <label for="Enter value for En" class="form-label">{{
+                "TextEn" | translate
+              }}</label>
               <input
                 type="text"
                 class="form-control"
@@ -303,7 +295,9 @@
             </div>
 
             <div class="mb-3">
-              <label for="Enter value for Ar" class="form-label">Text Ar</label>
+              <label for="Enter value for Ar" class="form-label">{{
+                "TextAr" | translate
+              }}</label>
               <div class="input-group">
                 <input
                   type="text"
@@ -324,7 +318,7 @@
                 id="ourValuesEnButton"
                 (click)="addPoints()"
               >
-                Add
+                {{ "Add" | translate }}
               </button>
             </div>
             <div class="col-12">
@@ -332,9 +326,9 @@
                 <table class="table">
                   <thead>
                     <tr>
-                      <th scope="col">Text En</th>
-                      <th scope="col">Text Ar</th>
-                      <th scope="col">Actions</th>
+                      <th scope="col">{{ "TextEn" | translate }}</th>
+                      <th scope="col">{{ "TextAr" | translate }}</th>
+                      <th scope="col">{{ "Actions" | translate }}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -351,7 +345,7 @@
                           class="btn btn-danger btn-sm"
                           (click)="removePoints(i)"
                         >
-                          Remove
+                          {{ "Remove" | translate }}
                         </a>
                       </td>
                     </tr>
@@ -373,7 +367,7 @@
           (click)="savePoinets()"
           *ngIf="!ideaPionnerPointsListModel.length"
         >
-          Save
+          {{ "Save" | translate }}
         </button>
         <button
           type="button"
@@ -381,7 +375,7 @@
           (click)="savePoinets()"
           *ngIf="ideaPionnerPointsListModel.length > 0"
         >
-          Update
+          {{ "Update" | translate }}
         </button>
         <button
           type="button"
@@ -389,7 +383,7 @@
           aria-label="Close"
           (click)="modalRef?.hide()"
         >
-          Close
+          {{ "Close" | translate }}
         </button>
       </div>
     </div>

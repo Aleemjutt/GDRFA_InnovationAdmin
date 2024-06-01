@@ -81,6 +81,11 @@ export class CreditsListComponent implements OnInit {
   }
 
   initilizeDataTable(): void {
+    const currentLang = this.globalService.getCurrentLanguage();
+    const languageConfig =
+      currentLang === 'ar'
+        ? this.globalService.getArabicLanguageConfig()
+        : this.globalService.getEnglishLanguageConfig();
     const datatable: any = $('#creditsDataTable').DataTable();
     this.creditService.getCreditList().subscribe((response: ResponseResult) => {
       // ////console.log(response.data, 'Data Table values');
@@ -95,6 +100,8 @@ export class CreditsListComponent implements OnInit {
           pageLength: 5,
           processing: true,
           data: this.creditList,
+
+          language: languageConfig,
           columns: [
             { data: 'id' },
             {

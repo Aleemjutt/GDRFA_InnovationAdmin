@@ -1,6 +1,6 @@
 {
-  "ID": "ID",
-  "DescriptionEn": "Description En",
-  "DescriptionAr": "Description Ar",
-  "Actions": "Actions"
+  "ID": "رقم المرجع",
+  "DescriptionEn": "الوصف باللغة الانجليزيه",
+  "DescriptionAr": "الوصف باللغة العربيه",
+  "Actions": "اجراء"
 }

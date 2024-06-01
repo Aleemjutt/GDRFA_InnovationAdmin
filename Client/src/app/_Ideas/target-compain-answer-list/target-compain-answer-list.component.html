@@ -3,44 +3,21 @@
     <div class="container-fluid">
       <div class="card">
         <div class="card-header align-items-center d-flex">
-          <h4 class="card-title mb-0 flex-grow-1">Target Compain Answer</h4>
+          <h4 class="card-title mb-0 flex-grow-1">
+            {{ "TargetCompainAnswer" | translate }}
+          </h4>
           <div class="flex-shrink-0">
-            <div class="d-flex align-items-center">
-              <!-- <input
-                type="text"
-                class="form-control me-3"
-                data-provider="flatpickr"
-                data-date-format="d M, Y"
-                data-range-date="true"
-                placeholder="Select Date Range"
-              />
-              <select
-                class="form-select mb-0 me-2"
-                aria-label="Default select example"
-              >
-                <option selected>Status</option>
-                <option value="1">Submitted</option>
-                <option value="2">In Review</option>
-                <option value="3">Approved</option>
-                <option value="4">Rejected</option>
-              </select>
-              <button
-                type="button"
-                class="btn btn-light waves-effect waves-light ms-2 me-2 col-1"
-              >
-                <i class="ri-search-2-line"></i>
-              </button> -->
-            </div>
+            <div class="d-flex align-items-center"></div>
           </div>
         </div>
         <div class="card-body">
           <table class="table table-nowrap" id="targetCompainAnswerDataTable">
             <thead>
               <tr>
-                <th>{{ "ID" }}</th>
-                <th>{{ "Target Compain Title " }}</th>
-                <th>{{ "Target Compain Details" }}</th>
-                <th>{{ "Actions" }}</th>
+                <th>{{ "ID" | translate }}</th>
+                <th>{{ "TargetCompainTitle " | translate }}</th>
+                <th>{{ "TargetCompainDetails" | translate }}</th>
+                <th>{{ "Actions" | translate }}</th>
               </tr>
             </thead>
             <tbody></tbody>
@@ -55,7 +32,9 @@
 
 <ng-template #templateDetails class="modal-lg">
   <div class="modal-header">
-    <h4 class="modal-title pull-left">Target Compain Details</h4>
+    <h4 class="modal-title pull-left">
+      {{ "TargetCompainDetails" | translate }}
+    </h4>
     <button
       type="button"
       class="btn-close close pull-right"
@@ -69,29 +48,29 @@
     <div class="row">
       <div class="row">
         <div class="col-md-6">
-          <label for="basiInput" class="form-label text-muted mb-0"
-            >Challenge Title</label
-          >
+          <label for="basiInput" class="form-label text-muted mb-0">{{
+            "ChallengeTitle" | translate
+          }}</label>
           <div>{{ targetCompainsAnswerDetailsModel.challengeTitle }}</div>
         </div>
         <div class="col-md-6">
-          <label for="basiInput" class="form-label text-muted mb-0"
-            >Challenge Details</label
-          >
+          <label for="basiInput" class="form-label text-muted mb-0">{{
+            "ChallengeDetails" | translate
+          }}</label>
           <div>{{ targetCompainsAnswerDetailsModel.challengeDetails }}</div>
         </div>
       </div>
 
       <div class="row">
-        <label class="mt-3">Options</label>
+        <label class="mt-3">{{ "Options" | translate }}</label>
 
         <div class="table-responsive">
           <table class="table">
             <thead>
               <tr>
                 <th>#</th>
-                <th scope="col">Option</th>
-                <th scope="col">Answer</th>
+                <th scope="col">{{ "Option" | translate }}</th>
+                <th scope="col">{{ "Answer" | translate }}</th>
               </tr>
             </thead>
             <tbody>
@@ -111,9 +90,9 @@
       </div>
 
       <div class="row mt-3">
-        <label for="basicInput" class="form-label text-muted mb-0"
-          >Attachments</label
-        >
+        <label for="basicInput" class="form-label text-muted mb-0">{{
+          "Attachments" | translate
+        }}</label>
       </div>
 
       <div class="row mt-2">
@@ -121,8 +100,8 @@
           <table class="table">
             <thead>
               <tr>
-                <th scope="col">File</th>
-                <th scope="col">Download</th>
+                <th scope="col">{{ "File" | translate }}</th>
+                <th scope="col">{{ "Download" | translate }}</th>
               </tr>
             </thead>
             <tbody>
@@ -156,7 +135,7 @@
                     class="btn btn-primary btn-sm"
                     download
                   >
-                    <i class="bi bi-download"></i> Download
+                    <i class="bi bi-download"></i>{{ "Download" | translate }}
                   </a>
                 </td>
               </tr>
@@ -178,7 +157,7 @@
           aria-label="Close"
           (click)="modalRef?.hide()"
         >
-          Close
+          {{ "Close" | translate }}
         </button>
       </div>
     </div>

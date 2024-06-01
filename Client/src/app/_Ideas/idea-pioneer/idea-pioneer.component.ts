@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { FilePondModule } from 'ngx-filepond';
 import { ToastrService } from 'ngx-toastr';
@@ -15,7 +16,7 @@ import { DubaiResidencayService } from 'src/app/_services/_futureFocused/dubai-r
 @Component({
   selector: 'app-idea-pioneer',
   standalone: true,
-  imports: [],
+  imports: [TranslateModule, CommonModule],
   templateUrl: './idea-pioneer.component.html',
   styleUrl: './idea-pioneer.component.css',
 })

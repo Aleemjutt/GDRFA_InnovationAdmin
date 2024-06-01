@@ -94,6 +94,11 @@ export class ReqeustListComponent implements OnInit {
   }
 
   initilizeDataTable(): void {
+    const currentLang = this.globalService.getCurrentLanguage();
+    const languageConfig =
+      currentLang === 'ar'
+        ? this.globalService.getArabicLanguageConfig()
+        : this.globalService.getEnglishLanguageConfig();
     //const datatable: any = $('#consultingRequestDataTable').DataTable();
     const row = '';
     this.datatable = $('#consultingRequestDataTable').DataTable();
@@ -118,6 +123,7 @@ export class ReqeustListComponent implements OnInit {
             pageLength: 5,
             processing: true,
             data: this.innovationConsultingRequestModelList,
+            language: languageConfig,
             columns: [
               { data: 'id' },
               {

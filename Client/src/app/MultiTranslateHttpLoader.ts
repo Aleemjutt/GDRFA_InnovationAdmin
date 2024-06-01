@@ -60,8 +60,9 @@ export class MultiTranslateHttpLoader implements TranslateLoader {
         { prefix: './assets/il8n/idea/ideaPioneers/', suffix: '.json' },
         { prefix: './assets/il8n/idea/myThoughts/', suffix: '.json' },
         { prefix: './assets/il8n/idea/targetCompain/', suffix: '.json' },
+        { prefix: './assets/il8n/idea/submityourIdea/', suffix: '.json' },
         {
-          prefix: './assets/il8n/innovationPossiblities/',
+          prefix: './assets/il8n/innovationPossibilites/',
           suffix: '.json',
         },
 

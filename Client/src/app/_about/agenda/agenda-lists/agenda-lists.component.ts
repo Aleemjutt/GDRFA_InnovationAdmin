@@ -154,6 +154,12 @@ export class AgendaListsComponent implements OnInit {
 
   initilizeDataTable(): void {
     // Data reload function
+
+    const currentLang = this.globalService.getCurrentLanguage();
+    const languageConfig =
+      currentLang === 'ar'
+        ? this.globalService.getArabicLanguageConfig()
+        : this.globalService.getEnglishLanguageConfig();
     const datatable: any = $('#agendaDataTable').DataTable();
     this.agendaService.getAgendaList().subscribe((response: ResponseResult) => {
       // ////console.log(response.data, 'Data Table values');
@@ -168,6 +174,7 @@ export class AgendaListsComponent implements OnInit {
           pageLength: 5,
           processing: true,
           data: this.agendaList,
+          language: languageConfig,
           columns: [
             { data: 'id' },
             {

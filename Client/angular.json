@@ -13,20 +13,13 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "allowedCommonJsDependencies": [
-              "lodash"
-            ],
+            "allowedCommonJsDependencies": ["lodash"],
             "outputPath": "dist/client",
             "index": "src/index.html",
             "main": "src/main.ts",
-            "polyfills": [
-              "zone.js"
-            ],
+            "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
-            "assets": [
-              "src/assets/images/favicon.ico",
-              "src/assets"
-            ],
+            "assets": ["src/assets/images/favicon.ico", "src/assets"],
             "scripts": [
               "src/assets/js/layout.js",
               "node_modules/jquery/dist/jquery.min.js",
@@ -151,22 +144,14 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ],
+            "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "tsconfig.spec.json",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
               "src/styles.css",
               "./node_modules/filepond/dist/filepond.min.css"
             ],
-            "scripts": [
-              "./node_modules/filepond/dist/filepond.min.js"
-            ]
+            "scripts": ["./node_modules/filepond/dist/filepond.min.js"]
           }
         }
       }

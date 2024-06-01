@@ -5,6 +5,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { FilePondModule } from 'ngx-filepond';
 import { ToastrService } from 'ngx-toastr';
+import { GlobalServiceService } from 'src/app/_global/-global-service.service';
 import { ArchivesModel } from 'src/app/_models/About/archivesModel';
 import { ResponseResult } from 'src/app/_models/responseResult';
 import { ArchivesService } from 'src/app/_services/_about/archives.service';
@@ -33,7 +34,8 @@ export class ArchivesListsComponent {
   constructor(
     private tosterService: ToastrService,
     private modalService: BsModalService,
-    private archivesService: ArchivesService
+    private archivesService: ArchivesService,
+    private globalService: GlobalServiceService
   ) {}
   ngOnInit(): void {
     this.initilizeDataTable();
@@ -47,6 +49,11 @@ export class ArchivesListsComponent {
   }
 
   initilizeDataTable(): void {
+    const currentLang = this.globalService.getCurrentLanguage();
+    const languageConfig =
+      currentLang === 'ar'
+        ? this.globalService.getArabicLanguageConfig()
+        : this.globalService.getEnglishLanguageConfig();
     this.archivesService
       .getArchivesList()
       .subscribe((response: ResponseResult) => {
@@ -63,6 +70,7 @@ export class ArchivesListsComponent {
             pageLength: 5,
             processing: true,
             data: this.archivesList,
+            language: languageConfig,
             columns: [
               { data: 'id' },
               {

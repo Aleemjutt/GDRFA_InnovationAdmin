@@ -3,7 +3,9 @@
     <div class="container-fluid">
       <div class="card">
         <div class="card-header align-items-center d-flex">
-          <h4 class="card-title mb-0 flex-grow-1">Target Compain List</h4>
+          <h4 class="card-title mb-0 flex-grow-1">
+            {{ "TargetCompainList" | translate }}
+          </h4>
           <div class="flex-shrink-0">
             <div class="d-flex align-items-center">
               <!-- <input
@@ -18,9 +20,9 @@
                 class="form-select mb-0 me-2"
                 aria-label="Default select example"
               >
-                <option selected>Status</option>
-                <option value="1">Active</option>
-                <option value="2">In-Active</option>
+                <option selected>{{ "Status" | translate }}</option>
+                <option value="1">{{ "Active" | translate }}</option>
+                <option value="2">{{ "InActive" | translate }}</option>
               </select>
               <button
                 type="button"
@@ -36,7 +38,7 @@
                 style="float: inline-end"
                 (click)="openModal(template)"
               >
-                Add New
+                {{ "AddNew" | translate }}
               </a>
             </div>
           </div>
@@ -46,12 +48,12 @@
             <table class="table table-nowrap" id="targetCompainDataTable">
               <thead>
                 <tr>
-                  <th>{{ "ID" }}</th>
-                  <th>{{ "Target Compain Text En" }}</th>
-                  <th>{{ "Target Compain Text Ar" }}</th>
-                  <th>{{ "Note En" }}</th>
-                  <th>{{ "Note Ar" }}</th>
-                  <th>{{ "Actions" }}</th>
+                  <th>{{ "ID" | translate }}</th>
+                  <th>{{ "TargetCompainTextEn" | translate }}</th>
+                  <th>{{ "TargetCompainTextAr" | translate }}</th>
+                  <th>{{ "NoteEn" | translate }}</th>
+                  <th>{{ "NoteAr" | translate }}</th>
+                  <th>{{ "Actions" | translate }}</th>
                 </tr>
               </thead>
               <tbody></tbody>
@@ -66,7 +68,7 @@
 </div>
 <ng-template #template class="modal-lg">
   <div class="modal-header bg-light">
-    <h4 class="modal-title pull-left">Add New</h4>
+    <h4 class="modal-title pull-left">{{ "AddNew" | translate }}</h4>
     <button
       type="button"
       class="btn-close close pull-right"
@@ -80,7 +82,9 @@
     <div class="row" style="margin-bottom: 65px">
       <div class="row">
         <div class="col-md-6 mt-3">
-          <label for="basiInput" class="form-label">Compain Title Eng</label>
+          <label for="basiInput" class="form-label">{{
+            "CompainTitleEn" | translate
+          }}</label>
           <input
             type="input"
             class="form-control"
@@ -89,7 +93,9 @@
           />
         </div>
         <div class="mt-3 col-md-6">
-          <label for="basiInput" class="form-label">Compain Title Ar</label>
+          <label for="basiInput" class="form-label">{{
+            "CompainTitleAr" | translate
+          }}</label>
           <input
             type="input"
             class="form-control"
@@ -100,7 +106,9 @@
       </div>
       <div class="row">
         <div class="col-md-6 mt-3">
-          <label for="basiInput" class="form-label">Note Eng</label>
+          <label for="basiInput" class="form-label">{{
+            "NoteEn" | translate
+          }}</label>
           <input
             type="input"
             class="form-control"
@@ -109,7 +117,9 @@
           />
         </div>
         <div class="mt-3 col-md-6">
-          <label for="basiInput" class="form-label">Note Ar</label>
+          <label for="basiInput" class="form-label">{{
+            "NoteAr" | translate
+          }}</label>
           <input
             type="input"
             class="form-control"
@@ -120,11 +130,13 @@
       </div>
 
       <div class="row">
-        <label class="mt-3">Options</label>
+        <label class="mt-3">{{ "Options" | translate }}</label>
 
         <div class="col-md-6">
           <div class="mt-3">
-            <label for="basiInput" class="form-label">Optiontext En</label>
+            <label for="basiInput" class="form-label">{{
+              "OptiontextEn" | translate
+            }}</label>
             <input
               type="input"
               class="form-control"
@@ -137,7 +149,9 @@
 
         <div class="col-md-6">
           <div class="mt-3">
-            <label for="basiInput" class="form-label">Optiontext Ar</label>
+            <label for="basiInput" class="form-label">{{
+              "OptiontextAr" | translate
+            }}</label>
             <input
               type="input"
               class="form-control"
@@ -150,7 +164,9 @@
 
         <div class="col-md-6">
           <div class="" style="margin-top: 30px">
-            <label for="userStatusInput" class="form-label">Status</label>
+            <label for="userStatusInput" class="form-label">{{
+              "Status" | translate
+            }}</label>
             <div class="form-check form-switch">
               <input
                 type="checkbox"
@@ -170,16 +186,16 @@
             id="ourValuesEnButton"
             (click)="addOption()"
           >
-            Add
+            {{ "Add" | translate }}
           </button>
         </div>
         <div class="table-responsive mt-4">
           <table class="table">
             <thead>
               <tr>
-                <th scope="col">Option En</th>
-                <th scope="col">Option Ar</th>
-                <th scope="col">Actions</th>
+                <th scope="col">{{ "OptionEn" | translate }}</th>
+                <th scope="col">{{ "OptionAr" | translate }}</th>
+                <th scope="col">{{ "Actions" | translate }}</th>
               </tr>
             </thead>
             <tbody>
@@ -196,7 +212,7 @@
                     class="btn btn-danger btn-sm"
                     (click)="removeOption(i)"
                   >
-                    Remove
+                    {{ "Remove" | translate }}
                   </button>
                 </td>
               </tr>
@@ -215,7 +231,7 @@
           (click)="add()"
           *ngIf="targetCompainModel.id == 0"
         >
-          Save
+          {{ "Save" | translate }}
         </button>
 
         <button
@@ -224,7 +240,7 @@
           (click)="update()"
           *ngIf="targetCompainModel.id != 0"
         >
-          Update
+          {{ "Update" | translate }}
         </button>
         <button
           type="button"
@@ -232,7 +248,7 @@
           aria-label="Close"
           (click)="modalRef?.hide()"
         >
-          Close
+          {{ "Close" | translate }}
         </button>
       </div>
     </div>
@@ -241,7 +257,9 @@
 
 <ng-template #templateDetails class="modal-lg">
   <div class="modal-header bg-light">
-    <h4 class="modal-title pull-left">Target Compain Details</h4>
+    <h4 class="modal-title pull-left">
+      {{ "TargetCompainDetails" | translate }}
+    </h4>
     <button
       type="button"
       class="btn-close close pull-right"
@@ -255,40 +273,40 @@
     <div class="row">
       <div class="row">
         <div class="col-md-6">
-          <label for="basiInput" class="form-label text-muted mb-0"
-            >Target Compain Text En</label
-          >
+          <label for="basiInput" class="form-label text-muted mb-0">{{
+            "TargetCompainTextEn" | translate
+          }}</label>
           <div>{{ targetCompainModel.targetCompainTextEn }}</div>
         </div>
         <div class="col-md-6">
-          <label for="basiInput" class="form-label text-muted mb-0"
-            >Target Compain Text Ar</label
-          >
+          <label for="basiInput" class="form-label text-muted mb-0">{{
+            "TargetCompainTextAr" | translate
+          }}</label>
           <div>{{ targetCompainModel.targetCompainTextAr }}</div>
         </div>
         <div class="col-md-6">
-          <label for="basiInput" class="form-label text-muted mb-0"
-            >Note En</label
-          >
+          <label for="basiInput" class="form-label text-muted mb-0">{{
+            "NoteEn" | translate
+          }}</label>
           <div>{{ targetCompainModel.noteEn }}</div>
         </div>
         <div class="col-md-6">
-          <label for="basiInput" class="form-label text-muted mb-0"
-            >Note AR</label
-          >
+          <label for="basiInput" class="form-label text-muted mb-0">{{
+            "NoteAr" | translate
+          }}</label>
           <div>{{ targetCompainModel.noteAr }}</div>
         </div>
       </div>
 
       <div class="row">
-        <label class="mt-3">Options</label>
+        <label class="mt-3">{{ "Options" | translate }}</label>
 
         <div class="table-responsive">
           <table class="table">
             <thead>
               <tr>
-                <th scope="col">Option En</th>
-                <th scope="col">Option Ar</th>
+                <th scope="col">{{ "OptionEn" | translate }}</th>
+                <th scope="col">{{ "OptionAr" | translate }}</th>
               </tr>
             </thead>
             <tbody>
@@ -319,7 +337,7 @@
           aria-label="Close"
           (click)="modalRef?.hide()"
         >
-          Close
+          {{ "Close" | translate }}
         </button>
       </div>
     </div>

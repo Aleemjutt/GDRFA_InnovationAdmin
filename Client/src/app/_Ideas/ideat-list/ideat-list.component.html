@@ -3,7 +3,9 @@
     <div class="container-fluid">
       <div class="card">
         <div class="card-header align-items-center d-flex">
-          <h4 class="card-title mb-0 flex-grow-1">Submited Ideas List</h4>
+          <h4 class="card-title mb-0 flex-grow-1">
+            {{ "SubmitedIdeasList" | translate }}
+          </h4>
           <div class="flex-shrink-0">
             <div class="d-flex align-items-center">
               <input
@@ -18,11 +20,11 @@
                 class="form-select mb-0 me-2"
                 aria-label="Default select example"
               >
-                <option selected>Status</option>
-                <option value="1">Submitted</option>
-                <option value="2">In Review</option>
-                <option value="3">Approved</option>
-                <option value="4">Rejected</option>
+                <option selected>{{ "Status" | translate }}</option>
+                <option value="1">{{ "Submitted" | translate }}</option>
+                <option value="2">{{ "InReview" | translate }}</option>
+                <option value="3">{{ "Approved" | translate }}</option>
+                <option value="4">{{ "Rejected" | translate }}</option>
               </select>
               <button
                 type="button"
@@ -30,16 +32,6 @@
               >
                 <i class="ri-search-2-line"></i>
               </button>
-              <!-- |
-              <a
-                type="button"
-                class="btn btn-danger waves-effect waves-light ms-2 col-3"
-                id="btnAdd"
-                style="float: inline-end"
-                (click)="openModal(template)"
-              >
-                Add New
-              </a> -->
             </div>
           </div>
         </div>
@@ -47,12 +39,12 @@
           <table class="table table-nowrap" id="ideaDataTable">
             <thead>
               <tr>
-                <th>{{ "ID" }}</th>
-                <th>{{ "Idea Title" }}</th>
-                <th>{{ "Sector" }}</th>
-                <th>{{ "Administration" }}</th>
-                <th>{{ "Status" }}</th>
-                <th>{{ "Actions" }}</th>
+                <th>{{ "ID" | translate }}</th>
+                <th>{{ "IdeaTitle" | translate }}</th>
+                <th>{{ "Sector" | translate }}</th>
+                <th>{{ "Administration" | translate }}</th>
+                <th>{{ "Status" | translate }}</th>
+                <th>{{ "Actions" | translate }}</th>
               </tr>
             </thead>
             <tbody></tbody>
@@ -66,7 +58,9 @@
 </div>
 <ng-template #template class="modal-lg">
   <div class="modal-header bg-light">
-    <h4 class="modal-title pull-left">Consulting Request</h4>
+    <h4 class="modal-title pull-left">
+      {{ "ConsultingRequest" | translate }}
+    </h4>
     <button
       type="button"
       class="btn-close close pull-right"
@@ -83,7 +77,9 @@
           <div class="col-md-12">
             <div class="col-md-6">
               <div class="mt-0">
-                <label for="basiInput" class="form-label">Idea title</label>
+                <label for="basiInput" class="form-label">{{
+                  "Ideatitle" | translate
+                }}</label>
                 <p
                   type="input"
                   class="form-control"
@@ -95,7 +91,9 @@
             </div>
             <div class="col-md-6">
               <div class="mt-3">
-                <label for="basiInput" class="form-label">Idea text</label>
+                <label for="basiInput" class="form-label">{{
+                  "Ideatext" | translate
+                }}</label>
                 <p
                   type="input"
                   class="form-control"
@@ -114,7 +112,8 @@
                   >
                   <p class="mb-1 mt-3 text-dark">
                     {{
-                      "Choose no more than two of the most influential returns from the returns listed below :"
+                      "Choosenomorethantwoofthemostinfluentialreturnsfromthereturnslistedbelow:"
+                        | translate
                     }}
                   </p>
                   <div class="form-check">
@@ -130,7 +129,7 @@
                       class="form-check-label text-dark"
                       for="defaultCheck1"
                     >
-                      {{ "Employee happiness" }}
+                      {{ "Employeehappiness" | translate }}
                     </label>
                   </div>
                   <div class="form-check">
@@ -146,7 +145,7 @@
                       class="form-check-label text-dark"
                       for="defaultCheck1"
                     >
-                      {{ "Improving services" }}
+                      {{ "Improvingservices" | translate }}
                     </label>
                   </div>
                   <div class="form-check">
@@ -162,7 +161,7 @@
                       class="form-check-label text-dark"
                       for="defaultCheck1"
                     >
-                      {{ "Rationalization of expenses" }}
+                      {{ "Rationalizationofexpenses" | translate }}
                     </label>
                   </div>
                   <div class="form-check">
@@ -178,7 +177,7 @@
                       class="form-check-label text-dark"
                       for="defaultCheck1"
                     >
-                      {{ "Customer happiness" }}
+                      {{ "Customerhappiness" | translate }}
                     </label>
                   </div>
                   <div class="form-check">
@@ -196,7 +195,7 @@
                       class="form-check-label text-dark"
                       for="defaultCheck1"
                     >
-                      {{ "Information technology development" }}
+                      {{ "Informationtechnologydevelopment" | translate }}
                     </label>
                   </div>
                   <div class="form-check">
@@ -212,7 +211,7 @@
                       class="form-check-label text-dark"
                       for="defaultCheck1"
                     >
-                      {{ "Finding new sources of financing" }}
+                      {{ "Findingnewsourcesoffinancing" | translate }}
                     </label>
                   </div>
                 </div>
@@ -220,7 +219,9 @@
             </div>
             <div class="col-md-6">
               <div class="mt-3">
-                <label for="basiInput" class="form-label">Sector</label>
+                <label for="basiInput" class="form-label">{{
+                  "Sector" | translate
+                }}</label>
                 <ng-select
                   #mySector
                   class="form-control mt-2 form-select"
@@ -235,7 +236,9 @@
             <br />
             <div class="col-md-6">
               <div class="mt-3">
-                <label for="basiInput" class="form-label">Administration</label>
+                <label for="basiInput" class="form-label">{{
+                  "Administration" | translate
+                }}</label>
                 <ng-select
                   #myAdministration
                   class="form-control mt-2 form-select"
@@ -249,9 +252,9 @@
             </div>
             <div class="col-md-6">
               <div class="mt-3">
-                <label for="basiInput" class="form-label text-muted mb-0"
-                  >Attachment</label
-                >
+                <label for="basiInput" class="form-label text-muted mb-0">{{
+                  "Attachment" | translate
+                }}</label>
                 <div class="fs-15">
                   <!-- <img
                     src="{{
@@ -275,7 +278,7 @@
             class="btn btn-danger waves-effect waves-light"
             (click)="Update()"
           >
-            Save
+            {{ "Save" | translate }}
           </button>
 
           <button
@@ -284,7 +287,7 @@
             aria-label="Close"
             (click)="modalRef?.hide()"
           >
-            Close
+            {{ "Close" | translate }}
           </button>
         </div>
       </div>
@@ -294,7 +297,7 @@
 
 <ng-template #templateDetails class="modal-lg">
   <div class="modal-header">
-    <h4 class="modal-title pull-left">Idea Details</h4>
+    <h4 class="modal-title pull-left">{{ "IdeaDetails" | translate }}</h4>
     <button
       type="button"
       class="btn-close close pull-right"
@@ -308,12 +311,14 @@
     <div class="row">
       <div class="row mt-3">
         <div class="col-md-4">
-          <label for="basiInput" class="form-label text-muted mb-0">Date</label>
+          <label for="basiInput" class="form-label text-muted mb-0">{{
+            "Date" | translate
+          }}</label>
           <div>{{ ideaSubmitModel?.createdDate }}</div>
         </div>
         <div class="col-md-4">
           <label for="basiInput" class="form-label text-muted mb-0"
-            >Status</label
+            >{{ "" | translate }}Status</label
           >
           <div *ngIf="ideaSubmitModel?.workFlowStatus == 6">
             <div class="text-success badge badge-soft-success fs-12 fw-regular">
@@ -354,88 +359,90 @@
       <hr class="bg-soft-dark" />
       <div class="row mt-3">
         <div class="col-md-3">
-          <label for="basiInput" class="form-label text-muted mb-0"
-            >Employee ID</label
-          >
+          <label for="basiInput" class="form-label text-muted mb-0">{{
+            "EmployeeID" | translate
+          }}</label>
           <div class="fs-15"></div>
         </div>
         <div class="col-md-3">
-          <label for="basiInput" class="form-label text-muted mb-0">Name</label>
+          <label for="basiInput" class="form-label text-muted mb-0">{{
+            "Name" | translate
+          }}</label>
           <div class="fs-15"></div>
         </div>
         <div class="col-md-3">
-          <label for="basiInput" class="form-label text-muted mb-0"
-            >Job Title</label
-          >
+          <label for="basiInput" class="form-label text-muted mb-0">{{
+            "JobTitle" | translate
+          }}</label>
           <div class="fs-15"></div>
         </div>
         <div class="col-md-3">
-          <label for="basiInput" class="form-label text-muted mb-0"
-            >Section</label
-          >
+          <label for="basiInput" class="form-label text-muted mb-0">{{
+            "Section" | translate
+          }}</label>
           <div class="fs-15"></div>
         </div>
       </div>
       <div class="row mt-3">
         <div class="col-md-3">
-          <label for="basiInput" class="form-label text-muted mb-0"
-            >Department</label
-          >
+          <label for="basiInput" class="form-label text-muted mb-0">{{
+            "Department" | translate
+          }}</label>
           <div class="fs-15"></div>
         </div>
         <div class="col-md-3">
-          <label for="basiInput" class="form-label text-muted mb-0"
-            >Sector</label
-          >
+          <label for="basiInput" class="form-label text-muted mb-0">{{
+            "Sector" | translate
+          }}</label>
           <div class="fs-15"></div>
         </div>
         <div class="col-md-3">
-          <label for="basiInput" class="form-label text-muted mb-0"
-            >Mobile No</label
-          >
+          <label for="basiInput" class="form-label text-muted mb-0">{{
+            "MobileNo" | translate
+          }}</label>
           <div class="fs-15"></div>
         </div>
         <div class="col-md-3">
-          <label for="basiInput" class="form-label text-muted mb-0"
-            >Office No</label
-          >
+          <label for="basiInput" class="form-label text-muted mb-0">{{
+            "OfficeNo" | translate
+          }}</label>
           <div class="fs-15"></div>
         </div>
       </div>
 
       <div class="row mt-3">
         <div class="col-md-3">
-          <label for="basiInput" class="form-label text-muted mb-0"
-            >Address</label
-          >
+          <label for="basiInput" class="form-label text-muted mb-0">{{
+            "Address" | translate
+          }}</label>
           <div class="fs-15"></div>
         </div>
         <div class="col-md-3">
-          <label for="basiInput" class="form-label text-muted mb-0"
-            >Email</label
-          >
+          <label for="basiInput" class="form-label text-muted mb-0">{{
+            "Email" | translate
+          }}</label>
           <div class="fs-15"></div>
         </div>
       </div>
       <div class="row mt-3">
         <hr class="bg-soft-dark" />
         <div class="col-md-6">
-          <label for="basiInput" class="form-label text-muted mb-0"
-            >Title</label
-          >
+          <label for="basiInput" class="form-label text-muted mb-0">{{
+            "Title" | translate
+          }}</label>
           <div class="fs-15">{{ ideaSubmitModel?.title }}</div>
         </div>
         <div class="col-md-6">
-          <label for="basiInput" class="form-label text-muted mb-0"
-            >Details</label
-          >
+          <label for="basiInput" class="form-label text-muted mb-0">{{
+            "Details" | translate
+          }}</label>
           <div class="fs-15">{{ ideaSubmitModel?.ideaText }}</div>
         </div>
       </div>
 
       <div class="row mt-3">
         <label for="basiInput" class="form-label text-muted mb-0"
-          >Return from implementing the idea
+          >{{ "Returnfromimplementingtheidea" | translate }}
         </label>
         <hr class="bg-soft-dark" />
         <div class="col-md-4">
@@ -447,9 +454,9 @@
               [checked]="ideaSubmitModel?.employeehappiness"
             />
 
-            <label class="form-check-label" for="employeeHappinessCheckbox"
-              >Employee happiness</label
-            >
+            <label class="form-check-label" for="employeeHappinessCheckbox">{{
+              "Employeehappiness" | translate
+            }}</label>
           </div>
         </div>
         <div class="col-md-4">
@@ -461,9 +468,9 @@
               [checked]="ideaSubmitModel?.improvingservices"
             />
 
-            <label class="form-check-label" for="employeeHappinessCheckbox"
-              >Improving Services</label
-            >
+            <label class="form-check-label" for="employeeHappinessCheckbox">{{
+              "ImprovingServices" | translate
+            }}</label>
           </div>
         </div>
         <div class="col-md-4">
@@ -475,9 +482,9 @@
               [checked]="ideaSubmitModel?.rationalizationofexpenses"
             />
 
-            <label class="form-check-label" for="employeeHappinessCheckbox"
-              >Rationalization of expenses</label
-            >
+            <label class="form-check-label" for="employeeHappinessCheckbox">{{
+              "Rationalizationofexpenses" | translate
+            }}</label>
           </div>
         </div>
       </div>
@@ -492,9 +499,9 @@
               [checked]="ideaSubmitModel?.customerhappiness"
             />
 
-            <label class="form-check-label" for="employeeHappinessCheckbox"
-              >Customer happiness</label
-            >
+            <label class="form-check-label" for="employeeHappinessCheckbox">{{
+              "Customerhappiness" | translate
+            }}</label>
           </div>
         </div>
         <div class="col-md-4">
@@ -506,9 +513,9 @@
               [checked]="ideaSubmitModel?.informationabouttechnologydevelopment"
             />
 
-            <label class="form-check-label" for="employeeHappinessCheckbox"
-              >Information about technology development</label
-            >
+            <label class="form-check-label" for="employeeHappinessCheckbox">{{
+              "Informationabouttechnologydevelopment" | translate
+            }}</label>
           </div>
         </div>
         <div class="col-md-4">
@@ -529,15 +536,15 @@
 
       <div class="row mt-3">
         <div class="col-md-6">
-          <label for="basiInput" class="form-label text-muted mb-0"
-            >Sector</label
-          >
+          <label for="basiInput" class="form-label text-muted mb-0">{{
+            "Sector" | translate
+          }}</label>
           <div class="fs-15">{{ ideaSubmitModel?.sectorName }}</div>
         </div>
         <div class="col-md-6">
-          <label for="basiInput" class="form-label text-muted mb-0"
-            >Administration</label
-          >
+          <label for="basiInput" class="form-label text-muted mb-0">{{
+            "Administration" | translate
+          }}</label>
           <div class="fs-15">{{ ideaSubmitModel?.administrationName }}</div>
         </div>
       </div>
@@ -545,9 +552,9 @@
       <hr class="bg-soft-dark" />
 
       <div class="row mt-3">
-        <label for="basicInput" class="form-label text-muted mb-0"
-          >Attachments</label
-        >
+        <label for="basicInput" class="form-label text-muted mb-0">{{
+          "Attachments" | translate
+        }}</label>
       </div>
 
       <div class="row mt-2">
@@ -555,8 +562,8 @@
           <table class="table">
             <thead>
               <tr>
-                <th scope="col">File</th>
-                <th scope="col">Download</th>
+                <th scope="col">{{ "File" | translate }}</th>
+                <th scope="col">{{ "Download" | translate }}</th>
               </tr>
             </thead>
             <tbody>
@@ -585,7 +592,7 @@
                     class="btn btn-primary btn-sm"
                     (click)="downloadFile(attachment.url)"
                   >
-                    <i class="bi bi-download"></i> Download
+                    <i class="bi bi-download"></i> {{ "Download" | translate }}
                   </button>
                 </td>
               </tr>
@@ -607,21 +614,21 @@
           class="btn btn-success button mr-2"
           (click)="accept(enum.Accept)"
         >
-          Accept
+          {{ "Accept" | translate }}
         </button>
         <button
           type="button"
           class="btn btn-danger button mr-2"
           (click)="reject(enum.Reject)"
         >
-          Reject
+          {{ "Reject" | translate }}
         </button>
         <button
           type="button"
           class="btn btn-warning button mr-2"
           (click)="modify(enum.Modification)"
         >
-          Modify
+          {{ "Modify" | translate }}
         </button>
 
         <button
@@ -630,7 +637,7 @@
           aria-label="Close"
           (click)="modalRef?.hide()"
         >
-          Close
+          {{ "Close" | translate }}
         </button>
       </div>
 
@@ -644,7 +651,7 @@
           aria-label="Close"
           (click)="modalRef?.hide()"
         >
-          Close
+          {{ "Close" | translate }}
         </button>
       </div>
     </div>

@@ -1,12 +1,12 @@
 {
-  "IdeaPionnerList": "Idea Pionner List",
-  "ID": "ID",
-  "TitleEn": "Title En",
-  "TitleAr": "Title Ar",
-  "NameEn": "NameEn",
-  "NameAr": "NameAr",
-  "MembershipApplicationPoints": "Membership Application Points",
-  "TextEn": "Text En",
-  "TextAr": "Text Ar",
-  "Add": "Add"
+  "IdeaPionnerList": "قائمة رواد الفكرة",
+  "ID": "رقم المرجع",
+  "TitleEn": "العنوان باللغة الانجليزيه",
+  "TitleAr": "العنوان باللغة العربيه",
+  "NameEn": "الاسم باللغة الانجليزيه",
+  "NameAr": "الاسم باللغة العربيه",
+  "MembershipApplicationPoints": "نقاط طلب العضوية",
+  "TextEn": "النص باللغة الانجليزيه",
+  "TextAr": "النص باللغة العربيه",
+  "Add": "اضافه"
 }

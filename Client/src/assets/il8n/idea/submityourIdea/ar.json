@@ -1,9 +1,9 @@
 {
-  "SubmitedIdeasList": "Submited Ideas List",
-  "ID": "ID",
-  "IdeaTitle": "Idea Title",
-  "Sector": "Sector",
-  "Administratoin": "Administratoin",
-  "Status": "Status",
-  "Actions": "Actions"
+  "SubmitedIdeasList": "قائمة الأفكار المقدمة",
+  "ID": "رقم المرجع",
+  "IdeaTitle": "عنوان الفكرة",
+  "Sector": "قطاع",
+  "Administration": "إدارة",
+  "Status": "الحاله",
+  "Actions": "الاجراء"
 }

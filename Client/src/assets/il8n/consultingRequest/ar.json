@@ -1,11 +1,11 @@
 {
-  "ID": "ID",
-  "RequesterName": "Requester Name",
-  "Email": "Email",
-  "Subject": "Subject",
-  "Status": "Status",
-  "Actions": "Actions",
-  "ConsultingRequestList": "Consulting Request List",
-  "Messsage": "Message",
-  "Reply": "Reply"
+  "ID": "رقم المرجع",
+  "RequesterName": "اسم مقدم الطلب",
+  "Email": "البريد الالكتروني",
+  "Subject": "الموضوع",
+  "Status": "الحاله",
+  "Actions": " اجراء",
+  "ConsultingRequestList": "قائمة طلبات الاستشارة",
+  "Messsage": "رساله",
+  "Reply": "الرد"
 }

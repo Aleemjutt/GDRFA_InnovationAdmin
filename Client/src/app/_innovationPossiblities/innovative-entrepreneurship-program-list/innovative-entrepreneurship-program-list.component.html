@@ -4,7 +4,7 @@
       <div class="card">
         <div class="card-header align-items-center d-flex">
           <h4 class="card-title mb-0 flex-grow-1">
-            Innovative Entrepreneurship List
+            {{ "InnovativeEntrepreneurshipList" | translate }}
           </h4>
           <div class="flex-shrink-0">
             <div class="d-flex align-items-center">
@@ -20,11 +20,11 @@
                 class="form-select mb-0 me-2"
                 aria-label="Default select example"
               >
-                <option selected>Status</option>
-                <option value="1">Submitted</option>
-                <option value="2">In Review</option>
-                <option value="3">Approved</option>
-                <option value="4">Rejected</option>
+                <option selected>{{ "Status" | translate }}</option>
+                <option value="1">{{ "Submitted" | translate }}</option>
+                <option value="2">{{ "InReview" | translate }}</option>
+                <option value="3">{{ "Approved" | translate }}</option>
+                <option value="4">{{ "Rejected" | translate }}</option>
               </select>
               <button
                 type="button"
@@ -49,13 +49,13 @@
           <table class="table table-nowrap" id="ideaDataTable">
             <thead>
               <tr>
-                <th>{{ "ID" }}</th>
-                <th>{{ "Company Title" }}</th>
-                <th>{{ "Full Name" }}</th>
-                <th>{{ "Contact No" }}</th>
-                <th>{{ "Email" }}</th>
-                <th>{{ "Status" }}</th>
-                <th>{{ "Actions" }}</th>
+                <th>{{ "ID" | translate }}</th>
+                <th>{{ "CompanyTitle" | translate }}</th>
+                <th>{{ "FullName" | translate }}</th>
+                <th>{{ "ContactNo" | translate }}</th>
+                <th>{{ "Email" | translate }}</th>
+                <th>{{ "Status" | translate }}</th>
+                <th>{{ "Actions" | translate }}</th>
               </tr>
             </thead>
             <tbody></tbody>
@@ -68,54 +68,9 @@
   <!-- End Page-content -->
 </div>
 
-<!-- <ng-template #template class="modal-lg">
-  <div class="modal-header bg-light">
-    <h4 class="modal-title pull-left">Innovative Entrepreneureships List</h4>
-    <button
-      type="button"
-      class="btn-close close pull-right"
-      aria-label="Close"
-      (click)="modalRef?.hide()"
-    >
-      <span aria-hidden="true" class="visually-hidden">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <div class="row" style="margin-bottom: 65px">
-      <div class="card-body">
-        <div class="row" *ngIf="entrepreneureshipModel">
-          <div class="col-md-12"></div>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="modal-footer">
-        <div class="button-container">
-          <button
-            type="button"
-            class="btn btn-danger waves-effect waves-light"
-            (click)="Save()"
-          >
-            Save
-          </button>
-
-          <button
-            type="button"
-            class="btn btn-light button"
-            aria-label="Close"
-            (click)="modalRef?.hide()"
-          >
-            Close
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-</ng-template> -->
-
 <ng-template #templateDetails class="modal-lg">
   <div class="modal-header">
-    <h4 class="modal-title pull-left">Details</h4>
+    <h4 class="modal-title pull-left">{{ "Details" | translate }}</h4>
     <button
       type="button"
       class="btn-close close pull-right"
@@ -129,25 +84,27 @@
     <div class="row">
       <div class="row mt-3">
         <div class="col-md-6">
-          <label for="basiInput" class="form-label text-muted mb-0"> ID</label>
+          <label for="basiInput" class="form-label text-muted mb-0"
+            >{{ "ID" | translate }}
+          </label>
           <div class="fs-15">{{ entrepreneureshipModel?.id }}</div>
         </div>
         <div class="col-md-6">
-          <label for="basiInput" class="form-label text-muted mb-0"
-            >Company Name</label
-          >
+          <label for="basiInput" class="form-label text-muted mb-0">{{
+            "CompanyName" | translate
+          }}</label>
           <div class="fs-15">{{ entrepreneureshipModel?.companyName }}</div>
         </div>
         <div class="col-md-6">
-          <label for="basiInput" class="form-label text-muted mb-0"
-            >Full Name</label
-          >
+          <label for="basiInput" class="form-label text-muted mb-0">{{
+            "FullName" | translate
+          }}</label>
           <div class="fs-15">{{ entrepreneureshipModel?.fullName }}</div>
         </div>
         <div class="col-md-6">
-          <label for="basiInput" class="form-label text-muted mb-0"
-            >Contact Number</label
-          >
+          <label for="basiInput" class="form-label text-muted mb-0">{{
+            "ContactNumber" | translate
+          }}</label>
           <div class="fs-15">
             {{ entrepreneureshipModel?.directContactNumber }}
           </div>
@@ -155,15 +112,15 @@
       </div>
       <div class="row mt-3">
         <div class="col-md-6">
-          <label for="basiInput" class="form-label text-muted mb-0"
-            >Email</label
-          >
+          <label for="basiInput" class="form-label text-muted mb-0">{{
+            "Email" | translate
+          }}</label>
           <div class="fs-15">{{ entrepreneureshipModel?.email }}</div>
         </div>
         <div class="col-md-6">
-          <label for="basiInput" class="form-label text-muted mb-0"
-            >Preferred Date To Contact</label
-          >
+          <label for="basiInput" class="form-label text-muted mb-0">{{
+            "PreferredDateToContact" | translate
+          }}</label>
           <div class="fs-15">
             {{
               globalService.convertDatetime(
@@ -174,9 +131,9 @@
         </div>
         <div class="row mt-3">
           <div class="col-md-6">
-            <label for="basiInput" class="form-label text-muted mb-0"
-              >Emirate</label
-            >
+            <label for="basiInput" class="form-label text-muted mb-0">{{
+              "Emirate" | translate
+            }}</label>
             <div class="fs-15">{{ entrepreneureshipModel?.emirate }}</div>
           </div>
         </div>
@@ -184,7 +141,7 @@
       <hr class="bg-soft-dark" />
       <div class="row mt-12">
         <div class="form-group mt-3 col-6">
-          <label class="text-dark">Required service</label>
+          <label class="text-dark">{{ "Requiredservice" | translate }}</label>
 
           <div class="form-check">
             <input
@@ -197,9 +154,11 @@
               "
             />
             <label class="form-check-label" for="evaluatingCriteria"
-              >Evaluating the maturity of institutional innovation according to
-              Gini criteria</label
-            >
+              >{{
+                "EvaluatingthematurityofinstitutionalinnovationaccordingtoGinicriteria"
+                  | translate
+              }}
+            </label>
           </div>
 
           <div class="form-check">
@@ -213,8 +172,8 @@
               "
             />
             <label class="form-check-label" for="preparingProcess"
-              >Preparing and qualifying for the evaluation process</label
-            >
+              >{{ "Preparingandqualifyingfortheevaluationprocess" | translate }}
+            </label>
           </div>
 
           <div class="form-check">
@@ -228,8 +187,8 @@
               "
             />
             <label class="form-check-label" for="innovationTools"
-              >Creating and developing innovation tools</label
-            >
+              >{{ "Creatinganddevelopinginnovationtools" | translate }}
+            </label>
           </div>
 
           <div class="form-check">
@@ -243,8 +202,8 @@
               "
             />
             <label class="form-check-label" for="innovationStrategy"
-              >Building and developing an innovation strategy</label
-            >
+              >{{ "Buildinganddevelopinganinnovationstrategy" | translate }}
+            </label>
           </div>
 
           <div class="form-check">
@@ -258,8 +217,8 @@
               "
             />
             <label class="form-check-label" for="qualificationOfEmployees"
-              >Training and qualification of employees</label
-            >
+              >{{ "Trainingandqualificationofemployees" | translate }}
+            </label>
           </div>
 
           <div class="form-check">
@@ -270,15 +229,17 @@
               id="other"
               [checked]="entrepreneureshipModel?.other"
             />
-            <label class="form-check-label" for="other">Other</label>
+            <label class="form-check-label" for="other">{{
+              "Other" | translate
+            }}</label>
           </div>
         </div>
       </div>
 
       <div class="form-group mt-2 col-12">
-        <label for="inquiryOrClarification" class="text-dark"
-          >Inquiry or clarification</label
-        >
+        <label for="inquiryOrClarification" class="text-dark">{{
+          "Inquiryorclarification" | translate
+        }}</label>
         {{ entrepreneureshipModel?.inquiryorclarification }}
       </div>
       <hr class="bg-soft-dark" />
@@ -286,18 +247,18 @@
         class="form-group mt-2 col-12"
         *ngIf="entrepreneureshipModel?.replyedStatus == 1"
       >
-        <label for="inquiryOrClarification" class="text-dark"
-          >Reply Note:</label
-        >
+        <label for="inquiryOrClarification" class="text-dark">{{
+          "ReplyNote:" | translate
+        }}</label>
         {{ entrepreneureshipModel?.replyNote }}
       </div>
       <div
         class="form-group mt-2 col-12"
         *ngIf="entrepreneureshipModel?.replyedStatus != 1"
       >
-        <label for="inquiryOrClarification" class="text-dark"
-          >Reply Note:</label
-        >
+        <label for="inquiryOrClarification" class="text-dark">{{
+          "ReplyNote:" | translate
+        }}</label>
         <textarea
           id="inquiryOrClarification"
           class="form-control"
@@ -317,7 +278,7 @@
           (click)="update()"
           *ngIf="entrepreneureshipModel?.replyedStatus != 1"
         >
-          Reply
+          {{ "Reply" | translate }}
         </button>
 
         <button
@@ -326,7 +287,7 @@
           aria-label="Close"
           (click)="modalRef?.hide()"
         >
-          Close
+          {{ "Close" | translate }}
         </button>
       </div>
     </div>

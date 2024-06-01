@@ -18,7 +18,6 @@ import { ErrorsInterceptor } from './_interceptors/errors.interceptor';
 import { SideBarComponent } from './layout/side-bar/side-bar.component';
 import { LogInComponent } from './log-in/log-in.component';
 import { UsersListComponent } from './_users/users-list/users-list.component';
-import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { FilePondModule, registerPlugin } from 'ngx-filepond';
 import { BsDropdownConfig, BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ModalModule } from 'ngx-bootstrap/modal';
@@ -52,8 +51,6 @@ import { AwardsAddEditComponent } from './_about/awards/awards-add-edit/awards-a
 import { MembershipListsComponent } from './_about/membership/membership-lists/membership-lists.component';
 import { MembershipAddComponent } from './_about/membership/membership-add/membership-add.component';
 import { MembershipAddEditComponent } from './_about/membership/membership-add-edit/membership-add-edit.component';
-import { AboutInnovatonCenterAddEditComponent } from './_about/about_innovation_center/about-innovaton-center-add-edit/about-innovaton-center-add-edit.component';
-import { AboutInnovatonCenterDetailsComponent } from './_about/about_innovation_center/about-innovaton-center-details/about-innovaton-center-details.component';
 import { RecursiveMenuComponent } from './recursive-menu/recursive-menu.component';
 registerPlugin(
   FilePondPluginFileValidateType,
@@ -272,8 +269,9 @@ registerPlugin(
               { prefix: './assets/il8n/idea/ideaPioneers/', suffix: '.json' },
               { prefix: './assets/il8n/idea/myThoughts/', suffix: '.json' },
               { prefix: './assets/il8n/idea/targetCompain/', suffix: '.json' },
+              { prefix: './assets/il8n/idea/submityourIdea/', suffix: '.json' },
               {
-                prefix: './assets/il8n/innovationPossiblities/',
+                prefix: './assets/il8n/innovationPossibilites/',
                 suffix: '.json',
               },
 
@@ -324,7 +322,7 @@ registerPlugin(
     }),
     TabsModule.forRoot(),
     BsDatepickerModule.forRoot(),
-    InnovationConsultingAddEditComponent,
+
     //RouterModule.forRoot(routes),
   ],
   providers: [

@@ -1,14 +1,14 @@
 {
-  "Research And Studies List": "Research And Studies List",
-  "DescriptionEn": "Description En",
-  "DescriptionAr": "Description Ar",
-  "StoryNameEn": "Story Name En",
-  "StoryNameAr": "Story Name Ar",
-  "PublisherNameEn": "Publisher Name En",
-  "PublisherNameAr": "Publisher Name Ar",
-  "Discuss": "Discuss",
-  "ResearchAndStudiesCategories": "Research And Studies Categories",
-  "BookNumberEn": "Book Number En",
-  "BookNumberAr": "Book Number Ar",
-  "BookLink": "Book Link"
+  "Research And Studies List": "قائمة البحوث والدراسات",
+  "DescriptionEn": "التفاصيل باللغة الانجليزيه",
+  "DescriptionAr": "التفاصيل باللغة العربيه",
+  "StoryNameEn": "اسم القصه باللغة الانجليزيه",
+  "StoryNameAr": "اسم القصه باللغة العربيه",
+  "PublisherNameEn": "اسم الناشر باللغة الانجليزيه",
+  "PublisherNameAr": "اسم الناشر باللغة العربيه",
+  "Discuss": "يناقش",
+  "ResearchAndStudiesCategories": "فئات البحوث والدراسات",
+  "BookNumberEn": "رقم الكتاب باللغة الانجليزيه",
+  "BookNumberAr": "رقم الكتاب باللغة العربيه",
+  "BookLink": "رابط الكتاب"
 }

@@ -3,6 +3,7 @@ import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { TypeModifier } from '@angular/compiler';
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormGroup, FormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 import { FilePond, FilePondOptions } from 'filepond';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { TabsModule } from 'ngx-bootstrap/tabs';
@@ -20,7 +21,13 @@ import { UploadServiceService } from 'src/app/_services/upload-service.service';
 @Component({
   selector: 'app-register-intellectual-property-list',
   standalone: true,
-  imports: [FilePondModule, CommonModule, FormsModule, TabsModule],
+  imports: [
+    FilePondModule,
+    CommonModule,
+    FormsModule,
+    TabsModule,
+    TranslateModule,
+  ],
   templateUrl: './register-intellectual-property-list.component.html',
   styleUrl: './register-intellectual-property-list.component.css',
 })
@@ -85,6 +92,11 @@ export class RegisterIntellectualPropertyListComponent implements OnInit {
   }
 
   initilizeDataTable(): void {
+    const currentLang = this.globalService.getCurrentLanguage();
+    const languageConfig =
+      currentLang === 'ar'
+        ? this.globalService.getArabicLanguageConfig()
+        : this.globalService.getEnglishLanguageConfig();
     const datatable: any = $('#propertiesTypeDataTable').DataTable();
     this.registerPropertyService
       ._list()
@@ -101,6 +113,7 @@ export class RegisterIntellectualPropertyListComponent implements OnInit {
             pageLength: 5,
             processing: true,
             data: this.registerIntecllectualPropertiesList,
+            language: languageConfig,
             columns: [
               { data: 'id' },
               {

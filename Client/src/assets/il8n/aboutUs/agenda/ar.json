@@ -1,12 +1,12 @@
 {
-  "ID": "ID",
-  "DescriptionEn": "Description En",
-  "DescriptionAr": "Description Ar",
-  "Actions": "Actions",
-  "HeadingEn": "Heading En",
-  "HeadingAr": "Heading Ar",
-  "AddNewArchives": "Add New Archives",
-  "Date": "Date",
-  "Time": "Time",
-  "Venue": "Venue"
+  "ID": "رقم المرجع",
+  "DescriptionEn": "الوصف باللغه الانجليزيه",
+  "DescriptionAr": "الوصف باللغه العربيه",
+  "Actions": "اجراء",
+  "HeadingEn": "العنوان باللغه الانجليزيه",
+  "HeadingAr": "العنوان باللغه العربيه",
+  "AddNewArchives": "اضافة ارشيف جديد",
+  "Date": "التاريخ",
+  "Time": "الوقت",
+  "Venue": "المكان"
 }

@@ -3,12 +3,16 @@
     <div class="container-fluid">
       <div class="card">
         <div class="card-header align-items-center d-flex">
-          <h4 class="card-title mb-0 flex-grow-1">Goverment 01</h4>
+          <h4 class="card-title mb-0 flex-grow-1">
+            {{ "Goverment01" | translate }}
+          </h4>
         </div>
         <div class="card-body">
           <div class="row" *ngIf="govermentModel">
             <div class="mt-3 col-md-12">
-              <label for="basiInput" class="form-label">Link Url </label>
+              <label for="basiInput" class="form-label"
+                >{{ "LinkUrl" | translate }}
+              </label>
               <input
                 type="input"
                 [(ngModel)]="govermentModel.link"
@@ -20,7 +24,9 @@
             <div class="mt-3 col-md-6">
               <div class="mb-3">
                 <div *ngIf="!govermentModel.urlEnBase64">
-                  <label for="formFile" class="form-label">Choose file</label>
+                  <label for="formFile" class="form-label">{{
+                    "Choosefile" | translate
+                  }}</label>
                   <file-pond
                     #myPond
                     label-idle='Drag & Drop your files or <span class="filepond--label-action"> Browse </span><br> <b>Maximum 5 files upload</b>'
@@ -48,7 +54,7 @@
                     (click)="removeImage('BannerEn')"
                     class="btn btn-danger"
                     style="display: block; margin-top: 10px; width: 150px"
-                    >Remove</a
+                    >{{ "Remove" | translate }}</a
                   >
                 </div>
               </div>
@@ -57,7 +63,9 @@
             <div class="mt-3 col-md-6">
               <div class="mb-3">
                 <div *ngIf="!govermentModel.urlArBase64">
-                  <label for="formFile" class="form-label">Choose file</label>
+                  <label for="formFile" class="form-label">{{
+                    "Choosefile" | translate
+                  }}</label>
                   <file-pond
                     #myPond
                     label-idle='Drag & Drop your files or <span class="filepond--label-action"> Browse </span><br> <b>Maximum 5 files upload</b>'
@@ -85,7 +93,7 @@
                     (click)="removeImage('BannerAr')"
                     class="btn btn-danger"
                     style="display: block; margin-top: 10px; width: 150px"
-                    >Remove</a
+                    >{{ "Remove" | translate }}</a
                   >
                 </div>
               </div>
@@ -98,7 +106,7 @@
             (click)="add()"
             *ngIf="govermentModel.id == 0"
           >
-            Save
+            {{ "Save" | translate }}
           </button>
 
           <button
@@ -107,7 +115,7 @@
             (click)="update()"
             *ngIf="govermentModel.id != 0"
           >
-            Update
+            {{ "Update" | translate }}
           </button>
         </div>
       </div>

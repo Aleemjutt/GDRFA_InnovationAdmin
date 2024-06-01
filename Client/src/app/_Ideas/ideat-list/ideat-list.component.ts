@@ -13,10 +13,11 @@ import { NgSelectComponent, NgSelectModule } from '@ng-select/ng-select';
 import { Status } from 'filepond';
 import { WorkFlowStatus } from 'src/app/_models/Common/workflowStatus';
 import { FiledownloaderService } from 'src/app/_services/filedownloader.service';
+import { TranslateModule } from '@ngx-translate/core';
 @Component({
   selector: 'app-ideat-list',
   standalone: true,
-  imports: [FormsModule, CommonModule, NgSelectModule],
+  imports: [FormsModule, CommonModule, NgSelectModule, TranslateModule],
   templateUrl: './ideat-list.component.html',
   styleUrl: './ideat-list.component.css',
 })
@@ -140,7 +141,11 @@ export class IdeatListComponent implements OnInit {
 
   initilizeDataTable(): void {
     //const datatable: any = $('#consultingRequestDataTable').DataTable();
-
+    const currentLang = this.globalService.getCurrentLanguage();
+    const languageConfig =
+      currentLang === 'ar'
+        ? this.globalService.getArabicLanguageConfig()
+        : this.globalService.getEnglishLanguageConfig();
     this.datatable = $('#ideaDataTable').DataTable();
     if (this.datatable != null && this.datatable != undefined) {
       this.datatable.destroy();
@@ -161,6 +166,7 @@ export class IdeatListComponent implements OnInit {
           pageLength: 5,
           processing: true,
           data: this.ideasSubmitModelList,
+          language: languageConfig,
           columns: [
             { data: 'id' },
             {

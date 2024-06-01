@@ -84,10 +84,6 @@ export class AboutInnovatonCenterAddEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.getDetails();
-
-    // this.globalService.getImgServerBaseUrl().subscribe((baseUrl) => {
-    //   this.imgServerBaseUrl = baseUrl;
-    // });
   }
   @HostListener('window:beforeunload', ['$event']) unloadNotification(
     $event: any
@@ -102,8 +98,6 @@ export class AboutInnovatonCenterAddEditComponent implements OnInit {
   pondOptions: FilePondOptions = {
     allowMultiple: false,
     labelIdle: 'Drop files here...',
-    //allo: ['image/jpeg, image/png'],
-    //acceptedFileTypes: ['image/jpeg, image/png'],
     allowReorder: true,
   };
 
@@ -370,5 +364,28 @@ export class AboutInnovatonCenterAddEditComponent implements OnInit {
           this.aboutInnovationCenterModel.directorImgUrl = '';
           break;
       }
+  }
+
+  getTabValue(value: string): string {
+    switch (value) {
+      case 'AbouttheCenter':
+        return this.globalService.getCurrentLanguage() == 'en'
+          ? 'About the Center'
+          : 'عن المركز';
+      case 'OrganizationStructure':
+        return this.globalService.getCurrentLanguage() == 'en'
+          ? 'Organization Structure'
+          : 'الهيكل التنظيمي';
+      case 'MessageFromtheDirector':
+        return this.globalService.getCurrentLanguage() == 'en'
+          ? 'Message From the Director'
+          : 'رسالة من المدير';
+      case 'OurStrategyAndInstitutionalValues':
+        return this.globalService.getCurrentLanguage() == 'en'
+          ? 'Our Strategy And Institutional Values'
+          : 'استراتيجيتنا والقيم المؤسسية';
+      default:
+        return '';
+    }
   }
 }

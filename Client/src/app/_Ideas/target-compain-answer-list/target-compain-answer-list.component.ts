@@ -15,10 +15,12 @@ import {
 } from 'src/app/_models/Ideas/ideaTargetModel';
 import { data } from 'jquery';
 import { ResponseResult } from 'src/app/_models/responseResult';
+import { TranslateModule } from '@ngx-translate/core';
+import { GlobalServiceService } from 'src/app/_global/-global-service.service';
 @Component({
   selector: 'app-target-compain-answer-list',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, TranslateModule],
   templateUrl: './target-compain-answer-list.component.html',
   styleUrl: './target-compain-answer-list.component.css',
 })
@@ -41,7 +43,8 @@ export class TargetCompainAnswerListComponent {
     private targetCopainAnswerService: TargetCompainAnswerService,
     private route: ActivatedRoute,
     private tosterService: ToastrService,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private globalService: GlobalServiceService
   ) {
     this.targetAnswerModel = {
       id: 0,
@@ -83,6 +86,11 @@ export class TargetCompainAnswerListComponent {
   }
 
   initilizeDataTable(): void {
+    const currentLang = this.globalService.getCurrentLanguage();
+    const languageConfig =
+      currentLang === 'ar'
+        ? this.globalService.getArabicLanguageConfig()
+        : this.globalService.getEnglishLanguageConfig();
     var id = this.route.snapshot.paramMap.get('id');
     console.log('catch Id', id);
     if (!id) return;
@@ -103,6 +111,7 @@ export class TargetCompainAnswerListComponent {
             pageLength: 5,
             processing: true,
             data: this.targetAnswerModelList,
+            language: languageConfig,
             columns: [
               { data: 'id' },
               {

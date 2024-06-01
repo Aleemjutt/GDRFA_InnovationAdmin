@@ -80,6 +80,11 @@ export class AwardsListsComponent implements OnInit {
   }
 
   initilizeDataTable(): void {
+    const currentLang = this.globalService.getCurrentLanguage();
+    const languageConfig =
+      currentLang === 'ar'
+        ? this.globalService.getArabicLanguageConfig()
+        : this.globalService.getEnglishLanguageConfig();
     const datatable: any = $('#awardsDataTable').DataTable();
     this.awardService.getAwardList().subscribe((response: ResponseResult) => {
       // ////console.log(response.data, 'Data Table values');
@@ -94,6 +99,7 @@ export class AwardsListsComponent implements OnInit {
           pageLength: 5,
           processing: true,
           data: this.awardList,
+          language: languageConfig,
           columns: [
             { data: 'id' },
             {

@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NotExpr } from '@angular/compiler';
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Route } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
@@ -14,7 +15,7 @@ import { EstablishedChallengedAnswerService } from 'src/app/_services/_futureFoc
 @Component({
   selector: 'app-established-challenged-answer-list',
   standalone: true,
-  imports: [CommonModule, AccordionModule],
+  imports: [CommonModule, AccordionModule, TranslateModule],
   templateUrl: './established-challenged-answer-list.component.html',
   styleUrl: './established-challenged-answer-list.component.css',
 })
@@ -70,6 +71,11 @@ export class EstablishedChallengedAnswerListComponent implements OnInit {
     this.initilizeDataTable();
   }
   initilizeDataTable(): void {
+    const currentLang = this.globalService.getCurrentLanguage();
+    const languageConfig =
+      currentLang === 'ar'
+        ? this.globalService.getArabicLanguageConfig()
+        : this.globalService.getEnglishLanguageConfig();
     let id = this.route.snapshot.paramMap.get('id');
 
     console.log('catch Id', id);
@@ -90,6 +96,7 @@ export class EstablishedChallengedAnswerListComponent implements OnInit {
             pageLength: 5,
             processing: true,
             data: this.establishedAsnswerdModels,
+            language: languageConfig,
             columns: [
               { data: 'id' },
               {

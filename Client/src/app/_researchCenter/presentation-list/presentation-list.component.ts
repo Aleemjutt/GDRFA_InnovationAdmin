@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { NgSelectComponent } from '@ng-select/ng-select';
+import { TranslateModule } from '@ngx-translate/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
@@ -14,7 +15,7 @@ import { FiledownloaderService } from 'src/app/_services/filedownloader.service'
 @Component({
   selector: 'app-presentation-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslateModule],
   templateUrl: './presentation-list.component.html',
   styleUrl: './presentation-list.component.css',
 })
@@ -122,7 +123,11 @@ export class PresentationListComponent {
 
   initilizeDataTable(): void {
     //const datatable: any = $('#consultingRequestDataTable').DataTable();
-
+    const currentLang = this.globalService.getCurrentLanguage();
+    const languageConfig =
+      currentLang === 'ar'
+        ? this.globalService.getArabicLanguageConfig()
+        : this.globalService.getEnglishLanguageConfig();
     this.datatable = $('#ideaDataTable').DataTable();
     if (this.datatable != null && this.datatable != undefined) {
       this.datatable.destroy();
@@ -143,6 +148,7 @@ export class PresentationListComponent {
           pageLength: 5,
           processing: true,
           data: this.presentationModelList,
+          language: languageConfig,
           columns: [
             { data: 'id' },
             {

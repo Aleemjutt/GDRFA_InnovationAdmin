@@ -7,7 +7,7 @@
       <div class="card">
         <div class="card-header align-items-center d-flex">
           <h4 class="card-title mb-0 flex-grow-1">
-            About the Innovation Center
+            {{ "AbouttheInnovationCenter" | translate }}
           </h4>
         </div>
         <div class="card-body" *ngIf="aboutInnovationCenterModel">
@@ -17,15 +17,17 @@
             (ngSubmit)="addAboutInnovation()"
           >
             <tabset>
-              <tab heading="About the Center">
+              <tab [heading]="getTabValue('AbouttheCenter')">
                 <div class="row mt-3">
-                  <label>About the Center En</label>
+                  <label>{{ "AbouttheCenterEn" | translate }}</label>
                   <textarea
                     class="textareasize form-control"
                     name="aboutDescriptionAr"
                     [(ngModel)]="aboutInnovationCenterModel.aboutDescriptionEn"
                   ></textarea>
-                  <label class="mt-3">About the Center Ar</label>
+                  <label class="mt-3">{{
+                    "AbouttheCenterAr" | translate
+                  }}</label>
                   <textarea
                     class="textareasize form-control"
                     name="aboutDescriptionEn"
@@ -34,64 +36,10 @@
                 </div>
               </tab>
 
-              <!-- <tab heading="Organization Stracture">
-                <label class="mt-3">Organization Stracture En</label>
-                <div>
-                  <file-pond
-                    *ngIf="!aboutInnovationCenterModel.orgStractureUrlEn"
-                    #organizationImgEn
-                    label-idle='Drag & Drop your files or <span class="filepond--label-action"> Browse </span><br> <b>Maximum 5 files upload</b>'
-                    allow-multiple="true"
-                    [options]="pondOptions"
-                    [files]="pondFiles"
-                    (oninit)="pondHandleInit()"
-                    (onaddfile)="
-                      pondHandleAddFile($event, 'OrganizationEnInstance')
-                    "
-                  ></file-pond>
-
-                  <img
-                    *ngIf="aboutInnovationCenterModel.orgStractureUrlEn"
-                    [src]="
-                      globalService.getImgServerBaseUrl() +
-                      aboutInnovationCenterModel.orgStractureUrlEn
-                    "
-                    style="height: 364px; width: 603px; margin-left: 198px"
-                    alt="Organization Image"
-                    class="mt-2"
-                  />
-                </div>
-
-                <label class="mt-3">Organization Stracture Ar</label>
-                <div>
-                  <file-pond
-                    *ngIf="!aboutInnovationCenterModel.orgStractureUrlAr"
-                    #organizationImgAr
-                    label-idle='Drag & Drop your files or <span class="filepond--label-action"> Browse </span><br> <b>Maximum 5 files upload</b>'
-                    allow-multiple="true"
-                    [options]="pondOptions"
-                    [files]="pondFiles"
-                    (oninit)="pondHandleInit()"
-                    (onaddfile)="
-                      pondHandleAddFile($event, 'OrganizationArInstance')
-                    "
-                  >
-                  </file-pond>
-
-                  <img
-                    *ngIf="aboutInnovationCenterModel.orgStractureUrlAr"
-                    [src]="
-                      globalService.getImgServerBaseUrl() +
-                      aboutInnovationCenterModel.orgStractureUrlAr
-                    "
-                    style="height: 364px; width: 603px; margin-left: 198px"
-                    alt="Organization Image"
-                    class="mt-2"
-                  />
-                </div>
-              </tab> -->
-              <tab heading="Organization Structure">
-                <label class="mt-3">Organization Structure En</label>
+              <tab [heading]="getTabValue('OrganizationStructure')">
+                <label class="mt-3">{{
+                  "OrganizationStructureEn" | translate
+                }}</label>
                 <div>
                   <file-pond
                     *ngIf="!aboutInnovationCenterModel.orgStractureUrlEn"
@@ -117,13 +65,17 @@
                       alt="Organization Image"
                       class="mt-2"
                     />
-                    <a (click)="removeImage('en')" class="btn btn-danger mt-2"
-                      >Remove</a
+                    <a
+                      (click)="removeImage('en')"
+                      class="btn btn-danger mt-2"
+                      >{{ "Remove" | translate }}</a
                     >
                   </div>
                 </div>
 
-                <label class="mt-3">Organization Structure Ar</label>
+                <label class="mt-3">{{
+                  "OrganizationStructureAr" | translate
+                }}</label>
                 <div>
                   <file-pond
                     *ngIf="!aboutInnovationCenterModel.orgStractureUrlAr"
@@ -150,19 +102,23 @@
                       alt="Organization Image"
                       class="mt-2"
                     />
-                    <a (click)="removeImage('ar')" class="btn btn-danger mt-2"
-                      >Remove</a
+                    <a
+                      (click)="removeImage('ar')"
+                      class="btn btn-danger mt-2"
+                      >{{ "Remove" | translate }}</a
                     >
                   </div>
                 </div>
               </tab>
 
-              <tab heading="Message From the Director">
+              <tab [heading]="getTabValue('MessageFromtheDirector')">
                 <div class="row mt-3">
                   <div class="col-md-4">
                     <div class="row">
                       <div class="col-md-12">
-                        <label for="name" class="mt-3">Director Name En </label>
+                        <label for="name" class="mt-3"
+                          >{{ "DirectorNameEn" | translate }}
+                        </label>
                         <input
                           type=" text"
                           class="form-control"
@@ -171,7 +127,9 @@
                             aboutInnovationCenterModel.directorNameEn
                           "
                         />
-                        <label for="name" class="mt-3">Director Name Ar</label>
+                        <label for="name" class="mt-3">{{
+                          "DirectorNameAr" | translate
+                        }}</label>
                         <textarea
                           type=" text"
                           class="form-control"
@@ -182,19 +140,7 @@
                         ></textarea>
                       </div>
                       <div class="col-md-12">
-                        <label>Director Profile Photo</label>
-                        <!-- <file-pond
-                          #DirectorImg
-                          label-idle='Drag & Drop your files or <span class="filepond--label-action"> Browse </span><br> <b>Maximum 5 files upload</b>'
-                          allow-multiple="true"
-                          [options]="pondOptions"
-                          [files]="pondFiles"
-                          (oninit)="pondHandleInit()"
-                          (onaddfile)="
-                            pondHandleAddFile($event, 'DirectorEnInstance')
-                          "
-                        >
-                        </file-pond> -->
+                        <label>{{ "DirectorProfilePhoto" | translate }}</label>
 
                         <ng-container
                           *ngIf="
@@ -231,7 +177,7 @@
                               (click)="removeImage('director')"
                               class="btn btn-danger"
                               style="display: block; margin-top: 10px"
-                              >Remove</a
+                              >{{ "Remove" | translate }}</a
                             >
                           </div>
                         </ng-template>
@@ -239,7 +185,9 @@
                     </div>
                   </div>
                   <div class="col-md-8">
-                    <label for="message" class="mt-3">Message En</label>
+                    <label for="message" class="mt-3">{{
+                      "MessageEn" | translate
+                    }}</label>
                     <textarea
                       class="messageTexarea form-control"
                       name="messageFromDirectorEn"
@@ -248,7 +196,9 @@
                       "
                     ></textarea>
 
-                    <label for="message" class="mt-3">Message Ar</label>
+                    <label for="message" class="mt-3">{{
+                      "MessageAr" | translate
+                    }}</label>
                     <textarea
                       class="messageTexarea form-control"
                       name="messageFromDirectorAr"
@@ -259,14 +209,14 @@
                   </div>
                 </div>
               </tab>
-              <tab heading="Our Strategy And Institutional Values">
+              <tab [heading]="getTabValue('OurStrategyAndInstitutionalValues')">
                 <label class="mt-3"
-                  >Our Strategy And Institutional Values</label
-                >
+                  >{{ "OurStrategyAndInstitutionalValues" | translate }}
+                </label>
 
                 <div class="row">
                   <div class="col-md-4">
-                    <label class="mt-3">Strategy En</label>
+                    <label class="mt-3">{{ "StrategyEn" | translate }}</label>
                     <input
                       type="text"
                       class="form-control"
@@ -302,11 +252,11 @@
                         (click)="removeImage('strategyEn')"
                         class="btn btn-danger mt-2 imgButton"
                       >
-                        Remove
+                        {{ "Remove" | translate }}
                       </a>
                     </div>
 
-                    <label class="mt-3">Strategy Ar</label>
+                    <label class="mt-3">{{ "StrategyAr" | translate }}</label>
                     <input
                       type="text"
                       class="form-control"
@@ -343,13 +293,13 @@
                         (click)="removeImage('strategyAr')"
                         class="btn btn-danger mt-2 imgButton"
                       >
-                        Remove
+                        {{ "Remove" | translate }}
                       </a>
                     </div>
                   </div>
 
                   <div class="col-md-4">
-                    <label class="mt-3">Our Vision En</label>
+                    <label class="mt-3">{{ "OurVisionEn" | translate }}</label>
                     <input
                       type="text"
                       class="form-control"
@@ -388,11 +338,11 @@
                         (click)="removeImage('VisionEnInstance')"
                         class="btn btn-danger mt-2 imgButton"
                       >
-                        Remove
+                        {{ "Remove" | translate }}
                       </a>
                     </div>
 
-                    <label class="mt-3">Our Vision Ar</label>
+                    <label class="mt-3">{{ "OurVisionAr" | translate }}</label>
                     <input
                       type="text"
                       class="form-control"
@@ -431,13 +381,13 @@
                         (click)="removeImage('VisionArInstance')"
                         class="btn btn-danger mt-2 imgButton"
                       >
-                        Remove
+                        {{ "Remove" | translate }}
                       </a>
                     </div>
                   </div>
 
                   <div class="col-md-4">
-                    <label class="mt-3">Our Mission En</label>
+                    <label class="mt-3">{{ "OurMissionEn" | translate }}</label>
                     <input
                       type="text"
                       class="form-control"
@@ -478,11 +428,11 @@
                       <a
                         (click)="removeImage('ourMissionEn')"
                         class="btn btn-danger mt-2 imgButton"
-                        >Remove</a
+                        >{{ "Remove" | translate }}</a
                       >
                     </div>
 
-                    <label class="mt-3">Our Mission Ar</label>
+                    <label class="mt-3">{{ "OurMissionAr" | translate }}</label>
                     <input
                       type="text"
                       class="form-control"
@@ -523,7 +473,7 @@
                         (click)="removeImage('ourMissionAr')"
                         class="btn btn-danger mt-2 imgButton"
                       >
-                        Remove
+                        {{ "Remove" | translate }}
                       </a>
                     </div>
                   </div>
@@ -531,12 +481,14 @@
 
                 <div class="row">
                   <div class="col-md-6">
-                    <label class="mt-3">Our Golas</label>
+                    <label class="mt-3">{{ "OurGolas" | translate }}</label>
                     <div class="row">
                       <div class="col-md-12">
                         <div class="input-group mb-3">
                           <div class="input-group-prepend">
-                            <label class="input-group-text">Our Goals Ar</label>
+                            <label class="input-group-text">{{
+                              "OurGoalsAr" | translate
+                            }}</label>
                           </div>
                           <input
                             type="text"
@@ -551,7 +503,9 @@
 
                         <div class="input-group mb-3">
                           <div class="input-group-prepend">
-                            <label class="input-group-text">Our Goals En</label>
+                            <label class="input-group-text">{{
+                              "OurGoalsEn" | translate
+                            }}</label>
                           </div>
                           <input
                             type="text"
@@ -569,7 +523,7 @@
                               id="ourValuesEnButton"
                               (click)="addItem()"
                             >
-                              Add
+                              {{ "Add" | translate }}
                             </button>
                           </div>
                         </div>
@@ -577,9 +531,13 @@
                           <table class="table">
                             <thead>
                               <tr>
-                                <th scope="col">Our Goal Ar</th>
-                                <th scope="col">Our Goal En</th>
-                                <th scope="col">Actions</th>
+                                <th scope="col">
+                                  {{ "OurGoalAr" | translate }}
+                                </th>
+                                <th scope="col">
+                                  {{ "OurGoalEn" | translate }}
+                                </th>
+                                <th scope="col">{{ "Actions" | translate }}</th>
                               </tr>
                             </thead>
                             <tbody>
@@ -596,7 +554,7 @@
                                     class="btn btn-danger btn-sm"
                                     (click)="removeItem(i)"
                                   >
-                                    Remove
+                                    {{ "Remove" | translate }}
                                   </button>
                                 </td>
                               </tr>
@@ -608,14 +566,14 @@
                   </div>
 
                   <div class="col-md-6">
-                    <label class="mt-3">Our Values</label>
+                    <label class="mt-3">{{ "OurValues" | translate }}</label>
                     <div class="row">
                       <div class="col-md-12">
                         <div class="input-group mb-3">
                           <div class="input-group-prepend">
-                            <label class="input-group-text"
-                              >Our Values Ar</label
-                            >
+                            <label class="input-group-text">{{
+                              "OurValuesAr" | translate
+                            }}</label>
                           </div>
                           <input
                             type="text"
@@ -630,9 +588,9 @@
 
                         <div class="input-group mb-3">
                           <div class="input-group-prepend">
-                            <label class="input-group-text"
-                              >Our Values En</label
-                            >
+                            <label class="input-group-text">{{
+                              "OurValuesEn" | translate
+                            }}</label>
                           </div>
                           <input
                             type="text"
@@ -650,7 +608,7 @@
                               id="ourValuesEnButton"
                               (click)="addItemValues()"
                             >
-                              Add
+                              {{ "Add" | translate }}
                             </a>
                           </div>
                         </div>
@@ -658,9 +616,13 @@
                           <table class="table">
                             <thead>
                               <tr>
-                                <th scope="col">Our Values Ar</th>
-                                <th scope="col">Our Values En</th>
-                                <th scope="col">Actions</th>
+                                <th scope="col">
+                                  {{ "OurValuesAr" | translate }}
+                                </th>
+                                <th scope="col">
+                                  {{ "OurValuesEn" | translate }}
+                                </th>
+                                <th scope="col">{{ "" | translate }}Actions</th>
                               </tr>
                             </thead>
                             <tbody>
@@ -677,7 +639,7 @@
                                     class="btn btn-danger btn-sm"
                                     (click)="removeValueItem(i)"
                                   >
-                                    Remove
+                                    {{ "Remove" | translate }}
                                   </a>
                                 </td>
                               </tr>
@@ -687,89 +649,6 @@
                       </div>
                     </div>
                   </div>
-
-                  <!-- Column for Our Values En -->
-                  <!-- <div class="col-md-6">
-                  <div class="row">
-                    <div class="col-md-12">
-                      <label>Our Values En</label>
-                      <div class="input-group mb-3">
-                        <button
-                          class="btn btn-outline-secondary"
-                          type="button"
-                          id="ourValuesEnButton"
-                          (click)="addItem('en')"
-                        >
-                          Add
-                        </button>
-                        <input
-                          type="text"
-                          class="form-control"
-                          placeholder=""
-                          aria-label="Example text with button addon"
-                          aria-describedby="button-addon1"
-                          [(ngModel)]="ourValuesEnInput"
-                        />
-                      </div>
-                      <ul class="list-group">
-                        <li
-                          class="list-group-item"
-                          *ngFor="let value of ourValuesEnList; let i = index"
-                        >
-                          {{ value }}
-                          <button
-                            class="btn btn-danger btn-sm float-end"
-                            (click)="removeItem('en', i)"
-                          >
-                            Remove
-                          </button>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div> -->
-
-                  <!-- Column for Our Values Ar -->
-                  <!-- <div class="col-md-6">
-                  <div class="row">
-                    <div class="col-md-12">
-                      <label for="ourValuesAr">Our Values Ar</label>
-                      <div class="input-group mb-3">
-                        <button
-                          class="btn btn-outline-secondary"
-                          type="button"
-                          id="ourValuesArButton"
-                          (click)="addItem('ar')"
-                        >
-                          Add
-                        </button>
-                        <input
-                          type="text"
-                          class="form-control"
-                          placeholder=""
-                          aria-label="Example text with button addon"
-                          aria-describedby="button-addon1"
-                          id="ourValuesArInput"
-                          [(ngModel)]="ourValuesArInput"
-                        />
-                      </div>
-                      <ul class="list-group">
-                        <li
-                          class="list-group-item"
-                          *ngFor="let value of ourValuesArList; let i = index"
-                        >
-                          {{ value }}
-                          <button
-                            class="btn btn-danger btn-sm float-end"
-                            (click)="removeItem('ar', i)"
-                          >
-                            Remove
-                          </button>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div> -->
                 </div>
               </tab>
             </tabset>
@@ -777,7 +656,7 @@
               type="submit"
               class="btn btn-danger waves-effect waves-light ms-2 col-3 pull-right mt-2"
             >
-              Save
+              {{ "Save" | translate }}
             </button>
           </form>
         </div>

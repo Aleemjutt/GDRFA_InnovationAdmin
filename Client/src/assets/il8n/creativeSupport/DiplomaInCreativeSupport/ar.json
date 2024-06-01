@@ -1,10 +1,10 @@
 {
-  "Diploma In Creative Support": "Diploma In Creative Support",
-  "SessionNameEn": "Session Name En",
-  "SessionNameAr": "Session Name Ar",
-  "LastSessionNameEn": "Last Session Name En",
-  "LastSessionNameAr": "Last Session Name Ar",
-  "DescriptionEn": "Description En",
-  "DescriptionAr": "Description Ar",
-  "JoinProgramLink": "Join Program Link"
+  "Diploma In Creative Support": "دبلوم في الدعم الإبداعي",
+  "SessionNameEn": "اسم الجلسه باللغة الانجليزيه",
+  "SessionNameAr": "اسم الجلسه باللغه العربيه",
+  "LastSessionNameEn": "اسم اخر جلسه باللغه الانجليزيه",
+  "LastSessionNameAr": "اسم اخر جلسه باللغه العربيه",
+  "DescriptionEn": "الوصف باللغه الانجليزيه",
+  "DescriptionAr": "الوصف باللغه العربيه",
+  "JoinProgramLink": "رابط الانضمام للبرنامج"
 }

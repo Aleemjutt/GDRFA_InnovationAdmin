@@ -1,7 +1,7 @@
 {
-  "UsersList": "Users List",
-  "Title": "Title",
-  "FirstName": "First Name",
-  "LastName": "Last Name",
-  "Email": "Email"
+  "UsersList": "قائمة المستخدمين",
+  "Title": "عنوان",
+  "FirstName": "الاسم الاول",
+  "LastName": "الاسم الاخير",
+  "Email": "البريد الالكتروني"
 }

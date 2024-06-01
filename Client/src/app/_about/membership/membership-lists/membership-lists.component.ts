@@ -128,6 +128,11 @@ export class MembershipListsComponent implements OnInit {
   }
 
   initilizeDataTable(): void {
+    const currentLang = this.globalService.getCurrentLanguage();
+    const languageConfig =
+      currentLang === 'ar'
+        ? this.globalService.getArabicLanguageConfig()
+        : this.globalService.getEnglishLanguageConfig();
     this.memberService
       .getMembershipList()
       .subscribe((response: ResponseResult) => {
@@ -144,6 +149,7 @@ export class MembershipListsComponent implements OnInit {
             pageLength: 5,
             processing: true,
             data: this.membershipList,
+            language: languageConfig,
             columns: [
               { data: 'id' },
               {

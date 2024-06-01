@@ -1,7 +1,7 @@
 {
-  "InnovationBriefList": "Innovation Brief List",
-  "BookNameEn": "Book Name En",
-  "BookNameAr": "Book Name Ar",
-  "BookCoverImage": "Book Cover Image",
-  "BookFile": "Book File"
+  "InnovationBriefList": "قائمة مختصرة للابتكار",
+  "BookNameEn": "الاسم الكتاب باللغة الانجليزيه",
+  "BookNameAr": "اسم الكتاب باللغة العربيه",
+  "BookCoverImage": "صورة غلاف الكتاب",
+  "BookFile": "ملف الكتاب"
 }

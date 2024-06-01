@@ -1,15 +1,15 @@
 {
-  "Add Contact Information": "Add Contact Information",
-  "TollFreeNumber": "Toll Free Number",
-  "TwitterUrl": "Twitter Url",
-  "InstagramUrl": "Instagram Url",
-  "FacbookUrl": "Facbook Url",
-  "SubmitSuggestionUrl": "Submit Suggestion Url",
-  "AmirChatUrl": "Amir Chat Url",
-  "ContactGeneralManagerUrl": "Contact General Manager Url",
-  "InstantVideoCallUrl": "Instant Video Call Url",
-  "Email": "Email",
-  "InternationalPhoneNumber": "International Phone Number",
-  "PostalAddress": "PostalAdddress",
-  "HeadquaterLocation": "Headquater Location"
+  "Add Contact Information": "اضافة بيانات التواصل",
+  "TollFreeNumber": "الرقم المجاني",
+  "TwitterUrl": "رابط موقع تويتر",
+  "InstagramUrl": "رابط موقع الانستقرام",
+  "FacbookUrl": "رابط موقع الفيس بوك",
+  "SubmitSuggestionUrl": "رابط تسليم الاقتراحات",
+  "AmirChatUrl": "رابط التوصل مع مركز امر",
+  "ContactGeneralManagerUrl": "رابط التواصل مع المدير العام",
+  "InstantVideoCallUrl": "رابط التواصل بالمكالمه المرئيه",
+  "Email": "الايميل",
+  "InternationalPhoneNumber": "رقم الهاتف الدولي",
+  "PostalAddress": "العنوان البريدي",
+  "HeadquaterLocation": "موقع المقر"
 }
