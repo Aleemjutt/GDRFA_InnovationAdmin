@@ -5,5 +5,22 @@
   "Sector": "Sector",
   "Administration": "Administration",
   "Status": "Status",
-  "Actions": "Actions"
+  "Actions": "Actions",
+  "IdeaDetails": "Idea Details",
+  "Section": "Section",
+  "JobTitle": "JobTitle",
+  "Name": "Name",
+  "EmployeeID": "Employee ID",
+  "Department": "Department",
+  "MobileNo": "MobileNo",
+  "OfficeNo": "OfficeNo",
+  "Address": "Address",
+  "Employeehappiness": "Employeehappiness",
+  "ImprovingServices": "ImprovingServices",
+  "Rationalizationofexpenses": "Rationalizationofexpenses",
+  "Customerhappiness": "Customerhappiness",
+  "Informationabouttechnologydevelopment": "Informationabouttechnologydevelopment",
+  "Attachments": "Attachments",
+  "Download": "Download",
+  "No": "File No"
 }

@@ -3,5 +3,7 @@
   "BookNameEn": "الاسم الكتاب باللغة الانجليزيه",
   "BookNameAr": "اسم الكتاب باللغة العربيه",
   "BookCoverImage": "صورة غلاف الكتاب",
-  "BookFile": "ملف الكتاب"
+  "BookFile": "ملف الكتاب",
+  "DownloadFile": "تحميل الملف",
+  "Book": "كتاب"
 }

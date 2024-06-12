@@ -10,7 +10,7 @@
         <div class="card-body" *ngIf="researchAreaModel">
           <form #editForm="ngForm" id="editForm" (ngSubmit)="add()">
             <tabset>
-              <tab heading="About the Center">
+              <tab [heading]="getTabName(1)">
                 <div class="row mt-3">
                   <label>{{ "AbouttheCenterEn" | translate }}</label>
                   <textarea
@@ -29,7 +29,7 @@
                 </div>
               </tab>
 
-              <tab heading="Presenting Scientific Research">
+              <tab [heading]="getTabName(2)">
                 <div class="row mt-3">
                   <label
                     >{{ "PresentingScientificResearchEn" | translate }}

@@ -1,5 +1,5 @@
 {
-  "Research And Studies List": "قائمة البحوث والدراسات",
+  "ResearchAndStudiesList": "قائمة البحوث والدراسات",
   "DescriptionEn": "التفاصيل باللغة الانجليزيه",
   "DescriptionAr": "التفاصيل باللغة العربيه",
   "StoryNameEn": "اسم القصه باللغة الانجليزيه",
@@ -10,5 +10,10 @@
   "ResearchAndStudiesCategories": "فئات البحوث والدراسات",
   "BookNumberEn": "رقم الكتاب باللغة الانجليزيه",
   "BookNumberAr": "رقم الكتاب باللغة العربيه",
-  "BookLink": "رابط الكتاب"
+  "BookLink": "رابط الكتاب",
+  "InnovationBriefDetails": "تفاصيل موجزة عن الابتكار",
+  "DownloadFile": "تحميل الملف",
+  "Book": "كتاب",
+  "BookCoverImage": "صورة غلاف الكتاب"
+  
 }

@@ -1,5 +1,4 @@
 {
-  
   "Add New": "اضافه",
   "Select Department": "اختيار قسم",
   "Select Operation": "اختيار معامله",
@@ -15,5 +14,14 @@
   "Close": "يغلق",
   "Update": "تحديث",
   "Loading...": "تحميل...",
-  "Innovation": "الابتكار"
+  "Innovation": "الابتكار",
+  "Status": "الحالة",
+  "Submitted": "مقدم",
+  "InReview": "قيد المراجعة",
+  "Approved": "موافق عليه",
+  "Rejected": "مرفوض",
+  "ChooseFile": "اختر ملف",
+  "Choosefile": "اختر ملف",
+  "InActive": "غير نشط",
+  "Active": "نشط"
 }

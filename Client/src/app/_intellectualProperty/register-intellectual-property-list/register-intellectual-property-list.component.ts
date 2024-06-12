@@ -10,7 +10,7 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 import { FilePondModule } from 'ngx-filepond';
 import { TabsetComponent } from 'ngx-tabset';
 import { ToastrService } from 'ngx-toastr';
-import { Observable, finalize } from 'rxjs';
+import { Observable, Subscription, finalize } from 'rxjs';
 import { GlobalServiceService } from 'src/app/_global/-global-service.service';
 import { ResponseResult } from 'src/app/_models/responseResult';
 import { IntellectualPropertyIndexService } from 'src/app/_services/_intellectualProperty/intellectual-property-index.service';
@@ -50,7 +50,7 @@ export class RegisterIntellectualPropertyListComponent implements OnInit {
   fileInfos?: Observable<any>;
   file: File | undefined;
   attachment: any;
-
+  private languageChangeSubscription!: Subscription;
   constructor(
     private tosterService: ToastrService,
     private modalService: BsModalService,
@@ -58,9 +58,15 @@ export class RegisterIntellectualPropertyListComponent implements OnInit {
     private registerPropertyService: RegisterIntellectualPropertyService,
     public globalService: GlobalServiceService,
     private downloadService: FiledownloaderService
-  ) {}
+  ) {
+    this.languageChangeSubscription = new Subscription();
+  }
   ngOnInit(): void {
-    this.initilizeDataTable();
+    this.languageChangeSubscription =
+      this.globalService.languageChange$.subscribe((lang) => {
+        // Update the ng-select label property when the language changes
+        this.initilizeDataTable();
+      });
     this.pondFiles;
   }
 

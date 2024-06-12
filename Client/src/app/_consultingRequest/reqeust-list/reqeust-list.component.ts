@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { GlobalServiceService } from 'src/app/_global/-global-service.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-reqeust-list',
   standalone: true,
@@ -24,16 +25,23 @@ export class ReqeustListComponent implements OnInit {
   @ViewChild('template') template: TemplateRef<any> | undefined;
   @ViewChild('templateDetails') templateDetails: TemplateRef<any> | undefined;
   private datatable: any;
+  private languageChangeSubscription!: Subscription;
   constructor(
     private consultingRequestService: ConsultingRequestService,
     private modalService: BsModalService,
 
     private tosterService: ToastrService,
     public globalService: GlobalServiceService
-  ) {}
+  ) {
+    this.languageChangeSubscription = new Subscription();
+  }
 
   ngOnInit(): void {
-    this.initilizeDataTable();
+    this.languageChangeSubscription =
+      this.globalService.languageChange$.subscribe((lang) => {
+        // Update the ng-select label property when the language changes
+        this.initilizeDataTable();
+      });
   }
 
   Update() {
@@ -100,7 +108,7 @@ export class ReqeustListComponent implements OnInit {
         ? this.globalService.getArabicLanguageConfig()
         : this.globalService.getEnglishLanguageConfig();
     //const datatable: any = $('#consultingRequestDataTable').DataTable();
-    const row = '';
+
     this.datatable = $('#consultingRequestDataTable').DataTable();
     if (this.datatable != null && this.datatable != undefined) {
       this.datatable.destroy();

@@ -108,4 +108,20 @@ export class ResearchCenterComponent implements OnInit {
   removeItem(index: number): void {
     this.researchCenterInfoModel?.researchAreaModels?.splice(index, 1);
   }
+
+  getTabName(tabId: number): string {
+    let tabName = '';
+    if (tabId == 1)
+      tabName =
+        this.globalService.getCurrentLanguage() === 'en'
+          ? 'About the Center'
+          : 'حول المركز';
+    else
+      tabName =
+        this.globalService.getCurrentLanguage() === 'en'
+          ? 'Presenting Scientific Research'
+          : 'عرض الأبحاث العلمية';
+
+    return tabName;
+  }
 }

@@ -15,5 +15,14 @@
   "Update": "Update",
   "Loading...": "Loading...",
   "success": "success",
-  "Innovation": "Innovation"
+  "Innovation": "Innovation",
+  "Status": "Status",
+  "Submitted": "Submitted",
+  "In Review": "In Review",
+  "Approved": "Approved",
+  "Rejected": "Rejected",
+  "ChooseFile": "Choose file",
+  "Choosefile": "Choose file",
+  "InActive": "InActive",
+  "Active": "Active"
 }

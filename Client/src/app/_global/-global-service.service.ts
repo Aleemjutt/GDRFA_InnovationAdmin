@@ -21,10 +21,16 @@ export class GlobalServiceService implements OnInit {
   currentLang: any = 'en';
   baseUrl = environment.apiUrl;
   imgServerBaseUrl: string = '';
+
   private languageSubject: BehaviorSubject<string> =
     new BehaviorSubject<string>('en');
   public languageChange$: Observable<string> =
     this.languageSubject.asObservable();
+  // private languageSubject: BehaviorSubject<string> =
+  //   new BehaviorSubject<string>('en');
+
+  // public languageChange$: Observable<string> =
+  //   this.languageSubject.asObservable();
 
   userType: BehaviorSubject<string> = new BehaviorSubject<string>(
     this.getUserType()
@@ -73,6 +79,7 @@ export class GlobalServiceService implements OnInit {
     this.translateService.setDefaultLang(lang);
     this.translateService.use(lang);
     this.changeCssFile(lang);
+    this.languageSubject.next(lang);
   }
   changeCssFile(lang: string) {
     let headTag = this.document.getElementsByTagName(
@@ -114,6 +121,9 @@ export class GlobalServiceService implements OnInit {
     }
   }
 
+  // get languageChanged() {
+  //   return this.languageSubject.asObservable();
+  // }
   getUserId() {
     const userString = localStorage.getItem('user');
     if (!userString) return null;

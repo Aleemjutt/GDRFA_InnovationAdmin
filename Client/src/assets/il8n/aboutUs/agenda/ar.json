@@ -8,5 +8,14 @@
   "AddNewArchives": "اضافة ارشيف جديد",
   "Date": "التاريخ",
   "Time": "الوقت",
-  "Venue": "المكان"
+  "Venue": "المكان",
+  "ChoosefileForDetails": "اختر الملف للحصول على التفاصيل",
+  "AddNewAgenda": "إضافة أجندة جديدة",
+  "UpdateAgenda": "تحديث جدول الأعمال",
+  "AgendaList": "قائمة جدول الأعمال",
+  "AgendaDetail": "تفاصيل جدول الأعمال",
+  "LocationDescriptionEn": "وصف الموقع أ",
+  "LocationDescriptionAr": "وصف الموقع ع",
+  "OnPremises": "في أماكن العمل",
+  "Online": "متصل"
 }

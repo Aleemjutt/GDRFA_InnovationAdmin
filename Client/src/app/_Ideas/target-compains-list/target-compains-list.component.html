@@ -67,8 +67,14 @@
   <!-- End Page-content -->
 </div>
 <ng-template #template class="modal-lg">
-  <div class="modal-header bg-light">
-    <h4 class="modal-title pull-left">{{ "AddNew" | translate }}</h4>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left" *ngIf="targetCompainModel?.id == 0">
+      {{ "AddNew" | translate }}
+    </h4>
+
+    <h4 class="modal-title pull-left" *ngIf="targetCompainModel?.id != 0">
+      {{ "UpdateCompain" | translate }}
+    </h4>
     <button
       type="button"
       class="btn-close close pull-right"
@@ -256,7 +262,7 @@
 </ng-template>
 
 <ng-template #templateDetails class="modal-lg">
-  <div class="modal-header bg-light">
+  <div class="modal-header">
     <h4 class="modal-title pull-left">
       {{ "TargetCompainDetails" | translate }}
     </h4>

@@ -25,6 +25,7 @@ export class NavComponent implements OnInit {
   model: any = {};
   currentLang: any;
   userLoginModel: any;
+  userFullName: string | undefined;
   //private currentUserSource = new BehaviorSubject<LoginResponse | null>(null);
 
   //_currentUser$ = this.currentUserSource.asObservable();
@@ -43,6 +44,20 @@ export class NavComponent implements OnInit {
     //this.getCurrentUser();
 
     this.userLoginModel = this.globalService.getUserLogin();
+  }
+
+  setUserFullName(_userLoginModel: any): string {
+    console.log(_userLoginModel, 'usermodel');
+    let firstName =
+      this.globalService.getCurrentLanguage() === 'en'
+        ? _userLoginModel.firstNameEn
+        : _userLoginModel.firstNameAr;
+    let lastName =
+      this.globalService.getCurrentLanguage() === 'en'
+        ? _userLoginModel.lastNameEn
+        : _userLoginModel.lastNameAr;
+
+    return firstName + lastName != null ? lastName : '';
   }
 
   // changeLanguage() {

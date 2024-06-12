@@ -25,5 +25,10 @@
   "Actions": "Actions",
   "OurGoalEn": "OurGoalEn",
   "OurGoalAr": "OurGoalAr",
-  "OurValues": "OurValues"
+  "OurValues": "OurValues",
+  "DirectorNameEn": "DirectorNameEn",
+  "DirectorNameAr": "DirectorNameAr",
+  "DirectorProfilePhoto": "DirectorProfilePhoto",
+  "OurGoalsAr": "OurGoalsAr",
+  "OurGoalsEn": "OurGoalsEn"
 }

@@ -6,7 +6,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
-import { retry } from 'rxjs';
+import { Subscription, retry } from 'rxjs';
 import { GlobalServiceService } from 'src/app/_global/-global-service.service';
 import {
   EstablishingDubaiForTheFutureDetailModel,
@@ -40,7 +40,7 @@ export class EstabishingDubaiFutureListComponent {
     [];
   requirmentsHeadingPointModels: RequirmentsHeadingPointModel[] = [];
   requirmentsPointsModels: RequirmentsPointsModel[] = [];
-
+  private languageChangeSubscription!: Subscription;
   constructor(
     public globalService: GlobalServiceService,
     private tosterService: ToastrService,
@@ -105,11 +105,16 @@ export class EstabishingDubaiFutureListComponent {
     };
 
     this.establishingDubaiForTheFutureDetailModels = [];
+    this.languageChangeSubscription = new Subscription();
   }
 
   ngOnInit(): void {
     //this.initializeDataTable();
-    this.initilizeDataTable();
+    this.languageChangeSubscription =
+      this.globalService.languageChange$.subscribe((lang) => {
+        // Update the ng-select label property when the language changes
+        this.initilizeDataTable();
+      });
   }
   openModal(template: TemplateRef<void>) {
     this.initForm();

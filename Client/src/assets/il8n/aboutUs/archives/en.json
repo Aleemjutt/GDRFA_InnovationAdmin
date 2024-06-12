@@ -3,7 +3,10 @@
   "DescriptionEn": "Description En",
   "DescriptionAr": "Description Ar",
   "Actions": "Actions",
-  "TitleEN": "TitleEn",
-  "TitleAr": "TitleAr",
-  "AddNewArchives": "Add New Archives"
+  "TitleEN": "Title En",
+  "TitleAr": "Title Ar",
+  "Add New Archives": "Add New Archives",
+  "ArchivesList": "Archives List",
+  "UpdateArchives": "Update Archives",
+  "Archives Details": "Archives Details"
 }

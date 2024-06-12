@@ -25,5 +25,10 @@
   "Actions": "الإجراءات",
   "OurGoalEn": "هدفنا بالإنجليزية",
   "OurGoalAr": "هدفنا بالعربية",
-  "OurValues": "قيمنا"
+  "OurValues": "قيمنا",
+  "DirectorNameEn": "اسم المدير بالإنجليزية",
+  "DirectorNameAr": "اسم المدير بالعربية",
+  "DirectorProfilePhoto": "صورة الملف الشخصي للمدير",
+  "OurGoalsAr": "أهدافنا بالعربية",
+  "OurGoalsEn": "أهدافنا بالإنجليزية"
 }

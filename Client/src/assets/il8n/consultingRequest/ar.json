@@ -3,9 +3,9 @@
   "RequesterName": "اسم مقدم الطلب",
   "Email": "البريد الالكتروني",
   "Subject": "الموضوع",
-  "Status": "الحاله",
   "Actions": " اجراء",
   "ConsultingRequestList": "قائمة طلبات الاستشارة",
   "Messsage": "رساله",
-  "Reply": "الرد"
+  "Reply": "الرد",
+  "ConsultingRequestDetails": "تفاصيل طلب الاستشارة"
 }

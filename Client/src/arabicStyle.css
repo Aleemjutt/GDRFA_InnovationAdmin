@@ -16,8 +16,8 @@ label {
 .ng-dropdown-panel {
   background-color: white !important;
   padding: 10px;
-  border: 1px solid #dde2e6;
   left: -1px;
+  border: 1px solid #dde2e6;
   top: 36px;
   border-radius: 6px;
 }
@@ -147,4 +147,36 @@ thead {
 
 .navbar-menu .navbar-nav .nav-link:hover {
   color: #a87935 !important;
+}
+#page-topbar {
+  left: 0px;
+}
+.main-content {
+  margin-right: 250px;
+  margin-left: 0px;
+}
+.navbar-menu .navbar-nav .nav-link[data-bs-toggle="collapse"]:after {
+  left: 18px;
+}
+div.dataTables_wrapper div.dataTables_filter {
+  text-align: left;
+}
+
+table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+th,
+td {
+  word-wrap: break-word;
+  word-break: break-all;
+  overflow: auto;
+  white-space: normal;
+}
+[dir="rtl"]
+  .navbar-menu
+  .navbar-nav
+  .nav-link[data-bs-toggle="collapse"][aria-expanded="true"]:after {
+  transform: rotate(180deg);
 }

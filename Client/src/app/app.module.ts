@@ -234,6 +234,7 @@ registerPlugin(
         useFactory: (http: HttpClient): MultiTranslateHttpLoader => {
           return new MultiTranslateHttpLoader(http, {
             resources: [
+              { prefix: './assets/il8n/Home/', suffix: '.json' },
               { prefix: './assets/il8n/common/', suffix: '.json' },
               { prefix: './assets/il8n/login/', suffix: '.json' },
               { prefix: './assets/il8n/menu/', suffix: '.json' },

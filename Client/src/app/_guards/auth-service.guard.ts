@@ -17,6 +17,7 @@ export class AuthService implements OnInit {
         this.accountServiec.currentUser$.pipe(take(1)).subscribe({
           next: (user) => {
             if (user) {
+              
               this.router.navigateByUrl('/userProfile');
               this.isAuthenticated = true;
             }

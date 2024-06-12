@@ -5,5 +5,8 @@
   "Actions": "اجراء",
   "TitleEN": "العنوان باللغه الانجليزيه",
   "TitleAr": "العنوان باللغه العربيه",
-  "AddNewArchives": "اضافه ارشيف جديد"
+  "Add New Archives": "اضافه ارشيف جديد",
+  "ArchivesList": "قائمة المحفوظات",
+  "UpdateArchives": "تحديث المحفوظات",
+  "ArchivesDetails": "تفاصيل الأرشيف"
 }

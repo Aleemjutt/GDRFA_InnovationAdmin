@@ -6,7 +6,7 @@ import { map } from 'rxjs/internal/operators/map';
 import { Observable, Subject, catchError, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { LoginResponse } from '../_models/loginResponse';
-import { ResponseResult } from '../_models/responseResult';
+import { ResponseResult, StatusCodes } from '../_models/responseResult';
 import { ToastrService } from 'ngx-toastr';
 import { StorageItem } from '../_models/localStorageItem';
 import { GlobalServiceService } from '../_global/-global-service.service';
@@ -61,15 +61,19 @@ export class AccountService {
       .pipe(
         map((response: ResponseResult) => {
           //const user = response.data;
-          this.loginResponse = response.data;
-          if (this.loginResponse) {
-            //localStorage.setItem('user', JSON.stringify(user));
-            this.setItemWithExpiration(
-              'user',
-              60, //this.loginResponse.expires_in
-              model
-            );
-            this.currentUserSource.next(this.loginResponse);
+          if (response.statusCode == StatusCodes.success) {
+            this.loginResponse = response.data;
+            if (this.loginResponse) {
+              //localStorage.setItem('user', JSON.stringify(user));
+              this.setItemWithExpiration(
+                'user',
+                60, //this.loginResponse.expires_in
+                model
+              );
+              this.currentUserSource.next(this.loginResponse);
+            } else {
+              this.tosterService.error(response.message);
+            }
           } else {
             this.tosterService.error(response.message);
           }

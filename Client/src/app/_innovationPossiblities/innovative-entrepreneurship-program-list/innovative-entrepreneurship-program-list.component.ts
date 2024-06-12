@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
 import { GlobalServiceService } from 'src/app/_global/-global-service.service';
 import {
   ReplyedStatus,
@@ -29,15 +30,22 @@ export class InnovativeEntrepreneurshipProgramListComponent implements OnInit {
   @ViewChild('templateDetails') templateDetails: TemplateRef<any> | undefined;
   enum: typeof ReplyedStatus = ReplyedStatus;
   modalRef: any;
+  private languageChangeSubscription!: Subscription;
   constructor(
     private modalService: BsModalService,
     public globalService: GlobalServiceService,
     private tosterService: ToastrService,
     private innovationEntureship: InnovativeEntrepreneurshipProgramService
-  ) {}
+  ) {
+    this.languageChangeSubscription = new Subscription();
+  }
 
   ngOnInit(): void {
-    this.initilizeDataTable();
+    this.languageChangeSubscription =
+      this.globalService.languageChange$.subscribe((lang) => {
+        // Update the ng-select label property when the language changes
+        this.initilizeDataTable();
+      });
   }
 
   initilizeDataTable(): void {

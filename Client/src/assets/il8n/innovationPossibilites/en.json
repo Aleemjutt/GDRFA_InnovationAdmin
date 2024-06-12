@@ -6,5 +6,18 @@
   "ContactNo": "Contact No",
   "Email": "Email",
   "Status": "Status",
-  "Actions": "Actions"
+  "Actions": "Actions",
+  "CompanyName": "Company Name",
+  "ContactNumber": "Contact Number",
+  "PreferredDateToContact": "Preferred Date To Contact",
+  "Emirate": "Emirate",
+  "Requiredservice": "Required service",
+  "EvaluatingthematurityofinstitutionalinnovationaccordingtoGinicriteria": "Evaluating the maturity of institutional innovation according to Ginicriteria",
+  "Preparingandqualifyingfortheevaluationprocess": "Preparing and qualifying for the evaluati on process",
+  "Creatinganddevelopinginnovationtools": "Creating and developing innovation tools",
+  "Buildinganddevelopinganinnovationstrategy": "Building and developing an innovation strategy",
+  "Trainingandqualificationofemployees": "Training and qualification of employees",
+  "Other": "Other",
+  "ReplyNote": "Reply Note",
+  "Reply": "Reply"
 }

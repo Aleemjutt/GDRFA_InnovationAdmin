@@ -7,7 +7,7 @@ import { FilePond, FilePondOptions } from 'filepond';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { FilePondModule } from 'ngx-filepond';
 import { ToastrService } from 'ngx-toastr';
-import { Observable, finalize } from 'rxjs';
+import { Observable, Subscription, finalize } from 'rxjs';
 import { GlobalServiceService } from 'src/app/_global/-global-service.service';
 import { ResponseResult } from 'src/app/_models/responseResult';
 import { IntellectualPropertyIndexService } from 'src/app/_services/_intellectualProperty/intellectual-property-index.service';
@@ -39,16 +39,22 @@ export class TypeOfPropertiesComponent implements OnInit {
   fileInfos?: Observable<any>;
   file: File | undefined;
   attachment: any;
-
+  private languageChangeSubscription!: Subscription;
   constructor(
     private tosterService: ToastrService,
     private modalService: BsModalService,
     private uploadService: UploadServiceService,
     private intecllectualPropertiesService: IntellectualPropertyIndexService,
     public globalService: GlobalServiceService
-  ) {}
+  ) {
+    this.languageChangeSubscription = new Subscription();
+  }
   ngOnInit(): void {
-    this.initilizeDataTable();
+    this.languageChangeSubscription =
+      this.globalService.languageChange$.subscribe((lang) => {
+        // Update the ng-select label property when the language changes
+        this.initilizeDataTable();
+      });
     this.pondFiles;
   }
 

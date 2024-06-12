@@ -16,7 +16,7 @@
                 data-range-date="true"
                 placeholder="Select Date Range"
               />
-              <select
+              <!-- <select
                 class="form-select mb-0 me-2"
                 aria-label="Default select example"
               >
@@ -25,7 +25,7 @@
                 <option value="2">In Review</option>
                 <option value="3">Approved</option>
                 <option value="4">Rejected</option>
-              </select>
+              </select> -->
               <button
                 type="button"
                 class="btn btn-light waves-effect waves-light ms-2 me-2 col-1"
@@ -78,10 +78,10 @@
 <ng-template #template class="modal-lg">
   <div class="modal-header">
     <h4 class="modal-title pull-left" *ngIf="creditModel.id == 0">
-      Add New Credit {{ "CreditsList" | translate }}
+      {{ "Add New Credit" | translate }}
     </h4>
     <h4 class="modal-title pull-left" *ngIf="creditModel.id != 0">
-      {{ "CreditsList" | translate }} Update Credit
+      {{ "Update Credit" | translate }}
     </h4>
     <button
       type="button"
@@ -96,7 +96,7 @@
     <div class="row">
       <div class="col-md-6 mt-3">
         <label for="basiInput" class="form-label">
-          {{ "DescriptionEng" | translate }}</label
+          {{ "DescriptionEn" | translate }}</label
         >
         <input
           type="input"
@@ -155,22 +155,6 @@
           </div>
         </div>
       </div>
-      <!-- <div class="mt-3">
-            <div class="mb-3">
-              <label for="formFile" class="form-label">Choose file</label>
-              <file-pond
-                #myPond
-                label-idle='Drag & Drop your files or <span class="filepond--label-action"> Browse </span><br> <b>Maximum 5 files upload</b>'
-                allow-multiple="true"
-                [options]="pondOptions"
-                [files]="pondFiles"
-                (oninit)="pondHandleInit()"
-                (onaddfile)="pondHandleAddFile($event)"
-              >
-              </file-pond>
-              {{ message }}
-            </div>
-          </div> -->
     </div>
     <div class="row">
       <div class="modal-footer">

@@ -3,5 +3,8 @@
   "DescriptionEn": "الوصف باللغه الانجليزيه",
   "DescriptionAr": "الوصف باللغه العربيه",
   "Actions": "اجراء",
-  "PartnerType": "نوع الشراكه"
+  "PartnerType": "نوع الشراكه",
+  "PartnersList": "قائمة الشركاء",
+  "AddNewPartner": "إضافة شريك جديد",
+  "UpdatePartner": "تحديث الشريك"
 }

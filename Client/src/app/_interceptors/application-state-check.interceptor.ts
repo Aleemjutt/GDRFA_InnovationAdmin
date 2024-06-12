@@ -17,7 +17,7 @@ export class applicationStateCheckInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
     //this.busyService.busy();
-    console.log("we are checking the session time don't wrroy.");
+    //console.log("we are checking the session time don't wrroy.");
     // console.log('expireation time', this.getItemWithExpiration());
     if (this.getItemWithExpiration() == null) {
       this.router.navigateByUrl('/login');
@@ -44,10 +44,10 @@ export class applicationStateCheckInterceptor implements HttpInterceptor {
     //console.log('current expir', item.expiration);
     // Check if the item is expired
 
-    console.log(item.expiration, 'Expiration Time here before');
-    console.log(currentTime, 'Current Time');
+    //console.log(item.expiration, 'Expiration Time here before');
+    //console.log(currentTime, 'Current Time');
     if (item.expiration && currentTime > item.expiration) {
-      console.log(item.expiration, 'Token has exipre');
+      //console.log(item.expiration, 'Token has exipre');
       // Remove the expired item
       // console.log('user removed');
       localStorage.removeItem('user');

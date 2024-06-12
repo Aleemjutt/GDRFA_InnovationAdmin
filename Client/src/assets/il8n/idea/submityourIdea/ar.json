@@ -5,5 +5,22 @@
   "Sector": "قطاع",
   "Administration": "إدارة",
   "Status": "الحاله",
-  "Actions": "الاجراء"
+  "Actions": "الاجراء",
+  "IdeaDetails": "تفاصيل الفكرة",
+  "Section": "القسم",
+  "JobTitle": "المسمى الوظيفي",
+  "Name": "الاسم",
+  "EmployeeID": "رقم الموظف",
+  "Department": "الإدارة",
+  "MobileNo": "رقم الجوال",
+  "OfficeNo": "رقم المكتب",
+  "Address": "العنوان",
+  "Employeehappiness": "سعادة الموظف",
+  "ImprovingServices": "تحسين الخدمات",
+  "Rationalizationofexpenses": "ترشيد النفقات",
+  "Customerhappiness": "سعادة العميل",
+  "Informationabouttechnologydevelopment": "معلومات عن تطوير التكنولوجيا",
+  "Attachments": "المرفقات",
+  "Download": "تحميل",
+  "No": "رقم الملف"
 }

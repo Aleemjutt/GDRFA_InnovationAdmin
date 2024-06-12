@@ -17,6 +17,7 @@ import { data } from 'jquery';
 import { ResponseResult } from 'src/app/_models/responseResult';
 import { TranslateModule } from '@ngx-translate/core';
 import { GlobalServiceService } from 'src/app/_global/-global-service.service';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-target-compain-answer-list',
   standalone: true,
@@ -39,6 +40,8 @@ export class TargetCompainAnswerListComponent {
 
   targetAnswerModelList: TargetAnswerModel[] = [];
   targetAttachmentModel: TargetAttachmentModel[] = [];
+  private languageChangeSubscription!: Subscription;
+  private datatable: any;
   constructor(
     private targetCopainAnswerService: TargetCompainAnswerService,
     private route: ActivatedRoute,
@@ -80,9 +83,16 @@ export class TargetCompainAnswerListComponent {
         extension: '',
       },
     ];
+
+    this.languageChangeSubscription = new Subscription();
   }
+
   ngOnInit(): void {
-    this.initilizeDataTable();
+    this.languageChangeSubscription =
+      this.globalService.languageChange$.subscribe((lang) => {
+        // Update the ng-select label property when the language changes
+        this.initilizeDataTable();
+      });
   }
 
   initilizeDataTable(): void {
@@ -94,6 +104,12 @@ export class TargetCompainAnswerListComponent {
     var id = this.route.snapshot.paramMap.get('id');
     console.log('catch Id', id);
     if (!id) return;
+
+    this.datatable = $('#targetCompainAnswerDataTable').DataTable();
+    if (this.datatable != null && this.datatable != undefined) {
+      this.datatable.destroy();
+      this.datatable = null;
+    }
     this.targetCopainAnswerService
       ._getList(parseInt(id))
 

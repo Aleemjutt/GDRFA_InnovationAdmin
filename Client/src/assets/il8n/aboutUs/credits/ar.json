@@ -2,5 +2,8 @@
   "ID": "رقم المرجع",
   "DescriptionEn": "الوصف باللغة الانجليزيه",
   "DescriptionAr": "الوصف باللغة العربيه",
-  "Actions": "اجراء"
+  "Actions": "اجراء",
+  "CreditsList": "قائمة الاعتمادات",
+  "Add New Credit": "إضافة اعتماد جديد",
+  "Update Credit": "تحديث الاعتماد"
 }

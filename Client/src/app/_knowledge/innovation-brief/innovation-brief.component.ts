@@ -7,7 +7,7 @@ import { FilePondOptions } from 'filepond';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { FilePondModule } from 'ngx-filepond';
 import { ToastrService } from 'ngx-toastr';
-import { Observable, finalize } from 'rxjs';
+import { Observable, Subscription, finalize } from 'rxjs';
 import { GlobalServiceService } from 'src/app/_global/-global-service.service';
 import { InnovationInBriefModel } from 'src/app/_models/knowledge/innovationBrief';
 import { ResponseResult, StatusCodes } from 'src/app/_models/responseResult';
@@ -41,7 +41,7 @@ export class InnovationBriefComponent implements OnInit {
   attachmentFile: File | undefined;
   attachment: any;
   imagesArray: any = [];
-
+  private languageChangeSubscription!: Subscription;
   constructor(
     private tosterService: ToastrService,
     private modalService: BsModalService,
@@ -70,10 +70,16 @@ export class InnovationBriefComponent implements OnInit {
       bookUrl: null, // Provide appropriate default value or structure for ResearchAndStudiesCategories
       bookUrlBase64: null,
     };
+
+    this.languageChangeSubscription = new Subscription();
   }
 
   ngOnInit(): void {
-    this.initilizeDataTable();
+    this.languageChangeSubscription =
+      this.globalService.languageChange$.subscribe((lang) => {
+        // Update the ng-select label property when the language changes
+        this.initilizeDataTable();
+      });
     this.pondFiles;
   }
 

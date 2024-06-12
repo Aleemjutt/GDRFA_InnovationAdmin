@@ -1,5 +1,5 @@
 {
-  "Research And Studies List": "Research And Studies List",
+  "ResearchAndStudiesList": "Research And Studies List",
   "DescriptionEn": "Description En",
   "DescriptionAr": "Description Ar",
   "StoryNameEn": "Story Name En",
@@ -10,5 +10,9 @@
   "ResearchAndStudiesCategories": "Research And Studies Categories",
   "BookNumberEn": "Book Number En",
   "BookNumberAr": "Book Number Ar",
-  "BookLink": "Book Link"
+  "BookLink": "Book Link",
+  "InnovationBriefDetails": "Innovation Brief Details",
+  "DownloadFile": "Download File",
+  "Book": "Book",
+  "BookConverImage": "Book Conver Image"
 }

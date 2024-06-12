@@ -38,6 +38,7 @@ export class ErrorsInterceptor implements HttpInterceptor {
               break;
             case 401:
               this.toster.error('Unauthorized', error.status.toString());
+
               break;
             case 404:
               //this.router.navigateByUrl('/notfound');
@@ -45,7 +46,6 @@ export class ErrorsInterceptor implements HttpInterceptor {
               break;
             case 500:
               const navitationExtrs: NavigationExtras = {
-              
                 state: { error: error.error },
               };
               this.toster.error('Something went wrong');

@@ -26,6 +26,7 @@ export class MultiTranslateHttpLoader implements TranslateLoader {
     if (this.withCommon) {
       // order matters! like this, all translations from common can be overrode with features' translations
       resources: [
+        { prefix: './assets/il8n/Home/', suffix: '.json' },
         { prefix: './assets/il8n/common/', suffix: '.json' },
         { prefix: './assets/il8n/login/', suffix: '.json' },
         { prefix: './assets/il8n/menu/', suffix: '.json' },

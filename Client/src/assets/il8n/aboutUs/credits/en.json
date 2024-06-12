@@ -2,5 +2,8 @@
   "ID": "ID",
   "DescriptionEn": "Description En",
   "DescriptionAr": "Description Ar",
-  "Actions": "Actions"
+  "Actions": "Actions",
+  "CreditsList": "Credits List",
+  "Add New Credit": "Add New Credit",
+  "Update Credit": "Update Credit"
 }

@@ -1,0 +1,13 @@
+{
+  "ID": "معرف",
+  "Year": "السنة",
+  "Classification": "التصنيف",
+  "Actions": "الإجراءات",
+  "AddNew": "إضافة جديد",
+  "AddUpdateMainDetails": "إضافة أو تحديث التفاصيل الرئيسية",
+  "DescripitonEn": "الوصف بالإنجليزية",
+  "DescriptionAr": "الوصف بالعربية",
+  "AddAwardsMainText": "إضافة نص الجوائز الرئيسي",
+  "AwardsList": "قائمة الجوائز",
+  "AddNewAwards": "إضافة جوائز جديدة"
+}

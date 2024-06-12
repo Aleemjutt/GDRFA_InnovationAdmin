@@ -3,5 +3,8 @@
   "DescriptionEn": "Description En",
   "DescriptionAr": "Description Ar",
   "Actions": "Actions",
-  "PartnerType": "Partner Type"
+  "PartnerType": "Partner Type",
+  "PartnersList": "Partners List",
+  "AddNewPartner": "Add New Partner",
+  "UpdatePartner": "Update Partner"
 }
