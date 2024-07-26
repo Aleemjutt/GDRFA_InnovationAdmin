@@ -1,6 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { LegendPosition } from '@swimlane/ngx-charts';
+import { GlobalServiceService } from '../_global/-global-service.service';
+import { DashBoardService } from '../_services/dash-board.service';
+import { ResponseResult, StatusCodes } from '../_models/responseResult';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -10,16 +14,39 @@ import { LegendPosition } from '@swimlane/ngx-charts';
 export class HomeComponent implements OnInit {
   registerMode = false;
   users: any;
-
-  constructor(private http: HttpClient) {
+  showBarChart = true;
+  private languageChangeSubscription!: Subscription;
+  private currentUserSubscription: Subscription;
+  constructor(
+    private http: HttpClient,
+    public globalService: GlobalServiceService,
+    private dashBoardService: DashBoardService
+  ) {
     Object.assign(this, {});
+    this.languageChangeSubscription = new Subscription();
+    this.currentUserSubscription = new Subscription();
   }
   ngOnInit(): void {
     //this.getDepartments();
     //this.getDashBoardCount(0);
     //this.getUsers();
+
+    this.languageChangeSubscription =
+      this.globalService.languageChange$.subscribe((lang) => {
+        // Update the ng-select label property when the language changes
+        this.updateBindLabel(lang);
+      });
   }
-  departmentsList: any[] = [];
+
+  private updateBindLabel(lang: string): void {
+    // You might need to recreate or refresh the ng-select component here
+    // Use a timeout to allow Angular to detect changes and refresh the ng-select component
+    setTimeout(() => {
+      // Refresh the ng-select component
+
+      this.getIdeasList(lang);
+    });
+  }
 
   // data = [
   //   { name: '> 95', value: 765 },
@@ -39,24 +66,7 @@ export class HomeComponent implements OnInit {
     domain: ['#08DDC1', '#FFDC1B', '#FF5E3A'],
   };
 
-  single = [
-    {
-      name: 'Pending',
-      value: 20,
-    },
-    {
-      name: 'Completd',
-      value: 10,
-    },
-    {
-      name: 'Total',
-      value: 100,
-    },
-    {
-      name: 'Underprocess',
-      value: 78,
-    },
-  ];
+  arrayValue = [{ name: '', value: 0 }];
   view: [number, number] = [700, 400];
 
   // options
@@ -66,16 +76,23 @@ export class HomeComponent implements OnInit {
   showLabels: boolean = true;
   isDoughnut: boolean = false;
 
+  //Barchart
+
+  showXAxis = true;
+  showYAxis = true;
+  showXAxisLabel = true;
+  showYAxisLabel = true;
+
   onSelect(data: any): void {
-    console.log('Item clicked', this.single);
+    console.log('Item clicked', this.arrayValue);
   }
 
   onActivate(data: any): void {
-    console.log('Activate', this.single);
+    console.log('Activate', this.arrayValue);
   }
 
   onDeactivate(data: any): void {
-    console.log('Deactivate', this.single);
+    console.log('Deactivate', this.arrayValue);
   }
 
   registerToggle(data: any) {
@@ -89,6 +106,24 @@ export class HomeComponent implements OnInit {
   //     complete: () => console.log('Request has been Completed'),
   //   });
   // }
+
+  getIdeasList(lang: string) {
+    this.dashBoardService.getDashboardCount().subscribe({
+      next: (response: ResponseResult) => {
+        if (response.statusCode == StatusCodes.success) {
+          this.arrayValue = response.data;
+          //const lang = this.globalService.getCurrentLanguage();
+          if (lang === 'en') {
+            console.log('lang', lang);
+
+            $('.legend-title-text').text('Ideas Status');
+          } else {
+            $('.legend-title-text').text('حالة الأفكار');
+          }
+        }
+      },
+    });
+  }
 
   cancelRegisterMode(Event: boolean) {
     this.registerMode = Event;

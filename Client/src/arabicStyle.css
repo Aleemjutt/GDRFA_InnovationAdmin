@@ -180,3 +180,6 @@ td {
   .nav-link[data-bs-toggle="collapse"][aria-expanded="true"]:after {
   transform: rotate(180deg);
 }
+.mr-110 {
+  margin-right: 110px;
+}

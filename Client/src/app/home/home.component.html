@@ -6,7 +6,51 @@
     <div class="container-fluid">
       <div class="card">
         <div class="card-header align-items-center d-flex">
-          <h4 class="card-title mb-0 flex-grow-1">{{ "Home" | translate }}</h4>
+          <h4 class="card-title" style="font-size: large">
+            {{ "Dasboard" | translate }}
+          </h4>
+          <div>
+            <button
+              class="btn btn-danger"
+              (click)="showBarChart = !showBarChart"
+            >
+              <i *ngIf="showBarChart" class="ri-pie-chart-fill"></i>
+              <i *ngIf="!showBarChart" class="ri-bar-chart-2-line"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="col-md-8 mr-110" *ngIf="showBarChart">
+          <ngx-charts-bar-vertical
+            [view]="view"
+            [customColors]="colorScheme"
+            [results]="arrayValue"
+            [gradient]="gradient"
+            [xAxis]="showXAxis"
+            [yAxis]="showYAxis"
+            [legend]="showLegend"
+            [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel"
+            (select)="onSelect($event)"
+          >
+          </ngx-charts-bar-vertical>
+        </div>
+
+        <div class="container" style="text-align: center" *ngIf="!showBarChart">
+          <ngx-charts-pie-chart
+            [view]="view"
+            [customColors]="colorScheme"
+            [results]="arrayValue"
+            [gradient]="gradient"
+            [legend]="showLegend"
+            [legendPosition]="legendPosition"
+            [labels]="showLabels"
+            [doughnut]="isDoughnut"
+            (select)="onSelect($event)"
+            (activate)="onActivate($event)"
+            (deactivate)="onDeactivate($event)"
+          >
+          </ngx-charts-pie-chart>
         </div>
       </div>
     </div>
@@ -14,37 +58,3 @@
   </div>
   <!-- End Page-content -->
 </div>
-<!-- end main content-->
-<!-- <ngx-charts-pie-chart
-  [results]="single"
-  [legend]="showLegend"
-  [labels]="showLabels"
-  [doughnut]="doughnut"
-  [gradient]="gradient"
->
-</ngx-charts-pie-chart> -->
-
-<!-- <ngx-charts-pie-chart [results]="data">
-  <ng-template #tooltipTemplate let-model="model">
-    <h1>
-      {{ model.name }}
-    </h1>
-    <h2>{{ model.value }}%</h2>
-  </ng-template>
-</ngx-charts-pie-chart> -->
-<!-- <div class="container" style="text-align: center">
-  <ngx-charts-pie-chart
-    [view]="view"
-    [customColors]="colorScheme"
-    [results]="single"
-    [gradient]="gradient"
-    [legend]="showLegend"
-    [legendPosition]="legendPosition"
-    [labels]="showLabels"
-    [doughnut]="isDoughnut"
-    (select)="onSelect($event)"
-    (activate)="onActivate($event)"
-    (deactivate)="onDeactivate($event)"
-  >
-  </ngx-charts-pie-chart>
-</div> -->

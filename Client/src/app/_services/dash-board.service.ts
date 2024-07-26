@@ -13,9 +13,9 @@ export class DashBoardService {
     private httpClient: HttpClient
   ) {}
 
-  getDashboardCount(id: number) {
+  getDashboardCount() {
     return this.httpClient.get<any>(
-      this.baseUrl + 'DashBoard/GetDashBoardCountAsync?userId=' + id,
+      this.baseUrl + 'DashBoard/GetDashBoardCountAsync',
       this.getHttpOptions()
     );
   }

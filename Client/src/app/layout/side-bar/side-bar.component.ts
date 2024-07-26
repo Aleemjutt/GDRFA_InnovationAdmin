@@ -50,6 +50,7 @@ export class SideBarComponent implements OnInit {
         icon: 'ri-dashboard-line csm-icon-color',
         subMenuId: 'submenuDashboards',
         subMenuItems: [],
+        routerLink: '/home',
       },
       {
         label:
