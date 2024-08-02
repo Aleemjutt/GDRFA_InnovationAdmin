@@ -267,6 +267,26 @@ export class SideBarComponent implements OnInit {
             icon: 'ri-award-line csm-icon-color',
             routerLink: '/creativeSupport/diplomaInCreativeSupport',
           },
+
+          {
+            label:
+              this.GlobalService.getCurrentLanguage() === 'en'
+                ? 'Join Program'
+                : 'الانضمام إلى البرنامج',
+            icon: 'ri-user-add-fill csm-icon-color',
+            subMenuId: 'submenuJoinProgram',
+            subMenuItems: [
+              {
+                label:
+                  this.GlobalService.getCurrentLanguage() === 'en'
+                    ? 'Participate Tests List'
+                    : 'قائمة الاختبارات المشاركة',
+                icon: 'ri-a-b csm-icon-color',
+                routerLink: '/creativeSupport/joinProgram',
+              },
+            ],
+          },
+
           {
             label:
               this.GlobalService.getCurrentLanguage() === 'en'

@@ -259,6 +259,10 @@ registerPlugin(
                 suffix: '.json',
               },
               {
+                prefix: './assets/il8n/creativeSupport/JoinProgram/',
+                suffix: '.json',
+              },
+              {
                 prefix: './assets/il8n/futureFocused/dubaiResidancy/',
                 suffix: '.json',
               },

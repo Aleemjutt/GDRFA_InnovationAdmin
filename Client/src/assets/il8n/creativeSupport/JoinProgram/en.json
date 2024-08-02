@@ -1,0 +1,19 @@
+{
+  "ParticipateTestsList": "Participate Tests List",
+  "AddNew": "AddNew",
+  "ID": "ID",
+  "Status": "Status",
+  "Actions": "Actions",
+  "Add": "Add",
+  "Update": "Update",
+  "AddQuestion": "Add Question",
+  "QuestionEn": "Question En",
+  "QuestionAr": "Question Ar",
+  "TextEn": "Text En",
+  "TextAr": "Text Ar",
+  "AddOption": "Add Option",
+  "Remove": "Remove",
+  "OptionEn": "Option En",
+  "OptionAr": "Option Ar",
+  "ParticipateTestDetail": "Participate Test Detail"
+}

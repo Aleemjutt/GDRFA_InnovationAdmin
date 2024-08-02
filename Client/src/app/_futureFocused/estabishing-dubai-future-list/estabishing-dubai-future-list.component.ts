@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
-import { Subscription, retry } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { GlobalServiceService } from 'src/app/_global/-global-service.service';
 import {
   EstablishingDubaiForTheFutureDetailModel,
@@ -15,7 +15,6 @@ import {
   RequirmentsPointsModel,
 } from 'src/app/_models/FutureFocused/futureFocused';
 import { ResponseResult, StatusCodes } from 'src/app/_models/responseResult';
-import { DubaiResidencayService } from 'src/app/_services/_futureFocused/dubai-residencay.service';
 import { FutureFocusedService } from 'src/app/_services/_futureFocused/future-focused.service';
 
 @Component({

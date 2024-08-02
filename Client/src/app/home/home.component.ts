@@ -63,7 +63,7 @@ export class HomeComponent implements OnInit {
   // }
 
   colorScheme = {
-    domain: ['#08DDC1', '#FFDC1B', '#FF5E3A'],
+    domain: ['#08DDC1', '#FFDC1B', '#FF5E3A', '#DAA520'],
   };
 
   arrayValue = [{ name: '', value: 0 }];
@@ -110,16 +110,16 @@ export class HomeComponent implements OnInit {
   getIdeasList(lang: string) {
     this.dashBoardService.getDashboardCount().subscribe({
       next: (response: ResponseResult) => {
+        if (lang === 'en') {
+          console.log('lang', lang);
+
+          $('.legend-title-text').text('Ideas Status');
+        } else {
+          $('.legend-title-text').text('حالة الأفكار');
+        }
         if (response.statusCode == StatusCodes.success) {
           this.arrayValue = response.data;
           //const lang = this.globalService.getCurrentLanguage();
-          if (lang === 'en') {
-            console.log('lang', lang);
-
-            $('.legend-title-text').text('Ideas Status');
-          } else {
-            $('.legend-title-text').text('حالة الأفكار');
-          }
         }
       },
     });

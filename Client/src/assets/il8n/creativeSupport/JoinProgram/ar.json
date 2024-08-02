@@ -1,0 +1,19 @@
+{
+  "ParticipateTestsList": "قائمة المشاركة في الاختبارات",
+  "AddNew": "أضف جديد",
+  "ID": "المعرف",
+  "Status": "الحالة",
+  "Actions": "الإجراءات",
+  "Add": "إضافة",
+  "Update": "تحديث",
+  "AddQuestion": "إضافة سؤال",
+  "QuestionEn": "السؤال بالإنجليزية",
+  "QuestionAr": "السؤال بالعربية",
+  "TextEn": "النص بالإنجليزية",
+  "TextAr": "النص بالعربية",
+  "AddOption": "إضافة خيار",
+  "Remove": "إزالة",
+  "OptionEn": "الخيار بالإنجليزية",
+  "OptionAr": "الخيار بالعربية",
+  "ParticipateTestDetail": "تفاصيل المشاركة في الاختبار"
+}

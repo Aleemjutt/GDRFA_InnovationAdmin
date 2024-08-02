@@ -1,0 +1,438 @@
+<div class="main-content">
+  <div class="page-content">
+    <div class="container-fluid">
+      <div class="card">
+        <div class="card-header align-items-center d-flex">
+          <h4 class="card-title mb-0 flex-grow-1">
+            {{ "ParticipateTestsList" | translate }}
+          </h4>
+          <div class="flex-shrink-0">
+            <div class="d-flex align-items-center">
+              <input
+                type="text"
+                class="form-control me-3"
+                data-provider="flatpickr"
+                data-date-format="d M, Y"
+                data-range-date="true"
+                placeholder="Select Date Range"
+              />
+              <select
+                class="form-select mb-0 me-2"
+                aria-label="Default select example"
+              >
+                <option selected>{{ "Status" | translate }}</option>
+              </select>
+              <button
+                type="button"
+                class="btn btn-light waves-effect waves-light ms-2 me-2 col-1"
+              >
+                <i class="ri-search-2-line"></i>
+              </button>
+              |
+              <a
+                type="button"
+                class="btn btn-danger waves-effect waves-light ms-2 col-3"
+                id="btnAdd"
+                style="float: inline-end"
+                (click)="openModal(template)"
+              >
+                {{ "AddNew" | translate }}
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <table class="table table-nowrap" id="awardsDataTable">
+            <thead>
+              <tr>
+                <th>{{ "ID" | translate }}</th>
+                <th>{{ "Status" | translate }}</th>
+                <th>{{ "Actions" | translate }}</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!-- container-fluid -->
+  </div>
+  <!-- End Page-content -->
+</div>
+<ng-template #template class="modal-lg">
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">
+      {{ "Add" | translate }}
+    </h4>
+
+    <h4 class="modal-title pull-left" *ngIf="participationTestViewModel.id > 0">
+      {{ "Update" | translate }}
+    </h4>
+    <button
+      type="button"
+      class="btn-close close pull-right"
+      aria-label="Close"
+      (click)="modalRef?.hide()"
+    >
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row" style="margin-bottom: 65px">
+      <div class="col-md-12" style="margin-bottom: 65px">
+        <!-- <div class="row">
+          <div class="col-md-12">
+            <div>
+              <label for="tagLineEngInput" class="form-label">{{
+                "QuestionDescriptionEn" | translate
+              }}</label>
+              <textarea
+                type="input"
+                class="form-control row-2"
+                id="questionDescriptionEn"
+                [(ngModel)]="questionViewModel.textEn"
+              ></textarea>
+            </div>
+            <div class="mt-3">
+              <label for="descriptionEngInput" class="form-label">{{
+                "QuestionDescriptionAr" | translate
+              }}</label>
+              <textarea
+                type="input"
+                class="form-control row-2"
+                id="questionDescriptionAr"
+                [(ngModel)]="questionViewModel.textAr"
+              ></textarea>
+            </div>
+          </div>
+        </div> -->
+        <div class="col-md-6">
+          <div class="" style="margin-top: 30px">
+            <label for="userStatusInput" class="form-label">{{
+              "Status" | translate
+            }}</label>
+            <div class="form-check form-switch">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                id="userStatusInput"
+                [(ngModel)]="participationTestViewModel.status"
+              />
+              <label class="form-check-label" for="userStatusInput"></label>
+            </div>
+          </div>
+        </div>
+        <hr style="margin-top: 25px" />
+        <div class="row mt-3">
+          <div class="col-md-6"></div>
+          <div class="col-md-6 text-right">
+            <button class="btn btn-danger pull-right" (click)="addQuestion()">
+              {{ "AddQuestion" | translate }}
+            </button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label for="headingLineEnInput" class="form-label">{{
+              "QuestionEn" | translate
+            }}</label>
+            <input
+              type="input"
+              class="form-control"
+              id="headingLineEnInput"
+              [(ngModel)]="questionViewModel.textEn"
+            />
+          </div>
+          <div class="col-md-6">
+            <label for="headingLineArInput" class="form-label">{{
+              "QuestionAr" | translate
+            }}</label>
+            <input
+              type="input"
+              class="form-control"
+              id="headingLineArInput"
+              [(ngModel)]="questionViewModel.textAr"
+            />
+          </div>
+        </div>
+        <div class="col-md-12">
+          <label class="mt-3">{{ "Options" | translate }}</label>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <label class="input-group-text">{{
+                    "TextEn" | translate
+                  }}</label>
+                </div>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter value for En"
+                  aria-label="Example text with button addon"
+                  aria-describedby="button-addon1"
+                  name="textEn"
+                  [(ngModel)]="mQSOptionViewModel.textEn"
+                />
+              </div>
+
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <label class="input-group-text">{{
+                    "TextAr" | translate
+                  }}</label>
+                </div>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter value for Ar"
+                  aria-label="Example text with button addon"
+                  aria-describedby="button-addon1"
+                  [(ngModel)]="mQSOptionViewModel.textAr"
+                />
+                <div class="input-group-append">
+                  <a
+                    class="btn btn-outline-secondary"
+                    type="button"
+                    id="ourValuesEnButton"
+                    (click)="addOption()"
+                  >
+                    {{ "AddOption" | translate }}
+                  </a>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">{{ "TextEn" | translate }}</th>
+                      <th scope="col">{{ "TextAr" | translate }}</th>
+                      <th scope="col">{{ "Actions" | translate }}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      *ngFor="let item of mQSOptionViewModelList; let i = index"
+                    >
+                      <td>{{ item.textAr }}</td>
+                      <td>{{ item.textEn }}</td>
+                      <td>
+                        <a
+                          class="btn btn-danger btn-sm"
+                          (click)="deleteOption(i)"
+                        >
+                          {{ "Remove" | translate }}
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <accordion [closeOthers]="oneAtATime" class="" style="padding: 0px">
+            <accordion-group
+              heading="{{ question.textEn }}"
+              style="padding-top: 10px"
+              *ngFor="let question of questionViewModelList; let i = index"
+            >
+              <div class="row">
+                <div class="col-md-12">
+                  <!-- Buttons for edit and delete -->
+                  <div class="accordion-top-right">
+                    <button
+                      type="button"
+                      class="btn btn-light mr-1"
+                      data-bs-toggle="modal"
+                      data-bs-target="#exampleModal"
+                      (click)="editQuestion(i)"
+                      data-backdrop="static"
+                      data-keyboard="false"
+                    >
+                      <svg
+                        width="1em"
+                        height="1em"
+                        viewBox="0 0 16 16"
+                        class="bi bi-pencil-square"
+                        fill="currentColor"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"
+                        />
+                        <path
+                          fill-rule="evenodd"
+                          d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"
+                        />
+                      </svg>
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-outline-danger mr-1"
+                      data-bs-toggle="modal"
+                      data-bs-target="#exampleModal"
+                      (click)="deleteQuestion(i)"
+                      data-backdrop="static"
+                      data-keyboard="false"
+                    >
+                      <svg
+                        width="1em"
+                        height="1em"
+                        viewBox="0 0 16 16"
+                        class="bi bi-trash-fill"
+                        fill="currentColor"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th scope="col">
+                            {{ "OptionEn" | translate }}
+                          </th>
+                          <th scope="col">
+                            {{ "OptionAr" | translate }}
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr
+                          *ngFor="
+                            let mcqOption of question.mqsOptionsViewModel;
+                            let i = index
+                          "
+                        >
+                          <td>{{ mcqOption.textAr }}</td>
+                          <td>{{ mcqOption.textEn }}</td>
+                          <td></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </accordion-group>
+          </accordion>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="modal-footer">
+      <div class="button-container">
+        <button
+          type="button"
+          class="btn btn-danger waves-effect waves-light mr-2"
+          (click)="addTest()"
+          *ngIf="participationTestViewModel.id == 0"
+        >
+          {{ "Add" | translate }}
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger waves-effect waves-light mr-2"
+          (click)="addTest()"
+          *ngIf="participationTestViewModel.id != 0"
+        >
+          {{ "Update" | translate }}
+        </button>
+        <button
+          type="button"
+          class="btn btn-light button"
+          aria-label="Close"
+          (click)="modalRef?.hide()"
+        >
+          {{ "Close" | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #templateDetails class="modal-lg">
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">
+      {{ "ParticipateTestDetail" | translate }}
+    </h4>
+    <button
+      type="button"
+      class="btn-close close pull-right"
+      aria-label="Close"
+      (click)="modalRef?.hide()"
+    >
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="col-md-12">
+      <accordion [closeOthers]="oneAtATime" class="" style="padding: 0px">
+        <accordion-group
+          heading="{{ question.textEn }}"
+          style="padding-top: 10px"
+          *ngFor="let question of questionViewModelList; let i = index"
+        >
+          <div class="row">
+            <div class="col-md-12">
+              <!-- Buttons for edit and delete -->
+
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">
+                        {{ "OptionEn" | translate }}
+                      </th>
+                      <th scope="col">
+                        {{ "OptionAr" | translate }}
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      *ngFor="
+                        let mcqOption of question.mqsOptionsViewModel;
+                        let i = index
+                      "
+                    >
+                      <td>{{ mcqOption.textAr }}</td>
+                      <td>{{ mcqOption.textEn }}</td>
+                      <td></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </accordion-group>
+      </accordion>
+    </div>
+  </div>
+
+  <!-- container-fluid -->
+  <!-- End Page-content -->
+  <div class="row">
+    <div class="modal-footer">
+      <div class="button-container">
+        <button
+          type="button"
+          class="btn btn-light button"
+          aria-label="Close"
+          (click)="modalRef?.hide()"
+        >
+          {{ "Close" | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>

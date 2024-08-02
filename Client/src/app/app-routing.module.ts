@@ -47,6 +47,7 @@ import { InnovationversionsComponent } from './_knowledge/innovationversions/inn
 import { GovermentComponent } from './_knowledge/goverment/goverment.component';
 import { ResearchCenterComponent } from './_researchCenter/research-center/research-center.component';
 import { PresentationListComponent } from './_researchCenter/presentation-list/presentation-list.component';
+import { JoinProgramComponent } from './_creativeSupport/join-program/join-program.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -276,6 +277,12 @@ const routes: Routes = [
   {
     path: 'creativeSupport/diplomaInCreativeSupport',
     component: DiplomaCreativeSupportComponent,
+    //canDeactivate: [preventUnsavedChangesGuard],
+  },
+
+  {
+    path: 'creativeSupport/joinProgram',
+    component: JoinProgramComponent,
     //canDeactivate: [preventUnsavedChangesGuard],
   },
 

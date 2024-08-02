@@ -49,6 +49,11 @@ export class MultiTranslateHttpLoader implements TranslateLoader {
           prefix: './assets/il8n/creativeSupport/DiplomaInCreativeSupport/',
           suffix: '.json',
         },
+
+        {
+          prefix: './assets/il8n/creativeSupport/JoinProgram/',
+          suffix: '.json',
+        },
         {
           prefix: './assets/il8n/futureFocused/dubaiResidancy/',
           suffix: '.json',

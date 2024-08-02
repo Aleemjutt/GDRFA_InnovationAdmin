@@ -1,14 +1,11 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { AccountService } from '../_services/account.service';
-import { Route, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { BsDropdownConfig } from 'ngx-bootstrap/dropdown';
 import { TranslateService } from '@ngx-translate/core';
 import { GlobalServiceService } from '../_global/-global-service.service';
 import { DOCUMENT } from '@angular/common';
-import { BehaviorSubject, Observable, of } from 'rxjs';
-import { User, UserModel } from '../_models/user';
-import { LoginResponse } from '../_models/loginResponse';
 
 @Component({
   selector: 'app-nav',
@@ -32,10 +29,7 @@ export class NavComponent implements OnInit {
   constructor(
     public accountservice: AccountService,
     private router: Router,
-    private toaster: ToastrService,
-    private translateService: TranslateService,
-    public globalService: GlobalServiceService,
-    @Inject(DOCUMENT) private document: Document
+    public globalService: GlobalServiceService
   ) {}
 
   ngOnInit(): void {
