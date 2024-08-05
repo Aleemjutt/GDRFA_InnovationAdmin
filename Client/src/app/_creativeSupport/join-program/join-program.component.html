@@ -170,7 +170,6 @@
                   class="form-control"
                   placeholder="Enter value for En"
                   aria-label="Example text with button addon"
-                  aria-describedby="button-addon1"
                   name="textEn"
                   [(ngModel)]="mQSOptionViewModel.textEn"
                 />
@@ -187,26 +186,39 @@
                   class="form-control"
                   placeholder="Enter value for Ar"
                   aria-label="Example text with button addon"
-                  aria-describedby="button-addon1"
+                  name="textAr"
                   [(ngModel)]="mQSOptionViewModel.textAr"
                 />
-                <div class="input-group-append">
-                  <a
-                    class="btn btn-outline-secondary"
-                    type="button"
-                    id="ourValuesEnButton"
-                    (click)="addOption()"
-                  >
-                    {{ "AddOption" | translate }}
-                  </a>
-                </div>
               </div>
+
+              <div class="col-md-3 mb-3">
+                <label class="label">{{ "IsCorrect" | translate }}</label>
+
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  name="isCorrect"
+                  [(ngModel)]="mQSOptionViewModel.isCorrect"
+                />
+              </div>
+
+              <div class="input-group-append mb-3">
+                <button
+                  class="btn btn-outline-secondary"
+                  type="button"
+                  (click)="addOption()"
+                >
+                  {{ "AddOption" | translate }}
+                </button>
+              </div>
+
               <div class="table-responsive">
                 <table class="table">
                   <thead>
                     <tr>
                       <th scope="col">{{ "TextEn" | translate }}</th>
                       <th scope="col">{{ "TextAr" | translate }}</th>
+                      <th scope="col">{{ "IsCorrect" | translate }}</th>
                       <th scope="col">{{ "Actions" | translate }}</th>
                     </tr>
                   </thead>
@@ -214,15 +226,22 @@
                     <tr
                       *ngFor="let item of mQSOptionViewModelList; let i = index"
                     >
-                      <td>{{ item.textAr }}</td>
                       <td>{{ item.textEn }}</td>
+                      <td>{{ item.textAr }}</td>
+                      <td *ngIf="item.isCorrect == true">
+                        {{ "Yes" }}
+                      </td>
+                      <td *ngIf="item.isCorrect == false">
+                        {{ "No" }}
+                      </td>
+
                       <td>
-                        <a
+                        <button
                           class="btn btn-danger btn-sm"
                           (click)="deleteOption(i)"
                         >
                           {{ "Remove" | translate }}
-                        </a>
+                        </button>
                       </td>
                     </tr>
                   </tbody>
@@ -303,6 +322,10 @@
                           <th scope="col">
                             {{ "OptionAr" | translate }}
                           </th>
+
+                          <th scope="col">
+                            {{ "IsCorrectAnswer" | translate }}
+                          </th>
                         </tr>
                       </thead>
                       <tbody>
@@ -314,7 +337,12 @@
                         >
                           <td>{{ mcqOption.textAr }}</td>
                           <td>{{ mcqOption.textEn }}</td>
-                          <td></td>
+                          <td *ngIf="mcqOption.isCorrect == true">
+                            {{ "Yes" }}
+                          </td>
+                          <td *ngIf="mcqOption.isCorrect == false">
+                            {{ "No" }}
+                          </td>
                         </tr>
                       </tbody>
                     </table>

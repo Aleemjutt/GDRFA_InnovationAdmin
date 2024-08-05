@@ -95,6 +95,9 @@ export class JoinProgramComponent implements OnInit {
       status: false,
     };
     this.languageChangeSubscription = new Subscription();
+
+    this.mQSOptionViewModelList = [];
+    this.questionViewModelList = [];
   }
 
   openModal(template: TemplateRef<void>) {
