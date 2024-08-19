@@ -48,6 +48,7 @@ import { GovermentComponent } from './_knowledge/goverment/goverment.component';
 import { ResearchCenterComponent } from './_researchCenter/research-center/research-center.component';
 import { PresentationListComponent } from './_researchCenter/presentation-list/presentation-list.component';
 import { JoinProgramComponent } from './_creativeSupport/join-program/join-program.component';
+import { AddProgramComponent } from './_creativeSupport/add-program/add-program.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -283,6 +284,12 @@ const routes: Routes = [
   {
     path: 'creativeSupport/joinProgram',
     component: JoinProgramComponent,
+    //canDeactivate: [preventUnsavedChangesGuard],
+  },
+
+  {
+    path: 'creativeSupport/addProgram',
+    component: AddProgramComponent,
     //canDeactivate: [preventUnsavedChangesGuard],
   },
 

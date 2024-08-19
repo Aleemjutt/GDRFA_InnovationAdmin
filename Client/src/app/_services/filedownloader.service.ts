@@ -79,4 +79,38 @@ export class FiledownloaderService {
     );
   }
   saveAndDownload(data: HttpResponse<Blob>) {}
+
+  downloadBase64File(
+    base64String: string,
+    fileName: string,
+    mimeType: string
+  ): void {
+    // Convert Base64 string to a Blob
+    const blob = this.base64ToBlob(base64String, mimeType);
+
+    // Create a URL for the Blob
+    const url = window.URL.createObjectURL(blob);
+
+    // Create an anchor element and simulate a click to download the file
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = fileName;
+    document.body.appendChild(a);
+    a.click();
+
+    // Cleanup
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(a);
+  }
+
+  private base64ToBlob(base64String: string, mimeType: string): Blob {
+    // Decode Base64 string
+    const byteCharacters = atob(base64String);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+    return new Blob([byteArray], { type: mimeType });
+  }
 }

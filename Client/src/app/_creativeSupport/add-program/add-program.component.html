@@ -1,0 +1,1526 @@
+<div class="main-content">
+  <div class="page-content">
+    <div class="container-fluid">
+      <div class="card">
+        <div class="card-header align-items-center d-flex">
+          <h4 class="card-title mb-0 flex-grow-1">
+            {{ "AddProgram" | translate }}
+          </h4>
+        </div>
+        <div class="card-body" *ngIf="joinProgramModel">
+          <form
+            #editForm="ngForm"
+            id="addProgramForm"
+            (ngSubmit)="addProgram()"
+          >
+            <tabset>
+              <tab [heading]="getTabValue('Program')">
+                <div class="row mt-3">
+                  <div class="col-md-6 mt-3">
+                    <label>{{ "StartDate" | translate }}</label>
+                    <input
+                      type="date"
+                      class="form-control date"
+                      name="aboutDescriptionAr"
+                      [(ngModel)]="joinProgramModel.startDate"
+                    />
+                  </div>
+                  <div class="col-md-6">
+                    <label class="mt-3">{{ "EndDate" | translate }}</label>
+                    <input
+                      type="date"
+                      class="form-control date"
+                      name="aboutDescriptionAr"
+                      [(ngModel)]="joinProgramModel.endDate"
+                    />
+                  </div>
+                </div>
+              </tab>
+              <tab [heading]="getTabValue('CreateTest')">
+                <div class="card">
+                  <div class="card-header align-items-center d-flex">
+                    <h4 class="card-title mb-0 flex-grow-1">
+                      {{ "ParticipateTestsList" | translate }}
+                    </h4>
+                    <div class="flex-shrink-0">
+                      <div class="d-flex align-items-center">
+                        <input
+                          type="text"
+                          class="form-control me-3"
+                          data-provider="flatpickr"
+                          data-date-format="d M, Y"
+                          data-range-date="true"
+                          placeholder="Select Date Range"
+                        />
+                        <select
+                          class="form-select mb-0 me-2"
+                          aria-label="Default select example"
+                        >
+                          <option selected>{{ "Status" | translate }}</option>
+                        </select>
+                        <button
+                          type="button"
+                          class="btn btn-light waves-effect waves-light ms-2 me-2 col-1"
+                        >
+                          <i class="ri-search-2-line"></i>
+                        </button>
+                        |
+                        <a
+                          type="button"
+                          class="btn btn-danger waves-effect waves-light ms-2 col-3"
+                          id="btnAdd"
+                          style="float: inline-end"
+                          (click)="openModal(template)"
+                        >
+                          {{ "AddNew" | translate }}
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <table class="table table-nowrap" id="testDataTable">
+                      <thead>
+                        <tr>
+                          <th>{{ "ID" | translate }}</th>
+                          <th>{{ "Status" | translate }}</th>
+                          <th>{{ "Actions" | translate }}</th>
+                        </tr>
+                      </thead>
+                      <tbody></tbody>
+                    </table>
+                  </div>
+                </div>
+              </tab>
+              <tab [heading]="getTabValue('Wrokshop')">
+                <div class="card">
+                  <div class="card-header align-items-center d-flex">
+                    <h4 class="card-title mb-0 flex-grow-1">
+                      {{ "WrokshopsList" | translate }}
+                    </h4>
+                    <div class="flex-shrink-0">
+                      <div class="d-flex align-items-center">
+                        <a
+                          type="button"
+                          class="btn btn-danger waves-effect waves-light"
+                          id="btnAdd"
+                          style="float: inline-end"
+                          (click)="addWrokshop(wrokshopTemplate)"
+                        >
+                          {{ "Add" | translate }}
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <table class="table table-nowrap" id="wrokshopDataTable">
+                      <thead>
+                        <tr>
+                          <th>{{ "ID" | translate }}</th>
+                          <th>{{ "NameEn" | translate }}</th>
+                          <th>{{ "NameAr" | translate }}</th>
+                          <th>{{ "Location" | translate }}</th>
+                          <th>{{ "WorkshopDate" | translate }}</th>
+                          <th>{{ "WrokshopTime" | translate }}</th>
+                        </tr>
+                      </thead>
+                      <tbody></tbody>
+                    </table>
+                  </div>
+                </div>
+              </tab>
+
+              <tab [heading]="getTabValue('Interview')">
+                <div class="row mt-3">
+                  <div class="card">
+                    <div class="card-header align-items-center d-flex">
+                      <h4 class="card-title mb-0 flex-grow-1">
+                        {{ "InterviewsList" | translate }}
+                      </h4>
+                      <div class="flex-shrink-0">
+                        <div class="d-flex align-items-center">
+                          <a
+                            type="button"
+                            class="btn btn-danger waves-effect waves-light"
+                            id="btnAdd"
+                            style="float: inline-end"
+                            (click)="addInterview(interviewTemplate)"
+                          >
+                            {{ "Add" | translate }}
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-body">
+                      <table class="table table-nowrap" id="interviewDataTable">
+                        <thead>
+                          <tr>
+                            <th>{{ "ID" | translate }}</th>
+                            <th>{{ "NameEn" | translate }}</th>
+                            <th>{{ "NameAr" | translate }}</th>
+                            <th>{{ "Location" | translate }}</th>
+                            <th>{{ "InterviewDate" | translate }}</th>
+                            <th>{{ "InterviewTime" | translate }}</th>
+                          </tr>
+                        </thead>
+                        <tbody></tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </tab>
+              <tab [heading]="getTabValue('TranningCourse')">
+                <label class="mt-3">{{ "TranningCousers" | translate }} </label>
+
+                <div class="row"></div>
+              </tab>
+              <tab [heading]="getTabValue('Challenges')">
+                <div class="row mt-3">
+                  <div class="card">
+                    <div class="card-header align-items-center d-flex">
+                      <h4 class="card-title mb-0 flex-grow-1">
+                        {{ "ChallengesList" | translate }}
+                      </h4>
+                      <div class="flex-shrink-0">
+                        <div class="d-flex align-items-center">
+                          <a
+                            type="button"
+                            class="btn btn-danger waves-effect waves-light"
+                            id="btnAdd"
+                            style="float: inline-end"
+                            (click)="addChallenge(challengeTemplate)"
+                          >
+                            {{ "Add" | translate }}
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-body">
+                      <table class="table table-nowrap" id="challengeDataTable">
+                        <thead>
+                          <tr>
+                            <th>{{ "ID" | translate }}</th>
+                            <th>{{ "TitleEn" | translate }}</th>
+                            <th>{{ "TitleAr" | translate }}</th>
+                            <th>{{ "DescriptionEn" | translate }}</th>
+                            <th>{{ "DescriptionAr" | translate }}</th>
+                          </tr>
+                        </thead>
+                        <tbody></tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </tab>
+              <!-- <tab [heading]="getTabValue('Presentation')">
+                <div class="row mt-3">
+                  <div class="card">
+                    <div class="card-header align-items-center d-flex">
+                      <h4 class="card-title mb-0 flex-grow-1">
+                        {{ "ChallengesList" | translate }}
+                      </h4>
+                      <div class="flex-shrink-0">
+                        <div class="d-flex align-items-center">
+                          <a
+                            type="button"
+                            class="btn btn-danger waves-effect waves-light"
+                            id="btnAdd"
+                            style="float: inline-end"
+                            (click)="addChallenge(challengeTemplate)"
+                          >
+                            {{ "Add" | translate }}
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-body">
+                      <table class="table table-nowrap" id="challengeDataTable">
+                        <thead>
+                          <tr>
+                            <th>{{ "ID" | translate }}</th>
+                            <th>{{ "TitleEn" | translate }}</th>
+                            <th>{{ "TitleAr" | translate }}</th>
+                            <th>{{ "DescriptionEn" | translate }}</th>
+                            <th>{{ "DescriptionAr" | translate }}</th>
+                          </tr>
+                        </thead>
+                        <tbody></tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </tab>
+              <tab [heading]="getTabValue('Graduation')">
+                <div class="row mt-3">
+                  <div class="card">
+                    <div class="card-header align-items-center d-flex">
+                      <h4 class="card-title mb-0 flex-grow-1">
+                        {{ "ChallengesList" | translate }}
+                      </h4>
+                      <div class="flex-shrink-0">
+                        <div class="d-flex align-items-center">
+                           <a
+                            type="button"
+                            class="btn btn-danger waves-effect waves-light"
+                            id="btnAdd"
+                            style="float: inline-end"
+                            (click)="addChallenge(challengeTemplate)"
+                          >
+                            {{ "Add" | translate }}
+                          </a> 
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-body">
+                      <table
+                        class="table table-nowrap"
+                        id="graduationDataTable"
+                      >
+                        <thead>
+                          <tr>
+                            <th>{{ "ID" | translate }}</th>
+                            <th>{{ "Title" | translate }}</th>
+                            <th>{{ "Action" | translate }}</th>
+                          </tr>
+                        </thead>
+                        <tbody></tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </tab> -->
+            </tabset>
+            <button
+              type="submit"
+              class="btn btn-danger waves-effect waves-light ms-2 col-3 pull-right mt-2"
+            >
+              {{ "Save" | translate }}
+            </button>
+          </form>
+        </div>
+      </div>
+      <!-- container-fluid -->
+    </div>
+    <!-- End Page-content -->
+  </div>
+  <!-- end main content-->
+</div>
+
+<ng-template #template class="modal-lg">
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">
+      {{ "Add" | translate }}
+    </h4>
+
+    <h4 class="modal-title pull-left" *ngIf="participationTestViewModel.id > 0">
+      {{ "Update" | translate }}
+    </h4>
+    <button
+      type="button"
+      class="btn-close close pull-right"
+      aria-label="Close"
+      (click)="modalRef?.hide()"
+    >
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row" style="margin-bottom: 65px">
+      <div class="col-md-12" style="margin-bottom: 65px">
+        <div class="col-md-6">
+          <div class="" style="margin-top: 30px">
+            <label for="userStatusInput" class="form-label">{{
+              "Status" | translate
+            }}</label>
+            <div class="form-check form-switch">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                id="userStatusInput"
+                [(ngModel)]="participationTestViewModel.status"
+              />
+              <label class="form-check-label" for="userStatusInput"></label>
+            </div>
+          </div>
+        </div>
+        <hr style="margin-top: 25px" />
+        <div class="row mt-3">
+          <div class="col-md-6"></div>
+          <div class="col-md-6 text-right">
+            <button class="btn btn-danger pull-right" (click)="addQuestion()">
+              {{ "AddQuestion" | translate }}
+            </button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label for="headingLineEnInput" class="form-label">{{
+              "QuestionEn" | translate
+            }}</label>
+            <input
+              type="input"
+              class="form-control"
+              id="headingLineEnInput"
+              [(ngModel)]="questionViewModel.textEn"
+            />
+          </div>
+          <div class="col-md-6">
+            <label for="headingLineArInput" class="form-label">{{
+              "QuestionAr" | translate
+            }}</label>
+            <input
+              type="input"
+              class="form-control"
+              id="headingLineArInput"
+              [(ngModel)]="questionViewModel.textAr"
+            />
+          </div>
+        </div>
+        <div class="col-md-12">
+          <label class="mt-3">{{ "Options" | translate }}</label>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <label class="input-group-text">{{
+                    "TextEn" | translate
+                  }}</label>
+                </div>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter value for En"
+                  aria-label="Example text with button addon"
+                  name="textEn"
+                  [(ngModel)]="mQSOptionViewModel.textEn"
+                />
+              </div>
+
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <label class="input-group-text">{{
+                    "TextAr" | translate
+                  }}</label>
+                </div>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter value for Ar"
+                  aria-label="Example text with button addon"
+                  name="textAr"
+                  [(ngModel)]="mQSOptionViewModel.textAr"
+                />
+              </div>
+
+              <div class="col-md-3 mb-3">
+                <label class="label">{{ "IsCorrect" | translate }}</label>
+
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  name="isCorrect"
+                  [(ngModel)]="mQSOptionViewModel.isCorrect"
+                />
+              </div>
+
+              <div class="input-group-append mb-3">
+                <button
+                  class="btn btn-outline-secondary"
+                  type="button"
+                  (click)="addOption()"
+                >
+                  {{ "AddOption" | translate }}
+                </button>
+              </div>
+
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">{{ "TextEn" | translate }}</th>
+                      <th scope="col">{{ "TextAr" | translate }}</th>
+                      <th scope="col">{{ "IsCorrect" | translate }}</th>
+                      <th scope="col">{{ "Actions" | translate }}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      *ngFor="let item of mQSOptionViewModelList; let i = index"
+                    >
+                      <td>{{ item.textEn }}</td>
+                      <td>{{ item.textAr }}</td>
+                      <td *ngIf="item.isCorrect == true">
+                        {{ "Yes" }}
+                      </td>
+                      <td *ngIf="item.isCorrect == false">
+                        {{ "No" }}
+                      </td>
+
+                      <td>
+                        <button
+                          class="btn btn-danger btn-sm"
+                          (click)="deleteOption(i)"
+                        >
+                          {{ "Remove" | translate }}
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <accordion [closeOthers]="oneAtATime" class="" style="padding: 0px">
+            <accordion-group
+              heading="{{ question.textEn }}"
+              style="padding-top: 10px"
+              *ngFor="let question of questionViewModelList; let i = index"
+            >
+              <div class="row">
+                <div class="col-md-12">
+                  <!-- Buttons for edit and delete -->
+                  <div class="accordion-top-right">
+                    <button
+                      type="button"
+                      class="btn btn-light mr-1"
+                      data-bs-toggle="modal"
+                      data-bs-target="#exampleModal"
+                      (click)="editQuestion(i)"
+                      data-backdrop="static"
+                      data-keyboard="false"
+                    >
+                      <svg
+                        width="1em"
+                        height="1em"
+                        viewBox="0 0 16 16"
+                        class="bi bi-pencil-square"
+                        fill="currentColor"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"
+                        />
+                        <path
+                          fill-rule="evenodd"
+                          d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"
+                        />
+                      </svg>
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-outline-danger mr-1"
+                      data-bs-toggle="modal"
+                      data-bs-target="#exampleModal"
+                      (click)="deleteQuestion(i)"
+                      data-backdrop="static"
+                      data-keyboard="false"
+                    >
+                      <svg
+                        width="1em"
+                        height="1em"
+                        viewBox="0 0 16 16"
+                        class="bi bi-trash-fill"
+                        fill="currentColor"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th scope="col">
+                            {{ "OptionEn" | translate }}
+                          </th>
+                          <th scope="col">
+                            {{ "OptionAr" | translate }}
+                          </th>
+
+                          <th scope="col">
+                            {{ "IsCorrectAnswer" | translate }}
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr
+                          *ngFor="
+                            let mcqOption of question.mqsOptionsViewModel;
+                            let i = index
+                          "
+                        >
+                          <td>{{ mcqOption.textAr }}</td>
+                          <td>{{ mcqOption.textEn }}</td>
+                          <td *ngIf="mcqOption.isCorrect == true">
+                            {{ "Yes" }}
+                          </td>
+                          <td *ngIf="mcqOption.isCorrect == false">
+                            {{ "No" }}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </accordion-group>
+          </accordion>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="modal-footer">
+      <div class="button-container">
+        <button
+          type="button"
+          class="btn btn-danger waves-effect waves-light mr-2"
+          (click)="addTest()"
+          *ngIf="participationTestViewModel.id == 0"
+        >
+          {{ "Add" | translate }}
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger waves-effect waves-light mr-2"
+          (click)="addTest()"
+          *ngIf="participationTestViewModel.id != 0"
+        >
+          {{ "Update" | translate }}
+        </button>
+        <button
+          type="button"
+          class="btn btn-light button"
+          aria-label="Close"
+          (click)="modalRef?.hide()"
+        >
+          {{ "Close" | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #templateDetails class="modal-lg">
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">
+      {{ "ParticipateTestDetail" | translate }}
+    </h4>
+    <button
+      type="button"
+      class="btn-close close pull-right"
+      aria-label="Close"
+      (click)="modalRef?.hide()"
+    >
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="col-md-12">
+      <accordion [closeOthers]="oneAtATime" class="" style="padding: 0px">
+        <accordion-group
+          heading="{{ question.textEn }}"
+          style="padding-top: 10px"
+          *ngFor="let question of questionViewModelList; let i = index"
+        >
+          <div class="row">
+            <div class="col-md-12">
+              <!-- Buttons for edit and delete -->
+
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">
+                        {{ "OptionEn" | translate }}
+                      </th>
+                      <th scope="col">
+                        {{ "OptionAr" | translate }}
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      *ngFor="
+                        let mcqOption of question.mqsOptionsViewModel;
+                        let i = index
+                      "
+                    >
+                      <td>{{ mcqOption.textAr }}</td>
+                      <td>{{ mcqOption.textEn }}</td>
+                      <td></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </accordion-group>
+      </accordion>
+    </div>
+  </div>
+
+  <!-- container-fluid -->
+  <!-- End Page-content -->
+  <div class="row">
+    <div class="modal-footer">
+      <div class="button-container">
+        <button
+          type="button"
+          class="btn btn-light button"
+          aria-label="Close"
+          (click)="modalRef?.hide()"
+        >
+          {{ "Close" | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #wrokshopTemplate class="modal-lg">
+  <div class="modal-header">
+    <h4 class="modal-title pull-left" *ngIf="wrokshopsViewModel.id == 0">
+      {{ "Add" | translate }}
+    </h4>
+    <h4 class="modal-title pull-left" *ngIf="wrokshopsViewModel.id != 0">
+      {{ "Update" | translate }}
+    </h4>
+    <button
+      type="button"
+      class="btn-close close pull-right"
+      aria-label="Close"
+      (click)="modalRef?.hide()"
+    >
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="row">
+        <div class="col-md-6 mt-3">
+          <div class="mt-0">
+            <label for="basiInput" class="form-label">
+              {{ "HeadingEn" | translate }}</label
+            >
+            <input
+              type="input"
+              class="form-control"
+              id="basiInput"
+              [(ngModel)]="wrokshopsViewModel.nameEn"
+            />
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mt-3">
+            <label for="basiInput" class="form-label">{{
+              "HeadingAr" | translate
+            }}</label>
+            <input
+              type="input"
+              class="form-control"
+              id="basiInput"
+              [(ngModel)]="wrokshopsViewModel.nameAr"
+            />
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="mt-3">
+            <label for="basiInput" class="form-label">{{
+              "Date" | translate
+            }}</label>
+            <input
+              type="date"
+              placeholder="Date"
+              class="form-control"
+              bsDatepicker
+              [(ngModel)]="wrokshopsViewModel.workshopDate"
+            />
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mt-3">
+            <label for="basiInput" class="form-label">{{
+              "Time" | translate
+            }}</label>
+            <input
+              type="time"
+              placeholder="Time"
+              class="form-control"
+              bsDatepicker
+              [(ngModel)]="wrokshopsViewModel.wrokshopTime"
+            />
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mt-3">
+            <label for="basiInput" class="form-label">{{
+              "Venue" | translate
+            }}</label>
+            <select class="form-control" [(ngModel)]="wrokshopsViewModel.venue">
+              <option [ngValue]="0">
+                {{ "OnPremises" | translate }}
+              </option>
+              <option [ngValue]="1">{{ "Online" | translate }}</option>
+            </select>
+          </div>
+        </div>
+        <div *ngIf="wrokshopsViewModel.venue == 0">
+          <div class="col-md-6">
+            <div class="mt-3">
+              <label for="basiInput" class="form-label">{{
+                "LocationDescription" | translate
+              }}</label>
+              <input
+                class="form-control"
+                [(ngModel)]="wrokshopsViewModel.locationDescription"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="mt-3">
+            <div class="mb-3">
+              <div *ngIf="!wrokshopsViewModel.imageUrl">
+                <label for="formFile" class="form-label">{{
+                  "Choosefile" | translate
+                }}</label>
+                <file-pond
+                  #myPond
+                  label-idle='Drag & Drop your files or <span class="filepond--label-action"> Browse </span><br> <b>Maximum 5 files upload</b>'
+                  allow-multiple="false"
+                  [options]="pondOptions"
+                  [files]="pondFiles"
+                  (oninit)="pondHandleInit()"
+                  (onaddfile)="pondHandleAddFile($event)"
+                >
+                </file-pond>
+              </div>
+              <div *ngIf="wrokshopsViewModel.imageUrl">
+                <img
+                  [src]="
+                    globalService.getImgServerBaseUrl(
+                      wrokshopsViewModel.urlBase64
+                    )
+                  "
+                  alt="Membership Image"
+                  style="height: 200px; width: 250px"
+                  class="mt-2"
+                />
+                <a
+                  (click)="removeImage()"
+                  class="btn btn-danger"
+                  style="display: block; margin-top: 10px"
+                  >{{ "Remove" | translate }}</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="modal-footer">
+      <div class="button-container">
+        <button
+          type="button"
+          class="btn btn-danger waves-effect waves-light mr-2"
+          (click)="saveWorkshop()"
+          *ngIf="wrokshopsViewModel.id == 0"
+        >
+          {{ "Save" | translate }}
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger waves-effect waves-light mr-2"
+          (click)="updateWrokShop()"
+          *ngIf="wrokshopsViewModel.id != 0"
+        >
+          {{ "Update" | translate }}
+        </button>
+        <button
+          type="button"
+          class="btn btn-light button"
+          aria-label="Close"
+          (click)="modalRef?.hide()"
+        >
+          {{ "Close" | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #wrokshopTemplateDetails class="modal-lg">
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">
+      {{ "WrokshopDetail" | translate }}
+    </h4>
+    <button
+      type="button"
+      class="btn-close close pull-right"
+      aria-label="Close"
+      (click)="modalRef?.hide()"
+    >
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6">
+          <label for="basiInput" class="form-label text-muted mb-0">{{
+            "HeadingEn" | translate
+          }}</label>
+          <div>{{ wrokshopsViewModel.nameEn }}</div>
+        </div>
+
+        <div class="col-md-6">
+          <label for="basiInput" class="form-label text-muted mb-0">{{
+            "HeadingAr" | translate
+          }}</label>
+          <div>{{ wrokshopsViewModel.nameAr }}</div>
+        </div>
+
+        <div class="col-md-6">
+          <label for="basiInput" class="form-label text-muted mb-0"
+            >{{ "Date" | translate }}
+          </label>
+          <div>{{ wrokshopsViewModel.workshopDate }}</div>
+        </div>
+        <div class="col-md-6">
+          <label for="basiInput" class="form-label text-muted mb-0"
+            >{{ "Time" | translate }}
+          </label>
+          <div>{{ wrokshopsViewModel.wrokshopTime }}</div>
+        </div>
+        <div class="col-md-6">
+          <label for="basiInput" class="form-label text-muted mb-0">{{
+            "Venue" | translate
+          }}</label>
+          <div *ngIf="wrokshopsViewModel.venue === 1">
+            {{ "Online" | translate }}
+          </div>
+          <div *ngIf="wrokshopsViewModel.venue === 0">
+            {{ "OnPremises" | translate }}
+          </div>
+        </div>
+        <div *ngIf="wrokshopsViewModel.venue === 0">
+          <div class="col-md-6">
+            <label for="basiInput" class="form-label text-muted mb-0">{{
+              "LocationDescription" | translate
+            }}</label>
+            <div>{{ wrokshopsViewModel.locationDescription }}</div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <label for="basiInput" class="form-label text-muted mb-0">{{
+            "Attachment" | translate
+          }}</label>
+          <div class="fs-15">
+            <img
+              [src]="
+                globalService.getImgServerBaseUrl(wrokshopsViewModel.urlBase64)
+              "
+              class="card-img-top img-thumnail"
+              style="height: 200px; width: auto"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- container-fluid -->
+  <!-- End Page-content -->
+  <div class="row">
+    <div class="modal-footer">
+      <div class="button-container">
+        <button
+          type="button"
+          class="btn btn-light button"
+          aria-label="Close"
+          (click)="modalRef?.hide()"
+        >
+          {{ "Close" | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #interviewTemplate class="modal-lg">
+  <div class="modal-header">
+    <h4 class="modal-title pull-left" *ngIf="interviewsViewModel.id == 0">
+      {{ "Add" | translate }}
+    </h4>
+    <h4 class="modal-title pull-left" *ngIf="interviewsViewModel.id != 0">
+      {{ "Update" | translate }}
+    </h4>
+    <button
+      type="button"
+      class="btn-close close pull-right"
+      aria-label="Close"
+      (click)="modalRef?.hide()"
+    >
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="row">
+        <div class="col-md-6 mt-3">
+          <div class="mt-0">
+            <label for="basiInput" class="form-label">
+              {{ "HeadingEn" | translate }}</label
+            >
+            <input
+              type="input"
+              class="form-control"
+              id="basiInput"
+              [(ngModel)]="interviewsViewModel.nameEn"
+            />
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mt-3">
+            <label for="basiInput" class="form-label">{{
+              "HeadingAr" | translate
+            }}</label>
+            <input
+              type="input"
+              class="form-control"
+              id="basiInput"
+              [(ngModel)]="interviewsViewModel.nameAr"
+            />
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="mt-3">
+            <label for="basiInput" class="form-label">{{
+              "Date" | translate
+            }}</label>
+            <input
+              type="date"
+              placeholder="Date"
+              class="form-control"
+              bsDatepicker
+              [(ngModel)]="interviewsViewModel.interviewDate"
+            />
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mt-3">
+            <label for="basiInput" class="form-label">{{
+              "Time" | translate
+            }}</label>
+            <input
+              type="time"
+              placeholder="Time"
+              class="form-control"
+              bsDatepicker
+              [(ngModel)]="interviewsViewModel.interviewTime"
+            />
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mt-3">
+            <label for="basiInput" class="form-label">{{
+              "Venue" | translate
+            }}</label>
+            <select
+              class="form-control"
+              [(ngModel)]="interviewsViewModel.venue"
+            >
+              <option [ngValue]="0">
+                {{ "OnPremises" | translate }}
+              </option>
+              <option [ngValue]="1">{{ "Online" | translate }}</option>
+            </select>
+          </div>
+        </div>
+        <div *ngIf="interviewsViewModel.venue == 0">
+          <div class="col-md-6">
+            <div class="mt-3">
+              <label for="basiInput" class="form-label">{{
+                "LocationDescription" | translate
+              }}</label>
+              <input
+                class="form-control"
+                [(ngModel)]="interviewsViewModel.locatoinDescription"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="mt-3">
+            <div class="mb-3">
+              <div *ngIf="!interviewsViewModel.imageUrl">
+                <label for="formFile" class="form-label">{{
+                  "Choosefile" | translate
+                }}</label>
+                <file-pond
+                  #myPond
+                  label-idle='Drag & Drop your files or <span class="filepond--label-action"> Browse </span><br> <b>Maximum 5 files upload</b>'
+                  allow-multiple="false"
+                  [options]="pondOptions"
+                  [files]="pondFiles"
+                  (oninit)="pondHandleInit()"
+                  (onaddfile)="pondHandleAddFile($event)"
+                >
+                </file-pond>
+              </div>
+              <div *ngIf="interviewsViewModel.imageUrl">
+                <img
+                  [src]="
+                    globalService.getImgServerBaseUrl(
+                      interviewsViewModel.urlBase64
+                    )
+                  "
+                  alt="Membership Image"
+                  style="height: 200px; width: 250px"
+                  class="mt-2"
+                />
+                <a
+                  (click)="removeImage()"
+                  class="btn btn-danger"
+                  style="display: block; margin-top: 10px"
+                  >{{ "Remove" | translate }}</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="modal-footer">
+      <div class="button-container">
+        <button
+          type="button"
+          class="btn btn-danger waves-effect waves-light mr-2"
+          (click)="saveInterview()"
+          *ngIf="interviewsViewModel.id == 0"
+        >
+          {{ "Save" | translate }}
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger waves-effect waves-light mr-2"
+          (click)="updateInterview()"
+          *ngIf="interviewsViewModel.id != 0"
+        >
+          {{ "Update" | translate }}
+        </button>
+        <button
+          type="button"
+          class="btn btn-light button"
+          aria-label="Close"
+          (click)="modalRef?.hide()"
+        >
+          {{ "Close" | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #interviewTemplateDetails class="modal-lg">
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">
+      {{ "InterviewDetail" | translate }}
+    </h4>
+    <button
+      type="button"
+      class="btn-close close pull-right"
+      aria-label="Close"
+      (click)="modalRef?.hide()"
+    >
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6">
+          <label for="basiInput" class="form-label text-muted mb-0">{{
+            "HeadingEn" | translate
+          }}</label>
+          <div>{{ interviewsViewModel.nameEn }}</div>
+        </div>
+
+        <div class="col-md-6">
+          <label for="basiInput" class="form-label text-muted mb-0">{{
+            "HeadingAr" | translate
+          }}</label>
+          <div>{{ interviewsViewModel.nameAr }}</div>
+        </div>
+
+        <div class="col-md-6">
+          <label for="basiInput" class="form-label text-muted mb-0"
+            >{{ "Date" | translate }}
+          </label>
+          <div>{{ interviewsViewModel.interviewDate }}</div>
+        </div>
+        <div class="col-md-6">
+          <label for="basiInput" class="form-label text-muted mb-0"
+            >{{ "Time" | translate }}
+          </label>
+          <div>{{ interviewsViewModel.interviewTime }}</div>
+        </div>
+        <div class="col-md-6">
+          <label for="basiInput" class="form-label text-muted mb-0">{{
+            "Venue" | translate
+          }}</label>
+          <div *ngIf="interviewsViewModel.venue === 1">
+            {{ "Online" | translate }}
+          </div>
+          <div *ngIf="interviewsViewModel.venue === 0">
+            {{ "OnPremises" | translate }}
+          </div>
+        </div>
+        <div *ngIf="interviewsViewModel.venue === 0">
+          <div class="col-md-6">
+            <label for="basiInput" class="form-label text-muted mb-0">{{
+              "LocationDescription" | translate
+            }}</label>
+            <div>{{ interviewsViewModel.locatoinDescription }}</div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <label for="basiInput" class="form-label text-muted mb-0">{{
+            "Attachment" | translate
+          }}</label>
+          <div class="fs-15">
+            <img
+              [src]="
+                globalService.getImgServerBaseUrl(interviewsViewModel.urlBase64)
+              "
+              class="card-img-top img-thumnail"
+              style="height: 200px; width: auto"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- container-fluid -->
+  <!-- End Page-content -->
+  <div class="row">
+    <div class="modal-footer">
+      <div class="button-container">
+        <button
+          type="button"
+          class="btn btn-light button"
+          aria-label="Close"
+          (click)="modalRef?.hide()"
+        >
+          {{ "Close" | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #interviewTemplate class="modal-lg">
+  <div class="modal-header">
+    <h4 class="modal-title pull-left" *ngIf="interviewsViewModel.id == 0">
+      {{ "Add" | translate }}
+    </h4>
+    <h4 class="modal-title pull-left" *ngIf="interviewsViewModel.id != 0">
+      {{ "Update" | translate }}
+    </h4>
+    <button
+      type="button"
+      class="btn-close close pull-right"
+      aria-label="Close"
+      (click)="modalRef?.hide()"
+    >
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="mt-3">
+            <div class="mb-3">
+              <div *ngIf="!interviewsViewModel.imageUrl">
+                <label for="formFile" class="form-label">{{
+                  "Choosefile" | translate
+                }}</label>
+                <file-pond
+                  #myPond
+                  label-idle='Drag & Drop your files or <span class="filepond--label-action"> Browse </span><br> <b>Maximum 5 files upload</b>'
+                  allow-multiple="false"
+                  [options]="pondOptions"
+                  [files]="pondFiles"
+                  (oninit)="pondHandleInit()"
+                  (onaddfile)="pondHandleAddFile($event)"
+                >
+                </file-pond>
+              </div>
+              <div *ngIf="participationTestViewModel.imageUrl">
+                <img
+                  [src]="
+                    globalService.getImgServerBaseUrl(
+                      interviewsViewModel.urlBase64
+                    )
+                  "
+                  alt="Membership Image"
+                  style="height: 200px; width: 250px"
+                  class="mt-2"
+                />
+                <a
+                  (click)="removeImage()"
+                  class="btn btn-danger"
+                  style="display: block; margin-top: 10px"
+                  >{{ "Remove" | translate }}</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="modal-footer">
+      <div class="button-container">
+        <button
+          type="button"
+          class="btn btn-danger waves-effect waves-light mr-2"
+          (click)="saveInterview()"
+          *ngIf="interviewsViewModel.id == 0"
+        >
+          {{ "Save" | translate }}
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger waves-effect waves-light mr-2"
+          (click)="updateInterview()"
+          *ngIf="interviewsViewModel.id != 0"
+        >
+          {{ "Update" | translate }}
+        </button>
+        <button
+          type="button"
+          class="btn btn-light button"
+          aria-label="Close"
+          (click)="modalRef?.hide()"
+        >
+          {{ "Close" | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #challengeTemplate class="modal-lg">
+  <div class="modal-header">
+    <h4 class="modal-title pull-left" *ngIf="challengeViewModel.id == 0">
+      {{ "Add" | translate }}
+    </h4>
+    <h4 class="modal-title pull-left" *ngIf="challengeViewModel.id != 0">
+      {{ "Update" | translate }}
+    </h4>
+    <button
+      type="button"
+      class="btn-close close pull-right"
+      aria-label="Close"
+      (click)="modalRef?.hide()"
+    >
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="row">
+        <div class="col-md-6 mt-3">
+          <div class="mt-0">
+            <label for="basiInput" class="form-label">
+              {{ "TitleEn" | translate }}</label
+            >
+            <input
+              type="input"
+              class="form-control"
+              id="basiInput"
+              [(ngModel)]="challengeViewModel.titleEn"
+            />
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mt-3">
+            <label for="basiInput" class="form-label">{{
+              "TitleAr" | translate
+            }}</label>
+            <input
+              type="input"
+              class="form-control"
+              id="basiInput"
+              [(ngModel)]="challengeViewModel.titleAr"
+            />
+          </div>
+        </div>
+
+        <div class="col-md-6 mt-3">
+          <div class="mt-0">
+            <label for="basiInput" class="form-label">
+              {{ "DescriptionEn" | translate }}</label
+            >
+            <input
+              type="input"
+              class="form-control"
+              id="basiInput"
+              [(ngModel)]="challengeViewModel.descriptionEn"
+            />
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mt-3">
+            <label for="basiInput" class="form-label">{{
+              "DescriptionAr" | translate
+            }}</label>
+            <input
+              type="input"
+              class="form-control"
+              id="basiInput"
+              [(ngModel)]="challengeViewModel.descriptionAr"
+            />
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="mt-3">
+            <label for="basiInput" class="form-label">{{
+              "Link" | translate
+            }}</label>
+            <input
+              type="input"
+              class="form-control"
+              id="basiInput"
+              [(ngModel)]="challengeViewModel.link"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="modal-footer">
+      <div class="button-container">
+        <button
+          type="button"
+          class="btn btn-danger waves-effect waves-light mr-2"
+          (click)="saveChallenge()"
+          *ngIf="challengeViewModel.id == 0"
+        >
+          {{ "Save" | translate }}
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger waves-effect waves-light mr-2"
+          (click)="updateChallenge()"
+          *ngIf="challengeViewModel.id != 0"
+        >
+          {{ "Update" | translate }}
+        </button>
+        <button
+          type="button"
+          class="btn btn-light button"
+          aria-label="Close"
+          (click)="modalRef?.hide()"
+        >
+          {{ "Close" | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #challengeTemplateDetails class="modal-lg">
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">
+      {{ "ChallengeDetail" | translate }}
+    </h4>
+    <button
+      type="button"
+      class="btn-close close pull-right"
+      aria-label="Close"
+      (click)="modalRef?.hide()"
+    >
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6">
+          <label for="basiInput" class="form-label text-muted mb-0">{{
+            "TitleEn" | translate
+          }}</label>
+          <div>{{ challengeViewModel.titleEn }}</div>
+        </div>
+
+        <div class="col-md-6">
+          <label for="basiInput" class="form-label text-muted mb-0">{{
+            "TitleAr" | translate
+          }}</label>
+          <div>{{ challengeViewModel.titleAr }}</div>
+        </div>
+
+        <div class="col-md-6">
+          <label for="basiInput" class="form-label text-muted mb-0"
+            >{{ "DescriptionAr" | translate }}
+          </label>
+          <div>{{ challengeViewModel.descriptionEn }}</div>
+        </div>
+
+        <div class="col-md-6">
+          <label for="basiInput" class="form-label text-muted mb-0"
+            >{{ "DescriptionAr" | translate }}
+          </label>
+          <div>{{ challengeViewModel.descriptionAr }}</div>
+        </div>
+        <div class="col-md-6">
+          <label for="basiInput" class="form-label text-muted mb-0"
+            >{{ "Link" | translate }}
+          </label>
+          <div>{{ challengeViewModel.link }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- container-fluid -->
+  <!-- End Page-content -->
+  <div class="row">
+    <div class="modal-footer">
+      <div class="button-container">
+        <button
+          type="button"
+          class="btn btn-light button"
+          aria-label="Close"
+          (click)="modalRef?.hide()"
+        >
+          {{ "Close" | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>

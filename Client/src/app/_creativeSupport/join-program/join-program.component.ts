@@ -13,7 +13,7 @@ import {
   ParticipationTestAnswerViewModel,
   ParticipationTestViewModel,
   QuestionViewModel,
-} from 'src/app/_models/CreativeSupport/joinProgramViewModel';
+} from 'src/app/_models/CreativeSupport/participatingTestViewModel';
 import { ResponseResult, StatusCodes } from 'src/app/_models/responseResult';
 import { JoinProgramService } from 'src/app/_services/_creativeSupport/join-program.service';
 

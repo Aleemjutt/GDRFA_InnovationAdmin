@@ -279,10 +279,18 @@ export class SideBarComponent implements OnInit {
               {
                 label:
                   this.GlobalService.getCurrentLanguage() === 'en'
-                    ? 'Participate Tests List'
+                    ? 'Participates Tests List'
                     : 'قائمة الاختبارات المشاركة',
                 icon: 'ri-a-b csm-icon-color',
                 routerLink: '/creativeSupport/joinProgram',
+              },
+              {
+                label:
+                  this.GlobalService.getCurrentLanguage() === 'en'
+                    ? 'Add Program'
+                    : 'قائمة الاختبارات المشاركة',
+                icon: 'ri-a-b csm-icon-color',
+                routerLink: '/creativeSupport/addProgram',
               },
             ],
           },

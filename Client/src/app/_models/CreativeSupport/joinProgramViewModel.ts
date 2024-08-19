@@ -1,27 +1,18 @@
-export interface ParticipationTestViewModel {
-  questionViewModels: QuestionViewModel[] | null;
-  participationTestAnswersViewModels: ParticipationTestAnswerViewModel[] | null;
-  status: boolean;
+import { JoinProgramChallengeViewModel } from './joinProgramChallengeViewModel';
+import { InterviewViewModel } from './interviewViewModel';
+import { WrokshopViewModel } from './wrokshopViewModel';
+
+export interface joinProgramViewModel {
+  id: number;
+  startDate: string | null;
+  endDate: string | null;
+  statusCode: StautsCode | null;
+  joinProgramChallengesViewModels: JoinProgramChallengeViewModel[] | null;
+  interviewsViewModels: InterviewViewModel[] | null;
+  wrokshopsViewModels: WrokshopViewModel[] | null;
 }
 
-export interface QuestionViewModel {
-  id: number | 0;
-  textAr: string;
-  textEn: string;
-  mqsOptionsViewModel: MQSOptionViewModel[];
-  participationTestId: number;
-}
-
-export interface MQSOptionViewModel {
-  id: number | 0;
-  textAr: string;
-  textEn: string;
-  isCorrect: boolean;
-  questionId: number;
-}
-
-export interface ParticipationTestAnswerViewModel {
-  questionId: number;
-  isSelected: boolean;
-  optionId: number;
+export enum StautsCode {
+  Active = 1,
+  IActive = 2,
 }
