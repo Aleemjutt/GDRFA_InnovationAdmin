@@ -79,6 +79,11 @@ export class AddProgramComponent implements OnInit {
   interviewsViewModels = [] as InterviewViewModel[];
   wrokshopsViewModels = [] as WrokshopViewModel[];
   challengeViewModels = [] as ChallengeViewModel[];
+
+  _wrokshopsViewModelsUpload = [] as WrokshopViewModel[];
+  _interviewsViewModelsUpload = [] as InterviewViewModel[];
+  _challengesViewModelsUpload = [] as ChallengeViewModel[];
+
   challengeViewModel: ChallengeViewModel;
 
   wrokshopsViewModel: WrokshopViewModel;
@@ -87,8 +92,9 @@ export class AddProgramComponent implements OnInit {
   @ViewChild('template') template: TemplateRef<any> | undefined;
   @ViewChild('templateDetails') templateDetails: TemplateRef<any> | undefined;
   oneAtATime: any = true;
-
-  participationTestViewModel: any;
+  @ViewChild('myPond') myPond: any;
+  pond: any;
+  participationTestViewModel: ParticipationTestViewModel;
 
   questionViewModel: any;
   mQSOptionViewModel: any;
@@ -152,7 +158,7 @@ export class AddProgramComponent implements OnInit {
     };
 
     this.joinProgramChallengesViewModel = {
-      id: 0,
+      id: -1,
       titleEn: '',
       titleAr: '',
       descriptionEn: '',
@@ -162,7 +168,7 @@ export class AddProgramComponent implements OnInit {
     };
 
     this.interviewsViewModel = {
-      id: 0,
+      id: -1,
       nameEn: '',
       nameAr: '',
       location: '',
@@ -178,7 +184,7 @@ export class AddProgramComponent implements OnInit {
       file: null,
     };
     this.wrokshopsViewModel = {
-      id: 0,
+      id: -1,
       nameEn: '',
       nameAr: '',
       location: '',
@@ -195,7 +201,7 @@ export class AddProgramComponent implements OnInit {
     };
 
     this.challengeViewModel = {
-      id: 0,
+      id: -1,
       titleAr: '',
       titleEn: '',
       descriptionEn: '',
@@ -213,11 +219,77 @@ export class AddProgramComponent implements OnInit {
     allowReorder: true,
   };
 
+  initWrokshopModel() {
+    this.wrokshopsViewModel = {
+      id: -1,
+      nameEn: '',
+      nameAr: '',
+      location: '',
+      latitude: '',
+      longitude: '',
+      locationDescription: '',
+      workshopDate: '',
+      wrokshopTime: '',
+      programId: 0,
+      venue: 1,
+      imageUrl: '',
+      urlBase64: '',
+      file: null,
+    };
+  }
+
+  initInterviewModel() {
+    this.interviewsViewModel = {
+      id: -1,
+      nameEn: '',
+      nameAr: '',
+      location: '',
+      latitude: '',
+      longitude: '',
+      locatoinDescription: '',
+      interviewDate: '',
+      interviewTime: '',
+      programId: 0,
+      imageUrl: '',
+      urlBase64: '',
+      venue: 1,
+      file: null,
+    };
+  }
+
+  initChallengedViewModel() {
+    this.challengeViewModel = {
+      id: -1,
+      titleAr: '',
+      titleEn: '',
+      descriptionEn: '',
+      descriptionAr: '',
+      link: '',
+      programId: 0,
+    };
+  }
+
+  initJoinChallengeViewModel() {
+    this.joinProgramChallengesViewModel = {
+      id: -1,
+      titleAr: '',
+      titleEn: '',
+      descriptionEn: '',
+      descriptionAr: '',
+      link: '',
+      programId: 0,
+    };
+  }
   pondHandleInit() {}
 
-  pondHandleAddFile(event: any) {
-    //const file: File | null = event.file;
+  pondHandleAddFile(event: { file: { file: File } }) {
     this.file = event.file.file;
+
+    if (this.file) {
+      this.fileUrl = this.file.name;
+    } else {
+      this.fileUrl = ''; // or handle the null case appropriately
+    }
   }
 
   pondHandleActivateFile(event: any) {}
@@ -264,8 +336,15 @@ export class AddProgramComponent implements OnInit {
 
     this.mQSOptionViewModelList = [];
     this.questionViewModelList = [];
+    this.initWrokshopModel();
+    this.initInterviewModel();
+    this.initJoinChallengeViewModel();
+    this.initChallengedViewModel();
   }
-
+  ngAfterViewInit() {
+    // Ensure the FilePond instance is correctly assigned after the view is initialized
+    this.pond = this.myPond.filePond;
+  }
   openModal(template: TemplateRef<void> | undefined) {
     this.initForm();
     if (template)
@@ -415,38 +494,89 @@ export class AddProgramComponent implements OnInit {
   addTest() {
     this.participationTestViewModel.questionViewModels =
       this.questionViewModelList;
-    this.joinProgramService.add(this.participationTestViewModel).subscribe({
-      next: (response: ResponseResult) => {
-        if (
-          response.statusCode == StatusCodes.success ||
-          response.statusCode == StatusCodes.update
-        ) {
-          this.tosterService.success(response.message);
-          this.modalRef?.hide();
-          this.initForm();
-          this.initilizeDataTable();
-        } else if (response.statusCode == StatusCodes.alreadyExists) {
-          this.tosterService.info(response.message);
-        } else {
-          this.tosterService.error(response.message);
-        }
-      },
-    });
+
+    const index = this.participationTestViewModelList.findIndex(
+      (item) => item.id === this.participationTestViewModel.id
+    );
+
+    // const existingInterview = this.interviewsViewModels.find(
+    //   (item) => item.id === this.interviewsViewModel.id
+    // );
+
+    if (index !== -1 && this.participationTestViewModel.id !== -1) {
+      // Remove the existing item at the specific index and insert the updated item at the same index
+      this.participationTestViewModelList.splice(
+        index,
+        1,
+        this.participationTestViewModel
+      );
+    } else {
+      // If the item is not found, simply push the new item
+
+      this.participationTestViewModelList.push(this.participationTestViewModel);
+    }
+
+    this.initWrokshopModel();
+    this.file as File;
+    this.modalRef?.hide();
+
+    //   this.joinProgramService.add(this.participationTestViewModel).subscribe({
+    //    next: (response: ResponseResult) => {
+    //     if (
+    //       response.statusCode == StatusCodes.success ||
+    //       response.statusCode == StatusCodes.update
+    //     ) {
+    //       this.tosterService.success(response.message);
+    //       this.modalRef?.hide();
+    //       this.initForm();
+    //       this.initilizeDataTable();
+    //     } else if (response.statusCode == StatusCodes.alreadyExists) {
+    //       this.tosterService.info(response.message);
+    //     } else {
+    //       this.tosterService.error(response.message);
+    //     }
+    //   },
+    // });
   }
   updateTest() {
-    this.participationTestViewModel.questionViewModels = this.questionViewModel;
-    this.joinProgramService.update(this.participationTestViewModel).subscribe({
-      next: (response: ResponseResult) => {
-        if (response.statusCode == StatusCodes.success) {
-          this.tosterService.success(response.message);
-          this.initForm();
-          this.modalRef?.hide();
-          this.initilizeDataTable();
-        } else {
-          this.tosterService.error(response.message);
-        }
-      },
-    });
+    if (this.joinProgramModel.id == 0) {
+      this.participationTestViewModel.questionViewModels =
+        this.questionViewModelList;
+
+      const index = this.participationTestViewModelList.findIndex(
+        (item) => item.id === this.participationTestViewModel.id
+      );
+
+      // const existingInterview = this.interviewsViewModels.find(
+      //   (item) => item.id === this.interviewsViewModel.id
+      // );
+
+      if (index !== -1 && this.participationTestViewModel.id !== -1) {
+        // Remove the existing item at the specific index and insert the updated item at the same index
+        this.participationTestViewModelList.splice(
+          index,
+          1,
+          this.participationTestViewModel
+        );
+      }
+    } else {
+      this.participationTestViewModel.questionViewModels =
+        this.questionViewModel;
+      this.joinProgramService
+        .update(this.participationTestViewModel)
+        .subscribe({
+          next: (response: ResponseResult) => {
+            if (response.statusCode == StatusCodes.success) {
+              this.tosterService.success(response.message);
+              this.initForm();
+              this.modalRef?.hide();
+              this.initilizeDataTable();
+            } else {
+              this.tosterService.error(response.message);
+            }
+          },
+        });
+    }
   }
 
   viewTestDetails(id: number, template: TemplateRef<any> | undefined) {
@@ -457,8 +587,10 @@ export class AddProgramComponent implements OnInit {
       next: (response: ResponseResult) => {
         if (response.statusCode == StatusCodes.success) {
           this.participationTestViewModel = response.data;
-          this.questionViewModelList =
-            this.participationTestViewModel.questionViewModels;
+          if (this.participationTestViewModel.questionViewModels != null) {
+            this.questionViewModelList =
+              this.participationTestViewModel.questionViewModels;
+          }
 
           this.modalRef = this.modalService.show(template, {
             class: 'gray modal-lg',
@@ -485,9 +617,10 @@ export class AddProgramComponent implements OnInit {
       next: (response: ResponseResult) => {
         if (response.statusCode == StatusCodes.success) {
           this.participationTestViewModel = response.data;
-          this.questionViewModelList =
-            this.participationTestViewModel.questionViewModels;
-
+          if (this.participationTestViewModel.questionViewModels != null) {
+            this.questionViewModelList =
+              this.participationTestViewModel.questionViewModels;
+          }
           this.modalRef = this.modalService.show(template, {
             class: 'gray modal-lg',
           });
@@ -584,15 +717,526 @@ export class AddProgramComponent implements OnInit {
   deleteOption(index: number) {
     this.mQSOptionViewModelList?.splice(index, 1);
   }
-
+  // Wrokshop **********/// Start ////************ */
   addWrokshop(wrokshopTemplate: TemplateRef<void> | undefined) {
     //this.initModel();
+    this.initWrokshopModel();
     if (wrokshopTemplate) {
       this.modalRef = this.modalService.show(
         wrokshopTemplate,
         Object.assign({}, { class: 'modal-lg' })
       );
     }
+  }
+
+  saveWorkshop() {
+    if (this.joinProgramModel.id == 0) {
+      if (this.file != null) {
+        this.wrokshopsViewModel.file = this.file;
+        this.wrokshopsViewModel.imageUrl = this.file.name;
+      }
+      const index = this.wrokshopsViewModels.findIndex(
+        (item) => item.id === this.wrokshopsViewModel.id
+      );
+
+      // const existingInterview = this.interviewsViewModels.find(
+      //   (item) => item.id === this.interviewsViewModel.id
+      // );
+
+      if (index !== -1 && this.wrokshopsViewModel.id !== -1) {
+        // Remove the existing item at the specific index and insert the updated item at the same index
+        this.wrokshopsViewModels.splice(index, 1, this.wrokshopsViewModel);
+      } else {
+        // If the item is not found, simply push the new item
+        this.wrokshopsViewModels.push(this.wrokshopsViewModel);
+      }
+
+      this.initWrokshopModel();
+      this.file as File;
+      this.modalRef?.hide();
+    } else {
+      if (this.file != null) {
+        this.upload(this.file);
+        this.wrokshopsViewModel.imageUrl = this.fileUrl;
+        this.wrokshopsViewModel.programId = this.joinProgramModel.id;
+      }
+      this.joinProgramService._addWrokshop(this.wrokshopsViewModel).subscribe({
+        next: (response: ResponseResult) => {
+          if (response.statusCode == StatusCodes.success) {
+            this.tosterService.success(response.message);
+          } else {
+            this.tosterService.error(response.message);
+          }
+        },
+      });
+    }
+  }
+
+  editWorkshop(id: number, template: TemplateRef<any> | undefined) {
+    if (!template) {
+      // Handle the case where template is undefined, perhaps by throwing an error or logging a message
+      return;
+    }
+
+    this.initWrokshopModel();
+    this.wrokshopsViewModel = this.wrokshopsViewModels[id];
+    this.wrokshopsViewModel.id = id;
+    //this.wrokshopsViewModels?.splice(id, 1);
+
+    // // Add the file to FilePond
+    // this.pond
+    //   .addFile(this.wrokshopsViewModel.file, {
+    //     // Options like `index` can be passed if needed
+    //     index: 0, // Adds the file as the first file
+    //   })
+    //   .then(() => {
+    //     console.log('File added successfully!');
+    //   })
+    //   .catch((error: any) => {
+    //     console.error('Error adding file:', error);
+    //   });
+
+    if (template) {
+      this.modalRef = this.modalService.show(
+        template,
+        Object.assign({}, { class: 'modal-lg' })
+      );
+    }
+  }
+
+  viewWrokshopDetails(id: number, template: TemplateRef<any> | undefined) {
+    if (!template) {
+      // Handle the case where template is undefined, perhaps by throwing an error or logging a message
+      return;
+    }
+    this.initWrokshopModel();
+    this.wrokshopsViewModel = this.wrokshopsViewModels[id];
+    // this.wrokshopsViewModels?.splice(id, 1);
+
+    if (template) {
+      this.modalRef = this.modalService.show(
+        template,
+        Object.assign({}, { class: 'modal-lg' })
+      );
+    }
+  }
+
+  deleteWrokshop(id: number) {
+    if (this.joinProgramModel.id == 0) {
+      this.wrokshopsViewModels.splice(id, 1);
+    } else {
+      this.joinProgramService._deleteWrokshop(id).subscribe({
+        next: (respone: ResponseResult) => {
+          if (respone.statusCode == StatusCodes.success)
+            this.tosterService.success(respone.message);
+          else this.tosterService.error(respone.message);
+        },
+      });
+    }
+  }
+
+  removeImageWrokshop() {
+    this.wrokshopsViewModel.imageUrl == null;
+    this.wrokshopsViewModel.file == null;
+  }
+
+  updateWrokShop() {
+    if (this.joinProgramModel.id == 0) {
+      if (this.file != null) {
+        this.wrokshopsViewModel.file = this.file;
+        this.wrokshopsViewModel.imageUrl = this.file.name;
+      }
+      const index = this.wrokshopsViewModels.findIndex(
+        (item) => item.id === this.wrokshopsViewModel.id
+      );
+
+      // const existingInterview = this.interviewsViewModels.find(
+      //   (item) => item.id === this.interviewsViewModel.id
+      // );
+
+      if (index !== -1 && this.wrokshopsViewModel.id !== -1) {
+        // Remove the existing item at the specific index and insert the updated item at the same index
+        this.wrokshopsViewModels.splice(index, 1, this.wrokshopsViewModel);
+      } else {
+        // If the item is not found, simply push the new item
+        this.wrokshopsViewModels.push(this.wrokshopsViewModel);
+      }
+
+      this.initWrokshopModel();
+      this.file as File;
+      this.modalRef?.hide();
+    } else {
+      if (this.file != null) {
+        this.upload(this.file);
+        this.wrokshopsViewModel.imageUrl = this.fileUrl;
+        this.joinProgramService
+          ._updateWrokshop(this.wrokshopsViewModel)
+          .subscribe({
+            next: (respone: ResponseResult) => {
+              if (respone.statusCode == StatusCodes.success)
+                this.tosterService.success(respone.message);
+              else this.tosterService.error(respone.message);
+            },
+          });
+      }
+    }
+  }
+
+  // Wrokshop **********/// End ////************ */
+
+  // InterView **********/// Start ////************ */
+  addInterview(interviewTemplate: TemplateRef<void> | undefined) {
+    //this.initModel();
+    this.initInterviewModel();
+    if (interviewTemplate) {
+      this.modalRef = this.modalService.show(
+        interviewTemplate,
+        Object.assign({}, { class: 'modal-lg' })
+      );
+    }
+  }
+
+  saveInterview() {
+    if (this.joinProgramModel.id == 0) {
+      if (this.file != null) {
+        this.interviewsViewModel.file = this.file;
+        this.interviewsViewModel.imageUrl = this.file.name;
+      }
+      // const index = this.interviewsViewModels.findIndex(
+      //   (item) => item.id === this.interviewsViewModel.id
+      // );
+
+      const index = this.interviewsViewModels.findIndex(
+        (item) => item.id === this.interviewsViewModel.id
+      );
+
+      // const existingInterview = this.interviewsViewModels.find(
+      //   (item) => item.id === this.interviewsViewModel.id
+      // );
+
+      if (index !== -1 && this.interviewsViewModel.id !== -1) {
+        // Remove the existing item at the specific index and insert the updated item at the same index
+        this.interviewsViewModels.splice(index, 1, this.interviewsViewModel);
+      } else {
+        // If the item is not found, simply push the new item
+        this.interviewsViewModels.push(this.interviewsViewModel);
+      }
+
+      // If the item is found, remove it from the list
+      // if (index !== null) {
+      //   this.interviewsViewModels.splice(index, 1);
+      // }
+
+      // Push the challengeViewModel back to the list
+      //this.interviewsViewModels.push(this.interviewsViewModel);
+      this.initInterviewModel();
+      this.file as File;
+      this.modalRef?.hide();
+    } else {
+      if (this.file != null) {
+        this.upload(this.file);
+        this.interviewsViewModel.imageUrl = this.fileUrl;
+        this.interviewsViewModel.programId = this.joinProgramModel.id;
+      }
+      this.joinProgramService
+        ._addInterView(this.interviewsViewModel)
+        .subscribe({
+          next: (response: ResponseResult) => {
+            if (response.statusCode == StatusCodes.success) {
+              this.tosterService.success(response.message);
+            } else {
+              this.tosterService.error(response.message);
+            }
+          },
+        });
+    }
+  }
+
+  editInterview(id: number, template: TemplateRef<any> | undefined) {
+    if (!template) {
+      // Handle the case where template is undefined, perhaps by throwing an error or logging a message
+      return;
+    }
+
+    this.initInterviewModel();
+    this.interviewsViewModel = this.interviewsViewModels[id];
+    this.interviewsViewModel.id = id;
+    //this.wrokshopsViewModels?.splice(id, 1);
+
+    // // Add the file to FilePond
+    // this.pond
+    //   .addFile(this.wrokshopsViewModel.file, {
+    //     // Options like `index` can be passed if needed
+    //     index: 0, // Adds the file as the first file
+    //   })
+    //   .then(() => {
+    //     console.log('File added successfully!');
+    //   })
+    //   .catch((error: any) => {
+    //     console.error('Error adding file:', error);
+    //   });
+
+    if (template) {
+      this.modalRef = this.modalService.show(
+        template,
+        Object.assign({}, { class: 'modal-lg' })
+      );
+    }
+  }
+
+  viewInterviewDetails(id: number, template: TemplateRef<any> | undefined) {
+    if (!template) {
+      // Handle the case where template is undefined, perhaps by throwing an error or logging a message
+      return;
+    }
+    this.initInterviewModel();
+    this.interviewsViewModel = this.interviewsViewModels[id];
+    // this.wrokshopsViewModels?.splice(id, 1);
+
+    if (template) {
+      this.modalRef = this.modalService.show(
+        template,
+        Object.assign({}, { class: 'modal-lg' })
+      );
+    }
+  }
+
+  deleteInterview(id: number) {
+    if (this.joinProgramModel.id == 0) {
+      this.interviewsViewModels.splice(id, 1);
+    } else {
+      this.joinProgramService._deleteInterView(id).subscribe({
+        next: (respone: ResponseResult) => {
+          if (respone.statusCode == StatusCodes.success)
+            this.tosterService.success(respone.message);
+          else this.tosterService.error(respone.message);
+        },
+      });
+    }
+  }
+
+  removeImageInterview() {
+    this.interviewsViewModel.imageUrl == null;
+    this.interviewsViewModel.file == null;
+  }
+
+  updateInterView() {
+    if (this.joinProgramModel.id == 0) {
+      if (this.file != null) {
+        this.interviewsViewModel.file = this.file;
+        this.interviewsViewModel.imageUrl = this.file.name;
+      }
+
+      const index = this.interviewsViewModels.findIndex(
+        (item) => item.id === this.interviewsViewModel.id
+      );
+
+      // const existingInterview = this.interviewsViewModels.find(
+      //   (item) => item.id === this.interviewsViewModel.id
+      // );
+
+      if (index !== -1 && this.interviewsViewModel.id !== -1) {
+        // Remove the existing item at the specific index and insert the updated item at the same index
+        this.interviewsViewModels.splice(index, 1, this.interviewsViewModel);
+      } else {
+        // If the item is not found, simply push the new item
+        this.interviewsViewModels.push(this.interviewsViewModel);
+      }
+
+      this.initInterviewModel();
+      this.file as File;
+      this.modalRef?.hide();
+    } else {
+      if (this.file != null) {
+        this.upload(this.file);
+        this.wrokshopsViewModel.imageUrl = this.fileUrl;
+        this.joinProgramService
+          ._updateInterView(this.interviewsViewModel)
+          .subscribe({
+            next: (respone: ResponseResult) => {
+              this.initInterviewModel();
+              if (respone.statusCode == StatusCodes.success)
+                this.tosterService.success(respone.message);
+              else this.tosterService.error(respone.message);
+            },
+          });
+      }
+    }
+  }
+
+  // InterView **********/// End ////************ */
+
+  // Challenge *******//// Start **************////
+
+  addChallenge(challengeTemplate: TemplateRef<void> | undefined) {
+    //this.initModel();
+    this.initJoinChallengeViewModel();
+    if (challengeTemplate) {
+      this.modalRef = this.modalService.show(
+        challengeTemplate,
+        Object.assign({}, { class: 'modal-lg' })
+      );
+    }
+  }
+
+  saveChallenge() {
+    if (this.joinProgramModel.id == 0) {
+      const index = this.challengeViewModels.findIndex(
+        (item) => item.id === this.challengeViewModel.id
+      );
+
+      // const existingInterview = this.interviewsViewModels.find(
+      //   (item) => item.id === this.interviewsViewModel.id
+      // );
+
+      if (index !== -1 && this.challengeViewModel.id !== -1) {
+        // Remove the existing item at the specific index and insert the updated item at the same index
+        this.challengeViewModels.splice(index, 1, this.challengeViewModel);
+      } else {
+        // If the item is not found, simply push the new item
+        this.challengeViewModels.push(this.challengeViewModel);
+      }
+
+      this.initChallengedViewModel();
+      this.file as File;
+      this.modalRef?.hide();
+    } else {
+      this.joinProgramService._addChallenge(this.challengeViewModel).subscribe({
+        next: (response: ResponseResult) => {
+          if (response.statusCode == StatusCodes.success) {
+            this.tosterService.success(response.message);
+          } else {
+            this.tosterService.error(response.message);
+          }
+        },
+      });
+    }
+  }
+
+  editChallenge(id: number, template: TemplateRef<any> | undefined) {
+    if (!template) {
+      // Handle the case where template is undefined, perhaps by throwing an error or logging a message
+      return;
+    }
+
+    this.initChallengedViewModel();
+    this.challengeViewModel = this.challengeViewModels[id];
+    this.challengeViewModel.id = id;
+
+    if (template) {
+      this.modalRef = this.modalService.show(
+        template,
+        Object.assign({}, { class: 'modal-lg' })
+      );
+    }
+  }
+
+  viewChallengeDetail(id: number, template: TemplateRef<any> | undefined) {
+    if (!template) {
+      // Handle the case where template is undefined, perhaps by throwing an error or logging a message
+      return;
+    }
+    this.initChallengedViewModel();
+    this.challengeViewModel = this.challengeViewModels[id];
+    // this.wrokshopsViewModels?.splice(id, 1);
+
+    if (template) {
+      this.modalRef = this.modalService.show(
+        template,
+        Object.assign({}, { class: 'modal-lg' })
+      );
+    }
+  }
+
+  deleteChallenge(id: number) {
+    if (this.joinProgramModel.id == 0) {
+      this.challengeViewModels.splice(id, 1);
+    } else {
+      this.joinProgramService._deleteChallenge(id).subscribe({
+        next: (respone: ResponseResult) => {
+          if (respone.statusCode == StatusCodes.success)
+            this.tosterService.success(respone.message);
+          else this.tosterService.error(respone.message);
+        },
+      });
+    }
+  }
+
+  updateChallenge() {
+    if (this.joinProgramModel.id == 0) {
+      const index = this.challengeViewModels.findIndex(
+        (item) => item.id === this.challengeViewModel.id
+      );
+
+      // const existingInterview = this.interviewsViewModels.find(
+      //   (item) => item.id === this.interviewsViewModel.id
+      // );
+
+      if (index !== -1 && this.challengeViewModel.id !== -1) {
+        // Remove the existing item at the specific index and insert the updated item at the same index
+        this.challengeViewModels.splice(index, 1, this.challengeViewModel);
+      } else {
+        // If the item is not found, simply push the new item
+        this.challengeViewModels.push(this.challengeViewModel);
+      }
+
+      this.initChallengedViewModel();
+      this.file as File;
+      this.modalRef?.hide();
+    } else {
+      this.joinProgramService
+        ._updateChallenge(this.challengeViewModel)
+        .subscribe({
+          next: (respone: ResponseResult) => {
+            if (respone.statusCode == StatusCodes.success)
+              this.tosterService.success(respone.message);
+            else this.tosterService.error(respone.message);
+          },
+        });
+    }
+  }
+
+  //Challenge *******//// End ************//////
+
+  addProgram() {
+    if (this.joinProgramModel.id == 0)
+      if (this.wrokshopsViewModels.length > 0) {
+        //this.upload();
+        for (let workshop of this.wrokshopsViewModels) {
+          if (workshop.file != null) {
+            this.upload(workshop.file);
+            workshop.imageUrl = this.fileUrl;
+          }
+          this._wrokshopsViewModelsUpload.push(workshop);
+        }
+      }
+
+    if (this.interviewsViewModels.length > 0) {
+      //this.upload();
+      for (let interview of this.interviewsViewModels) {
+        if (interview.file != null) {
+          this.upload(interview.file);
+          interview.imageUrl = this.fileUrl;
+        }
+        this._interviewsViewModelsUpload.push(interview);
+      }
+    }
+
+    this.joinProgramModel.interviewsViewModels =
+      this._interviewsViewModelsUpload;
+    this.joinProgramModel.wrokshopsViewModels = this._wrokshopsViewModelsUpload;
+    this.joinProgramModel.joinProgramChallengesViewModels =
+      this.challengeViewModels;
+
+    //participationTestViewModel
+
+    this.joinProgramService._addProgram(this.joinProgramModel).subscribe({
+      next: (respone: ResponseResult) => {
+        if (respone.statusCode == StatusCodes.success)
+          this.tosterService.success(respone.message);
+        else this.tosterService.error(respone.message);
+      },
+    });
   }
 
   upload(file: File): void {
@@ -634,191 +1278,6 @@ export class AddProgramComponent implements OnInit {
           },
         });
     }
-  }
-
-  removeImage() {}
-
-  saveWorkshop() {
-    if (this.joinProgramModel.id == 0) {
-      if (this.file != null) {
-        this.wrokshopsViewModel.file = this.file;
-      }
-      this.wrokshopsViewModels.push(this.wrokshopsViewModel);
-    } else {
-      if (this.file != null) {
-        this.upload(this.file);
-        this.wrokshopsViewModel.imageUrl = this.fileUrl;
-        this.wrokshopsViewModel.programId = this.joinProgramModel.id;
-      }
-      this.joinProgramService._addWrokshop(this.wrokshopsViewModel).subscribe({
-        next: (response: ResponseResult) => {
-          if (response.statusCode == StatusCodes.success) {
-            this.tosterService.success(response.message);
-          } else {
-            this.tosterService.error(response.message);
-          }
-        },
-      });
-    }
-  }
-
-  updateWrokShop() {
-    if (this.file != null) {
-      this.upload(this.file);
-
-      this.wrokshopsViewModel.imageUrl = this.fileUrl;
-      this.joinProgramService
-        ._updateWrokshop(this.wrokshopsViewModel)
-        .subscribe({
-          next: (respone: ResponseResult) => {
-            if (respone.statusCode == StatusCodes.success)
-              this.tosterService.success(respone.message);
-            else this.tosterService.error(respone.message);
-          },
-        });
-    } else {
-      this.joinProgramService
-        ._updateWrokshop(this.wrokshopsViewModel)
-        .subscribe({
-          next: (respone: ResponseResult) => {
-            if (respone.statusCode == StatusCodes.success)
-              this.tosterService.success(respone.message);
-            else this.tosterService.error(respone.message);
-          },
-        });
-    }
-  }
-
-  addInterview(interviewTemplate: TemplateRef<void> | undefined) {
-    //this.initModel();
-    if (interviewTemplate)
-      this.modalRef = this.modalService.show(
-        interviewTemplate,
-        Object.assign({}, { class: 'modal-lg' })
-      );
-  }
-
-  addChallenge(challengeTemplate: TemplateRef<void> | undefined) {
-    //this.initModel();
-    if (challengeTemplate)
-      this.modalRef = this.modalService.show(
-        challengeTemplate,
-        Object.assign({}, { class: 'modal-lg' })
-      );
-  }
-
-  saveInterview() {
-    if (this.interviewsViewModel != null) {
-      if (this.interviewsViewModel.programId == 0) {
-        if (this.file != null) {
-          this.interviewsViewModel.file = this.file;
-        }
-        this.interviewsViewModels.push(this.interviewsViewModel);
-      } else {
-        if (this.file != null) {
-          this.upload(this.file);
-          this.joinProgramService
-            ._addInterView(this.interviewsViewModel)
-            .subscribe({
-              next: (respone: ResponseResult) => {
-                if (respone.statusCode == StatusCodes.success)
-                  this.tosterService.success(respone.message);
-                else this.tosterService.error(respone.message);
-              },
-            });
-        }
-      }
-    }
-  }
-  updateInterview() {
-    if (this.file != null) {
-      this.upload(this.file);
-      this.joinProgramService
-        ._updateInterView(this.interviewsViewModel)
-        .subscribe({
-          next: (respone: ResponseResult) => {
-            if (respone.statusCode == StatusCodes.success)
-              this.tosterService.success(respone.message);
-            else this.tosterService.error(respone.message);
-          },
-        });
-    } else
-      this.joinProgramService
-        ._updateInterView(this.interviewsViewModel)
-        .subscribe({
-          next: (respone: ResponseResult) => {
-            if (respone.statusCode == StatusCodes.success)
-              this.tosterService.success(respone.message);
-            else this.tosterService.error(respone.message);
-          },
-        });
-  }
-
-  deleteInterView(id: number) {
-    this.joinProgramService._deleteInterView(id).subscribe({
-      next: (respone: ResponseResult) => {
-        if (respone.statusCode == StatusCodes.success)
-          this.tosterService.success(respone.message);
-        else this.tosterService.error(respone.message);
-      },
-    });
-  }
-
-  saveChallenge() {
-    if (this.challengeViewModel != null) {
-      if (this.joinProgramModel.id == 0) {
-        this.challengeViewModels.push(this.challengeViewModel);
-      }
-    } else {
-      this.joinProgramService._addChallenge(this.challengeViewModel).subscribe({
-        next: (respone: ResponseResult) => {
-          if (respone.statusCode == StatusCodes.success)
-            this.tosterService.success(respone.message);
-          else this.tosterService.error(respone.message);
-        },
-      });
-    }
-  }
-
-  updateChallenge() {
-    if (this.challengeViewModel != null) {
-      if (this.challengeViewModels.length > 0) {
-        // Find the item by its ID
-        const index = this.challengeViewModels.findIndex(
-          (item) => item.id === this.challengeViewModel.id
-        );
-        // If the item is found, remove it from the list
-        if (index !== -1) {
-          this.challengeViewModels.splice(index, 1);
-        }
-      }
-      // Push the challengeViewModel back to the list
-      this.challengeViewModels.push(this.challengeViewModel);
-    } else
-      this.joinProgramService
-        ._updateInterView(this.interviewsViewModel)
-        .subscribe({
-          next: (respone: ResponseResult) => {
-            if (respone.statusCode == StatusCodes.success)
-              this.tosterService.success(respone.message);
-            else this.tosterService.error(respone.message);
-          },
-        });
-  }
-
-  addProgram() {
-    if (this.joinProgramModel.id == 0)
-      if (this.wrokshopsViewModels.length > 0) {
-        //this.upload();
-      }
-
-    this.joinProgramService._addProgram(this.joinProgramModel).subscribe({
-      next: (respone: ResponseResult) => {
-        if (respone.statusCode == StatusCodes.success)
-          this.tosterService.success(respone.message);
-        else this.tosterService.error(respone.message);
-      },
-    });
   }
 
   getTabValue(value: string): string {

@@ -1,4 +1,5 @@
 export interface ParticipationTestViewModel {
+  id: number;
   questionViewModels: QuestionViewModel[] | null;
   participationTestAnswersViewModels: ParticipationTestAnswerViewModel[] | null;
   status: boolean;
