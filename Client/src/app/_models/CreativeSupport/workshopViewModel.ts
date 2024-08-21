@@ -1,4 +1,4 @@
-export interface WrokshopViewModel {
+export interface WorkshopViewModel {
   id: number;
   nameEn: string;
   nameAr: string;

@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { FilePond, FilePondOptions } from 'filepond';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
@@ -25,7 +25,7 @@ import {
   ParticipationTestViewModel,
   QuestionViewModel,
 } from 'src/app/_models/CreativeSupport/participatingTestViewModel';
-import { WrokshopViewModel } from 'src/app/_models/CreativeSupport/wrokshopViewModel';
+import { WorkshopViewModel } from 'src/app/_models/CreativeSupport/workshopViewModel';
 import { ResponseResult, StatusCodes } from 'src/app/_models/responseResult';
 import { JoinProgramService } from 'src/app/_services/_creativeSupport/join-program.service';
 import { UploadServiceService } from 'src/app/_services/upload-service.service';
@@ -77,16 +77,16 @@ export class AddProgramComponent implements OnInit {
   joinProgramModel: joinProgramViewModel;
   joinProgramChallengesViewModels = [] as JoinProgramChallengeViewModel[];
   interviewsViewModels = [] as InterviewViewModel[];
-  wrokshopsViewModels = [] as WrokshopViewModel[];
+  workshopsViewModels = [] as WorkshopViewModel[];
   challengeViewModels = [] as ChallengeViewModel[];
 
-  _wrokshopsViewModelsUpload = [] as WrokshopViewModel[];
+  _workshopsViewModelsUpload = [] as WorkshopViewModel[];
   _interviewsViewModelsUpload = [] as InterviewViewModel[];
   _challengesViewModelsUpload = [] as ChallengeViewModel[];
 
   challengeViewModel: ChallengeViewModel;
 
-  wrokshopsViewModel: WrokshopViewModel;
+  workshopsViewModel: WorkshopViewModel;
   interviewsViewModel: InterviewViewModel;
   joinProgramChallengesViewModel: JoinProgramChallengeViewModel;
   @ViewChild('template') template: TemplateRef<any> | undefined;
@@ -118,13 +118,15 @@ export class AddProgramComponent implements OnInit {
   agendAttachmentFile: File | undefined;
   attachment: any;
   fileUrl: string = '';
+  isView: boolean = true;
   constructor(
     public globalService: GlobalServiceService,
     private tosterService: ToastrService,
     private joinProgramService: JoinProgramService,
     private modalService: BsModalService,
     private router: Router,
-    private uploadService: UploadServiceService
+    private uploadService: UploadServiceService,
+    private route: ActivatedRoute
   ) {
     this.joinProgramModel = {
       id: 0,
@@ -133,7 +135,8 @@ export class AddProgramComponent implements OnInit {
       statusCode: StautsCode.IActive,
       joinProgramChallengesViewModels: this.joinProgramChallengesViewModels,
       interviewsViewModels: this.interviewsViewModels,
-      wrokshopsViewModels: this.wrokshopsViewModels,
+      workshopsViewModels: this.workshopsViewModels,
+      participationTestViewModels: this.participationTestViewModelList,
     };
 
     this.questionViewModel = {
@@ -183,7 +186,7 @@ export class AddProgramComponent implements OnInit {
       venue: 1,
       file: null,
     };
-    this.wrokshopsViewModel = {
+    this.workshopsViewModel = {
       id: -1,
       nameEn: '',
       nameAr: '',
@@ -220,7 +223,7 @@ export class AddProgramComponent implements OnInit {
   };
 
   initWrokshopModel() {
-    this.wrokshopsViewModel = {
+    this.workshopsViewModel = {
       id: -1,
       nameEn: '',
       nameAr: '',
@@ -308,8 +311,26 @@ export class AddProgramComponent implements OnInit {
     this.languageChangeSubscription =
       this.globalService.languageChange$.subscribe((lang) => {
         // Update the ng-select label property when the language changes
-        this.initilizeDataTable();
+        //this.initilizeDataTable();
       });
+
+    this.route.snapshot.paramMap.get('id');
+    this.route.snapshot.paramMap.get('type');
+
+    this.route.paramMap.subscribe((params) => {
+      let id = params.get('id');
+      let type = params.get('type');
+      // Use the id and type parameters as needed
+
+      console.log('id', id);
+      console.log('type', type);
+
+      if (id != null && type != null) {
+        this.editProgram(parseInt(id, 10));
+
+        this.isView = type === '1' ? true : false;
+      }
+    });
   }
 
   initForm() {
@@ -327,7 +348,7 @@ export class AddProgramComponent implements OnInit {
       isCorrect: false,
     };
     this.participationTestViewModel = {
-      id: 0,
+      id: -1,
       questionViewModels: [],
       participationTestAnswersViewModels: [],
       status: false,
@@ -354,142 +375,173 @@ export class AddProgramComponent implements OnInit {
       );
   }
 
-  initilizeDataTable(): void {
-    const currentLang = this.globalService.getCurrentLanguage();
-    const languageConfig =
-      currentLang === 'ar'
-        ? this.globalService.getArabicLanguageConfig()
-        : this.globalService.getEnglishLanguageConfig();
-    const datatable: any = $('#awardsDataTable').DataTable();
-    this.joinProgramService
-      ._getParticipateTestList()
-      .subscribe((response: ResponseResult) => {
-        // ////console.log(response.data, 'Data Table values');
-        console.log(response, 'response');
-        this.participationTestViewModelList = response.data;
-        // Datatable reloading
-        datatable.destroy();
+  // initilizeDataTable(): void {
+  //   const currentLang = this.globalService.getCurrentLanguage();
+  //   const languageConfig =
+  //     currentLang === 'ar'
+  //       ? this.globalService.getArabicLanguageConfig()
+  //       : this.globalService.getEnglishLanguageConfig();
+  //   const datatable: any = $('#awardsDataTable').DataTable();
+  //   this.joinProgramService
+  //     ._getParticipateTestList()
+  //     .subscribe((response: ResponseResult) => {
+  //       // ////console.log(response.data, 'Data Table values');
+  //       console.log(response, 'response');
+  //       this.participationTestViewModelList = response.data;
+  //       // Datatable reloading
+  //       datatable.destroy();
 
-        setTimeout(() => {
-          $('#awardsDataTable').DataTable({
-            pagingType: 'full_numbers',
-            pageLength: 5,
-            processing: true,
-            data: this.participationTestViewModelList,
-            language: languageConfig,
-            columns: [
-              { data: 'id' },
+  //       setTimeout(() => {
+  //         $('#awardsDataTable').DataTable({
+  //           pagingType: 'full_numbers',
+  //           pageLength: 5,
+  //           processing: true,
+  //           data: this.participationTestViewModelList,
+  //           language: languageConfig,
+  //           columns: [
+  //             { data: 'id' },
 
-              {
-                data: (row: any) =>
-                  this.globalService.getStatusName(row.status),
-              },
-              {
-                data: 'data',
-                defaultContent: `
-              <button
-              type="button"
-              class="btn btn-light mr-1"
-              data-bs-toggle="modal"
-              data-bs-target="#exampleModal"
-              (click)="viewpartnerDetails()"
-              data-backdrop="static"
-              data-keyboard="false"
-            >
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
-            <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
-            <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
-            </svg>
-            </button>
-            <button
-            type="button"
-            class="btn btn-light mr-1"
-            data-bs-toggle="modal"
-            data-bs-target="#exampleModal"
-            (click)="editpartner(id, template)"
-            data-backdrop="static"
-            data-keyboard="false"
-          >
-            <svg
-              width="1em"
-              height="1em"
-              viewBox="0 0 16 16"
-              class="bi bi-pencil-square"
-              fill="currentColor"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"
-              />
-              <path
-                fill-rule="evenodd"
-                d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"
-              />
-            </svg>
-          </button>
-           
-            <button
-                type="button"
-                class="btn btn-outline-danger  mr-1 "
-                data-bs-toggle="modal"
-                data-bs-target="#exampleModal"
-                (click)="deletepartner(id)"
-                data-backdrop="static"
-                data-keyboard="false"
-              >
-              <svg
-              width="1em"
-              height="1em"
-              viewBox="0 0 16 16"
-              class="bi bi-trash-fill"
-              fill="currentColor"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"
-              />
-            </svg>
-              </button>
+  //             {
+  //               data: (row: any) =>
+  //                 this.globalService.getStatusName(row.status),
+  //             },
+  //             {
+  //               data: 'data',
+  //               defaultContent: `
+  //             <button
+  //             type="button"
+  //             class="btn btn-light mr-1"
+  //             data-bs-toggle="modal"
+  //             data-bs-target="#exampleModal"
+  //             (click)="viewpartnerDetails()"
+  //             data-backdrop="static"
+  //             data-keyboard="false"
+  //           >
+  //           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+  //           <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
+  //           <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
+  //           </svg>
+  //           </button>
+  //           <button
+  //           type="button"
+  //           class="btn btn-light mr-1"
+  //           data-bs-toggle="modal"
+  //           data-bs-target="#exampleModal"
+  //           (click)="editpartner(id, template)"
+  //           data-backdrop="static"
+  //           data-keyboard="false"
+  //         >
+  //           <svg
+  //             width="1em"
+  //             height="1em"
+  //             viewBox="0 0 16 16"
+  //             class="bi bi-pencil-square"
+  //             fill="currentColor"
+  //             xmlns="http://www.w3.org/2000/svg"
+  //           >
+  //             <path
+  //               d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"
+  //             />
+  //             <path
+  //               fill-rule="evenodd"
+  //               d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"
+  //             />
+  //           </svg>
+  //         </button>
 
-              <button type="button" class="btn btn-light mr-1">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-up-right" viewBox="0 0 16 16">
-              <path fill-rule="evenodd" d="M6.364 13.5a.5.5 0 0 0 .5.5H13.5a1.5 1.5 0 0 0 1.5-1.5v-10A1.5 1.5 0 0 0 13.5 1h-10A1.5 1.5 0 0 0 2 2.5v6.636a.5.5 0 1 0 1 0V2.5a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v10a.5.5 0 0 1-.5.5H6.864a.5.5 0 0 0-.5.5"/>
-              <path fill-rule="evenodd" d="M11 5.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793l-8.147 8.146a.5.5 0 0 0 .708.708L10 6.707V10.5a.5.5 0 0 0 1 0z"/>
-              </svg>
-                   </button>
-            `,
-              },
-            ],
-            rowCallback: (row: Node, data: any, index: number) => {
-              const btnView = $('button:first', row);
-              const btnEdit = $('button:eq(1)', row);
-              const btnDelete = $('button:eq(2)', row);
-              const btnSubmitionDetails = $('button:last', row);
-              // Attach click event handlers to the buttons
-              btnView.on('click', () => {
-                this.viewTestDetails(data.id, this.templateDetails);
-              });
+  //           <button
+  //               type="button"
+  //               class="btn btn-outline-danger  mr-1 "
+  //               data-bs-toggle="modal"
+  //               data-bs-target="#exampleModal"
+  //               (click)="deletepartner(id)"
+  //               data-backdrop="static"
+  //               data-keyboard="false"
+  //             >
+  //             <svg
+  //             width="1em"
+  //             height="1em"
+  //             viewBox="0 0 16 16"
+  //             class="bi bi-trash-fill"
+  //             fill="currentColor"
+  //             xmlns="http://www.w3.org/2000/svg"
+  //           >
+  //             <path
+  //               fill-rule="evenodd"
+  //               d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"
+  //             />
+  //           </svg>
+  //             </button>
 
-              btnEdit.on('click', () => {
-                this.editTest(data.id, this.template);
-              });
+  //             <button type="button" class="btn btn-light mr-1">
+  //             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-up-right" viewBox="0 0 16 16">
+  //             <path fill-rule="evenodd" d="M6.364 13.5a.5.5 0 0 0 .5.5H13.5a1.5 1.5 0 0 0 1.5-1.5v-10A1.5 1.5 0 0 0 13.5 1h-10A1.5 1.5 0 0 0 2 2.5v6.636a.5.5 0 1 0 1 0V2.5a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v10a.5.5 0 0 1-.5.5H6.864a.5.5 0 0 0-.5.5"/>
+  //             <path fill-rule="evenodd" d="M11 5.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793l-8.147 8.146a.5.5 0 0 0 .708.708L10 6.707V10.5a.5.5 0 0 0 1 0z"/>
+  //             </svg>
+  //                  </button>
+  //           `,
+  //             },
+  //           ],
+  //           rowCallback: (row: Node, data: any, index: number) => {
+  //             const btnView = $('button:first', row);
+  //             const btnEdit = $('button:eq(1)', row);
+  //             const btnDelete = $('button:eq(2)', row);
+  //             const btnSubmitionDetails = $('button:last', row);
+  //             // Attach click event handlers to the buttons
+  //             btnView.on('click', () => {
+  //               this.viewTestDetail(data.id, this.templateDetails);
+  //             });
 
-              btnDelete.on('click', () => {
-                this.deleteTest(data.id);
-              });
+  //             btnEdit.on('click', () => {
+  //               this.editTest(data.id, this.template);
+  //             });
 
-              btnSubmitionDetails.on('click', () => {
-                this.router.navigateByUrl('/establisehdAnswerlist/' + data.id);
-              });
+  //             btnDelete.on('click', () => {
+  //               this.deleteTest(data.id);
+  //             });
 
-              return row;
-            },
+  //             btnSubmitionDetails.on('click', () => {
+  //               this.router.navigateByUrl('/establisehdAnswerlist/' + data.id);
+  //             });
 
-            lengthMenu: [5, 10, 25],
-          });
-        }, 1);
-      });
+  //             return row;
+  //           },
+
+  //           lengthMenu: [5, 10, 25],
+  //         });
+  //       }, 1);
+  //     });
+  // }
+
+  editProgram(id: number) {
+    this.joinProgramService._getProgramDetail(id).subscribe({
+      next: (response: ResponseResult) => {
+        if (response.statusCode == StatusCodes.success) {
+          this.joinProgramModel = response.data;
+          if (this.joinProgramModel.participationTestViewModels != null) {
+            this.participationTestViewModelList =
+              this.joinProgramModel.participationTestViewModels;
+
+            if (this.participationTestViewModel.questionViewModels != null) {
+              this.questionViewModelList =
+                this.participationTestViewModel.questionViewModels;
+            }
+          }
+          if (this.joinProgramModel.interviewsViewModels != null) {
+            this.interviewsViewModels =
+              this.joinProgramModel.interviewsViewModels;
+          }
+          if (this.joinProgramModel.workshopsViewModels != null) {
+            this.workshopsViewModels =
+              this.joinProgramModel.workshopsViewModels;
+          }
+          if (this.joinProgramModel.joinProgramChallengesViewModels != null) {
+            this.joinProgramChallengesViewModels =
+              this.joinProgramModel.joinProgramChallengesViewModels;
+          }
+        }
+      },
+    });
   }
   addTest() {
     this.participationTestViewModel.questionViewModels =
@@ -498,11 +550,9 @@ export class AddProgramComponent implements OnInit {
     const index = this.participationTestViewModelList.findIndex(
       (item) => item.id === this.participationTestViewModel.id
     );
-
     // const existingInterview = this.interviewsViewModels.find(
     //   (item) => item.id === this.interviewsViewModel.id
     // );
-
     if (index !== -1 && this.participationTestViewModel.id !== -1) {
       // Remove the existing item at the specific index and insert the updated item at the same index
       this.participationTestViewModelList.splice(
@@ -512,12 +562,10 @@ export class AddProgramComponent implements OnInit {
       );
     } else {
       // If the item is not found, simply push the new item
-
       this.participationTestViewModelList.push(this.participationTestViewModel);
     }
 
-    this.initWrokshopModel();
-    this.file as File;
+    this.initForm();
     this.modalRef?.hide();
 
     //   this.joinProgramService.add(this.participationTestViewModel).subscribe({
@@ -563,14 +611,14 @@ export class AddProgramComponent implements OnInit {
       this.participationTestViewModel.questionViewModels =
         this.questionViewModel;
       this.joinProgramService
-        .update(this.participationTestViewModel)
+        ._updateTest(this.participationTestViewModel)
         .subscribe({
           next: (response: ResponseResult) => {
             if (response.statusCode == StatusCodes.success) {
               this.tosterService.success(response.message);
               this.initForm();
               this.modalRef?.hide();
-              this.initilizeDataTable();
+              // this.initilizeDataTable();
             } else {
               this.tosterService.error(response.message);
             }
@@ -579,27 +627,40 @@ export class AddProgramComponent implements OnInit {
     }
   }
 
-  viewTestDetails(id: number, template: TemplateRef<any> | undefined) {
+  viewTestDetail(id: number, template: TemplateRef<any> | undefined) {
     if (!template) {
       return;
     }
-    this.joinProgramService._getDetail(id).subscribe({
-      next: (response: ResponseResult) => {
-        if (response.statusCode == StatusCodes.success) {
-          this.participationTestViewModel = response.data;
-          if (this.participationTestViewModel.questionViewModels != null) {
-            this.questionViewModelList =
-              this.participationTestViewModel.questionViewModels;
-          }
 
-          this.modalRef = this.modalService.show(template, {
-            class: 'gray modal-lg',
-          });
-        } else {
-          this.tosterService.error(response.message);
-        }
-      },
-    });
+    if (this.joinProgramModel.id == 0) {
+      this.participationTestViewModel = this.participationTestViewModelList[id];
+      this.participationTestViewModel.id = id;
+
+      if (this.participationTestViewModel.questionViewModels != null) {
+        this.questionViewModelList =
+          this.participationTestViewModel.questionViewModels;
+      }
+    } else {
+      this.joinProgramService._getTestDetail(id).subscribe({
+        next: (response: ResponseResult) => {
+          if (response.statusCode == StatusCodes.success) {
+            this.participationTestViewModel = response.data;
+            if (this.participationTestViewModel.questionViewModels != null) {
+              this.questionViewModelList =
+                this.participationTestViewModel.questionViewModels;
+            }
+          } else {
+            this.tosterService.error(response.message);
+          }
+        },
+      });
+    }
+
+    if (this.participationTestViewModel != null) {
+      this.modalRef = this.modalService.show(template, {
+        class: 'gray modal-lg',
+      });
+    }
   }
 
   editTest(id: number, template: TemplateRef<any> | undefined) {
@@ -613,25 +674,51 @@ export class AddProgramComponent implements OnInit {
       textAr: '',
       mQSOptionViewModel: [],
     };
-    this.joinProgramService._getDetail(id).subscribe({
-      next: (response: ResponseResult) => {
-        if (response.statusCode == StatusCodes.success) {
-          this.participationTestViewModel = response.data;
-          if (this.participationTestViewModel.questionViewModels != null) {
-            this.questionViewModelList =
-              this.participationTestViewModel.questionViewModels;
+
+    if (this.joinProgramModel.id == 0) {
+      this.participationTestViewModel = this.participationTestViewModelList[id];
+      this.participationTestViewModel.id = id;
+
+      if (this.participationTestViewModel.questionViewModels != null) {
+        this.questionViewModelList =
+          this.participationTestViewModel.questionViewModels;
+      }
+    } else {
+      this.joinProgramService._getTestDetail(id).subscribe({
+        next: (response: ResponseResult) => {
+          if (response.statusCode == StatusCodes.success) {
+            this.participationTestViewModel = response.data;
+            if (this.participationTestViewModel.questionViewModels != null) {
+              this.questionViewModelList =
+                this.participationTestViewModel.questionViewModels;
+            }
+          } else {
+            this.tosterService.error(response.message);
           }
-          this.modalRef = this.modalService.show(template, {
-            class: 'gray modal-lg',
-          });
-        } else {
-          this.tosterService.error(response.message);
-        }
-      },
-    });
+        },
+      });
+    }
+
+    if (this.participationTestViewModel != null) {
+      this.modalRef = this.modalService.show(template, {
+        class: 'gray modal-lg',
+      });
+    }
   }
 
-  deleteTest(id: any) {}
+  deleteTest(id: any) {
+    if (this.joinProgramModel.id == 0) {
+      this.participationTestViewModelList.splice(id, 1);
+    } else {
+      this.joinProgramService._deleteTest(id).subscribe({
+        next: (respone: ResponseResult) => {
+          if (respone.statusCode == StatusCodes.success)
+            this.tosterService.success(respone.message);
+          else this.tosterService.error(respone.message);
+        },
+      });
+    }
+  }
 
   addTestDetail(): void {
     if (
@@ -732,23 +819,23 @@ export class AddProgramComponent implements OnInit {
   saveWorkshop() {
     if (this.joinProgramModel.id == 0) {
       if (this.file != null) {
-        this.wrokshopsViewModel.file = this.file;
-        this.wrokshopsViewModel.imageUrl = this.file.name;
+        this.workshopsViewModel.file = this.file;
+        this.workshopsViewModel.imageUrl = this.file.name;
       }
-      const index = this.wrokshopsViewModels.findIndex(
-        (item) => item.id === this.wrokshopsViewModel.id
+      const index = this.workshopsViewModels.findIndex(
+        (item) => item.id === this.workshopsViewModel.id
       );
 
       // const existingInterview = this.interviewsViewModels.find(
       //   (item) => item.id === this.interviewsViewModel.id
       // );
 
-      if (index !== -1 && this.wrokshopsViewModel.id !== -1) {
+      if (index !== -1 && this.workshopsViewModel.id !== -1) {
         // Remove the existing item at the specific index and insert the updated item at the same index
-        this.wrokshopsViewModels.splice(index, 1, this.wrokshopsViewModel);
+        this.workshopsViewModels.splice(index, 1, this.workshopsViewModel);
       } else {
         // If the item is not found, simply push the new item
-        this.wrokshopsViewModels.push(this.wrokshopsViewModel);
+        this._workshopsViewModelsUpload.push(this.workshopsViewModel);
       }
 
       this.initWrokshopModel();
@@ -757,13 +844,30 @@ export class AddProgramComponent implements OnInit {
     } else {
       if (this.file != null) {
         this.upload(this.file);
-        this.wrokshopsViewModel.imageUrl = this.fileUrl;
-        this.wrokshopsViewModel.programId = this.joinProgramModel.id;
+        this.workshopsViewModel.imageUrl = this.fileUrl;
+        this.workshopsViewModel.programId = this.joinProgramModel.id;
       }
-      this.joinProgramService._addWrokshop(this.wrokshopsViewModel).subscribe({
+      this.workshopsViewModel.id = 0;
+      this.joinProgramService._addWorkshop(this.workshopsViewModel).subscribe({
         next: (response: ResponseResult) => {
           if (response.statusCode == StatusCodes.success) {
             this.tosterService.success(response.message);
+            this.modalRef?.hide();
+
+            const index = this.workshopsViewModels.findIndex(
+              (item) => item.id === this.workshopsViewModel.id
+            );
+            if (index !== -1 && this.workshopsViewModel.id !== -1) {
+              // Remove the existing item at the specific index and insert the updated item at the same index
+              this.workshopsViewModels.splice(
+                index,
+                1,
+                this.workshopsViewModel
+              );
+            } else {
+              // If the item is not found, simply push the new item
+              this._workshopsViewModelsUpload.push(this.workshopsViewModel);
+            }
           } else {
             this.tosterService.error(response.message);
           }
@@ -779,8 +883,8 @@ export class AddProgramComponent implements OnInit {
     }
 
     this.initWrokshopModel();
-    this.wrokshopsViewModel = this.wrokshopsViewModels[id];
-    this.wrokshopsViewModel.id = id;
+    this.workshopsViewModel = this.workshopsViewModels[id];
+    this.workshopsViewModel.id = id;
     //this.wrokshopsViewModels?.splice(id, 1);
 
     // // Add the file to FilePond
@@ -810,7 +914,7 @@ export class AddProgramComponent implements OnInit {
       return;
     }
     this.initWrokshopModel();
-    this.wrokshopsViewModel = this.wrokshopsViewModels[id];
+    this.workshopsViewModel = this.workshopsViewModels[id];
     // this.wrokshopsViewModels?.splice(id, 1);
 
     if (template) {
@@ -823,9 +927,9 @@ export class AddProgramComponent implements OnInit {
 
   deleteWrokshop(id: number) {
     if (this.joinProgramModel.id == 0) {
-      this.wrokshopsViewModels.splice(id, 1);
+      this.workshopsViewModels.splice(id, 1);
     } else {
-      this.joinProgramService._deleteWrokshop(id).subscribe({
+      this.joinProgramService._deleteWorkshop(id).subscribe({
         next: (respone: ResponseResult) => {
           if (respone.statusCode == StatusCodes.success)
             this.tosterService.success(respone.message);
@@ -836,30 +940,30 @@ export class AddProgramComponent implements OnInit {
   }
 
   removeImageWrokshop() {
-    this.wrokshopsViewModel.imageUrl == null;
-    this.wrokshopsViewModel.file == null;
+    this.workshopsViewModel.imageUrl == null;
+    this.workshopsViewModel.file == null;
   }
 
   updateWrokShop() {
     if (this.joinProgramModel.id == 0) {
       if (this.file != null) {
-        this.wrokshopsViewModel.file = this.file;
-        this.wrokshopsViewModel.imageUrl = this.file.name;
+        this.workshopsViewModel.file = this.file;
+        this.workshopsViewModel.imageUrl = this.file.name;
       }
-      const index = this.wrokshopsViewModels.findIndex(
-        (item) => item.id === this.wrokshopsViewModel.id
+      const index = this.workshopsViewModels.findIndex(
+        (item) => item.id === this.workshopsViewModel.id
       );
 
       // const existingInterview = this.interviewsViewModels.find(
       //   (item) => item.id === this.interviewsViewModel.id
       // );
 
-      if (index !== -1 && this.wrokshopsViewModel.id !== -1) {
+      if (index !== -1 && this.workshopsViewModel.id !== -1) {
         // Remove the existing item at the specific index and insert the updated item at the same index
-        this.wrokshopsViewModels.splice(index, 1, this.wrokshopsViewModel);
+        this.workshopsViewModels.splice(index, 1, this.workshopsViewModel);
       } else {
         // If the item is not found, simply push the new item
-        this.wrokshopsViewModels.push(this.wrokshopsViewModel);
+        this.workshopsViewModels.push(this.workshopsViewModel);
       }
 
       this.initWrokshopModel();
@@ -868,9 +972,9 @@ export class AddProgramComponent implements OnInit {
     } else {
       if (this.file != null) {
         this.upload(this.file);
-        this.wrokshopsViewModel.imageUrl = this.fileUrl;
+        this.workshopsViewModel.imageUrl = this.fileUrl;
         this.joinProgramService
-          ._updateWrokshop(this.wrokshopsViewModel)
+          ._updateWorkshop(this.workshopsViewModel)
           .subscribe({
             next: (respone: ResponseResult) => {
               if (respone.statusCode == StatusCodes.success)
@@ -1049,7 +1153,7 @@ export class AddProgramComponent implements OnInit {
     } else {
       if (this.file != null) {
         this.upload(this.file);
-        this.wrokshopsViewModel.imageUrl = this.fileUrl;
+        this.workshopsViewModel.imageUrl = this.fileUrl;
         this.joinProgramService
           ._updateInterView(this.interviewsViewModel)
           .subscribe({
@@ -1200,31 +1304,57 @@ export class AddProgramComponent implements OnInit {
 
   addProgram() {
     if (this.joinProgramModel.id == 0)
-      if (this.wrokshopsViewModels.length > 0) {
-        //this.upload();
-        for (let workshop of this.wrokshopsViewModels) {
-          if (workshop.file != null) {
-            this.upload(workshop.file);
-            workshop.imageUrl = this.fileUrl;
-          }
-          this._wrokshopsViewModelsUpload.push(workshop);
+      // if (this.wrokshopsViewModels.length > 0) {
+      //   //this.upload();
+      //   for (let workshop of this.wrokshopsViewModels) {
+      //     if (workshop.file != null) {
+      //       this.upload(workshop.file);
+      //       workshop.imageUrl = this.fileUrl;
+      //     }
+      //     this._wrokshopsViewModelsUpload.push(workshop);
+      //   }
+      // }
+
+      for (let workshop of this.workshopsViewModels) {
+        // Check if the interview is not in _interviewsViewModelsUpload
+        const alreadyUploaded = this._workshopsViewModelsUpload.some(
+          (uploadedWorkshop) => uploadedWorkshop === workshop
+        );
+
+        if (!alreadyUploaded && workshop.file != null) {
+          this.upload(workshop.file);
+          workshop.imageUrl = this.fileUrl;
+          this._workshopsViewModelsUpload.push(workshop); // Add to the uploaded list
         }
       }
 
     if (this.interviewsViewModels.length > 0) {
-      //this.upload();
+      // for (let interview of this.interviewsViewModels) {
+      //   if (interview.file != null)
+      //   {
+      //     this.upload(interview.file);
+      //     interview.imageUrl = this.fileUrl;
+      //   }
+      //      this._interviewsViewModelsUpload.push(interview);
+      // }
+
       for (let interview of this.interviewsViewModels) {
-        if (interview.file != null) {
+        // Check if the interview is not in _interviewsViewModelsUpload
+        const alreadyUploaded = this._interviewsViewModelsUpload.some(
+          (uploadedInterview) => uploadedInterview === interview
+        );
+
+        if (!alreadyUploaded && interview.file != null) {
           this.upload(interview.file);
           interview.imageUrl = this.fileUrl;
+          this._interviewsViewModelsUpload.push(interview); // Add to the uploaded list
         }
-        this._interviewsViewModelsUpload.push(interview);
       }
     }
 
     this.joinProgramModel.interviewsViewModels =
       this._interviewsViewModelsUpload;
-    this.joinProgramModel.wrokshopsViewModels = this._wrokshopsViewModelsUpload;
+    this.joinProgramModel.workshopsViewModels = this._workshopsViewModelsUpload;
     this.joinProgramModel.joinProgramChallengesViewModels =
       this.challengeViewModels;
 
@@ -1232,9 +1362,16 @@ export class AddProgramComponent implements OnInit {
 
     this.joinProgramService._addProgram(this.joinProgramModel).subscribe({
       next: (respone: ResponseResult) => {
-        if (respone.statusCode == StatusCodes.success)
+        if (respone.statusCode == StatusCodes.success) {
+          this.initForm();
+          this._challengesViewModelsUpload = [];
+          this._interviewsViewModelsUpload = [];
+          this._workshopsViewModelsUpload = [];
+
           this.tosterService.success(respone.message);
-        else this.tosterService.error(respone.message);
+        } else {
+          this.tosterService.error(respone.message);
+        }
       },
     });
   }
@@ -1249,7 +1386,7 @@ export class AddProgramComponent implements OnInit {
           finalize(() => {
             this.selectedFiles = undefined;
 
-            this.wrokshopsViewModel.imageUrl = this.fileUrl;
+            this.workshopsViewModel.imageUrl = this.fileUrl;
           })
         )
         .subscribe({

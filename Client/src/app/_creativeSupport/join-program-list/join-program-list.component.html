@@ -1,0 +1,65 @@
+<div class="main-content">
+  <div class="page-content">
+    <div class="container-fluid">
+      <div class="card">
+        <div class="card-header align-items-center d-flex">
+          <h4 class="card-title mb-0 flex-grow-1">
+            {{ "ProgramsList" | translate }}
+          </h4>
+          <div class="flex-shrink-0">
+            <div class="d-flex align-items-center">
+              <input
+                type="text"
+                class="form-control me-3"
+                data-provider="flatpickr"
+                data-date-format="d M, Y"
+                data-range-date="true"
+                placeholder="Select Date Range"
+              />
+              <select
+                class="form-select mb-0 me-2"
+                aria-label="Default select example"
+              >
+                <option selected>{{ "Status" | translate }}</option>
+              </select>
+              <button
+                type="button"
+                class="btn btn-light waves-effect waves-light ms-2 me-2 col-1"
+              >
+                <i class="ri-search-2-line"></i>
+              </button>
+              <!-- |
+              <a
+                type="button"
+                class="btn btn-danger waves-effect waves-light ms-2 col-3"
+                id="btnAdd"
+                style="float: inline-end"
+                (click)="openModal(template)"
+              >
+                {{ "AddNew" | translate }}
+              </a> -->
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <table class="table table-nowrap" id="joinProgramDataTable">
+            <thead>
+              <tr>
+                <th>{{ "ID" | translate }}</th>
+                <th>{{ "DescriptionEn" | translate }}</th>
+                <th>{{ "DescriptionAr" | translate }}</th>
+                <th>{{ "StartDate" | translate }}</th>
+                <th>{{ "EndDate" | translate }}</th>
+                <th>{{ "Status" | translate }}</th>
+                <th>{{ "Actions" | translate }}</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!-- container-fluid -->
+  </div>
+  <!-- End Page-content -->
+</div>

@@ -36,7 +36,7 @@ export class TargetCompainsListComponent {
     private modalService: BsModalService,
     private targetCompainService: TargetCompainService,
     private router: Router,
-    private globalService : GlobalServiceService
+    private globalService: GlobalServiceService
   ) {
     this.targetCompainsOptionModel = {
       id: 0,

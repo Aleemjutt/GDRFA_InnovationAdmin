@@ -1,6 +1,7 @@
 import { JoinProgramChallengeViewModel } from './joinProgramChallengeViewModel';
 import { InterviewViewModel } from './interviewViewModel';
-import { WrokshopViewModel } from './wrokshopViewModel';
+import { WorkshopViewModel } from './workshopViewModel';
+import { ParticipationTestViewModel } from './participatingTestViewModel';
 
 export interface joinProgramViewModel {
   id: number;
@@ -9,7 +10,8 @@ export interface joinProgramViewModel {
   statusCode: StautsCode | null;
   joinProgramChallengesViewModels: JoinProgramChallengeViewModel[] | null;
   interviewsViewModels: InterviewViewModel[] | null;
-  wrokshopsViewModels: WrokshopViewModel[] | null;
+  workshopsViewModels: WorkshopViewModel[] | null;
+  participationTestViewModels: ParticipationTestViewModel[] | null;
 }
 
 export enum StautsCode {

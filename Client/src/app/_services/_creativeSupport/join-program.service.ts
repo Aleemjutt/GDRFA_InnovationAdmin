@@ -1,10 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { id } from '@swimlane/ngx-charts';
 import { GlobalServiceService } from 'src/app/_global/-global-service.service';
 import { ChallengeViewModel } from 'src/app/_models/CreativeSupport/challengeViewModel';
 import { InterviewViewModel } from 'src/app/_models/CreativeSupport/interviewViewModel';
 import { joinProgramViewModel } from 'src/app/_models/CreativeSupport/joinProgramViewModel';
-import { WrokshopViewModel } from 'src/app/_models/CreativeSupport/wrokshopViewModel';
+import { WorkshopViewModel } from 'src/app/_models/CreativeSupport/workshopViewModel';
 import { ResponseResult } from 'src/app/_models/responseResult';
 import { environment } from 'src/environments/environment.development';
 
@@ -20,6 +21,20 @@ export class JoinProgramService {
     private httpClient: HttpClient,
     private globalService: GlobalServiceService
   ) {}
+
+  _getProgramList() {
+    return this.httpClient.get<ResponseResult>(
+      this.baseUrl + 'joinProgram/list',
+      this.globalService.getHttpOptions()
+    );
+  }
+
+  _getProgramDetail(id: number) {
+    return this.httpClient.get<ResponseResult>(
+      this.baseUrl + 'joinProgram/detailProgram?id=' + id,
+      this.globalService.getHttpOptions()
+    );
+  }
 
   _addProgram(model: joinProgramViewModel) {
     return this.httpClient.post<ResponseResult>(
@@ -51,7 +66,7 @@ export class JoinProgramService {
     );
   }
 
-  add(model: any | null) {
+  _addTest(model: any | null) {
     console.log('test', model);
     return this.httpClient.post<ResponseResult>(
       this.baseUrl + 'creativeSupport/joinProgram/addParticipateTest',
@@ -60,40 +75,52 @@ export class JoinProgramService {
     );
   }
 
-  update(model: any | null) {
-    return this.httpClient.post<ResponseResult>(
+  _updateTest(model: any | null) {
+    return this.httpClient.put<ResponseResult>(
       this.baseUrl + 'creativeSupport/updateParticipateTest',
       model,
       this.globalService.getHttpOptions()
     );
   }
 
-  _getDetail(id: number) {
+  _getTestDetail(id: number) {
     return this.httpClient.get<ResponseResult>(
       this.baseUrl + 'creativeSupport/getParticipateTestDetail?id=' + id,
       this.globalService.getHttpOptions()
     );
   }
-  // WrokShop
-  _addWrokshop(model: WrokshopViewModel) {
-    return this.httpClient.post<ResponseResult>(
-      this.baseUrl + 'joinProgram/addWrokshop',
-      model,
-      this.globalService.getHttpOptions()
-    );
-  }
 
-  _updateWrokshop(model: WrokshopViewModel) {
-    return this.httpClient.put<ResponseResult>(
-      this.baseUrl + 'joinProgram/updateWrokshop',
-      model,
-      this.globalService.getHttpOptions()
-    );
-  }
-
-  _deleteWrokshop(id: number) {
+  _deleteTest(id: number) {
     return this.httpClient.delete<ResponseResult>(
-      this.baseUrl + 'joinProgram/deleteWrokshop?id=' + id,
+      this.baseUrl + 'creativeSupport/deleteTest?id=' + id,
+      this.globalService.getHttpOptions()
+    );
+  }
+  // Workshop
+  _addWorkshop(model: WorkshopViewModel) {
+    return this.httpClient.post<ResponseResult>(
+      this.baseUrl + 'joinProgram/addWorkshop',
+      model,
+      this.globalService.getHttpOptions()
+    );
+  }
+
+  _updateWorkshop(model: WorkshopViewModel) {
+    return this.httpClient.put<ResponseResult>(
+      this.baseUrl + 'joinProgram/updateWorkshop',
+      model,
+      this.globalService.getHttpOptions()
+    );
+  }
+  _detailWorkshop(id: number) {
+    return this.httpClient.get<ResponseResult>(
+      this.baseUrl + 'joinProgram/detailWorkshop?id=' + id,
+      this.globalService.getHttpOptions()
+    );
+  }
+  _deleteWorkshop(id: number) {
+    return this.httpClient.delete<ResponseResult>(
+      this.baseUrl + 'joinProgram/deleteWorkshop?id=' + id,
       this.globalService.getHttpOptions()
     );
   }
@@ -115,7 +142,12 @@ export class JoinProgramService {
       this.globalService.getHttpOptions()
     );
   }
-
+  _detailInterView(id: number) {
+    return this.httpClient.get<ResponseResult>(
+      this.baseUrl + 'joinProgram/detailInterview?id=' + id,
+      this.globalService.getHttpOptions()
+    );
+  }
   _deleteInterView(id: number) {
     return this.httpClient.delete<ResponseResult>(
       this.baseUrl + 'joinProgram/deleteInterview?id=' + id,
@@ -137,6 +169,13 @@ export class JoinProgramService {
     return this.httpClient.put<ResponseResult>(
       this.baseUrl + 'joinProgram/updateChalllenge',
       model,
+      this.globalService.getHttpOptions()
+    );
+  }
+
+  _detailChallenge(id: number) {
+    return this.httpClient.get<ResponseResult>(
+      this.baseUrl + 'joinProgram/detailChallenge?id=' + id,
       this.globalService.getHttpOptions()
     );
   }

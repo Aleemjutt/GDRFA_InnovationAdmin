@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
@@ -43,7 +43,8 @@ export class JoinProgramComponent implements OnInit {
     private tosterService: ToastrService,
     private joinProgramService: JoinProgramService,
     private modalService: BsModalService,
-    private router: Router
+    private router: Router,
+  
   ) {
     this.questionViewModel = {
       id: 0,
@@ -72,6 +73,8 @@ export class JoinProgramComponent implements OnInit {
         // Update the ng-select label property when the language changes
         this.initilizeDataTable();
       });
+
+ 
   }
 
   initForm() {
@@ -248,45 +251,49 @@ export class JoinProgramComponent implements OnInit {
   addTest() {
     this.participationTestViewModel.questionViewModels =
       this.questionViewModelList;
-    this.joinProgramService.add(this.participationTestViewModel).subscribe({
-      next: (response: ResponseResult) => {
-        if (
-          response.statusCode == StatusCodes.success ||
-          response.statusCode == StatusCodes.update
-        ) {
-          this.tosterService.success(response.message);
-          this.modalRef?.hide();
-          this.initForm();
-          this.initilizeDataTable();
-        } else if (response.statusCode == StatusCodes.alreadyExists) {
-          this.tosterService.info(response.message);
-        } else {
-          this.tosterService.error(response.message);
-        }
-      },
-    });
+    this.joinProgramService
+      ._addTest(this.participationTestViewModel)
+      .subscribe({
+        next: (response: ResponseResult) => {
+          if (
+            response.statusCode == StatusCodes.success ||
+            response.statusCode == StatusCodes.update
+          ) {
+            this.tosterService.success(response.message);
+            this.modalRef?.hide();
+            this.initForm();
+            this.initilizeDataTable();
+          } else if (response.statusCode == StatusCodes.alreadyExists) {
+            this.tosterService.info(response.message);
+          } else {
+            this.tosterService.error(response.message);
+          }
+        },
+      });
   }
   updateTest() {
     this.participationTestViewModel.questionViewModels = this.questionViewModel;
-    this.joinProgramService.update(this.participationTestViewModel).subscribe({
-      next: (response: ResponseResult) => {
-        if (response.statusCode == StatusCodes.success) {
-          this.tosterService.success(response.message);
-          this.initForm();
-          this.modalRef?.hide();
-          this.initilizeDataTable();
-        } else {
-          this.tosterService.error(response.message);
-        }
-      },
-    });
+    this.joinProgramService
+      ._updateTest(this.participationTestViewModel)
+      .subscribe({
+        next: (response: ResponseResult) => {
+          if (response.statusCode == StatusCodes.success) {
+            this.tosterService.success(response.message);
+            this.initForm();
+            this.modalRef?.hide();
+            this.initilizeDataTable();
+          } else {
+            this.tosterService.error(response.message);
+          }
+        },
+      });
   }
 
   viewTestDetails(id: number, template: TemplateRef<any> | undefined) {
     if (!template) {
       return;
     }
-    this.joinProgramService._getDetail(id).subscribe({
+    this.joinProgramService._getTestDetail(id).subscribe({
       next: (response: ResponseResult) => {
         if (response.statusCode == StatusCodes.success) {
           this.participationTestViewModel = response.data;
@@ -314,7 +321,7 @@ export class JoinProgramComponent implements OnInit {
       textAr: '',
       mQSOptionViewModel: [],
     };
-    this.joinProgramService._getDetail(id).subscribe({
+    this.joinProgramService._getTestDetail(id).subscribe({
       next: (response: ResponseResult) => {
         if (response.statusCode == StatusCodes.success) {
           this.participationTestViewModel = response.data;
