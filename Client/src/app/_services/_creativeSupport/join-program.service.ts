@@ -4,6 +4,7 @@ import { id } from '@swimlane/ngx-charts';
 import { GlobalServiceService } from 'src/app/_global/-global-service.service';
 import { ChallengeViewModel } from 'src/app/_models/CreativeSupport/challengeViewModel';
 import { InterviewViewModel } from 'src/app/_models/CreativeSupport/interviewViewModel';
+import { JoinProgramChallengeViewModel } from 'src/app/_models/CreativeSupport/joinProgramChallengeViewModel';
 import { joinProgramViewModel } from 'src/app/_models/CreativeSupport/joinProgramViewModel';
 import { WorkshopViewModel } from 'src/app/_models/CreativeSupport/workshopViewModel';
 import { ResponseResult } from 'src/app/_models/responseResult';
@@ -125,6 +126,13 @@ export class JoinProgramService {
     );
   }
 
+  _listWorkshop() {
+    return this.httpClient.get<ResponseResult>(
+      this.baseUrl + 'joinProgram/listWorkshop',
+      this.globalService.getHttpOptions()
+    );
+  }
+
   //InterView
 
   _addInterView(model: InterviewViewModel) {
@@ -155,9 +163,16 @@ export class JoinProgramService {
     );
   }
 
+  _listInterview() {
+    return this.httpClient.get<ResponseResult>(
+      this.baseUrl + 'joinProgram/listInterview',
+      this.globalService.getHttpOptions()
+    );
+  }
+
   // Challenge
 
-  _addChallenge(model: ChallengeViewModel) {
+  _addChallenge(model: JoinProgramChallengeViewModel) {
     return this.httpClient.post<ResponseResult>(
       this.baseUrl + 'joinProgram/addChallenge',
       model,
@@ -165,9 +180,9 @@ export class JoinProgramService {
     );
   }
 
-  _updateChallenge(model: ChallengeViewModel) {
+  _updateChallenge(model: JoinProgramChallengeViewModel) {
     return this.httpClient.put<ResponseResult>(
-      this.baseUrl + 'joinProgram/updateChalllenge',
+      this.baseUrl + 'joinProgram/updateChallenge',
       model,
       this.globalService.getHttpOptions()
     );
@@ -183,6 +198,13 @@ export class JoinProgramService {
   _deleteChallenge(id: number) {
     return this.httpClient.delete<ResponseResult>(
       this.baseUrl + 'joinProgram/deleteChallenge?id=' + id,
+      this.globalService.getHttpOptions()
+    );
+  }
+
+  _listChallenge() {
+    return this.httpClient.get<ResponseResult>(
+      this.baseUrl + 'joinProgram/listChallenge',
       this.globalService.getHttpOptions()
     );
   }

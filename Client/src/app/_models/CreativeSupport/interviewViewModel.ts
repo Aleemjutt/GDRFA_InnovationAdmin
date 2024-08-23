@@ -6,7 +6,7 @@ export interface InterviewViewModel {
   latitude: string;
   longitude: string;
   locatoinDescription: string;
-  interviewDate: string;
+  interviewDate: string| null;
   interviewTime: string | null;
   programId: number | null;
   imageUrl: string;

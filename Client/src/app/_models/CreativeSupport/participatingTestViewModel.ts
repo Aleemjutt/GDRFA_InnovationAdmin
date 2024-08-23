@@ -3,6 +3,7 @@ export interface ParticipationTestViewModel {
   questionViewModels: QuestionViewModel[] | null;
   participationTestAnswersViewModels: ParticipationTestAnswerViewModel[] | null;
   status: boolean;
+  programId: number;
 }
 
 export interface QuestionViewModel {

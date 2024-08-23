@@ -4,15 +4,14 @@ import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { FilePond, FilePondOptions } from 'filepond';
+import { FilePondOptions } from 'filepond';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { FilePondModule } from 'ngx-filepond';
 import { ToastrService } from 'ngx-toastr';
-import { finalize, Observable, Subscription } from 'rxjs';
+import { EMPTY, finalize, Observable, Subscription } from 'rxjs';
 import { GlobalServiceService } from 'src/app/_global/-global-service.service';
-import { ChallengeViewModel } from 'src/app/_models/CreativeSupport/challengeViewModel';
 import { InterviewViewModel } from 'src/app/_models/CreativeSupport/interviewViewModel';
 import { JoinProgramChallengeViewModel } from 'src/app/_models/CreativeSupport/joinProgramChallengeViewModel';
 import {
@@ -75,20 +74,20 @@ export class AddProgramComponent implements OnInit {
     | undefined;
   modalRef?: BsModalRef;
   joinProgramModel: joinProgramViewModel;
-  joinProgramChallengesViewModels = [] as JoinProgramChallengeViewModel[];
-  interviewsViewModels = [] as InterviewViewModel[];
-  workshopsViewModels = [] as WorkshopViewModel[];
-  challengeViewModels = [] as ChallengeViewModel[];
+  joinProgramChallengeViewModels = [] as JoinProgramChallengeViewModel[];
 
-  _workshopsViewModelsUpload = [] as WorkshopViewModel[];
-  _interviewsViewModelsUpload = [] as InterviewViewModel[];
-  _challengesViewModelsUpload = [] as ChallengeViewModel[];
+  interviewViewModels = [] as InterviewViewModel[];
+  workshopViewModels = [] as WorkshopViewModel[];
 
-  challengeViewModel: ChallengeViewModel;
+  _workshopViewModelsUpload = [] as WorkshopViewModel[];
+  _interviewViewModelsUpload = [] as InterviewViewModel[];
+  _challengesViewModelsUpload = [] as JoinProgramChallengeViewModel[];
 
-  workshopsViewModel: WorkshopViewModel;
-  interviewsViewModel: InterviewViewModel;
-  joinProgramChallengesViewModel: JoinProgramChallengeViewModel;
+  joinProgramChallengeViewModel: JoinProgramChallengeViewModel;
+
+  workshopViewModel: WorkshopViewModel;
+  interviewViewModel: InterviewViewModel;
+
   @ViewChild('template') template: TemplateRef<any> | undefined;
   @ViewChild('templateDetails') templateDetails: TemplateRef<any> | undefined;
   oneAtATime: any = true;
@@ -119,6 +118,8 @@ export class AddProgramComponent implements OnInit {
   attachment: any;
   fileUrl: string = '';
   isView: boolean = true;
+
+  _id: number = 0;
   constructor(
     public globalService: GlobalServiceService,
     private tosterService: ToastrService,
@@ -133,9 +134,9 @@ export class AddProgramComponent implements OnInit {
       startDate: '',
       endDate: '',
       statusCode: StautsCode.IActive,
-      joinProgramChallengesViewModels: this.joinProgramChallengesViewModels,
-      interviewsViewModels: this.interviewsViewModels,
-      workshopsViewModels: this.workshopsViewModels,
+      joinProgramChallengeViewModels: this.joinProgramChallengeViewModels,
+      interviewViewModels: this.interviewViewModels,
+      workshopViewModels: this.workshopViewModels,
       participationTestViewModels: this.participationTestViewModelList,
     };
 
@@ -158,9 +159,10 @@ export class AddProgramComponent implements OnInit {
       questionViewModels: [],
       participationTestAnswersViewModels: [],
       status: false,
+      programId: 0,
     };
 
-    this.joinProgramChallengesViewModel = {
+    this.joinProgramChallengeViewModel = {
       id: -1,
       titleEn: '',
       titleAr: '',
@@ -170,7 +172,7 @@ export class AddProgramComponent implements OnInit {
       programId: 0,
     };
 
-    this.interviewsViewModel = {
+    this.interviewViewModel = {
       id: -1,
       nameEn: '',
       nameAr: '',
@@ -186,7 +188,7 @@ export class AddProgramComponent implements OnInit {
       venue: 1,
       file: null,
     };
-    this.workshopsViewModel = {
+    this.workshopViewModel = {
       id: -1,
       nameEn: '',
       nameAr: '',
@@ -195,22 +197,12 @@ export class AddProgramComponent implements OnInit {
       longitude: '',
       locationDescription: '',
       workshopDate: '',
-      wrokshopTime: '',
+      workshopTime: '',
       programId: 0,
       venue: 1,
       imageUrl: '',
       urlBase64: '',
       file: null,
-    };
-
-    this.challengeViewModel = {
-      id: -1,
-      titleAr: '',
-      titleEn: '',
-      descriptionEn: '',
-      descriptionAr: '',
-      link: '',
-      programId: 0,
     };
   }
 
@@ -223,7 +215,7 @@ export class AddProgramComponent implements OnInit {
   };
 
   initWrokshopModel() {
-    this.workshopsViewModel = {
+    this.workshopViewModel = {
       id: -1,
       nameEn: '',
       nameAr: '',
@@ -232,17 +224,18 @@ export class AddProgramComponent implements OnInit {
       longitude: '',
       locationDescription: '',
       workshopDate: '',
-      wrokshopTime: '',
+      workshopTime: '',
       programId: 0,
       venue: 1,
       imageUrl: '',
       urlBase64: '',
       file: null,
     };
+    this._id = 0;
   }
 
   initInterviewModel() {
-    this.interviewsViewModel = {
+    this.interviewViewModel = {
       id: -1,
       nameEn: '',
       nameAr: '',
@@ -261,7 +254,7 @@ export class AddProgramComponent implements OnInit {
   }
 
   initChallengedViewModel() {
-    this.challengeViewModel = {
+    this.joinProgramChallengeViewModel = {
       id: -1,
       titleAr: '',
       titleEn: '',
@@ -270,10 +263,11 @@ export class AddProgramComponent implements OnInit {
       link: '',
       programId: 0,
     };
+    this._id = 0;
   }
 
-  initJoinChallengeViewModel() {
-    this.joinProgramChallengesViewModel = {
+  initJoinJoinProgramChallengeViewModel() {
+    this.joinProgramChallengeViewModel = {
       id: -1,
       titleAr: '',
       titleEn: '',
@@ -352,6 +346,7 @@ export class AddProgramComponent implements OnInit {
       questionViewModels: [],
       participationTestAnswersViewModels: [],
       status: false,
+      programId: 0,
     };
     this.languageChangeSubscription = new Subscription();
 
@@ -359,8 +354,10 @@ export class AddProgramComponent implements OnInit {
     this.questionViewModelList = [];
     this.initWrokshopModel();
     this.initInterviewModel();
-    this.initJoinChallengeViewModel();
+    this.initJoinJoinProgramChallengeViewModel();
     this.initChallengedViewModel();
+
+    this._id = 0;
   }
   ngAfterViewInit() {
     // Ensure the FilePond instance is correctly assigned after the view is initialized
@@ -375,149 +372,19 @@ export class AddProgramComponent implements OnInit {
       );
   }
 
-  // initilizeDataTable(): void {
-  //   const currentLang = this.globalService.getCurrentLanguage();
-  //   const languageConfig =
-  //     currentLang === 'ar'
-  //       ? this.globalService.getArabicLanguageConfig()
-  //       : this.globalService.getEnglishLanguageConfig();
-  //   const datatable: any = $('#awardsDataTable').DataTable();
-  //   this.joinProgramService
-  //     ._getParticipateTestList()
-  //     .subscribe((response: ResponseResult) => {
-  //       // ////console.log(response.data, 'Data Table values');
-  //       console.log(response, 'response');
-  //       this.participationTestViewModelList = response.data;
-  //       // Datatable reloading
-  //       datatable.destroy();
-
-  //       setTimeout(() => {
-  //         $('#awardsDataTable').DataTable({
-  //           pagingType: 'full_numbers',
-  //           pageLength: 5,
-  //           processing: true,
-  //           data: this.participationTestViewModelList,
-  //           language: languageConfig,
-  //           columns: [
-  //             { data: 'id' },
-
-  //             {
-  //               data: (row: any) =>
-  //                 this.globalService.getStatusName(row.status),
-  //             },
-  //             {
-  //               data: 'data',
-  //               defaultContent: `
-  //             <button
-  //             type="button"
-  //             class="btn btn-light mr-1"
-  //             data-bs-toggle="modal"
-  //             data-bs-target="#exampleModal"
-  //             (click)="viewpartnerDetails()"
-  //             data-backdrop="static"
-  //             data-keyboard="false"
-  //           >
-  //           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
-  //           <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
-  //           <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
-  //           </svg>
-  //           </button>
-  //           <button
-  //           type="button"
-  //           class="btn btn-light mr-1"
-  //           data-bs-toggle="modal"
-  //           data-bs-target="#exampleModal"
-  //           (click)="editpartner(id, template)"
-  //           data-backdrop="static"
-  //           data-keyboard="false"
-  //         >
-  //           <svg
-  //             width="1em"
-  //             height="1em"
-  //             viewBox="0 0 16 16"
-  //             class="bi bi-pencil-square"
-  //             fill="currentColor"
-  //             xmlns="http://www.w3.org/2000/svg"
-  //           >
-  //             <path
-  //               d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"
-  //             />
-  //             <path
-  //               fill-rule="evenodd"
-  //               d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"
-  //             />
-  //           </svg>
-  //         </button>
-
-  //           <button
-  //               type="button"
-  //               class="btn btn-outline-danger  mr-1 "
-  //               data-bs-toggle="modal"
-  //               data-bs-target="#exampleModal"
-  //               (click)="deletepartner(id)"
-  //               data-backdrop="static"
-  //               data-keyboard="false"
-  //             >
-  //             <svg
-  //             width="1em"
-  //             height="1em"
-  //             viewBox="0 0 16 16"
-  //             class="bi bi-trash-fill"
-  //             fill="currentColor"
-  //             xmlns="http://www.w3.org/2000/svg"
-  //           >
-  //             <path
-  //               fill-rule="evenodd"
-  //               d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"
-  //             />
-  //           </svg>
-  //             </button>
-
-  //             <button type="button" class="btn btn-light mr-1">
-  //             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-up-right" viewBox="0 0 16 16">
-  //             <path fill-rule="evenodd" d="M6.364 13.5a.5.5 0 0 0 .5.5H13.5a1.5 1.5 0 0 0 1.5-1.5v-10A1.5 1.5 0 0 0 13.5 1h-10A1.5 1.5 0 0 0 2 2.5v6.636a.5.5 0 1 0 1 0V2.5a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v10a.5.5 0 0 1-.5.5H6.864a.5.5 0 0 0-.5.5"/>
-  //             <path fill-rule="evenodd" d="M11 5.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793l-8.147 8.146a.5.5 0 0 0 .708.708L10 6.707V10.5a.5.5 0 0 0 1 0z"/>
-  //             </svg>
-  //                  </button>
-  //           `,
-  //             },
-  //           ],
-  //           rowCallback: (row: Node, data: any, index: number) => {
-  //             const btnView = $('button:first', row);
-  //             const btnEdit = $('button:eq(1)', row);
-  //             const btnDelete = $('button:eq(2)', row);
-  //             const btnSubmitionDetails = $('button:last', row);
-  //             // Attach click event handlers to the buttons
-  //             btnView.on('click', () => {
-  //               this.viewTestDetail(data.id, this.templateDetails);
-  //             });
-
-  //             btnEdit.on('click', () => {
-  //               this.editTest(data.id, this.template);
-  //             });
-
-  //             btnDelete.on('click', () => {
-  //               this.deleteTest(data.id);
-  //             });
-
-  //             btnSubmitionDetails.on('click', () => {
-  //               this.router.navigateByUrl('/establisehdAnswerlist/' + data.id);
-  //             });
-
-  //             return row;
-  //           },
-
-  //           lengthMenu: [5, 10, 25],
-  //         });
-  //       }, 1);
-  //     });
-  // }
-
   editProgram(id: number) {
     this.joinProgramService._getProgramDetail(id).subscribe({
       next: (response: ResponseResult) => {
         if (response.statusCode == StatusCodes.success) {
           this.joinProgramModel = response.data;
+
+          this.joinProgramModel.startDate = this.globalService.ISODateFromate(
+            this.joinProgramModel.startDate
+          );
+          this.joinProgramModel.endDate = this.globalService.ISODateFromate(
+            this.joinProgramModel.endDate
+          );
+
           if (this.joinProgramModel.participationTestViewModels != null) {
             this.participationTestViewModelList =
               this.joinProgramModel.participationTestViewModels;
@@ -527,78 +394,101 @@ export class AddProgramComponent implements OnInit {
                 this.participationTestViewModel.questionViewModels;
             }
           }
-          if (this.joinProgramModel.interviewsViewModels != null) {
-            this.interviewsViewModels =
-              this.joinProgramModel.interviewsViewModels;
+          if (this.joinProgramModel.interviewViewModels != null) {
+            this.interviewViewModels =
+              this.joinProgramModel.interviewViewModels;
           }
-          if (this.joinProgramModel.workshopsViewModels != null) {
-            this.workshopsViewModels =
-              this.joinProgramModel.workshopsViewModels;
+          if (this.joinProgramModel.workshopViewModels != null) {
+            this.workshopViewModels = this.joinProgramModel.workshopViewModels;
           }
-          if (this.joinProgramModel.joinProgramChallengesViewModels != null) {
-            this.joinProgramChallengesViewModels =
-              this.joinProgramModel.joinProgramChallengesViewModels;
+          if (this.joinProgramModel.joinProgramChallengeViewModels != null) {
+            this.joinProgramChallengeViewModels =
+              this.joinProgramModel.joinProgramChallengeViewModels;
           }
         }
       },
     });
   }
-  addTest() {
-    this.participationTestViewModel.questionViewModels =
-      this.questionViewModelList;
-
-    const index = this.participationTestViewModelList.findIndex(
-      (item) => item.id === this.participationTestViewModel.id
-    );
-    // const existingInterview = this.interviewsViewModels.find(
-    //   (item) => item.id === this.interviewsViewModel.id
-    // );
-    if (index !== -1 && this.participationTestViewModel.id !== -1) {
-      // Remove the existing item at the specific index and insert the updated item at the same index
-      this.participationTestViewModelList.splice(
-        index,
-        1,
-        this.participationTestViewModel
+  checekIsActiveTest() {
+    if (this.participationTestViewModel.status) {
+      var isExist = this.participationTestViewModelList.find(
+        (a) => a.status == true
       );
+
+      if (isExist == null) {
+        return false;
+      } else {
+        return true;
+      }
     } else {
-      // If the item is not found, simply push the new item
-      this.participationTestViewModelList.push(this.participationTestViewModel);
+      return false;
     }
+  }
 
-    this.initForm();
-    this.modalRef?.hide();
+  addTest() {
+    if (!this.checekIsActiveTest()) {
+      if (this.joinProgramModel.id == 0) {
+        this.participationTestViewModel.questionViewModels =
+          this.questionViewModelList;
+        const index = this.participationTestViewModelList.findIndex(
+          (item) => item.id === this.participationTestViewModel.id
+        );
+        if (index !== -1 && this.participationTestViewModel.id !== -1) {
+          // Remove the existing item at the specific index and insert the updated item at the same index
+          this.participationTestViewModelList.splice(
+            index,
+            1,
+            this.participationTestViewModel
+          );
+        } else {
+          // If the item is not found, simply push the new item
+          this.participationTestViewModelList.push(
+            this.participationTestViewModel
+          );
+        }
 
-    //   this.joinProgramService.add(this.participationTestViewModel).subscribe({
-    //    next: (response: ResponseResult) => {
-    //     if (
-    //       response.statusCode == StatusCodes.success ||
-    //       response.statusCode == StatusCodes.update
-    //     ) {
-    //       this.tosterService.success(response.message);
-    //       this.modalRef?.hide();
-    //       this.initForm();
-    //       this.initilizeDataTable();
-    //     } else if (response.statusCode == StatusCodes.alreadyExists) {
-    //       this.tosterService.info(response.message);
-    //     } else {
-    //       this.tosterService.error(response.message);
-    //     }
-    //   },
-    // });
+        this.initForm();
+        this.modalRef?.hide();
+      } else {
+        //this.participationTestViewModel.id = this._id;
+        this.participationTestViewModel.programId = this.joinProgramModel.id;
+        this.participationTestViewModel.questionViewModels =
+          this.questionViewModelList;
+        this.joinProgramService
+          ._addTest(this.participationTestViewModel)
+          .subscribe({
+            next: (response: ResponseResult) => {
+              if (
+                response.statusCode == StatusCodes.success ||
+                response.statusCode == StatusCodes.update
+              ) {
+                this.tosterService.success(response.message);
+                this.modalRef?.hide();
+                this.listTest();
+                this.initForm();
+              } else if (response.statusCode == StatusCodes.alreadyExists) {
+                this.tosterService.info(response.message);
+              } else {
+                this.tosterService.error(response.message);
+              }
+            },
+          });
+      }
+    } else {
+      let message =
+        this.globalService.getCurrentLanguage() == 'en'
+          ? 'Only one test can be active at a time!'
+          : 'لا يمكن أن يكون هناك سوى اختبار واحد نشط في كل مرة!';
+      this.tosterService.error(message);
+    }
   }
   updateTest() {
     if (this.joinProgramModel.id == 0) {
       this.participationTestViewModel.questionViewModels =
         this.questionViewModelList;
-
       const index = this.participationTestViewModelList.findIndex(
         (item) => item.id === this.participationTestViewModel.id
       );
-
-      // const existingInterview = this.interviewsViewModels.find(
-      //   (item) => item.id === this.interviewsViewModel.id
-      // );
-
       if (index !== -1 && this.participationTestViewModel.id !== -1) {
         // Remove the existing item at the specific index and insert the updated item at the same index
         this.participationTestViewModelList.splice(
@@ -608,17 +498,18 @@ export class AddProgramComponent implements OnInit {
         );
       }
     } else {
+      this.participationTestViewModel.id = this._id;
       this.participationTestViewModel.questionViewModels =
         this.questionViewModel;
       this.joinProgramService
         ._updateTest(this.participationTestViewModel)
         .subscribe({
           next: (response: ResponseResult) => {
-            if (response.statusCode == StatusCodes.success) {
+            if (response.statusCode == StatusCodes.update) {
               this.tosterService.success(response.message);
+              this.listTest();
               this.initForm();
               this.modalRef?.hide();
-              // this.initilizeDataTable();
             } else {
               this.tosterService.error(response.message);
             }
@@ -641,19 +532,26 @@ export class AddProgramComponent implements OnInit {
           this.participationTestViewModel.questionViewModels;
       }
     } else {
-      this.joinProgramService._getTestDetail(id).subscribe({
-        next: (response: ResponseResult) => {
-          if (response.statusCode == StatusCodes.success) {
-            this.participationTestViewModel = response.data;
-            if (this.participationTestViewModel.questionViewModels != null) {
-              this.questionViewModelList =
-                this.participationTestViewModel.questionViewModels;
-            }
-          } else {
-            this.tosterService.error(response.message);
-          }
-        },
-      });
+      this.participationTestViewModel = this.participationTestViewModelList[id];
+      if (this.workshopViewModel != null) {
+        this.joinProgramService
+          ._getTestDetail(this.participationTestViewModel.id)
+          .subscribe({
+            next: (response: ResponseResult) => {
+              if (response.statusCode == StatusCodes.success) {
+                this.participationTestViewModel = response.data;
+                if (
+                  this.participationTestViewModel.questionViewModels != null
+                ) {
+                  this.questionViewModelList =
+                    this.participationTestViewModel.questionViewModels;
+                }
+              } else {
+                this.tosterService.error(response.message);
+              }
+            },
+          });
+      }
     }
 
     if (this.participationTestViewModel != null) {
@@ -677,6 +575,7 @@ export class AddProgramComponent implements OnInit {
 
     if (this.joinProgramModel.id == 0) {
       this.participationTestViewModel = this.participationTestViewModelList[id];
+      this._id = id;
       this.participationTestViewModel.id = id;
 
       if (this.participationTestViewModel.questionViewModels != null) {
@@ -684,7 +583,9 @@ export class AddProgramComponent implements OnInit {
           this.participationTestViewModel.questionViewModels;
       }
     } else {
-      this.joinProgramService._getTestDetail(id).subscribe({
+      this.participationTestViewModel = this.participationTestViewModelList[id];
+      this._id = this.participationTestViewModel.id;
+      this.joinProgramService._getTestDetail(this._id).subscribe({
         next: (response: ResponseResult) => {
           if (response.statusCode == StatusCodes.success) {
             this.participationTestViewModel = response.data;
@@ -710,11 +611,15 @@ export class AddProgramComponent implements OnInit {
     if (this.joinProgramModel.id == 0) {
       this.participationTestViewModelList.splice(id, 1);
     } else {
-      this.joinProgramService._deleteTest(id).subscribe({
+      let _id = this.participationTestViewModelList[id].id;
+      this.joinProgramService._deleteTest(_id).subscribe({
         next: (respone: ResponseResult) => {
-          if (respone.statusCode == StatusCodes.success)
+          if (respone.statusCode == StatusCodes.deleted) {
             this.tosterService.success(respone.message);
-          else this.tosterService.error(respone.message);
+            this.listTest();
+          } else {
+            this.tosterService.error(respone.message);
+          }
         },
       });
     }
@@ -737,6 +642,16 @@ export class AddProgramComponent implements OnInit {
         mQSOptionViewModel: [],
       };
     }
+  }
+
+  listTest() {
+    this.joinProgramService._getParticipateTestList().subscribe({
+      next: (response: ResponseResult) => {
+        if (response.statusCode == StatusCodes.success) {
+          this.participationTestViewModelList = response.data;
+        }
+      },
+    });
   }
 
   removeQuestion(index: number): void {
@@ -819,61 +734,72 @@ export class AddProgramComponent implements OnInit {
   saveWorkshop() {
     if (this.joinProgramModel.id == 0) {
       if (this.file != null) {
-        this.workshopsViewModel.file = this.file;
-        this.workshopsViewModel.imageUrl = this.file.name;
+        this.workshopViewModel.file = this.file;
+        this.workshopViewModel.imageUrl = this.file.name;
       }
-      const index = this.workshopsViewModels.findIndex(
-        (item) => item.id === this.workshopsViewModel.id
+      const index = this.workshopViewModels.findIndex(
+        (item) => item.id === this.workshopViewModel.id
       );
-
-      // const existingInterview = this.interviewsViewModels.find(
-      //   (item) => item.id === this.interviewsViewModel.id
-      // );
-
-      if (index !== -1 && this.workshopsViewModel.id !== -1) {
-        // Remove the existing item at the specific index and insert the updated item at the same index
-        this.workshopsViewModels.splice(index, 1, this.workshopsViewModel);
+      if (index !== -1 && this.workshopViewModel.id !== -1) {
+        this.workshopViewModels.splice(index, 1, this.workshopViewModel);
       } else {
-        // If the item is not found, simply push the new item
-        this._workshopsViewModelsUpload.push(this.workshopsViewModel);
+        this._workshopViewModelsUpload.push(this.workshopViewModel);
       }
-
       this.initWrokshopModel();
       this.file as File;
       this.modalRef?.hide();
     } else {
       if (this.file != null) {
-        this.upload(this.file);
-        this.workshopsViewModel.imageUrl = this.fileUrl;
-        this.workshopsViewModel.programId = this.joinProgramModel.id;
-      }
-      this.workshopsViewModel.id = 0;
-      this.joinProgramService._addWorkshop(this.workshopsViewModel).subscribe({
-        next: (response: ResponseResult) => {
-          if (response.statusCode == StatusCodes.success) {
-            this.tosterService.success(response.message);
-            this.modalRef?.hide();
-
-            const index = this.workshopsViewModels.findIndex(
-              (item) => item.id === this.workshopsViewModel.id
-            );
-            if (index !== -1 && this.workshopsViewModel.id !== -1) {
-              // Remove the existing item at the specific index and insert the updated item at the same index
-              this.workshopsViewModels.splice(
-                index,
-                1,
-                this.workshopsViewModel
-              );
-            } else {
-              // If the item is not found, simply push the new item
-              this._workshopsViewModelsUpload.push(this.workshopsViewModel);
+        // First, upload the file and then proceed to add the workshop
+        this.upload(this.file).subscribe({
+          next: (event: any) => {
+            if (event instanceof HttpResponse && event.status === 200) {
+              if (event.body.data && event.body.data.length > 0) {
+                this.workshopViewModel.imageUrl = event.body.data[0].url;
+                this.workshopViewModel.programId = this.joinProgramModel.id;
+                this.addWorkshop(); // Call the function that adds the workshop after upload completes
+              }
             }
-          } else {
-            this.tosterService.error(response.message);
-          }
-        },
-      });
+          },
+          error: (error) => {
+            this.tosterService.error('File upload failed. Please try again.');
+          },
+        });
+      } else {
+        // If there's no file to upload, directly add the workshop
+        this.workshopViewModel.programId = this.joinProgramModel.id;
+        this.addWorkshop();
+      }
     }
+  }
+
+  addWorkshop() {
+    if (this.workshopViewModel.id == -1) {
+      this.workshopViewModel.id = 0;
+    }
+
+    this.joinProgramService._addWorkshop(this.workshopViewModel).subscribe({
+      next: (response: ResponseResult) => {
+        if (response.statusCode == StatusCodes.success) {
+          this.tosterService.success(response.message);
+          this.modalRef?.hide();
+          this.listWorkshop();
+          const index = this.workshopViewModels.findIndex(
+            (item) => item.id === this.workshopViewModel.id
+          );
+          if (index !== -1 && this.workshopViewModel.id !== -1) {
+            this.workshopViewModels.splice(index, 1, this.workshopViewModel);
+          } else {
+            this._workshopViewModelsUpload.push(this.workshopViewModel);
+          }
+        } else {
+          this.tosterService.error(response.message);
+        }
+      },
+      error: (error) => {
+        this.tosterService.error('Failed to add workshop. Please try again.');
+      },
+    });
   }
 
   editWorkshop(id: number, template: TemplateRef<any> | undefined) {
@@ -881,30 +807,24 @@ export class AddProgramComponent implements OnInit {
       // Handle the case where template is undefined, perhaps by throwing an error or logging a message
       return;
     }
-
     this.initWrokshopModel();
-    this.workshopsViewModel = this.workshopsViewModels[id];
-    this.workshopsViewModel.id = id;
-    //this.wrokshopsViewModels?.splice(id, 1);
-
-    // // Add the file to FilePond
-    // this.pond
-    //   .addFile(this.wrokshopsViewModel.file, {
-    //     // Options like `index` can be passed if needed
-    //     index: 0, // Adds the file as the first file
-    //   })
-    //   .then(() => {
-    //     console.log('File added successfully!');
-    //   })
-    //   .catch((error: any) => {
-    //     console.error('Error adding file:', error);
-    //   });
-
-    if (template) {
-      this.modalRef = this.modalService.show(
-        template,
-        Object.assign({}, { class: 'modal-lg' })
+    this.workshopViewModel = this.workshopViewModels[id];
+    if (this.joinProgramModel.id != 0) {
+      this._id = this.workshopViewModel.id;
+    }
+    if (this.workshopViewModel.workshopDate) {
+      this.workshopViewModel.workshopDate = this.globalService.ISODateFromate(
+        this.workshopViewModel.workshopDate
       );
+    }
+    this.workshopViewModel.id = id;
+    if (this.workshopViewModel != null && this.workshopViewModel != undefined) {
+      if (template) {
+        this.modalRef = this.modalService.show(
+          template,
+          Object.assign({}, { class: 'modal-lg' })
+        );
+      }
     }
   }
 
@@ -914,7 +834,7 @@ export class AddProgramComponent implements OnInit {
       return;
     }
     this.initWrokshopModel();
-    this.workshopsViewModel = this.workshopsViewModels[id];
+    this.workshopViewModel = this.workshopViewModels[id];
     // this.wrokshopsViewModels?.splice(id, 1);
 
     if (template) {
@@ -927,43 +847,50 @@ export class AddProgramComponent implements OnInit {
 
   deleteWrokshop(id: number) {
     if (this.joinProgramModel.id == 0) {
-      this.workshopsViewModels.splice(id, 1);
+      this.workshopViewModels.splice(id, 1);
     } else {
-      this.joinProgramService._deleteWorkshop(id).subscribe({
+      let _id = this.workshopViewModels[id].id;
+      this.joinProgramService._deleteWorkshop(_id).subscribe({
         next: (respone: ResponseResult) => {
-          if (respone.statusCode == StatusCodes.success)
+          if (respone.statusCode == StatusCodes.success) {
             this.tosterService.success(respone.message);
-          else this.tosterService.error(respone.message);
+            this.listWorkshop();
+          } else {
+            this.tosterService.error(respone.message);
+          }
         },
       });
     }
   }
 
   removeImageWrokshop() {
-    this.workshopsViewModel.imageUrl == null;
-    this.workshopsViewModel.file == null;
+    this.workshopViewModel.imageUrl = '';
+    this.workshopViewModel.file = null;
+    this.workshopViewModel.urlBase64 = '';
   }
 
   updateWrokShop() {
     if (this.joinProgramModel.id == 0) {
       if (this.file != null) {
-        this.workshopsViewModel.file = this.file;
-        this.workshopsViewModel.imageUrl = this.file.name;
+        this.workshopViewModel.file = this.file;
+        this.workshopViewModel.imageUrl = this.file.name;
       }
-      const index = this.workshopsViewModels.findIndex(
-        (item) => item.id === this.workshopsViewModel.id
+      const index = this.workshopViewModels.findIndex(
+        (item) => item.id === this.workshopViewModel.id
       );
 
-      // const existingInterview = this.interviewsViewModels.find(
-      //   (item) => item.id === this.interviewsViewModel.id
+      // const existingInterview = this.interviewViewModels.find(
+      //   (item) => item.id === this.interviewViewModel.id
       // );
 
-      if (index !== -1 && this.workshopsViewModel.id !== -1) {
+      if (index !== -1 && this.workshopViewModel.id !== -1) {
         // Remove the existing item at the specific index and insert the updated item at the same index
-        this.workshopsViewModels.splice(index, 1, this.workshopsViewModel);
+        this.workshopViewModel.id = this._id;
+
+        this.workshopViewModels.splice(index, 1, this.workshopViewModel);
       } else {
         // If the item is not found, simply push the new item
-        this.workshopsViewModels.push(this.workshopsViewModel);
+        this.workshopViewModels.push(this.workshopViewModel);
       }
 
       this.initWrokshopModel();
@@ -971,24 +898,60 @@ export class AddProgramComponent implements OnInit {
       this.modalRef?.hide();
     } else {
       if (this.file != null) {
-        this.upload(this.file);
-        this.workshopsViewModel.imageUrl = this.fileUrl;
-        this.joinProgramService
-          ._updateWorkshop(this.workshopsViewModel)
-          .subscribe({
-            next: (respone: ResponseResult) => {
-              if (respone.statusCode == StatusCodes.success)
-                this.tosterService.success(respone.message);
-              else this.tosterService.error(respone.message);
-            },
-          });
+        this.upload(this.file).subscribe({
+          next: (event: any) => {
+            if (event instanceof HttpResponse && event.status === 200) {
+              if (event.body.data && event.body.data.length > 0) {
+                this.workshopViewModel.imageUrl = event.body.data[0].url;
+                this.workshopViewModel.programId = this.joinProgramModel.id;
+                this.workshopViewModel.id = 0;
+                this.updateWorkshop(); // Call the function that adds the workshop after upload completes
+              }
+            }
+          },
+          error: (error) => {
+            this.tosterService.error('File upload failed. Please try again.');
+          },
+        });
+        // this.upload(this.file);
+        // this.workshopViewModel.imageUrl = this.fileUrl;
+        //this.updateWorkshop();
+      } else {
+        this.updateWorkshop();
       }
     }
+  }
+
+  updateWorkshop() {
+    this.workshopViewModel.id = this._id;
+    this.joinProgramService._updateWorkshop(this.workshopViewModel).subscribe({
+      next: (respone: ResponseResult) => {
+        if (respone.statusCode == StatusCodes.success) {
+          this.tosterService.success(respone.message);
+          this.modalRef?.hide();
+          this.listWorkshop();
+          this.initWrokshopModel();
+        } else {
+          this.tosterService.error(respone.message);
+        }
+      },
+    });
+  }
+
+  listWorkshop() {
+    this.joinProgramService._listWorkshop().subscribe({
+      next: (response: ResponseResult) => {
+        if (response.statusCode == StatusCodes.success) {
+          this.workshopViewModels = response.data;
+        }
+      },
+    });
   }
 
   // Wrokshop **********/// End ////************ */
 
   // InterView **********/// Start ////************ */
+
   addInterview(interviewTemplate: TemplateRef<void> | undefined) {
     //this.initModel();
     this.initInterviewModel();
@@ -1003,57 +966,74 @@ export class AddProgramComponent implements OnInit {
   saveInterview() {
     if (this.joinProgramModel.id == 0) {
       if (this.file != null) {
-        this.interviewsViewModel.file = this.file;
-        this.interviewsViewModel.imageUrl = this.file.name;
+        this.interviewViewModel.file = this.file;
+        this.interviewViewModel.imageUrl = this.file.name;
       }
-      // const index = this.interviewsViewModels.findIndex(
-      //   (item) => item.id === this.interviewsViewModel.id
-      // );
-
-      const index = this.interviewsViewModels.findIndex(
-        (item) => item.id === this.interviewsViewModel.id
+      const index = this.interviewViewModels.findIndex(
+        (item) => item.id === this.interviewViewModel.id
       );
-
-      // const existingInterview = this.interviewsViewModels.find(
-      //   (item) => item.id === this.interviewsViewModel.id
-      // );
-
-      if (index !== -1 && this.interviewsViewModel.id !== -1) {
-        // Remove the existing item at the specific index and insert the updated item at the same index
-        this.interviewsViewModels.splice(index, 1, this.interviewsViewModel);
+      if (index !== -1 && this.interviewViewModel.id !== -1) {
+        this.interviewViewModels.splice(index, 1, this.interviewViewModel);
       } else {
-        // If the item is not found, simply push the new item
-        this.interviewsViewModels.push(this.interviewsViewModel);
+        this._interviewViewModelsUpload.push(this.interviewViewModel);
       }
-
-      // If the item is found, remove it from the list
-      // if (index !== null) {
-      //   this.interviewsViewModels.splice(index, 1);
-      // }
-
-      // Push the challengeViewModel back to the list
-      //this.interviewsViewModels.push(this.interviewsViewModel);
       this.initInterviewModel();
       this.file as File;
       this.modalRef?.hide();
     } else {
+      this.interviewViewModel.programId = this.joinProgramModel.id;
+      this.interviewViewModel.id = 0;
       if (this.file != null) {
-        this.upload(this.file);
-        this.interviewsViewModel.imageUrl = this.fileUrl;
-        this.interviewsViewModel.programId = this.joinProgramModel.id;
-      }
-      this.joinProgramService
-        ._addInterView(this.interviewsViewModel)
-        .subscribe({
-          next: (response: ResponseResult) => {
-            if (response.statusCode == StatusCodes.success) {
-              this.tosterService.success(response.message);
-            } else {
-              this.tosterService.error(response.message);
+        // First, upload the file and then proceed to add the workshop
+        this.upload(this.file).subscribe({
+          next: (event: any) => {
+            if (event instanceof HttpResponse && event.status === 200) {
+              if (event.body.data && event.body.data.length > 0) {
+                this.interviewViewModel.imageUrl = event.body.data[0].url;
+
+                this._addInterview(); // Call the function that adds the workshop after upload completes
+              }
             }
           },
+          error: (error) => {
+            this.tosterService.error('File upload failed. Please try again.');
+          },
         });
+      } else {
+        // If there's no file to upload, directly add the workshop
+
+        this._addInterview();
+      }
     }
+  }
+
+  _addInterview() {
+    if (this.interviewViewModel.id >= -1) {
+      this.interviewViewModel.id = 0;
+    }
+
+    this.joinProgramService._addInterView(this.interviewViewModel).subscribe({
+      next: (response: ResponseResult) => {
+        if (response.statusCode == StatusCodes.success) {
+          this.tosterService.success(response.message);
+          this.modalRef?.hide();
+          this.listInterview();
+          const index = this.interviewViewModels.findIndex(
+            (item) => item.id === this.interviewViewModel.id
+          );
+          if (index !== -1 && this.interviewViewModel.id !== -1) {
+            this.interviewViewModels.splice(index, 1, this.interviewViewModel);
+          } else {
+            this._interviewViewModelsUpload.push(this.interviewViewModel);
+          }
+        } else {
+          this.tosterService.error(response.message);
+        }
+      },
+      error: (error) => {
+        this.tosterService.error('Failed to add Interview. Please try again.');
+      },
+    });
   }
 
   editInterview(id: number, template: TemplateRef<any> | undefined) {
@@ -1061,30 +1041,27 @@ export class AddProgramComponent implements OnInit {
       // Handle the case where template is undefined, perhaps by throwing an error or logging a message
       return;
     }
-
     this.initInterviewModel();
-    this.interviewsViewModel = this.interviewsViewModels[id];
-    this.interviewsViewModel.id = id;
-    //this.wrokshopsViewModels?.splice(id, 1);
+    this.interviewViewModel = this.interviewViewModels[id];
+    if (this.joinProgramModel.id == 1) {
+      this._id = this.interviewViewModel.id;
+    }
 
-    // // Add the file to FilePond
-    // this.pond
-    //   .addFile(this.wrokshopsViewModel.file, {
-    //     // Options like `index` can be passed if needed
-    //     index: 0, // Adds the file as the first file
-    //   })
-    //   .then(() => {
-    //     console.log('File added successfully!');
-    //   })
-    //   .catch((error: any) => {
-    //     console.error('Error adding file:', error);
-    //   });
+    this.interviewViewModel.interviewDate = this.globalService.ISODateFromate(
+      this.interviewViewModel.interviewDate
+    );
 
-    if (template) {
-      this.modalRef = this.modalService.show(
-        template,
-        Object.assign({}, { class: 'modal-lg' })
-      );
+    this.interviewViewModel.id = id;
+    if (
+      this.interviewViewModel != null &&
+      this.interviewViewModel != undefined
+    ) {
+      if (template) {
+        this.modalRef = this.modalService.show(
+          template,
+          Object.assign({}, { class: 'modal-lg' })
+        );
+      }
     }
   }
 
@@ -1094,7 +1071,7 @@ export class AddProgramComponent implements OnInit {
       return;
     }
     this.initInterviewModel();
-    this.interviewsViewModel = this.interviewsViewModels[id];
+    this.interviewViewModel = this.interviewViewModels[id];
     // this.wrokshopsViewModels?.splice(id, 1);
 
     if (template) {
@@ -1107,44 +1084,50 @@ export class AddProgramComponent implements OnInit {
 
   deleteInterview(id: number) {
     if (this.joinProgramModel.id == 0) {
-      this.interviewsViewModels.splice(id, 1);
+      this.interviewViewModels.splice(id, 1);
     } else {
-      this.joinProgramService._deleteInterView(id).subscribe({
+      let _id = this.interviewViewModels[id].id;
+      this.joinProgramService._deleteInterView(_id).subscribe({
         next: (respone: ResponseResult) => {
-          if (respone.statusCode == StatusCodes.success)
+          if (respone.statusCode == StatusCodes.success) {
             this.tosterService.success(respone.message);
-          else this.tosterService.error(respone.message);
+            this.listInterview();
+          } else {
+            this.tosterService.error(respone.message);
+          }
         },
       });
     }
   }
 
   removeImageInterview() {
-    this.interviewsViewModel.imageUrl == null;
-    this.interviewsViewModel.file == null;
+    this.interviewViewModel.imageUrl = '';
+    this.interviewViewModel.file = null;
+    this.interviewViewModel.urlBase64 = '';
   }
 
-  updateInterView() {
+  updateInterview() {
     if (this.joinProgramModel.id == 0) {
       if (this.file != null) {
-        this.interviewsViewModel.file = this.file;
-        this.interviewsViewModel.imageUrl = this.file.name;
+        this.interviewViewModel.file = this.file;
+        this.interviewViewModel.imageUrl = this.file.name;
       }
-
-      const index = this.interviewsViewModels.findIndex(
-        (item) => item.id === this.interviewsViewModel.id
+      const index = this.interviewViewModels.findIndex(
+        (item) => item.id === this.interviewViewModel.id
       );
 
-      // const existingInterview = this.interviewsViewModels.find(
-      //   (item) => item.id === this.interviewsViewModel.id
+      // const existingInterview = this.interviewViewModels.find(
+      //   (item) => item.id === this.interviewViewModel.id
       // );
 
-      if (index !== -1 && this.interviewsViewModel.id !== -1) {
+      if (index !== -1 && this.interviewViewModel.id !== -1) {
         // Remove the existing item at the specific index and insert the updated item at the same index
-        this.interviewsViewModels.splice(index, 1, this.interviewsViewModel);
+        this.interviewViewModel.id = this._id;
+
+        this.interviewViewModels.splice(index, 1, this.interviewViewModel);
       } else {
         // If the item is not found, simply push the new item
-        this.interviewsViewModels.push(this.interviewsViewModel);
+        this.interviewViewModels.push(this.interviewViewModel);
       }
 
       this.initInterviewModel();
@@ -1152,20 +1135,57 @@ export class AddProgramComponent implements OnInit {
       this.modalRef?.hide();
     } else {
       if (this.file != null) {
-        this.upload(this.file);
-        this.workshopsViewModel.imageUrl = this.fileUrl;
-        this.joinProgramService
-          ._updateInterView(this.interviewsViewModel)
-          .subscribe({
-            next: (respone: ResponseResult) => {
-              this.initInterviewModel();
-              if (respone.statusCode == StatusCodes.success)
-                this.tosterService.success(respone.message);
-              else this.tosterService.error(respone.message);
-            },
-          });
+        this.upload(this.file).subscribe({
+          next: (event: any) => {
+            if (event instanceof HttpResponse && event.status === 200) {
+              if (event.body.data && event.body.data.length > 0) {
+                this.interviewViewModel.imageUrl = event.body.data[0].url;
+                this.interviewViewModel.programId = this.joinProgramModel.id;
+                this.interviewViewModel.id = 0;
+                this._updateInterview(); // Call the function that adds the workshop after upload completes
+              }
+            }
+          },
+          error: (error) => {
+            this.tosterService.error('File upload failed. Please try again.');
+          },
+        });
+        // this.upload(this.file);
+        // this.workshopViewModel.imageUrl = this.fileUrl;
+        //this.updateWorkshop();
+      } else {
+        this._updateInterview();
       }
     }
+  }
+
+  _updateInterview() {
+    this.interviewViewModel.id = this._id;
+    this.joinProgramService
+      ._updateInterView(this.interviewViewModel)
+      .subscribe({
+        next: (respone: ResponseResult) => {
+          if (respone.statusCode == StatusCodes.update) {
+            this.tosterService.success(respone.message);
+            this.modalRef?.hide();
+
+            this.initInterviewModel();
+            this.listInterview();
+          } else {
+            this.tosterService.error(respone.message);
+          }
+        },
+      });
+  }
+
+  listInterview() {
+    this.joinProgramService._listInterview().subscribe({
+      next: (response: ResponseResult) => {
+        if (response.statusCode == StatusCodes.success) {
+          this.interviewViewModels = response.data;
+        }
+      },
+    });
   }
 
   // InterView **********/// End ////************ */
@@ -1174,7 +1194,7 @@ export class AddProgramComponent implements OnInit {
 
   addChallenge(challengeTemplate: TemplateRef<void> | undefined) {
     //this.initModel();
-    this.initJoinChallengeViewModel();
+    this.initJoinJoinProgramChallengeViewModel();
     if (challengeTemplate) {
       this.modalRef = this.modalService.show(
         challengeTemplate,
@@ -1185,35 +1205,45 @@ export class AddProgramComponent implements OnInit {
 
   saveChallenge() {
     if (this.joinProgramModel.id == 0) {
-      const index = this.challengeViewModels.findIndex(
-        (item) => item.id === this.challengeViewModel.id
+      const index = this.joinProgramChallengeViewModels.findIndex(
+        (item) => item.id === this.joinProgramChallengeViewModel.id
       );
 
-      // const existingInterview = this.interviewsViewModels.find(
-      //   (item) => item.id === this.interviewsViewModel.id
-      // );
-
-      if (index !== -1 && this.challengeViewModel.id !== -1) {
+      if (index !== -1 && this.joinProgramChallengeViewModel.id !== -1) {
         // Remove the existing item at the specific index and insert the updated item at the same index
-        this.challengeViewModels.splice(index, 1, this.challengeViewModel);
+        this.joinProgramChallengeViewModels.splice(
+          index,
+          1,
+          this.joinProgramChallengeViewModel
+        );
       } else {
         // If the item is not found, simply push the new item
-        this.challengeViewModels.push(this.challengeViewModel);
+        this.joinProgramChallengeViewModels.push(
+          this.joinProgramChallengeViewModel
+        );
       }
 
       this.initChallengedViewModel();
-      this.file as File;
+
       this.modalRef?.hide();
     } else {
-      this.joinProgramService._addChallenge(this.challengeViewModel).subscribe({
-        next: (response: ResponseResult) => {
-          if (response.statusCode == StatusCodes.success) {
-            this.tosterService.success(response.message);
-          } else {
-            this.tosterService.error(response.message);
-          }
-        },
-      });
+      if (this.joinProgramChallengeViewModel.id == -1) {
+        this.joinProgramChallengeViewModel.id = 0;
+      }
+      this.joinProgramChallengeViewModel.programId = this.joinProgramModel.id;
+      this.joinProgramService
+        ._addChallenge(this.joinProgramChallengeViewModel)
+        .subscribe({
+          next: (response: ResponseResult) => {
+            if (response.statusCode == StatusCodes.success) {
+              this.tosterService.success(response.message);
+              this.listChalllenge();
+              this.modalRef?.hide();
+            } else {
+              this.tosterService.error(response.message);
+            }
+          },
+        });
     }
   }
 
@@ -1224,8 +1254,11 @@ export class AddProgramComponent implements OnInit {
     }
 
     this.initChallengedViewModel();
-    this.challengeViewModel = this.challengeViewModels[id];
-    this.challengeViewModel.id = id;
+    this.joinProgramChallengeViewModel =
+      this.joinProgramChallengeViewModels[id];
+
+    this._id = this.joinProgramChallengeViewModel.id;
+    this.joinProgramChallengeViewModel.id = id;
 
     if (template) {
       this.modalRef = this.modalService.show(
@@ -1241,7 +1274,8 @@ export class AddProgramComponent implements OnInit {
       return;
     }
     this.initChallengedViewModel();
-    this.challengeViewModel = this.challengeViewModels[id];
+    this.joinProgramChallengeViewModel =
+      this.joinProgramChallengeViewModels[id];
     // this.wrokshopsViewModels?.splice(id, 1);
 
     if (template) {
@@ -1254,13 +1288,22 @@ export class AddProgramComponent implements OnInit {
 
   deleteChallenge(id: number) {
     if (this.joinProgramModel.id == 0) {
-      this.challengeViewModels.splice(id, 1);
+      this.joinProgramChallengeViewModels.splice(id, 1);
     } else {
-      this.joinProgramService._deleteChallenge(id).subscribe({
+      let _id = this.joinProgramChallengeViewModels[id].id;
+      const index = this.joinProgramChallengeViewModels.findIndex(
+        (item) => item.id === this.joinProgramChallengeViewModel.id
+      );
+
+      this.joinProgramService._deleteChallenge(_id).subscribe({
         next: (respone: ResponseResult) => {
-          if (respone.statusCode == StatusCodes.success)
+          if (respone.statusCode == StatusCodes.deleted) {
             this.tosterService.success(respone.message);
-          else this.tosterService.error(respone.message);
+
+            this.listChalllenge();
+          } else {
+            this.tosterService.error(respone.message);
+          }
         },
       });
     }
@@ -1268,36 +1311,54 @@ export class AddProgramComponent implements OnInit {
 
   updateChallenge() {
     if (this.joinProgramModel.id == 0) {
-      const index = this.challengeViewModels.findIndex(
-        (item) => item.id === this.challengeViewModel.id
+      const index = this.joinProgramChallengeViewModels.findIndex(
+        (item) => item.id === this.joinProgramChallengeViewModel.id
       );
 
-      // const existingInterview = this.interviewsViewModels.find(
-      //   (item) => item.id === this.interviewsViewModel.id
-      // );
-
-      if (index !== -1 && this.challengeViewModel.id !== -1) {
+      if (index !== -1 && this.joinProgramChallengeViewModel.id !== -1) {
         // Remove the existing item at the specific index and insert the updated item at the same index
-        this.challengeViewModels.splice(index, 1, this.challengeViewModel);
+        this.joinProgramChallengeViewModels.splice(
+          index,
+          1,
+          this.joinProgramChallengeViewModel
+        );
       } else {
         // If the item is not found, simply push the new item
-        this.challengeViewModels.push(this.challengeViewModel);
+        this.joinProgramChallengeViewModels.push(
+          this.joinProgramChallengeViewModel
+        );
       }
 
       this.initChallengedViewModel();
       this.file as File;
       this.modalRef?.hide();
     } else {
+      this.joinProgramChallengeViewModel.id = this._id;
       this.joinProgramService
-        ._updateChallenge(this.challengeViewModel)
+        ._updateChallenge(this.joinProgramChallengeViewModel)
         .subscribe({
           next: (respone: ResponseResult) => {
-            if (respone.statusCode == StatusCodes.success)
+            if (respone.statusCode == StatusCodes.update) {
               this.tosterService.success(respone.message);
-            else this.tosterService.error(respone.message);
+              this.modalRef?.hide();
+              this.listChalllenge();
+              this.initChallengedViewModel();
+            } else {
+              this.tosterService.error(respone.message);
+            }
           },
         });
     }
+  }
+
+  listChalllenge() {
+    this.joinProgramService._listChallenge().subscribe({
+      next: (response: ResponseResult) => {
+        if (response.statusCode == StatusCodes.success) {
+          this.joinProgramChallengeViewModels = response.data;
+        }
+      },
+    });
   }
 
   //Challenge *******//// End ************//////
@@ -1315,48 +1376,47 @@ export class AddProgramComponent implements OnInit {
       //   }
       // }
 
-      for (let workshop of this.workshopsViewModels) {
-        // Check if the interview is not in _interviewsViewModelsUpload
-        const alreadyUploaded = this._workshopsViewModelsUpload.some(
+      for (let workshop of this.workshopViewModels) {
+        // Check if the interview is not in _interviewViewModelsUpload
+        const alreadyUploaded = this._workshopViewModelsUpload.some(
           (uploadedWorkshop) => uploadedWorkshop === workshop
         );
 
         if (!alreadyUploaded && workshop.file != null) {
           this.upload(workshop.file);
           workshop.imageUrl = this.fileUrl;
-          this._workshopsViewModelsUpload.push(workshop); // Add to the uploaded list
+          this._workshopViewModelsUpload.push(workshop); // Add to the uploaded list
         }
       }
 
-    if (this.interviewsViewModels.length > 0) {
-      // for (let interview of this.interviewsViewModels) {
+    if (this.interviewViewModels.length > 0) {
+      // for (let interview of this.interviewViewModels) {
       //   if (interview.file != null)
       //   {
       //     this.upload(interview.file);
       //     interview.imageUrl = this.fileUrl;
       //   }
-      //      this._interviewsViewModelsUpload.push(interview);
+      //      this._interviewViewModelsUpload.push(interview);
       // }
 
-      for (let interview of this.interviewsViewModels) {
-        // Check if the interview is not in _interviewsViewModelsUpload
-        const alreadyUploaded = this._interviewsViewModelsUpload.some(
+      for (let interview of this.interviewViewModels) {
+        // Check if the interview is not in _interviewViewModelsUpload
+        const alreadyUploaded = this._interviewViewModelsUpload.some(
           (uploadedInterview) => uploadedInterview === interview
         );
 
         if (!alreadyUploaded && interview.file != null) {
           this.upload(interview.file);
           interview.imageUrl = this.fileUrl;
-          this._interviewsViewModelsUpload.push(interview); // Add to the uploaded list
+          this._interviewViewModelsUpload.push(interview); // Add to the uploaded list
         }
       }
     }
 
-    this.joinProgramModel.interviewsViewModels =
-      this._interviewsViewModelsUpload;
-    this.joinProgramModel.workshopsViewModels = this._workshopsViewModelsUpload;
-    this.joinProgramModel.joinProgramChallengesViewModels =
-      this.challengeViewModels;
+    this.joinProgramModel.interviewViewModels = this._interviewViewModelsUpload;
+    this.joinProgramModel.workshopViewModels = this._workshopViewModelsUpload;
+    this.joinProgramModel.joinProgramChallengeViewModels =
+      this.joinProgramChallengeViewModels;
 
     //participationTestViewModel
 
@@ -1365,8 +1425,8 @@ export class AddProgramComponent implements OnInit {
         if (respone.statusCode == StatusCodes.success) {
           this.initForm();
           this._challengesViewModelsUpload = [];
-          this._interviewsViewModelsUpload = [];
-          this._workshopsViewModelsUpload = [];
+          this._interviewViewModelsUpload = [];
+          this._workshopViewModelsUpload = [];
 
           this.tosterService.success(respone.message);
         } else {
@@ -1376,46 +1436,65 @@ export class AddProgramComponent implements OnInit {
     });
   }
 
-  upload(file: File): void {
+  upload(file: File): Observable<any> {
     this.progress = 0;
 
     if (file != null) {
-      this.uploadService
-        .upload(file, 'joinProgram')
-        .pipe(
-          finalize(() => {
-            this.selectedFiles = undefined;
-
-            this.workshopsViewModel.imageUrl = this.fileUrl;
-          })
-        )
-        .subscribe({
-          next: (event: any) => {
-            if (event.type === HttpEventType.UploadProgress) {
-              this.progress = Math.round((100 * event.loaded) / event.total);
-            } else if (event instanceof HttpResponse) {
-              this.message = event.body.message;
-
-              // Assuming the uploaded file's URL is returned in the response
-              const fileUrl = event.body.fileUrl;
-              this.fileInfos = this.uploadService.getFiles();
-
-              // Set the URL here
-              this.fileUrl = fileUrl;
-            }
-          },
-          error: (err: any) => {
-            this.progress = 0;
-            if (err.error && err.error.message) {
-              this.message = err.error.message;
-            } else {
-              this.message = 'Could not upload the file!';
-            }
-            this.currentFile = undefined;
-          },
-        });
+      return this.uploadService.upload(file, 'joinProgram').pipe(
+        finalize(() => {
+          this.selectedFiles = undefined;
+          //this.workshopViewModel.imageUrl = this.fileUrl;
+        })
+      );
     }
+
+    return EMPTY; // Return an empty observable if no file is provided
   }
+  // upload(file: File): Observable<any> {
+  //   this.progress = 0;
+
+  //   if (file != null) {
+  //     this.uploadService
+  //       .upload(file, 'joinProgram')
+  //       .pipe(
+  //         finalize(() => {
+  //           this.selectedFiles = undefined;
+
+  //           this.workshopViewModel.imageUrl = this.fileUrl;
+  //         })
+  //       )
+  //       .subscribe({
+  //         next: (event: any) => {
+  //           if (event.type === HttpEventType.UploadProgress) {
+  //             this.progress = Math.round((100 * event.loaded) / event.total);
+  //           } else if (event instanceof HttpResponse) {
+  //             this.message = event.body.message;
+
+  //             // Assuming the uploaded file's URL is returned in the response
+  //             if (event.status == 200) {
+  //               if (event.body.data != null && event.body.data.length > 0) {
+  //                 this.fileUrl = event.body.data[0].url;
+  //               }
+  //             }
+  //             this.fileInfos = this.uploadService.getFiles();
+
+  //             // Set the URL here
+  //           }
+  //         },
+  //         error: (err: any) => {
+  //           this.progress = 0;
+  //           if (err.error && err.error.message) {
+  //             this.message = err.error.message;
+  //           } else {
+  //             this.message = 'Could not upload the file!';
+  //           }
+  //           this.currentFile = undefined;
+  //         },
+  //       });
+  //   }
+
+  //   return EMPTY;
+  // }
 
   getTabValue(value: string): string {
     switch (value) {

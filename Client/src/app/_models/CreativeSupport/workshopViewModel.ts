@@ -7,7 +7,7 @@ export interface WorkshopViewModel {
   longitude: string;
   locationDescription: string;
   workshopDate: string | null;
-  wrokshopTime: string | null;
+  workshopTime: string | null;
   programId: number | null;
   venue: number | null;
   imageUrl: string;

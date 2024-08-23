@@ -8,9 +8,9 @@ export interface joinProgramViewModel {
   startDate: string | null;
   endDate: string | null;
   statusCode: StautsCode | null;
-  joinProgramChallengesViewModels: JoinProgramChallengeViewModel[] | null;
-  interviewsViewModels: InterviewViewModel[] | null;
-  workshopsViewModels: WorkshopViewModel[] | null;
+  joinProgramChallengeViewModels: JoinProgramChallengeViewModel[] | null;
+  interviewViewModels: InterviewViewModel[] | null;
+  workshopViewModels: WorkshopViewModel[] | null;
   participationTestViewModels: ParticipationTestViewModel[] | null;
 }
 

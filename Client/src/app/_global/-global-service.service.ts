@@ -13,6 +13,7 @@ import {
   ResearchAndStudiesCategories,
 } from '../_models/knowledge/researchAndStudies';
 import { ResearchAreaCategory } from '../_models/ResearchCenter/presentation';
+import { NumberCardModule } from '@swimlane/ngx-charts';
 
 @Injectable({
   providedIn: 'root',
@@ -548,6 +549,29 @@ export class GlobalServiceService implements OnInit {
     return formattedDate;
   }
 
+  ConvertDateTimeToDateOnly(dateTime: string | null): string | null {
+    if (!dateTime) {
+      return null;
+    }
+
+    const _datetime = new Date(dateTime);
+
+    // Extract the day, month, and year from the Date object
+    const day = _datetime.getDate().toString().padStart(2, '0');
+    const month = (_datetime.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
+    const year = _datetime.getFullYear();
+
+    // Return the date in the format DD-MM-YYYY
+    return `${day}-${month}-${year}`;
+  }
+
+  ISODateFromate(dateTime: string | null) {
+    if (!dateTime) return null;
+    const date = new Date(dateTime);
+
+    return date.toISOString().split('T')[0];
+  }
+
   getResearchAreaName(researchArea: ResearchAreaCategory | null): string {
     let researchAreaName = '';
     const language = this.getCurrentLanguage();
@@ -1078,6 +1102,15 @@ export class GlobalServiceService implements OnInit {
       infoFiltered: '(filtered from a total of _MAX_ entries)',
       searchPlaceholder: 'search',
     };
+  }
+
+  getVenueType(venue: number | null) {
+    if (this.getCurrentLanguage() === 'en') {
+      return venue === 1 ? 'Online' : 'OnPremises';
+    } else {
+      // Arabic or any other language
+      return venue === 1 ? 'عبر الإنترنت' : 'في الموقع';
+    }
   }
 
   // getImgServerBaseUrl(): Observable<string> {
