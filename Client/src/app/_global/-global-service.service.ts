@@ -236,6 +236,70 @@ export class GlobalServiceService implements OnInit {
     return statuName;
   }
 
+  getAttendanceStatusName(status: number) {
+    let statuName = '';
+    const currentLanguage = this.getCurrentLanguage();
+
+    switch (status) {
+      case 1: // Present
+        statuName =
+          currentLanguage == 'en'
+            ? '<span class="badge badge-success">Present</span>'
+            : '<span class="badge badge-success">حاضر</span>';
+        break;
+      case 2: // Absent
+        statuName =
+          currentLanguage == 'en'
+            ? '<span class="badge badge-danger">Absent</span>'
+            : '<span class="badge badge-danger">غائب</span>';
+        break;
+      case 0: // Non
+      default:
+        statuName =
+          currentLanguage == 'en'
+            ? '<span class="badge badge-secondary">Non</span>'
+            : '<span class="badge badge-secondary">لا شيء</span>';
+        break;
+    }
+
+    return statuName;
+  }
+
+  getInterviewStatusName(status: number) {
+    let statuName = '';
+    const currentLanguage = this.getCurrentLanguage();
+
+    switch (status) {
+      case 1: // Passed
+        statuName =
+          currentLanguage == 'en'
+            ? '<span class="badge badge-success">Passed</span>'
+            : '<span class="badge badge-success">ناجح</span>';
+        break;
+      case 2: // Fail
+        statuName =
+          currentLanguage == 'en'
+            ? '<span class="badge badge-danger">Fail</span>'
+            : '<span class="badge badge-danger">راسب</span>';
+        break;
+      case 3: // NotAttended
+        statuName =
+          currentLanguage == 'en'
+            ? '<span class="badge badge-warning">Not Attended</span>'
+            : '<span class="badge badge-warning">لم يحضر</span>';
+        break;
+      case 0: // Non
+      default:
+        statuName =
+          currentLanguage == 'en'
+            ? '<span class="badge badge-secondary">Non</span>'
+            : '<span class="badge badge-secondary">لا شيء</span>';
+        break;
+    }
+
+    return statuName;
+  }
+
   getWorkbookType(workbookType: number) {
     let workbookTypeName = '';
     const language = this.getCurrentLanguage();
@@ -283,6 +347,41 @@ export class GlobalServiceService implements OnInit {
     }
 
     return workbookTypeName;
+  }
+
+  getTestStatusName(status: number) {
+    let statuName = '';
+    const currentLanguage = this.getCurrentLanguage();
+
+    switch (status) {
+      case 1: // Passed
+        statuName =
+          currentLanguage == 'en'
+            ? '<span class="badge badge-success">Passed</span>'
+            : '<span class="badge badge-success">ناجح</span>';
+        break;
+      case 2: // Fail
+        statuName =
+          currentLanguage == 'en'
+            ? '<span class="badge badge-danger">Fail</span>'
+            : '<span class="badge badge-danger">راسب</span>';
+        break;
+      case 3: // Not Attended
+        statuName =
+          currentLanguage == 'en'
+            ? '<span class="badge badge-warning">Not Attended</span>'
+            : '<span class="badge badge-warning">لم يحضر</span>';
+        break;
+      case 0: // Non
+      default:
+        statuName =
+          currentLanguage == 'en'
+            ? '<span class="badge badge-secondary">Non</span>'
+            : '<span class="badge badge-secondary">لا شيء</span>';
+        break;
+    }
+
+    return statuName;
   }
 
   getAuthorNature(authorNature: number) {

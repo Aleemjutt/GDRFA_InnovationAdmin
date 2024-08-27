@@ -1,84 +1,85 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { AccordionModule } from 'ngx-bootstrap/accordion';
-import { BsModalService } from 'ngx-bootstrap/modal';
-import { ToastrService } from 'ngx-toastr';
-import { Subscription } from 'rxjs';
+import { FilePondModule } from 'ngx-filepond';
 import { GlobalServiceService } from 'src/app/_global/-global-service.service';
-import {
-  ParticipationTestAnswerViewModel,
-  ParticipationTestViewModel,
-} from 'src/app/_models/CreativeSupport/participatingTestViewModel';
+import { InterviewAttendanceViewModel } from 'src/app/_models/CreativeSupport/interviewViewModel';
 import { ResponseResult } from 'src/app/_models/responseResult';
 import { JoinProgramService } from 'src/app/_services/_creativeSupport/join-program.service';
+import { JoinProgramShareServiceService } from 'src/app/_services/SharedServices/join-program-share-service.service';
 
 @Component({
-  selector: 'app-join-program-list',
+  selector: 'app-list-interview-attendance',
   standalone: true,
-  imports: [FormsModule, CommonModule, AccordionModule, TranslateModule],
-  templateUrl: './join-program-list.component.html',
-  styleUrl: './join-program-list.component.css',
+  imports: [FormsModule, CommonModule, TranslateModule],
+  templateUrl: './list-interview-attendance.component.html',
+  styleUrl: './list-interview-attendance.component.css',
 })
-export class JoinProgramListComponent implements OnInit {
-  participationTestAnswerViewModelList: ParticipationTestAnswerViewModel[] = [];
-  participationTestViewModelList: ParticipationTestViewModel[] = [];
-  private languageChangeSubscription!: Subscription;
+export class ListInterviewAttendanceComponent implements OnInit {
+  @Input()
+  listInterviewAttendnaceViewModel: InterviewAttendanceViewModel[] = [];
+  @Input() programId: number = 0;
   constructor(
-    public globalService: GlobalServiceService,
-    private tosterService: ToastrService,
-    private joinProgramService: JoinProgramService,
-    private modalService: BsModalService,
-    private router: Router
+    private globalService: GlobalServiceService,
+    private sharedService: JoinProgramShareServiceService,
+    private joinProgramService: JoinProgramService
   ) {}
+
   ngOnInit(): void {
-    this.initilizeDataTable();
+    // Fetch the data and update the service
+    this.joinProgramService
+      ._listInInterviewAttendance(this.programId)
+      .subscribe((response: ResponseResult) => {
+        // ////console.log(response.data, 'Data Table values');
+        console.log(response, 'response');
+
+        const interViewModelList = response.data; // Replace with your actual fetching logic
+
+        this.sharedService._setInterviewList(interViewModelList);
+      });
   }
+
   initilizeDataTable(): void {
     const currentLang = this.globalService.getCurrentLanguage();
     const languageConfig =
       currentLang === 'ar'
         ? this.globalService.getArabicLanguageConfig()
         : this.globalService.getEnglishLanguageConfig();
-    const datatable: any = $('#joinProgramDataTable').DataTable();
-    this.joinProgramService
-      ._getProgramList()
-      .subscribe((response: ResponseResult) => {
-        // ////console.log(response.data, 'Data Table values');
-        console.log(response, 'response');
+    const datatable: any = $('#interviewAttendanceDataTable').DataTable();
+    // this.joinProgramService
+    //   ._getProgramList()
+    //   .subscribe((response: ResponseResult) => {
+    //     // ////console.log(response.data, 'Data Table values');
+    //     console.log(response, 'response');
 
-        this.participationTestViewModelList = response.data;
-        // Datatable reloading
-        datatable.destroy();
+    //     this.participationTestViewModelList = response.data;
+    //     // Datatable reloading
 
-        setTimeout(() => {
-          $('#joinProgramDataTable').DataTable({
-            pagingType: 'full_numbers',
-            pageLength: 5,
-            processing: true,
-            data: this.participationTestViewModelList,
-            language: languageConfig,
-            columns: [
-              { data: 'id' },
-              { data: 'descriptionEn' },
-              { data: 'descriptionAr' },
-              {
-                data: (row: any) =>
-                  this.globalService.ConvertDateTimeToDateOnly(row.startDate),
-              },
-              {
-                data: (row: any) =>
-                  this.globalService.ConvertDateTimeToDateOnly(row.endDate),
-              },
-              {
-                data: (row: any) =>
-                  this.globalService.getStatusName(row.status),
-              },
-              {
-                data: 'data',
-                defaultContent: `
+    datatable.destroy();
+
+    setTimeout(() => {
+      $('#interviewAttendanceDataTable').DataTable({
+        pagingType: 'full_numbers',
+        pageLength: 5,
+        processing: true,
+        data: this.listInterviewAttendnaceViewModel,
+        language: languageConfig,
+        columns: [
+          { data: 'id' },
+          { data: 'empId' },
+          { data: 'empName' },
+          {
+            data: (row: any) =>
+              this.globalService.ConvertDateTimeToDateOnly(row.registerDate),
+          },
+          {
+            data: (row: any) =>
+              this.globalService.getInterviewStatusName(row.interviewStatus),
+          },
+          {
+            data: 'data',
+            defaultContent: `
               <button
               type="button"
               class="btn btn-light mr-1"
@@ -149,40 +150,33 @@ export class JoinProgramListComponent implements OnInit {
               </svg>
                    </button>
             `,
-              },
-            ],
-            rowCallback: (row: Node, data: any, index: number) => {
-              const btnViewDetail = $('button:first', row);
-              const btnEdit = $('button:eq(1)', row);
-              const btnDelete = $('button:eq(2)', row);
-              // const btnSubmitionDetails = $('button:last', row);
-              // Attach click event handlers to the buttons
-              btnViewDetail.on('click', () => {
-                this.router.navigateByUrl(
-                  // '/creativeSupport/listProgram/' + data.id
-                  `/creativeSupport/addProgram/${data.id}/1`
-                );
-              });
-              btnEdit.on('click', () => {
-                this.router.navigateByUrl(
-                  `/creativeSupport/addProgram/${data.id}/2`
-                );
-              });
-              btnDelete.on('click', () => {
-                this.joinProgramService._deleteProgram(data.id);
-              });
+          },
+        ],
+        rowCallback: (row: Node, data: any, index: number) => {
+          const btnViewDetail = $('button:first', row);
+          const btnEdit = $('button:eq(1)', row);
+          const btnDelete = $('button:eq(2)', row);
+          // const btnSubmitionDetails = $('button:last', row);
+          // Attach click event handlers to the buttons
+          // btnViewDetail.on('click', () => {
+          //   this.router.navigateByUrl(
+          //     // '/creativeSupport/listProgram/' + data.id
+          //     `/creativeSupport/addProgram/${data.id}/1`
+          //   );
+          // });
+          // btnEdit.on('click', () => {
+          //   this.router.navigateByUrl(`/creativeSupport/addProgram/${data.id}/2`);
+          // });
+          // btnDelete.on('click', () => {
+          //   this.joinProgramService._deleteProgram(data.id);
+          // });
 
-              return row;
-            },
+          return row;
+        },
 
-            lengthMenu: [5, 10, 25],
-          });
-        }, 1);
+        lengthMenu: [5, 10, 25],
       });
+    }, 1);
+    //});
   }
-  // viewProgramDetails(id: number) {
-  //   this.router.Rou;
-  // }
-  // editProgram(id: number) {}
-  // deleteProgram(id: number) {}
 }

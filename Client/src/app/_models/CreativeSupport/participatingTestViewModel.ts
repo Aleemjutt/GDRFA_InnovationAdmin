@@ -28,3 +28,20 @@ export interface ParticipationTestAnswerViewModel {
   isSelected: boolean;
   optionId: number;
 }
+
+export interface ParticipationTestAttendnaceViewModel {
+  submitDate: string | null;
+  userId: number | null;
+  userName: string | null;
+  empId: string | null;
+  empName: string | null;
+  testId: number | null;
+  testStatus: TestStatus;
+}
+
+export enum TestStatus {
+  Non = 0,
+  Passed = 1,
+  Fail = 2,
+  NotAttended = 3,
+}

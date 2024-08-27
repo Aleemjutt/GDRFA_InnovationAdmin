@@ -7,3 +7,11 @@ export interface JoinProgramChallengeViewModel {
   link: string | null;
   programId: number | null;
 }
+
+export interface JoinProgramChallengeSubmitViewModel {
+  challengeId: number | null;
+  userId: number | null;
+  userName: string | null;
+  empId: string | null;
+  empName: string | null;
+}

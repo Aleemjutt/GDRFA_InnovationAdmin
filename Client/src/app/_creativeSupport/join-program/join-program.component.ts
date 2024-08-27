@@ -43,8 +43,7 @@ export class JoinProgramComponent implements OnInit {
     private tosterService: ToastrService,
     private joinProgramService: JoinProgramService,
     private modalService: BsModalService,
-    private router: Router,
-  
+    private router: Router
   ) {
     this.questionViewModel = {
       id: 0,
@@ -73,8 +72,6 @@ export class JoinProgramComponent implements OnInit {
         // Update the ng-select label property when the language changes
         this.initilizeDataTable();
       });
-
- 
   }
 
   initForm() {
@@ -119,7 +116,7 @@ export class JoinProgramComponent implements OnInit {
         : this.globalService.getEnglishLanguageConfig();
     const datatable: any = $('#awardsDataTable').DataTable();
     this.joinProgramService
-      ._getParticipateTestList()
+      ._getParticipateTestList(0)
       .subscribe((response: ResponseResult) => {
         // ////console.log(response.data, 'Data Table values');
         console.log(response, 'response');

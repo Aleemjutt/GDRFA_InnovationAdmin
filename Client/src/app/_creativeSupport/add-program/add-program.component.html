@@ -16,6 +16,40 @@
             <tabset>
               <tab [heading]="getTabValue('Program')">
                 <div class="row mt-3">
+                  <div>
+                    <a
+                      type="button"
+                      class="btn btn-danger waves-effect waves-light"
+                      id="btnAdd"
+                      style="float: inline-end"
+                      (click)="
+                        listRegisterProgram(registerInProgramDetailTemplete)
+                      "
+                    >
+                      {{ "ViewRegisterMembers" | translate }}
+                    </a>
+                  </div>
+
+                  <div class="col-md-6 mt-3">
+                    <label>{{ "DescriptionEn" | translate }}</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="descriptionEn"
+                      [(ngModel)]="joinProgramModel.descriptionEn"
+                    />
+                  </div>
+                  <div class="col-md-6">
+                    <label class="mt-3">{{
+                      "DescriptionAr" | translate
+                    }}</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="descriptionAr"
+                      [(ngModel)]="joinProgramModel.descriptionAr"
+                    />
+                  </div>
                   <div class="col-md-6 mt-3">
                     <label>{{ "StartDate" | translate }}</label>
                     <input
@@ -64,15 +98,17 @@
                         >
                           <i class="ri-search-2-line"></i>
                         </button>
+
                         |
                         <a
+                          *ngIf="!isView"
                           type="button"
                           class="btn btn-danger waves-effect waves-light ms-2 col-3"
                           id="btnAdd"
                           style="float: inline-end"
                           (click)="openModal(template)"
                         >
-                          {{ "AddNew" | translate }}
+                          {{ "Add" | translate }}
                         </a>
                       </div>
                     </div>
@@ -131,6 +167,7 @@
                               (click)="editTest(i, template)"
                               data-backdrop="static"
                               data-keyboard="false"
+                              *ngIf="!isView"
                             >
                               <svg
                                 width="1em"
@@ -158,6 +195,7 @@
                               (click)="deleteTest(i)"
                               data-backdrop="static"
                               data-keyboard="false"
+                              *ngIf="!isView"
                             >
                               <svg
                                 width="1em"
@@ -182,6 +220,12 @@
                                 fill="currentColor"
                                 class="bi bi-box-arrow-in-up-right"
                                 viewBox="0 0 16 16"
+                                (click)="
+                                  viewParticipateInTest(
+                                    item.id,
+                                    participateTestAttendanceDetailTemplete
+                                  )
+                                "
                               >
                                 <path
                                   fill-rule="evenodd"
@@ -209,6 +253,7 @@
                     <div class="flex-shrink-0">
                       <div class="d-flex align-items-center">
                         <a
+                          *ngIf="!isView"
                           type="button"
                           class="btn btn-danger waves-effect waves-light"
                           id="btnAdd"
@@ -287,6 +332,7 @@
                               (click)="editWorkshop(i, wrokshopTemplate)"
                               data-backdrop="static"
                               data-keyboard="false"
+                              *ngIf="!isView"
                             >
                               <svg
                                 width="1em"
@@ -314,6 +360,7 @@
                               (click)="deleteWrokshop(i)"
                               data-backdrop="static"
                               data-keyboard="false"
+                              *ngIf="!isView"
                             >
                               <svg
                                 width="1em"
@@ -330,7 +377,16 @@
                               </svg>
                             </button>
 
-                            <button type="button" class="btn btn-light mr-1">
+                            <button
+                              type="button"
+                              class="btn btn-light mr-1"
+                              (click)="
+                                viewWorkshopAttendance(
+                                  item.id,
+                                  workshopAttendanceDetailTemplete
+                                )
+                              "
+                            >
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="16"
@@ -367,6 +423,7 @@
                       <div class="flex-shrink-0">
                         <div class="d-flex align-items-center">
                           <a
+                            *ngIf="!isView"
                             type="button"
                             class="btn btn-danger waves-effect waves-light"
                             id="btnAdd"
@@ -450,6 +507,7 @@
                                 (click)="editInterview(i, interviewTemplate)"
                                 data-backdrop="static"
                                 data-keyboard="false"
+                                *ngIf="!isView"
                               >
                                 <svg
                                   width="1em"
@@ -477,6 +535,7 @@
                                 (click)="deleteInterview(i)"
                                 data-backdrop="static"
                                 data-keyboard="false"
+                                *ngIf="!isView"
                               >
                                 <svg
                                   width="1em"
@@ -493,7 +552,16 @@
                                 </svg>
                               </button>
 
-                              <button type="button" class="btn btn-light mr-1">
+                              <button
+                                type="button"
+                                class="btn btn-light mr-1"
+                                (click)="
+                                  viewInterviewAttendance(
+                                    item.id,
+                                    interviewAttendanceDetailTemplete
+                                  )
+                                "
+                              >
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
                                   width="16"
@@ -535,6 +603,7 @@
                       <div class="flex-shrink-0">
                         <div class="d-flex align-items-center">
                           <a
+                            *ngIf="!isView"
                             type="button"
                             class="btn btn-danger waves-effect waves-light"
                             id="btnAdd"
@@ -609,6 +678,7 @@
                                 (click)="editChallenge(i, challengeTemplate)"
                                 data-backdrop="static"
                                 data-keyboard="false"
+                                *ngIf="!isView"
                               >
                                 <svg
                                   width="1em"
@@ -629,6 +699,7 @@
                               </button>
 
                               <button
+                                *ngIf="!isView"
                                 type="button"
                                 class="btn btn-outline-danger mr-1"
                                 data-bs-toggle="modal"
@@ -652,7 +723,16 @@
                                 </svg>
                               </button>
 
-                              <button type="button" class="btn btn-light mr-1">
+                              <button
+                                type="button"
+                                class="btn btn-light mr-1"
+                                (click)="
+                                  viewChallengeSubmited(
+                                    item.id,
+                                    challengeSubmitedDetailTemplete
+                                  )
+                                "
+                              >
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
                                   width="16"
@@ -758,6 +838,7 @@
               </tab> -->
             </tabset>
             <button
+              *ngIf="!isView"
               type="submit"
               class="btn btn-danger waves-effect waves-light ms-2 col-3 pull-right mt-2"
             >
@@ -1445,12 +1526,9 @@
   <div class="modal-header">
     <h4 class="modal-title pull-left" *ngIf="interviewViewModel.id == -1">
       {{ "Add" | translate }}
-      {{ interviewViewModel.id }}
     </h4>
     <h4 class="modal-title pull-left" *ngIf="interviewViewModel.id >= 0">
       {{ "Update" | translate }}
-
-      {{ interviewViewModel.id }}
     </h4>
     <button
       type="button"
@@ -1725,100 +1803,6 @@
   </div>
 </ng-template>
 
-<!-- <ng-template #interviewTemplate class="modal-lg">
-  <div class="modal-header">
-    <h4 class="modal-title pull-left" *ngIf="interviewViewModel.id == 0">
-      {{ "Add" | translate }}
-    </h4>
-    <h4 class="modal-title pull-left" *ngIf="interviewViewModel.id != 0">
-      {{ "Update" | translate }}
-    </h4>
-    <button
-      type="button"
-      class="btn-close close pull-right"
-      aria-label="Close"
-      (click)="modalRef?.hide()"
-    >
-      <span aria-hidden="true" class="visually-hidden">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <div class="row">
-      <div class="row">
-        <div class="col-md-6">
-          <div class="mt-3">
-            <div class="mb-3">
-              <div *ngIf="!interviewViewModel.imageUrl">
-                <label for="formFile" class="form-label">{{
-                  "Choosefile" | translate
-                }}</label>
-                <file-pond
-                  #myPond
-                  label-idle='Drag & Drop your files or <span class="filepond--label-action"> Browse </span><br> <b>Maximum 5 files upload</b>'
-                  allow-multiple="false"
-                  [options]="pondOptions"
-                  [files]="pondFiles"
-                  (oninit)="pondHandleInit()"
-                  (onaddfile)="pondHandleAddFile($event)"
-                >
-                </file-pond>
-              </div>
-              <div *ngIf="participationTestViewModel.imageUrl">
-                <img
-                  [src]="
-                    globalService.getImgServerBaseUrl(
-                      interviewViewModel.urlBase64
-                    )
-                  "
-                  alt="Membership Image"
-                  style="height: 200px; width: 250px"
-                  class="mt-2"
-                />
-                <a
-                  (click)="removeImageInterview()"
-                  class="btn btn-danger"
-                  style="display: block; margin-top: 10px"
-                  >{{ "Remove" | translate }}</a
-                >
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="modal-footer">
-      <div class="button-container">
-        <button
-          type="button"
-          class="btn btn-danger waves-effect waves-light mr-2"
-          (click)="saveInterview()"
-          *ngIf="interviewViewModel.id == 0"
-        >
-          {{ "Save" | translate }}
-        </button>
-        <button
-          type="button"
-          class="btn btn-danger waves-effect waves-light mr-2"
-          (click)="updateInterview()"
-          *ngIf="interviewViewModel.id != 0"
-        >
-          {{ "Update" | translate }}
-        </button>
-        <button
-          type="button"
-          class="btn btn-light button"
-          aria-label="Close"
-          (click)="modalRef?.hide()"
-        >
-          {{ "Close" | translate }}
-        </button>
-      </div>
-    </div>
-  </div>
-</ng-template> -->
-
 <ng-template #challengeTemplate class="modal-lg">
   <div class="modal-header">
     <h4
@@ -1998,6 +1982,209 @@
           <div>{{ joinProgramChallengeViewModel.link }}</div>
         </div>
       </div>
+    </div>
+  </div>
+  <!-- container-fluid -->
+  <!-- End Page-content -->
+  <div class="row">
+    <div class="modal-footer">
+      <div class="button-container">
+        <button
+          type="button"
+          class="btn btn-light button"
+          aria-label="Close"
+          (click)="modalRef?.hide()"
+        >
+          {{ "Close" | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<!--*****************************************/// View of Participating In Test ///************************************************-->
+<ng-template #registerInProgramDetailTemplete class="modal-lg">
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">
+      {{ "RegisterInProgramDetail" | translate }}
+    </h4>
+    <button
+      type="button"
+      class="btn-close close pull-right"
+      aria-label="Close"
+      (click)="modalRef?.hide()"
+    >
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="container-fluid">
+      <app-list-register-in-program
+        [listRegisterProgramViewModel]="listRegisterProgramViewModel"
+        [programId]="joinProgramModel.id"
+      ></app-list-register-in-program>
+    </div>
+  </div>
+  <!-- container-fluid -->
+  <!-- End Page-content -->
+  <div class="row">
+    <div class="modal-footer">
+      <div class="button-container">
+        <button
+          type="button"
+          class="btn btn-light button"
+          aria-label="Close"
+          (click)="modalRef?.hide()"
+        >
+          {{ "Close" | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #participateTestAttendanceDetailTemplete class="modal-lg">
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">
+      {{ "TestSubmited" | translate }}
+    </h4>
+    <button
+      type="button"
+      class="btn-close close pull-right"
+      aria-label="Close"
+      (click)="modalRef?.hide()"
+    >
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="container-fluid">
+      <app-list-test-submited
+        [listParticipationTestAttendnaceViewModel]="
+          listParticipateAttendanceViewModel
+        "
+        [programId]="participationTestViewModel.id"
+      ></app-list-test-submited>
+    </div>
+  </div>
+  <!-- container-fluid -->
+  <!-- End Page-content -->
+  <div class="row">
+    <div class="modal-footer">
+      <div class="button-container">
+        <button
+          type="button"
+          class="btn btn-light button"
+          aria-label="Close"
+          (click)="modalRef?.hide()"
+        >
+          {{ "Close" | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #workshopAttendanceDetailTemplete class="modal-lg">
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">
+      {{ "WorshopAttendance" | translate }}
+    </h4>
+    <button
+      type="button"
+      class="btn-close close pull-right"
+      aria-label="Close"
+      (click)="modalRef?.hide()"
+    >
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="container-fluid">
+      <app-list-workshop-attendance
+        [listWorkshopAttendanceViewModel]="listWorkshopAttendanceViewModel"
+        [programId]="workshopViewModel.id"
+      ></app-list-workshop-attendance>
+    </div>
+  </div>
+  <!-- container-fluid -->
+  <!-- End Page-content -->
+  <div class="row">
+    <div class="modal-footer">
+      <div class="button-container">
+        <button
+          type="button"
+          class="btn btn-light button"
+          aria-label="Close"
+          (click)="modalRef?.hide()"
+        >
+          {{ "Close" | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #interviewAttendanceDetailTemplete class="modal-lg">
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">
+      {{ "InterviewAttendance" | translate }}
+    </h4>
+    <button
+      type="button"
+      class="btn-close close pull-right"
+      aria-label="Close"
+      (click)="modalRef?.hide()"
+    >
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="container-fluid">
+      <app-list-interview-attendance
+        [listInterviewAttendnaceViewModel]="listInterviewAttendanceViewModel"
+        [programId]="interviewViewModel.id"
+      ></app-list-interview-attendance>
+    </div>
+  </div>
+  <!-- container-fluid -->
+  <!-- End Page-content -->
+  <div class="row">
+    <div class="modal-footer">
+      <div class="button-container">
+        <button
+          type="button"
+          class="btn btn-light button"
+          aria-label="Close"
+          (click)="modalRef?.hide()"
+        >
+          {{ "Close" | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #challengeSubmitedDetailTemplete class="modal-lg">
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">
+      {{ "ChallengedSubmitedList" | translate }}
+    </h4>
+    <button
+      type="button"
+      class="btn-close close pull-right"
+      aria-label="Close"
+      (click)="modalRef?.hide()"
+    >
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="container-fluid">
+      <app-list-challenged-submited
+        [listChallengeSubmitedViewModel]="listChallengeSubmitedViewModel"
+        [programId]="joinProgramChallengeViewModel.id"
+      ></app-list-challenged-submited>
     </div>
   </div>
   <!-- container-fluid -->

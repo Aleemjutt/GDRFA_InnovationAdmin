@@ -14,3 +14,19 @@ export interface WorkshopViewModel {
   urlBase64: string;
   file: File | null;
 }
+
+export interface WorkshopAttendanceViewModel {
+  registerDate: string | null;
+  userId: number | null;
+  userName: string | null;
+  empId: string | null;
+  empName: string | null;
+  workshopId: number | null;
+  attendanceStatus: AttendanceStatus;
+}
+
+export enum AttendanceStatus {
+  Non = 0,
+  Present = 1,
+  Absent = 2,
+}

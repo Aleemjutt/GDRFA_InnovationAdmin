@@ -276,14 +276,14 @@ export class SideBarComponent implements OnInit {
             icon: 'ri-user-add-fill csm-icon-color',
             subMenuId: 'submenuJoinProgram',
             subMenuItems: [
-              {
-                label:
-                  this.GlobalService.getCurrentLanguage() === 'en'
-                    ? 'Participates Tests List'
-                    : 'قائمة الاختبارات المشاركة',
-                icon: 'ri-a-b csm-icon-color',
-                routerLink: '/creativeSupport/joinProgram',
-              },
+              // {
+              //   label:
+              //     this.GlobalService.getCurrentLanguage() === 'en'
+              //       ? 'Participates Tests List'
+              //       : 'قائمة الاختبارات المشاركة',
+              //   icon: 'ri-a-b csm-icon-color',
+              //   routerLink: '/creativeSupport/joinProgram',
+              // },
               {
                 label:
                   this.GlobalService.getCurrentLanguage() === 'en'
@@ -298,7 +298,7 @@ export class SideBarComponent implements OnInit {
                     ? 'Add Program'
                     : 'قائمة الاختبارات المشاركة',
                 icon: 'ri-a-b csm-icon-color',
-                routerLink: '/creativeSupport/addProgram',
+                routerLink: '/creativeSupport/addProgram/0/0',
               },
             ],
           },

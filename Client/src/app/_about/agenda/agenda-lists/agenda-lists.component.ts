@@ -613,4 +613,6 @@ export class AgendaListsComponent implements OnInit {
       this.agendaModel.imageUrl = '';
     }
   }
+
+  /// Tables
 }

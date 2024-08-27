@@ -6,11 +6,28 @@ export interface InterviewViewModel {
   latitude: string;
   longitude: string;
   locatoinDescription: string;
-  interviewDate: string| null;
+  interviewDate: string | null;
   interviewTime: string | null;
   programId: number | null;
   imageUrl: string;
   urlBase64: string;
   venue: number;
   file: File | null;
+}
+
+export interface InterviewAttendanceViewModel {
+  registerDate: string | null;
+  userId: number | null;
+  userName: string | null;
+  empId: string | null;
+  empName: string | null;
+  interviewId: number | null;
+  interviewStatus: InterviewStatus;
+}
+
+export enum InterviewStatus {
+  Non = 0,
+  Passed = 1,
+  Fail = 2,
+  NotAttended = 3,
 }

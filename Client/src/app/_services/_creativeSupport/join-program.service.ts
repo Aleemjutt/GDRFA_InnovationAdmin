@@ -60,9 +60,9 @@ export class JoinProgramService {
     );
   }
 
-  _getParticipateTestList() {
+  _getParticipateTestList(id: number) {
     return this.httpClient.get<ResponseResult>(
-      this.baseUrl + 'creativeSupport/getParticipateTestList',
+      this.baseUrl + 'creativeSupport/getParticipateTestList?id=' + id,
       this.globalService.getHttpOptions()
     );
   }
@@ -126,9 +126,9 @@ export class JoinProgramService {
     );
   }
 
-  _listWorkshop() {
+  _listWorkshop(id: number) {
     return this.httpClient.get<ResponseResult>(
-      this.baseUrl + 'joinProgram/listWorkshop',
+      this.baseUrl + 'joinProgram/listWorkshop?id=' + id,
       this.globalService.getHttpOptions()
     );
   }
@@ -163,9 +163,9 @@ export class JoinProgramService {
     );
   }
 
-  _listInterview() {
+  _listInterview(id: number) {
     return this.httpClient.get<ResponseResult>(
-      this.baseUrl + 'joinProgram/listInterview',
+      this.baseUrl + 'joinProgram/listInterview?id=' + id,
       this.globalService.getHttpOptions()
     );
   }
@@ -202,9 +202,44 @@ export class JoinProgramService {
     );
   }
 
-  _listChallenge() {
+  _listChallenge(id: number) {
     return this.httpClient.get<ResponseResult>(
-      this.baseUrl + 'joinProgram/listChallenge',
+      this.baseUrl + 'joinProgram/listChallenge?id=' + id,
+      this.globalService.getHttpOptions()
+    );
+  }
+
+  // View Details Of Program By Clint End
+  _listRegisterInProgram(id: number) {
+    return this.httpClient.get<ResponseResult>(
+      this.baseUrl + 'joinProgram/listRegisterInProgram?id=' + id,
+      this.globalService.getHttpOptions()
+    );
+  }
+
+  _listParticipateTestAttendance(id: number) {
+    return this.httpClient.get<ResponseResult>(
+      this.baseUrl + 'joinProgram/listRegisterInProgram?id=' + id,
+      this.globalService.getHttpOptions()
+    );
+  }
+  _listInWorkshopAttendance(id: number) {
+    return this.httpClient.get<ResponseResult>(
+      this.baseUrl + 'joinProgram/listWorshopAttendnace?id=' + id,
+      this.globalService.getHttpOptions()
+    );
+  }
+
+  _listInInterviewAttendance(id: number) {
+    return this.httpClient.get<ResponseResult>(
+      this.baseUrl + 'joinProgram/listInterviewAttendnace?id=' + id,
+      this.globalService.getHttpOptions()
+    );
+  }
+
+  _listChallengeSubmited(id: number) {
+    return this.httpClient.get<ResponseResult>(
+      this.baseUrl + 'joinProgram/listChallengeSubmit?id=' + id,
       this.globalService.getHttpOptions()
     );
   }
