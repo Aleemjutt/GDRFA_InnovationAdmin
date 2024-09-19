@@ -8,247 +8,502 @@
           </h4>
         </div>
         <div class="card-body" *ngIf="joinProgramModel">
-          <form
-            #editForm="ngForm"
-            id="addProgramForm"
-            (ngSubmit)="addProgram()"
-          >
-            <tabset>
-              <tab [heading]="getTabValue('Program')">
-                <div class="row mt-3">
-                  <div>
-                    <a
-                      type="button"
-                      class="btn btn-danger waves-effect waves-light"
-                      id="btnAdd"
-                      style="float: inline-end"
-                      (click)="
-                        listRegisterProgram(registerInProgramDetailTemplete)
-                      "
-                    >
-                      {{ "ViewRegisterMembers" | translate }}
-                    </a>
-                  </div>
-
-                  <div class="col-md-6 mt-3">
-                    <label>{{ "DescriptionEn" | translate }}</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      name="descriptionEn"
-                      [(ngModel)]="joinProgramModel.descriptionEn"
-                    />
-                  </div>
-                  <div class="col-md-6">
-                    <label class="mt-3">{{
-                      "DescriptionAr" | translate
-                    }}</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      name="descriptionAr"
-                      [(ngModel)]="joinProgramModel.descriptionAr"
-                    />
-                  </div>
-                  <div class="col-md-6 mt-3">
-                    <label>{{ "StartDate" | translate }}</label>
-                    <input
-                      type="date"
-                      class="form-control date"
-                      name="aboutDescriptionAr"
-                      [(ngModel)]="joinProgramModel.startDate"
-                    />
-                  </div>
-                  <div class="col-md-6">
-                    <label class="mt-3">{{ "EndDate" | translate }}</label>
-                    <input
-                      type="date"
-                      class="form-control date"
-                      name="aboutDescriptionAr"
-                      [(ngModel)]="joinProgramModel.endDate"
-                    />
-                  </div>
+          <tabset>
+            <tab [heading]="getTabValue('Program')">
+              <div class="row mt-3">
+                <div>
+                  <a
+                    type="button"
+                    class="btn btn-danger waves-effect waves-light"
+                    id="btnAdd"
+                    style="float: inline-end"
+                    (click)="
+                      listRegisterProgram(registerInProgramDetailTemplete)
+                    "
+                  >
+                    {{ "ViewRegisterMembers" | translate }}
+                  </a>
                 </div>
-              </tab>
-              <tab [heading]="getTabValue('CreateTest')">
-                <div class="card">
-                  <div class="card-header align-items-center d-flex">
-                    <h4 class="card-title mb-0 flex-grow-1">
-                      {{ "ParticipateTestsList" | translate }}
-                    </h4>
-                    <div class="flex-shrink-0">
-                      <div class="d-flex align-items-center">
-                        <input
-                          type="text"
-                          class="form-control me-3"
-                          data-provider="flatpickr"
-                          data-date-format="d M, Y"
-                          data-range-date="true"
-                          placeholder="Select Date Range"
-                        />
-                        <select
-                          class="form-select mb-0 me-2"
-                          aria-label="Default select example"
-                        >
-                          <option selected>{{ "Status" | translate }}</option>
-                        </select>
-                        <button
-                          type="button"
-                          class="btn btn-light waves-effect waves-light ms-2 me-2 col-1"
-                        >
-                          <i class="ri-search-2-line"></i>
-                        </button>
 
-                        |
-                        <a
-                          *ngIf="!isView"
-                          type="button"
-                          class="btn btn-danger waves-effect waves-light ms-2 col-3"
-                          id="btnAdd"
-                          style="float: inline-end"
-                          (click)="openModal(template)"
-                        >
-                          {{ "Add" | translate }}
-                        </a>
-                      </div>
+                <div class="col-md-6 mt-3">
+                  <label>{{ "DescriptionEn" | translate }}</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="joinProgramModel.descriptionEn"
+                    (ngModelChange)="
+                      globalService.onInputChange('descriptionEn', $event)
+                    "
+                    [ngClass]="{
+                      'input-error':
+                        globalService.dataKeys['descriptionEn']?.isError
+                    }"
+                  />
+                  <span
+                    *ngIf="globalService.dataKeys['descriptionEn']?.isError"
+                    class="text-danger"
+                  >
+                    <i class="bi bi-exclamation-circle"></i>
+                    {{ "Thisfiledisrequired!" | translate }}
+                  </span>
+                </div>
+                <div class="col-md-6">
+                  <label class="mt-3">{{ "DescriptionAr" | translate }}</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="joinProgramModel.descriptionAr"
+                    (ngModelChange)="
+                      globalService.onInputChange('descriptionAr', $event)
+                    "
+                    [ngClass]="{
+                      'input-error':
+                        globalService.dataKeys['descriptionAr']?.isError
+                    }"
+                  />
+                  <span
+                    *ngIf="globalService.dataKeys['descriptionAr']?.isError"
+                    class="text-danger"
+                  >
+                    <i class="bi bi-exclamation-circle"></i>
+                    {{ "Thisfiledisrequired!" | translate }}
+                  </span>
+                </div>
+                <div class="col-md-6 mt-3">
+                  <label>{{ "StartDate" | translate }}</label>
+                  <input
+                    type="date"
+                    class="form-control date"
+                    [(ngModel)]="joinProgramModel.startDate"
+                    (ngModelChange)="
+                      globalService.onInputChange('startDate', $event, 'date')
+                    "
+                    [ngClass]="{
+                      'input-error':
+                        globalService.dataKeys['startDate']?.isError
+                    }"
+                  />
+                  <span
+                    *ngIf="globalService.dataKeys['startDate']?.isError"
+                    class="text-danger"
+                  >
+                    <i class="bi bi-exclamation-circle"></i>
+                    {{ "Thisfiledisrequired!" | translate }}
+                  </span>
+                </div>
+                <div class="col-md-6">
+                  <label class="mt-3">{{ "EndDate" | translate }}</label>
+
+                  <input
+                    type="date"
+                    class="form-control date"
+                    [(ngModel)]="joinProgramModel.endDate"
+                    (ngModelChange)="
+                      globalService.onInputChange('endDate', $event, 'date')
+                    "
+                    [ngClass]="{
+                      'input-error': globalService.dataKeys['endDate']?.isError
+                    }"
+                  />
+                  <span
+                    *ngIf="globalService.dataKeys['endDate']?.isError"
+                    class="text-danger"
+                  >
+                    <i class="bi bi-exclamation-circle"></i>
+                    {{ "Thisfiledisrequired!" | translate }}
+                  </span>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="" style="margin-top: 30px">
+                    <label for="userStatusInput" class="form-label">{{
+                      "Status" | translate
+                    }}</label>
+                    <div class="form-check form-switch">
+                      <input
+                        type="checkbox"
+                        class="form-check-input"
+                        (change)="setJoinProgramCheckBoxValue($event)"
+                        [(ngModel)]="joinProgramModel.statusCode"
+                        [checked]="
+                          joinProgramModel.statusCode == StatusCode.IsActive
+                        "
+                      />
                     </div>
                   </div>
-                  <div class="card-body">
-                    <table class="table table-nowrap" id="testDataTable">
-                      <thead>
-                        <tr>
-                          <th>{{ "ID" | translate }}</th>
-                          <th>{{ "Status" | translate }}</th>
-                          <th>{{ "Actions" | translate }}</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <!--  -->
-                        <tr
-                          *ngFor="
-                            let item of participationTestViewModelList;
-                            let i = index
-                          "
-                        >
-                          <td>{{ i }}</td>
-                          <td>{{ item.status }}</td>
+                </div>
+              </div>
+            </tab>
+            <tab [heading]="getTabValue('CreateTest')">
+              <div class="card">
+                <div class="card-header align-items-center d-flex">
+                  <h4 class="card-title mb-0 flex-grow-1">
+                    {{ "ParticipateTestsList" | translate }}
+                  </h4>
+                  <div class="flex-shrink-0">
+                    <div class="d-flex align-items-center">
+                      <input
+                        type="text"
+                        class="form-control me-3"
+                        data-provider="flatpickr"
+                        data-date-format="d M, Y"
+                        data-range-date="true"
+                        placeholder="Select Date Range"
+                      />
+                      <select
+                        class="form-select mb-0 me-2"
+                        aria-label="Default select example"
+                      >
+                        <option selected>{{ "Status" | translate }}</option>
+                      </select>
+                      <button
+                        type="button"
+                        class="btn btn-light waves-effect waves-light ms-2 me-2 col-1"
+                      >
+                        <i class="ri-search-2-line"></i>
+                      </button>
 
-                          <td>
-                            <button
-                              type="button"
-                              class="btn btn-light mr-1"
-                              data-bs-toggle="modal"
-                              data-bs-target="#exampleModal"
-                              (click)="viewTestDetail(i, templateDetails)"
-                              data-backdrop="static"
-                              data-keyboard="false"
-                            >
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="16"
-                                height="16"
-                                fill="currentColor"
-                                class="bi bi-eye-fill"
-                                viewBox="0 0 16 16"
-                              >
-                                <path
-                                  d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"
-                                />
-                                <path
-                                  d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"
-                                />
-                              </svg>
-                            </button>
-                            <button
-                              type="button"
-                              class="btn btn-light mr-1"
-                              data-bs-toggle="modal"
-                              data-bs-target="#exampleModal"
-                              (click)="editTest(i, template)"
-                              data-backdrop="static"
-                              data-keyboard="false"
-                              *ngIf="!isView"
-                            >
-                              <svg
-                                width="1em"
-                                height="1em"
-                                viewBox="0 0 16 16"
-                                class="bi bi-pencil-square"
-                                fill="currentColor"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"
-                                />
-                                <path
-                                  fill-rule="evenodd"
-                                  d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"
-                                />
-                              </svg>
-                            </button>
-
-                            <button
-                              type="button"
-                              class="btn btn-outline-danger mr-1"
-                              data-bs-toggle="modal"
-                              data-bs-target="#exampleModal"
-                              (click)="deleteTest(i)"
-                              data-backdrop="static"
-                              data-keyboard="false"
-                              *ngIf="!isView"
-                            >
-                              <svg
-                                width="1em"
-                                height="1em"
-                                viewBox="0 0 16 16"
-                                class="bi bi-trash-fill"
-                                fill="currentColor"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  fill-rule="evenodd"
-                                  d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"
-                                />
-                              </svg>
-                            </button>
-
-                            <button type="button" class="btn btn-light mr-1">
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="16"
-                                height="16"
-                                fill="currentColor"
-                                class="bi bi-box-arrow-in-up-right"
-                                viewBox="0 0 16 16"
-                                (click)="
-                                  viewParticipateInTest(
-                                    item.id,
-                                    participateTestAttendanceDetailTemplete
-                                  )
-                                "
-                              >
-                                <path
-                                  fill-rule="evenodd"
-                                  d="M6.364 13.5a.5.5 0 0 0 .5.5H13.5a1.5 1.5 0 0 0 1.5-1.5v-10A1.5 1.5 0 0 0 13.5 1h-10A1.5 1.5 0 0 0 2 2.5v6.636a.5.5 0 1 0 1 0V2.5a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v10a.5.5 0 0 1-.5.5H6.864a.5.5 0 0 0-.5.5"
-                                />
-                                <path
-                                  fill-rule="evenodd"
-                                  d="M11 5.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793l-8.147 8.146a.5.5 0 0 0 .708.708L10 6.707V10.5a.5.5 0 0 0 1 0z"
-                                />
-                              </svg>
-                            </button>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
+                      |
+                      <a
+                        *ngIf="!isView"
+                        type="button"
+                        class="btn btn-danger waves-effect waves-light ms-2 col-3"
+                        id="btnAdd"
+                        style="float: inline-end"
+                        (click)="openModal(template)"
+                      >
+                        {{ "Add" | translate }}
+                      </a>
+                    </div>
                   </div>
                 </div>
-              </tab>
-              <tab [heading]="getTabValue('Wrokshop')">
+                <div class="card-body">
+                  <table class="table table-nowrap" id="testDataTable">
+                    <thead>
+                      <tr>
+                        <th>{{ "ID" | translate }}</th>
+                        <th>{{ "Status" | translate }}</th>
+                        <th>{{ "Actions" | translate }}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <!--  -->
+                      <tr
+                        *ngFor="
+                          let item of participationTestViewModelList;
+                          let i = index
+                        "
+                      >
+                        <td>{{ i }}</td>
+                        <td>
+                          <span
+                            class="badge badge-success"
+                            *ngIf="item.statusCode == StatusCode.IsActive"
+                          >
+                            {{
+                              globalService.getStatusOnlyNameOnCodeBased(
+                                item.statusCode
+                              )
+                            }}</span
+                          >
+
+                          <span
+                            class="badge badge-info"
+                            *ngIf="item.statusCode == StatusCode.InActive"
+                          >
+                            {{
+                              globalService.getStatusOnlyNameOnCodeBased(
+                                item.statusCode
+                              )
+                            }}</span
+                          >
+                        </td>
+
+                        <td>
+                          <button
+                            type="button"
+                            class="btn btn-light mr-1"
+                            data-bs-toggle="modal"
+                            data-bs-target="#exampleModal"
+                            (click)="viewTestDetail(i, templateDetails)"
+                            data-backdrop="static"
+                            data-keyboard="false"
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="16"
+                              height="16"
+                              fill="currentColor"
+                              class="bi bi-eye-fill"
+                              viewBox="0 0 16 16"
+                            >
+                              <path
+                                d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"
+                              />
+                              <path
+                                d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"
+                              />
+                            </svg>
+                          </button>
+                          <button
+                            type="button"
+                            class="btn btn-light mr-1"
+                            data-bs-toggle="modal"
+                            data-bs-target="#exampleModal"
+                            (click)="editTest(i, template)"
+                            data-backdrop="static"
+                            data-keyboard="false"
+                            *ngIf="!isView"
+                          >
+                            <svg
+                              width="1em"
+                              height="1em"
+                              viewBox="0 0 16 16"
+                              class="bi bi-pencil-square"
+                              fill="currentColor"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"
+                              />
+                              <path
+                                fill-rule="evenodd"
+                                d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"
+                              />
+                            </svg>
+                          </button>
+
+                          <button
+                            type="button"
+                            class="btn btn-outline-danger mr-1"
+                            data-bs-toggle="modal"
+                            data-bs-target="#exampleModal"
+                            (click)="deleteTest(i)"
+                            data-backdrop="static"
+                            data-keyboard="false"
+                            *ngIf="!isView"
+                          >
+                            <svg
+                              width="1em"
+                              height="1em"
+                              viewBox="0 0 16 16"
+                              class="bi bi-trash-fill"
+                              fill="currentColor"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                fill-rule="evenodd"
+                                d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"
+                              />
+                            </svg>
+                          </button>
+
+                          <button type="button" class="btn btn-light mr-1">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="16"
+                              height="16"
+                              fill="currentColor"
+                              class="bi bi-box-arrow-in-up-right"
+                              viewBox="0 0 16 16"
+                              (click)="
+                                viewParticipateInTest(
+                                  item.id,
+                                  participateTestAttendanceDetailTemplete
+                                )
+                              "
+                            >
+                              <path
+                                fill-rule="evenodd"
+                                d="M6.364 13.5a.5.5 0 0 0 .5.5H13.5a1.5 1.5 0 0 0 1.5-1.5v-10A1.5 1.5 0 0 0 13.5 1h-10A1.5 1.5 0 0 0 2 2.5v6.636a.5.5 0 1 0 1 0V2.5a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v10a.5.5 0 0 1-.5.5H6.864a.5.5 0 0 0-.5.5"
+                              />
+                              <path
+                                fill-rule="evenodd"
+                                d="M11 5.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793l-8.147 8.146a.5.5 0 0 0 .708.708L10 6.707V10.5a.5.5 0 0 0 1 0z"
+                              />
+                            </svg>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </tab>
+            <tab [heading]="getTabValue('Wrokshop')">
+              <div class="card">
+                <div class="card-header align-items-center d-flex">
+                  <h4 class="card-title mb-0 flex-grow-1">
+                    {{ "WrokshopsList" | translate }}
+                  </h4>
+                  <div class="flex-shrink-0">
+                    <div class="d-flex align-items-center">
+                      <a
+                        *ngIf="!isView"
+                        type="button"
+                        class="btn btn-danger waves-effect waves-light"
+                        id="btnAdd"
+                        style="float: inline-end"
+                        (click)="addWrokshop(wrokshopTemplate)"
+                      >
+                        {{ "Add" | translate }}
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <table class="table table-nowrap" id="wrokshopDataTable">
+                    <thead>
+                      <tr>
+                        <th>{{ "ID" | translate }}</th>
+                        <th>{{ "NameEn" | translate }}</th>
+                        <th>{{ "NameAr" | translate }}</th>
+                        <th>{{ "Location" | translate }}</th>
+                        <th>{{ "WorkshopDate" | translate }}</th>
+                        <th>{{ "WrokshopTime" | translate }}</th>
+                        <th>{{ "Actions" | translate }}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        *ngFor="let item of workshopViewModels; let i = index"
+                      >
+                        <td>{{ i }}</td>
+
+                        <td>{{ item.nameEn }}</td>
+                        <td>{{ item.nameAr }}</td>
+                        <td>{{ globalService.getVenueType(item.venue) }}</td>
+                        <td>
+                          {{
+                            globalService.ConvertDateTimeToDateOnly(
+                              item.workshopDate
+                            )
+                          }}
+                        </td>
+                        <td>{{ item.workshopTime }}</td>
+
+                        <td>
+                          <button
+                            type="button"
+                            class="btn btn-light mr-1"
+                            data-bs-toggle="modal"
+                            data-bs-target="#exampleModal"
+                            (click)="
+                              viewWrokshopDetails(i, wrokshopTemplateDetails)
+                            "
+                            data-backdrop="static"
+                            data-keyboard="false"
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="16"
+                              height="16"
+                              fill="currentColor"
+                              class="bi bi-eye-fill"
+                              viewBox="0 0 16 16"
+                            >
+                              <path
+                                d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"
+                              />
+                              <path
+                                d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"
+                              />
+                            </svg>
+                          </button>
+                          <button
+                            type="button"
+                            class="btn btn-light mr-1"
+                            data-bs-toggle="modal"
+                            data-bs-target="#exampleModal"
+                            (click)="editWorkshop(i, wrokshopTemplate)"
+                            data-backdrop="static"
+                            data-keyboard="false"
+                            *ngIf="!isView"
+                          >
+                            <svg
+                              width="1em"
+                              height="1em"
+                              viewBox="0 0 16 16"
+                              class="bi bi-pencil-square"
+                              fill="currentColor"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"
+                              />
+                              <path
+                                fill-rule="evenodd"
+                                d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"
+                              />
+                            </svg>
+                          </button>
+
+                          <button
+                            type="button"
+                            class="btn btn-outline-danger mr-1"
+                            data-bs-toggle="modal"
+                            data-bs-target="#exampleModal"
+                            (click)="deleteWrokshop(i)"
+                            data-backdrop="static"
+                            data-keyboard="false"
+                            *ngIf="!isView"
+                          >
+                            <svg
+                              width="1em"
+                              height="1em"
+                              viewBox="0 0 16 16"
+                              class="bi bi-trash-fill"
+                              fill="currentColor"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                fill-rule="evenodd"
+                                d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"
+                              />
+                            </svg>
+                          </button>
+
+                          <button
+                            type="button"
+                            class="btn btn-light mr-1"
+                            (click)="
+                              viewWorkshopAttendance(
+                                item.id,
+                                workshopAttendanceDetailTemplete
+                              )
+                            "
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="16"
+                              height="16"
+                              fill="currentColor"
+                              class="bi bi-box-arrow-in-up-right"
+                              viewBox="0 0 16 16"
+                            >
+                              <path
+                                fill-rule="evenodd"
+                                d="M6.364 13.5a.5.5 0 0 0 .5.5H13.5a1.5 1.5 0 0 0 1.5-1.5v-10A1.5 1.5 0 0 0 13.5 1h-10A1.5 1.5 0 0 0 2 2.5v6.636a.5.5 0 1 0 1 0V2.5a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v10a.5.5 0 0 1-.5.5H6.864a.5.5 0 0 0-.5.5"
+                              />
+                              <path
+                                fill-rule="evenodd"
+                                d="M11 5.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793l-8.147 8.146a.5.5 0 0 0 .708.708L10 6.707V10.5a.5.5 0 0 0 1 0z"
+                              />
+                            </svg>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </tab>
+            <tab [heading]="getTabValue('Interview')">
+              <div class="row mt-3">
                 <div class="card">
                   <div class="card-header align-items-center d-flex">
                     <h4 class="card-title mb-0 flex-grow-1">
-                      {{ "WrokshopsList" | translate }}
+                      {{ "InterviewsList" | translate }}
                     </h4>
                     <div class="flex-shrink-0">
                       <div class="d-flex align-items-center">
@@ -258,7 +513,7 @@
                           class="btn btn-danger waves-effect waves-light"
                           id="btnAdd"
                           style="float: inline-end"
-                          (click)="addWrokshop(wrokshopTemplate)"
+                          (click)="addInterview(interviewTemplate)"
                         >
                           {{ "Add" | translate }}
                         </a>
@@ -266,35 +521,37 @@
                     </div>
                   </div>
                   <div class="card-body">
-                    <table class="table table-nowrap" id="wrokshopDataTable">
+                    <table class="table table-nowrap" id="interviewDataTable">
                       <thead>
                         <tr>
                           <th>{{ "ID" | translate }}</th>
                           <th>{{ "NameEn" | translate }}</th>
                           <th>{{ "NameAr" | translate }}</th>
                           <th>{{ "Location" | translate }}</th>
-                          <th>{{ "WorkshopDate" | translate }}</th>
-                          <th>{{ "WrokshopTime" | translate }}</th>
+                          <th>{{ "InterviewDate" | translate }}</th>
+                          <th>{{ "InterviewTime" | translate }}</th>
                           <th>{{ "Actions" | translate }}</th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr
-                          *ngFor="let item of workshopViewModels; let i = index"
+                          *ngFor="
+                            let item of interviewViewModels;
+                            let i = index
+                          "
                         >
                           <td>{{ i }}</td>
-
                           <td>{{ item.nameEn }}</td>
                           <td>{{ item.nameAr }}</td>
-                          <td>{{ globalService.getVenueType(item.venue) }}</td>
+                          <td>{{ item.locatoinDescription }}</td>
                           <td>
                             {{
                               globalService.ConvertDateTimeToDateOnly(
-                                item.workshopDate
+                                item.interviewDate
                               )
                             }}
                           </td>
-                          <td>{{ item.workshopTime }}</td>
+                          <td>{{ item.interviewTime }}</td>
 
                           <td>
                             <button
@@ -303,7 +560,10 @@
                               data-bs-toggle="modal"
                               data-bs-target="#exampleModal"
                               (click)="
-                                viewWrokshopDetails(i, wrokshopTemplateDetails)
+                                viewInterviewDetails(
+                                  i,
+                                  interviewTemplateDetails
+                                )
                               "
                               data-backdrop="static"
                               data-keyboard="false"
@@ -329,7 +589,7 @@
                               class="btn btn-light mr-1"
                               data-bs-toggle="modal"
                               data-bs-target="#exampleModal"
-                              (click)="editWorkshop(i, wrokshopTemplate)"
+                              (click)="editInterview(i, interviewTemplate)"
                               data-backdrop="static"
                               data-keyboard="false"
                               *ngIf="!isView"
@@ -357,7 +617,7 @@
                               class="btn btn-outline-danger mr-1"
                               data-bs-toggle="modal"
                               data-bs-target="#exampleModal"
-                              (click)="deleteWrokshop(i)"
+                              (click)="deleteInterview(i)"
                               data-backdrop="static"
                               data-keyboard="false"
                               *ngIf="!isView"
@@ -381,9 +641,9 @@
                               type="button"
                               class="btn btn-light mr-1"
                               (click)="
-                                viewWorkshopAttendance(
+                                viewInterviewAttendance(
                                   item.id,
-                                  workshopAttendanceDetailTemplete
+                                  interviewAttendanceDetailTemplete
                                 )
                               "
                             >
@@ -411,440 +671,190 @@
                     </table>
                   </div>
                 </div>
-              </tab>
+              </div>
+            </tab>
+            <tab [heading]="getTabValue('TranningCourse')">
+              <label class="mt-3">{{ "TranningCousers" | translate }} </label>
 
-              <tab [heading]="getTabValue('Interview')">
-                <div class="row mt-3">
-                  <div class="card">
-                    <div class="card-header align-items-center d-flex">
-                      <h4 class="card-title mb-0 flex-grow-1">
-                        {{ "InterviewsList" | translate }}
-                      </h4>
-                      <div class="flex-shrink-0">
-                        <div class="d-flex align-items-center">
-                          <a
-                            *ngIf="!isView"
-                            type="button"
-                            class="btn btn-danger waves-effect waves-light"
-                            id="btnAdd"
-                            style="float: inline-end"
-                            (click)="addInterview(interviewTemplate)"
-                          >
-                            {{ "Add" | translate }}
-                          </a>
-                        </div>
+              <div class="row"></div>
+            </tab>
+            <tab [heading]="getTabValue('Challenges')">
+              <div class="row mt-3">
+                <div class="card">
+                  <div class="card-header align-items-center d-flex">
+                    <h4 class="card-title mb-0 flex-grow-1">
+                      {{ "ChallengesList" | translate }}
+                    </h4>
+                    <div class="flex-shrink-0">
+                      <div class="d-flex align-items-center">
+                        <a
+                          *ngIf="!isView"
+                          type="button"
+                          class="btn btn-danger waves-effect waves-light"
+                          id="btnAdd"
+                          style="float: inline-end"
+                          (click)="addChallenge(challengeTemplate)"
+                        >
+                          {{ "Add" | translate }}
+                        </a>
                       </div>
                     </div>
-                    <div class="card-body">
-                      <table class="table table-nowrap" id="interviewDataTable">
-                        <thead>
-                          <tr>
-                            <th>{{ "ID" | translate }}</th>
-                            <th>{{ "NameEn" | translate }}</th>
-                            <th>{{ "NameAr" | translate }}</th>
-                            <th>{{ "Location" | translate }}</th>
-                            <th>{{ "InterviewDate" | translate }}</th>
-                            <th>{{ "InterviewTime" | translate }}</th>
-                            <th>{{ "Actions" | translate }}</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr
-                            *ngFor="
-                              let item of interviewViewModels;
-                              let i = index
-                            "
-                          >
-                            <td>{{ i }}</td>
-                            <td>{{ item.nameEn }}</td>
-                            <td>{{ item.nameAr }}</td>
-                            <td>{{ item.locatoinDescription }}</td>
-                            <td>
-                              {{
-                                globalService.ConvertDateTimeToDateOnly(
-                                  item.interviewDate
+                  </div>
+                  <div class="card-body">
+                    <table class="table table-nowrap" id="challengeDataTable">
+                      <thead>
+                        <tr>
+                          <th>{{ "ID" | translate }}</th>
+                          <th>{{ "TitleEn" | translate }}</th>
+                          <th>{{ "TitleAr" | translate }}</th>
+                          <th>{{ "DescriptionEn" | translate }}</th>
+                          <th>{{ "DescriptionAr" | translate }}</th>
+                          <th>{{ "Actions" | translate }}</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr
+                          *ngFor="
+                            let item of joinProgramChallengeViewModels;
+                            let i = index
+                          "
+                        >
+                          <td>{{ i }}</td>
+                          <td>{{ item.titleEn }}</td>
+                          <td>{{ item.titleAr }}</td>
+                          <td>{{ item.descriptionEn }}</td>
+                          <td>{{ item.descriptionAr }}</td>
+                          <td>
+                            <button
+                              type="button"
+                              class="btn btn-light mr-1"
+                              data-bs-toggle="modal"
+                              data-bs-target="#exampleModal"
+                              (click)="
+                                viewChallengeDetail(i, challengeTemplateDetails)
+                              "
+                              data-backdrop="static"
+                              data-keyboard="false"
+                            >
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="16"
+                                height="16"
+                                fill="currentColor"
+                                class="bi bi-eye-fill"
+                                viewBox="0 0 16 16"
+                              >
+                                <path
+                                  d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"
+                                />
+                                <path
+                                  d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"
+                                />
+                              </svg>
+                            </button>
+                            <button
+                              type="button"
+                              class="btn btn-light mr-1"
+                              data-bs-toggle="modal"
+                              data-bs-target="#exampleModal"
+                              (click)="editChallenge(i, challengeTemplate)"
+                              data-backdrop="static"
+                              data-keyboard="false"
+                              *ngIf="!isView"
+                            >
+                              <svg
+                                width="1em"
+                                height="1em"
+                                viewBox="0 0 16 16"
+                                class="bi bi-pencil-square"
+                                fill="currentColor"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"
+                                />
+                                <path
+                                  fill-rule="evenodd"
+                                  d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"
+                                />
+                              </svg>
+                            </button>
+
+                            <button
+                              *ngIf="!isView"
+                              type="button"
+                              class="btn btn-outline-danger mr-1"
+                              data-bs-toggle="modal"
+                              data-bs-target="#exampleModal"
+                              (click)="deleteChallenge(i)"
+                              data-backdrop="static"
+                              data-keyboard="false"
+                            >
+                              <svg
+                                width="1em"
+                                height="1em"
+                                viewBox="0 0 16 16"
+                                class="bi bi-trash-fill"
+                                fill="currentColor"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  fill-rule="evenodd"
+                                  d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"
+                                />
+                              </svg>
+                            </button>
+
+                            <button
+                              type="button"
+                              class="btn btn-light mr-1"
+                              (click)="
+                                viewChallengeSubmited(
+                                  item.id,
+                                  challengeSubmitedDetailTemplete
                                 )
-                              }}
-                            </td>
-                            <td>{{ item.interviewTime }}</td>
-
-                            <td>
-                              <button
-                                type="button"
-                                class="btn btn-light mr-1"
-                                data-bs-toggle="modal"
-                                data-bs-target="#exampleModal"
-                                (click)="
-                                  viewInterviewDetails(
-                                    i,
-                                    interviewTemplateDetails
-                                  )
-                                "
-                                data-backdrop="static"
-                                data-keyboard="false"
+                              "
+                            >
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="16"
+                                height="16"
+                                fill="currentColor"
+                                class="bi bi-box-arrow-in-up-right"
+                                viewBox="0 0 16 16"
                               >
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  width="16"
-                                  height="16"
-                                  fill="currentColor"
-                                  class="bi bi-eye-fill"
-                                  viewBox="0 0 16 16"
-                                >
-                                  <path
-                                    d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"
-                                  />
-                                  <path
-                                    d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"
-                                  />
-                                </svg>
-                              </button>
-                              <button
-                                type="button"
-                                class="btn btn-light mr-1"
-                                data-bs-toggle="modal"
-                                data-bs-target="#exampleModal"
-                                (click)="editInterview(i, interviewTemplate)"
-                                data-backdrop="static"
-                                data-keyboard="false"
-                                *ngIf="!isView"
-                              >
-                                <svg
-                                  width="1em"
-                                  height="1em"
-                                  viewBox="0 0 16 16"
-                                  class="bi bi-pencil-square"
-                                  fill="currentColor"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"
-                                  />
-                                  <path
-                                    fill-rule="evenodd"
-                                    d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"
-                                  />
-                                </svg>
-                              </button>
-
-                              <button
-                                type="button"
-                                class="btn btn-outline-danger mr-1"
-                                data-bs-toggle="modal"
-                                data-bs-target="#exampleModal"
-                                (click)="deleteInterview(i)"
-                                data-backdrop="static"
-                                data-keyboard="false"
-                                *ngIf="!isView"
-                              >
-                                <svg
-                                  width="1em"
-                                  height="1em"
-                                  viewBox="0 0 16 16"
-                                  class="bi bi-trash-fill"
-                                  fill="currentColor"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    fill-rule="evenodd"
-                                    d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"
-                                  />
-                                </svg>
-                              </button>
-
-                              <button
-                                type="button"
-                                class="btn btn-light mr-1"
-                                (click)="
-                                  viewInterviewAttendance(
-                                    item.id,
-                                    interviewAttendanceDetailTemplete
-                                  )
-                                "
-                              >
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  width="16"
-                                  height="16"
-                                  fill="currentColor"
-                                  class="bi bi-box-arrow-in-up-right"
-                                  viewBox="0 0 16 16"
-                                >
-                                  <path
-                                    fill-rule="evenodd"
-                                    d="M6.364 13.5a.5.5 0 0 0 .5.5H13.5a1.5 1.5 0 0 0 1.5-1.5v-10A1.5 1.5 0 0 0 13.5 1h-10A1.5 1.5 0 0 0 2 2.5v6.636a.5.5 0 1 0 1 0V2.5a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v10a.5.5 0 0 1-.5.5H6.864a.5.5 0 0 0-.5.5"
-                                  />
-                                  <path
-                                    fill-rule="evenodd"
-                                    d="M11 5.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793l-8.147 8.146a.5.5 0 0 0 .708.708L10 6.707V10.5a.5.5 0 0 0 1 0z"
-                                  />
-                                </svg>
-                              </button>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
+                                <path
+                                  fill-rule="evenodd"
+                                  d="M6.364 13.5a.5.5 0 0 0 .5.5H13.5a1.5 1.5 0 0 0 1.5-1.5v-10A1.5 1.5 0 0 0 13.5 1h-10A1.5 1.5 0 0 0 2 2.5v6.636a.5.5 0 1 0 1 0V2.5a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v10a.5.5 0 0 1-.5.5H6.864a.5.5 0 0 0-.5.5"
+                                />
+                                <path
+                                  fill-rule="evenodd"
+                                  d="M11 5.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793l-8.147 8.146a.5.5 0 0 0 .708.708L10 6.707V10.5a.5.5 0 0 0 1 0z"
+                                />
+                              </svg>
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
                   </div>
                 </div>
-              </tab>
-              <tab [heading]="getTabValue('TranningCourse')">
-                <label class="mt-3">{{ "TranningCousers" | translate }} </label>
-
-                <div class="row"></div>
-              </tab>
-              <tab [heading]="getTabValue('Challenges')">
-                <div class="row mt-3">
-                  <div class="card">
-                    <div class="card-header align-items-center d-flex">
-                      <h4 class="card-title mb-0 flex-grow-1">
-                        {{ "ChallengesList" | translate }}
-                      </h4>
-                      <div class="flex-shrink-0">
-                        <div class="d-flex align-items-center">
-                          <a
-                            *ngIf="!isView"
-                            type="button"
-                            class="btn btn-danger waves-effect waves-light"
-                            id="btnAdd"
-                            style="float: inline-end"
-                            (click)="addChallenge(challengeTemplate)"
-                          >
-                            {{ "Add" | translate }}
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="card-body">
-                      <table class="table table-nowrap" id="challengeDataTable">
-                        <thead>
-                          <tr>
-                            <th>{{ "ID" | translate }}</th>
-                            <th>{{ "TitleEn" | translate }}</th>
-                            <th>{{ "TitleAr" | translate }}</th>
-                            <th>{{ "DescriptionEn" | translate }}</th>
-                            <th>{{ "DescriptionAr" | translate }}</th>
-                            <th>{{ "Actions" | translate }}</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr
-                            *ngFor="
-                              let item of joinProgramChallengeViewModels;
-                              let i = index
-                            "
-                          >
-                            <td>{{ i }}</td>
-                            <td>{{ item.titleEn }}</td>
-                            <td>{{ item.titleAr }}</td>
-                            <td>{{ item.descriptionEn }}</td>
-                            <td>{{ item.descriptionAr }}</td>
-                            <td>
-                              <button
-                                type="button"
-                                class="btn btn-light mr-1"
-                                data-bs-toggle="modal"
-                                data-bs-target="#exampleModal"
-                                (click)="
-                                  viewChallengeDetail(
-                                    i,
-                                    challengeTemplateDetails
-                                  )
-                                "
-                                data-backdrop="static"
-                                data-keyboard="false"
-                              >
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  width="16"
-                                  height="16"
-                                  fill="currentColor"
-                                  class="bi bi-eye-fill"
-                                  viewBox="0 0 16 16"
-                                >
-                                  <path
-                                    d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"
-                                  />
-                                  <path
-                                    d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"
-                                  />
-                                </svg>
-                              </button>
-                              <button
-                                type="button"
-                                class="btn btn-light mr-1"
-                                data-bs-toggle="modal"
-                                data-bs-target="#exampleModal"
-                                (click)="editChallenge(i, challengeTemplate)"
-                                data-backdrop="static"
-                                data-keyboard="false"
-                                *ngIf="!isView"
-                              >
-                                <svg
-                                  width="1em"
-                                  height="1em"
-                                  viewBox="0 0 16 16"
-                                  class="bi bi-pencil-square"
-                                  fill="currentColor"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"
-                                  />
-                                  <path
-                                    fill-rule="evenodd"
-                                    d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"
-                                  />
-                                </svg>
-                              </button>
-
-                              <button
-                                *ngIf="!isView"
-                                type="button"
-                                class="btn btn-outline-danger mr-1"
-                                data-bs-toggle="modal"
-                                data-bs-target="#exampleModal"
-                                (click)="deleteChallenge(i)"
-                                data-backdrop="static"
-                                data-keyboard="false"
-                              >
-                                <svg
-                                  width="1em"
-                                  height="1em"
-                                  viewBox="0 0 16 16"
-                                  class="bi bi-trash-fill"
-                                  fill="currentColor"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    fill-rule="evenodd"
-                                    d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"
-                                  />
-                                </svg>
-                              </button>
-
-                              <button
-                                type="button"
-                                class="btn btn-light mr-1"
-                                (click)="
-                                  viewChallengeSubmited(
-                                    item.id,
-                                    challengeSubmitedDetailTemplete
-                                  )
-                                "
-                              >
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  width="16"
-                                  height="16"
-                                  fill="currentColor"
-                                  class="bi bi-box-arrow-in-up-right"
-                                  viewBox="0 0 16 16"
-                                >
-                                  <path
-                                    fill-rule="evenodd"
-                                    d="M6.364 13.5a.5.5 0 0 0 .5.5H13.5a1.5 1.5 0 0 0 1.5-1.5v-10A1.5 1.5 0 0 0 13.5 1h-10A1.5 1.5 0 0 0 2 2.5v6.636a.5.5 0 1 0 1 0V2.5a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v10a.5.5 0 0 1-.5.5H6.864a.5.5 0 0 0-.5.5"
-                                  />
-                                  <path
-                                    fill-rule="evenodd"
-                                    d="M11 5.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793l-8.147 8.146a.5.5 0 0 0 .708.708L10 6.707V10.5a.5.5 0 0 0 1 0z"
-                                  />
-                                </svg>
-                              </button>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-              </tab>
-              <!-- <tab [heading]="getTabValue('Presentation')">
-                <div class="row mt-3">
-                  <div class="card">
-                    <div class="card-header align-items-center d-flex">
-                      <h4 class="card-title mb-0 flex-grow-1">
-                        {{ "ChallengesList" | translate }}
-                      </h4>
-                      <div class="flex-shrink-0">
-                        <div class="d-flex align-items-center">
-                          <a
-                            type="button"
-                            class="btn btn-danger waves-effect waves-light"
-                            id="btnAdd"
-                            style="float: inline-end"
-                            (click)="addChallenge(challengeTemplate)"
-                          >
-                            {{ "Add" | translate }}
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="card-body">
-                      <table class="table table-nowrap" id="challengeDataTable">
-                        <thead>
-                          <tr>
-                            <th>{{ "ID" | translate }}</th>
-                            <th>{{ "TitleEn" | translate }}</th>
-                            <th>{{ "TitleAr" | translate }}</th>
-                            <th>{{ "DescriptionEn" | translate }}</th>
-                            <th>{{ "DescriptionAr" | translate }}</th>
-                          </tr>
-                        </thead>
-                        <tbody></tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-              </tab>
-              <tab [heading]="getTabValue('Graduation')">
-                <div class="row mt-3">
-                  <div class="card">
-                    <div class="card-header align-items-center d-flex">
-                      <h4 class="card-title mb-0 flex-grow-1">
-                        {{ "ChallengesList" | translate }}
-                      </h4>
-                      <div class="flex-shrink-0">
-                        <div class="d-flex align-items-center">
-                           <a
-                            type="button"
-                            class="btn btn-danger waves-effect waves-light"
-                            id="btnAdd"
-                            style="float: inline-end"
-                            (click)="addChallenge(challengeTemplate)"
-                          >
-                            {{ "Add" | translate }}
-                          </a> 
-                        </div>
-                      </div>
-                    </div>
-                    <div class="card-body">
-                      <table
-                        class="table table-nowrap"
-                        id="graduationDataTable"
-                      >
-                        <thead>
-                          <tr>
-                            <th>{{ "ID" | translate }}</th>
-                            <th>{{ "Title" | translate }}</th>
-                            <th>{{ "Action" | translate }}</th>
-                          </tr>
-                        </thead>
-                        <tbody></tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-              </tab> -->
-            </tabset>
-            <button
-              *ngIf="!isView"
-              type="submit"
-              class="btn btn-danger waves-effect waves-light ms-2 col-3 pull-right mt-2"
+              </div>
+            </tab>
+          </tabset>
+          <button
+            *ngIf="!isView"
+            type="submit"
+            class="btn btn-danger waves-effect waves-light ms-2 col-3 pull-right mt-2"
+            (click)="addProgram()"
+          >
+            <span *ngIf="joinProgramModel.id <= 0">
+              {{ "Save" | translate }}</span
             >
-              {{ "Save" | translate }}
-            </button>
-          </form>
+            <span *ngIf="joinProgramModel.id > 0">
+              {{ "Update" | translate }}</span
+            >
+          </button>
         </div>
       </div>
       <!-- container-fluid -->
@@ -860,7 +870,7 @@
       class="modal-title pull-left"
       *ngIf="participationTestViewModel.id == -1"
     >
-      {{ "Update" | translate }}
+      {{ "Add" | translate }}
     </h4>
 
     <h4
@@ -881,19 +891,50 @@
   <div class="modal-body">
     <div class="row" style="margin-bottom: 65px">
       <div class="col-md-12" style="margin-bottom: 65px">
-        <div class="col-md-6">
-          <div class="" style="margin-top: 30px">
+        <div class="row">
+          <div class="col-md-6">
             <label for="userStatusInput" class="form-label">{{
               "Status" | translate
             }}</label>
-            <div class="form-check form-switch">
+
+            <select
+              class="form-control"
+              [(ngModel)]="participationTestViewModel.statusCode"
+            >
+              <option [ngValue]="StatusCode.InActive">
+                {{ "InActive" | translate }}
+              </option>
+              <option [ngValue]="StatusCode.IsActive">
+                {{ "IsActive" | translate }}
+              </option>
+            </select>
+          </div>
+
+          <div class="col-md-6">
+            <div class="mt-0">
+              <label for="basiInput" class="form-label">
+                {{ "PassingPercentage" | translate }}</label
+              >
               <input
-                type="checkbox"
-                class="form-check-input"
-                id="userStatusInput"
-                [(ngModel)]="participationTestViewModel.status"
+                type="number"
+                class="form-control"
+                id="basiInput"
+                [(ngModel)]="participationTestViewModel.passingRating"
+                (ngModelChange)="
+                  globalService.onInputChange('passingRating', $event)
+                "
+                [ngClass]="{
+                  'input-error':
+                    globalService.dataKeys['passingRating']?.isError
+                }"
               />
-              <label class="form-check-label" for="userStatusInput"></label>
+              <span
+                *ngIf="globalService.dataKeys['passingRating']?.isError"
+                class="text-danger"
+              >
+                <i class="bi bi-exclamation-circle"></i>
+                {{ "Thisfiledisrequired!" | translate }}
+              </span>
             </div>
           </div>
         </div>
@@ -907,7 +948,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-md-6">
+          <!-- <div class="col-md-6">
             <label for="headingLineEnInput" class="form-label">{{
               "QuestionEn" | translate
             }}</label>
@@ -918,6 +959,10 @@
               [(ngModel)]="questionViewModel.textEn"
             />
           </div>
+
+
+
+
           <div class="col-md-6">
             <label for="headingLineArInput" class="form-label">{{
               "QuestionAr" | translate
@@ -928,6 +973,55 @@
               id="headingLineArInput"
               [(ngModel)]="questionViewModel.textAr"
             />
+          </div> -->
+          <div class="col-md-6">
+            <div class="mt-0">
+              <label for="basiInput" class="form-label">
+                {{ "QuestionEn" | translate }}</label
+              >
+              <input
+                type="input"
+                class="form-control"
+                id="basiInput"
+                [(ngModel)]="questionViewModel.textEn"
+                (ngModelChange)="globalService.onInputChange('textEn', $event)"
+                [ngClass]="{
+                  'input-error': globalService.dataKeys['textEn']?.isError
+                }"
+              />
+              <span
+                *ngIf="globalService.dataKeys['textEn']?.isError"
+                class="text-danger"
+              >
+                <i class="bi bi-exclamation-circle"></i>
+                {{ "Thisfiledisrequired!" | translate }}
+              </span>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="mt-0">
+              <label for="basiInput" class="form-label">
+                {{ "QuestionAr" | translate }}</label
+              >
+              <input
+                type="input"
+                class="form-control"
+                id="basiInput"
+                [(ngModel)]="questionViewModel.textAr"
+                (ngModelChange)="globalService.onInputChange('textAr', $event)"
+                [ngClass]="{
+                  'input-error': globalService.dataKeys['textAr']?.isError
+                }"
+              />
+              <span
+                *ngIf="globalService.dataKeys['textAr']?.isError"
+                class="text-danger"
+              >
+                <i class="bi bi-exclamation-circle"></i>
+                {{ "Thisfiledisrequired!" | translate }}
+              </span>
+            </div>
           </div>
         </div>
         <div class="col-md-12">
@@ -940,14 +1034,34 @@
                     "TextEn" | translate
                   }}</label>
                 </div>
+
                 <input
+                  type="input"
+                  class="form-control"
+                  id="basiInput"
+                  [(ngModel)]="mQSOptionViewModel.textEn"
+                  (ngModelChange)="
+                    globalService.onInputChange('textEn', $event)
+                  "
+                  [ngClass]="{
+                    'input-error': globalService.dataKeys['textEn']?.isError
+                  }"
+                />
+                <span
+                  *ngIf="globalService.dataKeys['textEn']?.isError"
+                  class="text-danger"
+                >
+                  <i class="bi bi-exclamation-circle"></i>
+                  {{ "Thisfiledisrequired!" | translate }}
+                </span>
+                <!-- <input
                   type="text"
                   class="form-control"
                   placeholder="Enter value for En"
                   aria-label="Example text with button addon"
                   name="textEn"
                   [(ngModel)]="mQSOptionViewModel.textEn"
-                />
+                /> -->
               </div>
 
               <div class="input-group mb-3">
@@ -957,13 +1071,32 @@
                   }}</label>
                 </div>
                 <input
+                  type="input"
+                  class="form-control"
+                  id="basiInput"
+                  [(ngModel)]="mQSOptionViewModel.textAr"
+                  (ngModelChange)="
+                    globalService.onInputChange('textAr', $event)
+                  "
+                  [ngClass]="{
+                    'input-error': globalService.dataKeys['textAr']?.isError
+                  }"
+                />
+                <span
+                  *ngIf="globalService.dataKeys['textAr']?.isError"
+                  class="text-danger"
+                >
+                  <i class="bi bi-exclamation-circle"></i>
+                  {{ "Thisfiledisrequired!" | translate }}
+                </span>
+                <!-- <input
                   type="text"
                   class="form-control"
                   placeholder="Enter value for Ar"
                   aria-label="Example text with button addon"
                   name="textAr"
                   [(ngModel)]="mQSOptionViewModel.textAr"
-                />
+                /> -->
               </div>
 
               <div class="col-md-3 mb-3">
@@ -1270,7 +1403,18 @@
               class="form-control"
               id="basiInput"
               [(ngModel)]="workshopViewModel.nameEn"
+              (ngModelChange)="globalService.onInputChange('nameEn', $event)"
+              [ngClass]="{
+                'input-error': globalService.dataKeys['nameEn']?.isError
+              }"
             />
+            <span
+              *ngIf="globalService.dataKeys['nameEn']?.isError"
+              class="text-danger"
+            >
+              <i class="bi bi-exclamation-circle"></i>
+              {{ "Thisfiledisrequired!" | translate }}
+            </span>
           </div>
         </div>
         <div class="col-md-6">
@@ -1283,7 +1427,17 @@
               class="form-control"
               id="basiInput"
               [(ngModel)]="workshopViewModel.nameAr"
+              (ngModelChange)="globalService.onInputChange('nameAr', $event)"
+              [ngClass]="{
+                'input-error': globalService.dataKeys['nameAr']?.isError
+              }"
             />
+            <span
+              *ngIf="globalService.dataKeys['nameAr']?.isError"
+              class="text-danger"
+            >
+              {{ "This filed is required!" | translate }}
+            </span>
           </div>
         </div>
 
@@ -1298,13 +1452,26 @@
               class="form-control"
               bsDatepicker
               [(ngModel)]="workshopViewModel.workshopDate"
+              (ngModelChange)="
+                globalService.onInputChange('workshopDate', $event, 'date')
+              "
+              [ngClass]="{
+                'input-error': globalService.dataKeys['workshopDate']?.isError
+              }"
             />
+            <span
+              *ngIf="globalService.dataKeys['workshopDate']?.isError"
+              class="text-danger"
+            >
+              <i class="bi bi-exclamation-circle"></i>
+              {{ "Thisfiledisrequired!" | translate }}
+            </span>
           </div>
         </div>
         <div class="col-md-6">
           <div class="mt-3">
             <label for="basiInput" class="form-label">{{
-              "Time" | translate
+              "TimeFrom" | translate
             }}</label>
             <input
               type="time"
@@ -1319,22 +1486,48 @@
         <div class="col-md-6">
           <div class="mt-3">
             <label for="basiInput" class="form-label">{{
+              "TimeTo" | translate
+            }}</label>
+            <input
+              type="time"
+              placeholder="Time"
+              class="form-control"
+              bsDatepicker
+              [(ngModel)]="workshopViewModel.workshopTimeTo"
+              name="workshopTimeTo"
+            />
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mt-3">
+            <label for="basiInput" class="form-label">{{
               "Venue" | translate
             }}</label>
             <select class="form-control" [(ngModel)]="workshopViewModel.venue">
               <option [ngValue]="1">
                 {{ "OnPremises" | translate }}
               </option>
-              <option [ngValue]="1">{{ "Online" | translate }}</option>
+              <option [ngValue]="2">{{ "Online" | translate }}</option>
             </select>
           </div>
         </div>
-        <div *ngIf="workshopViewModel.venue == 0">
+
+        <div>
           <div class="col-md-6">
             <div class="mt-3">
-              <label for="basiInput" class="form-label">{{
-                "LocationDescription" | translate
-              }}</label>
+              <label
+                for="basiInput"
+                class="form-label"
+                *ngIf="workshopViewModel.venue == 1"
+                >{{ "LocationDescription" | translate }}</label
+              >
+
+              <label
+                for="basiInput"
+                class="form-label"
+                *ngIf="workshopViewModel.venue == 2"
+                >{{ "Link" | translate }}</label
+              >
               <input
                 class="form-control"
                 [(ngModel)]="workshopViewModel.locationDescription"
@@ -1420,7 +1613,7 @@
 <ng-template #wrokshopTemplateDetails class="modal-lg">
   <div class="modal-header">
     <h4 class="modal-title pull-left">
-      {{ "WrokshopDetail" | translate }}
+      {{ "WorkshopDetail" | translate }}
     </h4>
     <button
       type="button"
@@ -1462,7 +1655,13 @@
         </div>
         <div class="col-md-6">
           <label for="basiInput" class="form-label text-muted mb-0"
-            >{{ "Time" | translate }}
+            >{{ "TimeFrom" | translate }}
+          </label>
+          <div>{{ workshopViewModel.workshopTime }}</div>
+        </div>
+        <div class="col-md-6">
+          <label for="basiInput" class="form-label text-muted mb-0"
+            >{{ "TimeTo" | translate }}
           </label>
           <div>{{ workshopViewModel.workshopTime }}</div>
         </div>
@@ -1470,23 +1669,33 @@
           <label for="basiInput" class="form-label text-muted mb-0">{{
             "Venue" | translate
           }}</label>
+
           <div *ngIf="workshopViewModel.venue === 1">
-            {{ "Online" | translate }}
-          </div>
-          <div *ngIf="workshopViewModel.venue === 0">
             {{ "OnPremises" | translate }}
           </div>
-        </div>
-        <div *ngIf="workshopViewModel.venue === 0">
-          <div class="col-md-6">
-            <label for="basiInput" class="form-label text-muted mb-0">{{
-              "LocationDescription" | translate
-            }}</label>
-            <div>{{ workshopViewModel.locationDescription }}</div>
+          <div *ngIf="workshopViewModel.venue === 2">
+            {{ "Online" | translate }}
           </div>
         </div>
+
+        <div class="col-md-6">
+          <label
+            for="basiInput"
+            class="form-label"
+            *ngIf="workshopViewModel.venue == 1"
+            >{{ "LocationDescription" | translate }}</label
+          >
+
+          <label
+            for="basiInput"
+            class="form-label"
+            *ngIf="workshopViewModel.venue == 2"
+            >{{ "Link" | translate }}</label
+          >
+          <div>{{ workshopViewModel.locationDescription }}</div>
+        </div>
       </div>
-      <div class="row">
+      <div class="row mt-10">
         <div class="col-md-6">
           <label for="basiInput" class="form-label text-muted mb-0">{{
             "Attachment" | translate
@@ -1542,7 +1751,7 @@
   <div class="modal-body">
     <div class="row">
       <div class="row">
-        <div class="col-md-6 mt-3">
+        <!-- <div class="col-md-6 mt-3">
           <div class="mt-0">
             <label for="basiInput" class="form-label">
               {{ "HeadingEn" | translate }}</label
@@ -1554,8 +1763,9 @@
               [(ngModel)]="interviewViewModel.nameEn"
             />
           </div>
-        </div>
-        <div class="col-md-6">
+        </div> -->
+
+        <!-- <div class="col-md-6">
           <div class="mt-3">
             <label for="basiInput" class="form-label">{{
               "HeadingAr" | translate
@@ -1567,105 +1777,194 @@
               [(ngModel)]="interviewViewModel.nameAr"
             />
           </div>
+        </div> -->
+
+        <div class="col-md-6 mt-3">
+          <div class="mt-0">
+            <label for="basiInput" class="form-label">
+              {{ "TitleEn" | translate }}</label
+            >
+            <input
+              type="input"
+              class="form-control"
+              id="basiInput"
+              [(ngModel)]="interviewViewModel.nameEn"
+              (ngModelChange)="globalService.onInputChange('nameEn', $event)"
+              [ngClass]="{
+                'input-error': globalService.dataKeys['nameEn']?.isError
+              }"
+            />
+            <span
+              *ngIf="globalService.dataKeys['nameEn']?.isError"
+              class="text-danger"
+            >
+              <i class="bi bi-exclamation-circle"></i>
+              {{ "Thisfiledisrequired!" | translate }}
+            </span>
+          </div>
         </div>
 
+        <div class="col-md-6 mt-3">
+          <div class="mt-0">
+            <label for="basiInput" class="form-label">
+              {{ "TitleAr" | translate }}</label
+            >
+            <input
+              type="input"
+              class="form-control"
+              id="basiInput"
+              [(ngModel)]="interviewViewModel.nameAr"
+              (ngModelChange)="globalService.onInputChange('nameAr', $event)"
+              [ngClass]="{
+                'input-error': globalService.dataKeys['nameAr']?.isError
+              }"
+            />
+            <span
+              *ngIf="globalService.dataKeys['nameAr']?.isError"
+              class="text-danger"
+            >
+              <i class="bi bi-exclamation-circle"></i>
+              {{ "Thisfiledisrequired!" | translate }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="mt-3">
+          <label for="basiInput" class="form-label">{{
+            "Date" | translate
+          }}</label>
+          <input
+            type="date"
+            placeholder="Date"
+            class="form-control date"
+            bsDatepicker
+            [(ngModel)]="interviewViewModel.interviewDate"
+            (ngModelChange)="
+              globalService.onInputChange('interviewDate', $event, 'date')
+            "
+            [ngClass]="{
+              'input-error': globalService.dataKeys['interviewDate']?.isError
+            }"
+          />
+          <span
+            *ngIf="globalService.dataKeys['interviewDate']?.isError"
+            class="text-danger"
+          >
+            <i class="bi bi-exclamation-circle"></i>
+            {{ "Thisfiledisrequired!" | translate }}
+          </span>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="mt-3">
+          <label for="basiInput" class="form-label">{{
+            "TimeFrom" | translate
+          }}</label>
+          <input
+            type="time"
+            placeholder="Time"
+            class="form-control"
+            bsDatepicker
+            [(ngModel)]="interviewViewModel.interviewTime"
+          />
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="mt-3">
+          <label for="basiInput" class="form-label">{{
+            "TimeTo" | translate
+          }}</label>
+          <input
+            type="time"
+            placeholder="Time"
+            class="form-control"
+            bsDatepicker
+            [(ngModel)]="interviewViewModel.interviewTimeTo"
+          />
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="mt-3">
+          <label for="basiInput" class="form-label">{{
+            "Venue" | translate
+          }}</label>
+          <select class="form-control" [(ngModel)]="interviewViewModel.venue">
+            <option [ngValue]="0">
+              {{ "OnPremises" | translate }}
+            </option>
+            <option [ngValue]="1">{{ "Online" | translate }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
         <div class="col-md-6">
           <div class="mt-3">
-            <label for="basiInput" class="form-label">{{
-              "Date" | translate
-            }}</label>
+            <label
+              for="basiInput"
+              class="form-label"
+              *ngIf="interviewViewModel.venue == 0"
+              >{{ "LocationDescription" | translate }}</label
+            >
+
+            <label
+              for="basiInput"
+              class="form-label"
+              *ngIf="interviewViewModel.venue == 1"
+              >{{ "Link" | translate }}</label
+            >
             <input
-              type="date"
-              placeholder="Date"
               class="form-control"
-              bsDatepicker
-              [(ngModel)]="interviewViewModel.interviewDate"
+              [(ngModel)]="interviewViewModel.locatoinDescription"
             />
           </div>
         </div>
-        <div class="col-md-6">
-          <div class="mt-3">
-            <label for="basiInput" class="form-label">{{
-              "Time" | translate
-            }}</label>
-            <input
-              type="time"
-              placeholder="Time"
-              class="form-control"
-              bsDatepicker
-              [(ngModel)]="interviewViewModel.interviewTime"
-            />
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="mt-3">
-            <label for="basiInput" class="form-label">{{
-              "Venue" | translate
-            }}</label>
-            <select class="form-control" [(ngModel)]="interviewViewModel.venue">
-              <option [ngValue]="0">
-                {{ "OnPremises" | translate }}
-              </option>
-              <option [ngValue]="1">{{ "Online" | translate }}</option>
-            </select>
-          </div>
-        </div>
-        <div *ngIf="interviewViewModel.venue == 0">
-          <div class="col-md-6">
-            <div class="mt-3">
-              <label for="basiInput" class="form-label">{{
-                "LocationDescription" | translate
+      </div>
+
+      <div class="col-md-6">
+        <div class="mt-3">
+          <div class="mb-3">
+            <div *ngIf="!interviewViewModel.imageUrl">
+              <label for="formFile" class="form-label">{{
+                "Choosefile" | translate
               }}</label>
-              <input
-                class="form-control"
-                [(ngModel)]="interviewViewModel.locatoinDescription"
-              />
+              <file-pond
+                #myPond
+                label-idle='Drag & Drop your files or <span class="filepond--label-action"> Browse </span><br> <b>Maximum 5 files upload</b>'
+                allow-multiple="false"
+                [options]="pondOptions"
+                [files]="pondFiles"
+                (oninit)="pondHandleInit()"
+                (onaddfile)="pondHandleAddFile($event)"
+              >
+              </file-pond>
             </div>
-          </div>
-        </div>
-
-        <div class="col-md-6">
-          <div class="mt-3">
-            <div class="mb-3">
-              <div *ngIf="!interviewViewModel.imageUrl">
-                <label for="formFile" class="form-label">{{
-                  "Choosefile" | translate
-                }}</label>
-                <file-pond
-                  #myPond
-                  label-idle='Drag & Drop your files or <span class="filepond--label-action"> Browse </span><br> <b>Maximum 5 files upload</b>'
-                  allow-multiple="false"
-                  [options]="pondOptions"
-                  [files]="pondFiles"
-                  (oninit)="pondHandleInit()"
-                  (onaddfile)="pondHandleAddFile($event)"
-                >
-                </file-pond>
-              </div>
-              <div *ngIf="interviewViewModel.imageUrl">
-                <img
-                  [src]="
-                    globalService.getImgServerBaseUrl(
-                      interviewViewModel.urlBase64
-                    )
-                  "
-                  alt="Membership Image"
-                  style="height: 200px; width: 250px"
-                  class="mt-2"
-                />
-                <a
-                  (click)="removeImageInterview()"
-                  class="btn btn-danger"
-                  style="display: block; margin-top: 10px"
-                  >{{ "Remove" | translate }}</a
-                >
-              </div>
+            <div *ngIf="interviewViewModel.imageUrl">
+              <img
+                [src]="
+                  globalService.getImgServerBaseUrl(
+                    interviewViewModel.urlBase64
+                  )
+                "
+                alt="Membership Image"
+                style="height: 200px; width: 250px"
+                class="mt-2"
+              />
+              <a
+                (click)="removeImageInterview()"
+                class="btn btn-danger"
+                style="display: block; margin-top: 10px"
+                >{{ "Remove" | translate }}</a
+              >
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+
   <div class="row">
     <div class="modal-footer">
       <div class="button-container">
@@ -1743,9 +2042,16 @@
         </div>
         <div class="col-md-6">
           <label for="basiInput" class="form-label text-muted mb-0"
-            >{{ "Time" | translate }}
+            >{{ "TimeFrom" | translate }}
           </label>
           <div>{{ interviewViewModel.interviewTime }}</div>
+        </div>
+
+        <div class="col-md-6">
+          <label for="basiInput" class="form-label text-muted mb-0"
+            >{{ "TimeTo" | translate }}
+          </label>
+          <div>{{ interviewViewModel.interviewTimeTo }}</div>
         </div>
         <div class="col-md-6">
           <label for="basiInput" class="form-label text-muted mb-0">{{
@@ -1758,13 +2064,23 @@
             {{ "OnPremises" | translate }}
           </div>
         </div>
-        <div *ngIf="interviewViewModel.venue === 0">
-          <div class="col-md-6">
-            <label for="basiInput" class="form-label text-muted mb-0">{{
-              "LocationDescription" | translate
-            }}</label>
-            <div>{{ interviewViewModel.locatoinDescription }}</div>
-          </div>
+
+        <div class="col-md-6">
+          <label
+            for="basiInput"
+            class="form-label text-muted mb-0"
+            *ngIf="interviewViewModel.venue == 0"
+            >{{ "LocationDescription" | translate }}</label
+          >
+
+          <label
+            for="basiInput"
+            class="form-label text-muted mb-0"
+            *ngIf="interviewViewModel.venue == 1"
+            >{{ "Online" | translate }}</label
+          >
+
+          <div>{{ interviewViewModel.locatoinDescription }}</div>
         </div>
       </div>
       <div class="row">
@@ -1837,25 +2153,46 @@
             <input
               type="input"
               class="form-control"
-              id="basiInput"
               [(ngModel)]="joinProgramChallengeViewModel.titleEn"
+              (ngModelChange)="globalService.onInputChange('titleEn', $event)"
+              [ngClass]="{
+                'input-error': globalService.dataKeys['titleEn']?.isError
+              }"
             />
+            <span
+              *ngIf="globalService.dataKeys['titleEn']?.isError"
+              class="text-danger"
+            >
+              <i class="bi bi-exclamation-circle"></i>
+              {{ "Thisfiledisrequired!" | translate }}
+            </span>
           </div>
         </div>
-        <div class="col-md-6">
-          <div class="mt-3">
-            <label for="basiInput" class="form-label">{{
-              "TitleAr" | translate
-            }}</label>
+
+        <div class="col-md-6 mt-3">
+          <div class="mt-0">
+            <label for="basiInput" class="form-label">
+              {{ "TitleAr" | translate }}</label
+            >
             <input
               type="input"
               class="form-control"
               id="basiInput"
               [(ngModel)]="joinProgramChallengeViewModel.titleAr"
+              (ngModelChange)="globalService.onInputChange('titleAr', $event)"
+              [ngClass]="{
+                'input-error': globalService.dataKeys['titleAr']?.isError
+              }"
             />
+            <span
+              *ngIf="globalService.dataKeys['titleAr']?.isError"
+              class="text-danger"
+            >
+              <i class="bi bi-exclamation-circle"></i>
+              {{ "Thisfiledisrequired!" | translate }}
+            </span>
           </div>
         </div>
-
         <div class="col-md-6 mt-3">
           <div class="mt-0">
             <label for="basiInput" class="form-label">
@@ -2063,7 +2400,7 @@
         [listParticipationTestAttendnaceViewModel]="
           listParticipateAttendanceViewModel
         "
-        [programId]="participationTestViewModel.id"
+        [testId]="participationTestViewModel.id"
       ></app-list-test-submited>
     </div>
   </div>
@@ -2101,10 +2438,13 @@
   </div>
   <div class="modal-body">
     <div class="container-fluid">
-      <app-list-workshop-attendance
-        [listWorkshopAttendanceViewModel]="listWorkshopAttendanceViewModel"
-        [programId]="workshopViewModel.id"
-      ></app-list-workshop-attendance>
+      <ng-container *ngIf="isComponentVisible">
+        <app-list-workshop-attendance
+          #listWorkshopAttendanceComponent
+          [listWorkshopAttendanceViewModel]="listWorkshopAttendanceViewModel"
+          [workshopId]="workshopViewModel.id"
+        ></app-list-workshop-attendance>
+      </ng-container>
     </div>
   </div>
   <!-- container-fluid -->
@@ -2112,6 +2452,21 @@
   <div class="row">
     <div class="modal-footer">
       <div class="button-container">
+        <button
+          type="button"
+          class="btn btn-danger waves-effect waves-light mr-2"
+          (click)="submitAttendance()"
+        >
+          {{ "Save" | translate }}
+        </button>
+        <!-- <button
+          type="button"
+          class="btn btn-danger waves-effect waves-light mr-2"
+          (click)="updateInterview()"
+          *ngIf="interviewViewModel.id >= 0"
+        >
+          {{ "Update" | translate }}
+        </button> -->
         <button
           type="button"
           class="btn btn-light button"
@@ -2152,6 +2507,21 @@
   <div class="row">
     <div class="modal-footer">
       <div class="button-container">
+        <button
+          type="button"
+          class="btn btn-danger waves-effect waves-light mr-2"
+          (click)="markInterviewStatus()"
+        >
+          {{ "Save" | translate }}
+        </button>
+        <!-- <button
+          type="button"
+          class="btn btn-danger waves-effect waves-light mr-2"
+          (click)="updateInterview()"
+          *ngIf="interviewViewModel.id >= 0"
+        >
+          {{ "Update" | translate }}
+        </button> -->
         <button
           type="button"
           class="btn btn-light button"

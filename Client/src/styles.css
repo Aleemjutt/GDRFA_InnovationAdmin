@@ -148,3 +148,9 @@ thead {
 .navbar-menu .navbar-nav .nav-link:hover {
   color: #a87935 !important;
 }
+
+.text-danger {
+  color: red;
+  font-size: 0.875em;
+  margin-top: 0.25em;
+}

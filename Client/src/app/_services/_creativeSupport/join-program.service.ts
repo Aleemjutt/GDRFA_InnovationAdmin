@@ -3,10 +3,16 @@ import { Injectable } from '@angular/core';
 import { id } from '@swimlane/ngx-charts';
 import { GlobalServiceService } from 'src/app/_global/-global-service.service';
 import { ChallengeViewModel } from 'src/app/_models/CreativeSupport/challengeViewModel';
-import { InterviewViewModel } from 'src/app/_models/CreativeSupport/interviewViewModel';
+import {
+  InterviewAttendanceViewModel,
+  InterviewViewModel,
+} from 'src/app/_models/CreativeSupport/interviewViewModel';
 import { JoinProgramChallengeViewModel } from 'src/app/_models/CreativeSupport/joinProgramChallengeViewModel';
 import { joinProgramViewModel } from 'src/app/_models/CreativeSupport/joinProgramViewModel';
-import { WorkshopViewModel } from 'src/app/_models/CreativeSupport/workshopViewModel';
+import {
+  WorkshopAttendanceViewModel,
+  WorkshopViewModel,
+} from 'src/app/_models/CreativeSupport/workshopViewModel';
 import { ResponseResult } from 'src/app/_models/responseResult';
 import { environment } from 'src/environments/environment.development';
 
@@ -55,7 +61,7 @@ export class JoinProgramService {
 
   _deleteProgram(id: number) {
     return this.httpClient.delete<ResponseResult>(
-      this.baseUrl + 'joinProgram/deletePogram?id=' + id,
+      this.baseUrl + 'joinProgram/deleteProgram?id=' + id,
       this.globalService.getHttpOptions()
     );
   }
@@ -210,6 +216,12 @@ export class JoinProgramService {
   }
 
   // View Details Of Program By Clint End
+  _listParticipationTestAttendnace(id: number) {
+    return this.httpClient.get<ResponseResult>(
+      this.baseUrl + 'joinProgram/listParticipationTestAttendnace?id=' + id,
+      this.globalService.getHttpOptions()
+    );
+  }
   _listRegisterInProgram(id: number) {
     return this.httpClient.get<ResponseResult>(
       this.baseUrl + 'joinProgram/listRegisterInProgram?id=' + id,
@@ -223,9 +235,25 @@ export class JoinProgramService {
       this.globalService.getHttpOptions()
     );
   }
-  _listInWorkshopAttendance(id: number) {
+
+  // _listInWorkshopAttendance(id: number) {
+  //   return this.httpClient.get<ResponseResult>(
+  //     this.baseUrl + 'joinProgram/listWorshopAttendnace?id=' + id,
+  //     this.globalService.getHttpOptions()
+  //   );
+  // }
+
+  _listWorkshopAttendance(id: number) {
     return this.httpClient.get<ResponseResult>(
       this.baseUrl + 'joinProgram/listWorshopAttendnace?id=' + id,
+      this.globalService.getHttpOptions()
+    );
+  }
+
+  _markWorkshopeAttendance(model: WorkshopAttendanceViewModel[]) {
+    return this.httpClient.post<ResponseResult>(
+      this.baseUrl + 'joinProgram/markWorkshopAttendance',
+      model,
       this.globalService.getHttpOptions()
     );
   }
@@ -233,6 +261,14 @@ export class JoinProgramService {
   _listInInterviewAttendance(id: number) {
     return this.httpClient.get<ResponseResult>(
       this.baseUrl + 'joinProgram/listInterviewAttendnace?id=' + id,
+      this.globalService.getHttpOptions()
+    );
+  }
+
+  _markInterviewResult(model: InterviewAttendanceViewModel[]) {
+    return this.httpClient.post<ResponseResult>(
+      this.baseUrl + 'joinProgram/markInterviewStatus',
+      model,
       this.globalService.getHttpOptions()
     );
   }

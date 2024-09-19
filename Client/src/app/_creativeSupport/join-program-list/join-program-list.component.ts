@@ -12,7 +12,7 @@ import {
   ParticipationTestAnswerViewModel,
   ParticipationTestViewModel,
 } from 'src/app/_models/CreativeSupport/participatingTestViewModel';
-import { ResponseResult } from 'src/app/_models/responseResult';
+import { ResponseResult, StatusCodes } from 'src/app/_models/responseResult';
 import { JoinProgramService } from 'src/app/_services/_creativeSupport/join-program.service';
 
 @Component({
@@ -74,7 +74,7 @@ export class JoinProgramListComponent implements OnInit {
               },
               {
                 data: (row: any) =>
-                  this.globalService.getStatusName(row.status),
+                  this.globalService.getStatusNameOnCodeBased(row.statusCode),
               },
               {
                 data: 'data',
@@ -84,7 +84,7 @@ export class JoinProgramListComponent implements OnInit {
               class="btn btn-light mr-1"
               data-bs-toggle="modal"
               data-bs-target="#exampleModal"
-              (click)="viewpartnerDetails()"
+             
               data-backdrop="static"
               data-keyboard="false"
             >
@@ -98,7 +98,7 @@ export class JoinProgramListComponent implements OnInit {
             class="btn btn-light mr-1"
             data-bs-toggle="modal"
             data-bs-target="#exampleModal"
-            (click)="editpartner(id, template)"
+          
             data-backdrop="static"
             data-keyboard="false"
           >
@@ -122,11 +122,7 @@ export class JoinProgramListComponent implements OnInit {
             <button
                 type="button"
                 class="btn btn-outline-danger  mr-1 "
-                data-bs-toggle="modal"
-                data-bs-target="#exampleModal"
-                (click)="deletepartner(id)"
-                data-backdrop="static"
-                data-keyboard="false"
+               
               >
               <svg
               width="1em"
@@ -142,19 +138,14 @@ export class JoinProgramListComponent implements OnInit {
               />
             </svg>
               </button>
-              <button type="button" class="btn btn-light mr-1">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-up-right" viewBox="0 0 16 16">
-              <path fill-rule="evenodd" d="M6.364 13.5a.5.5 0 0 0 .5.5H13.5a1.5 1.5 0 0 0 1.5-1.5v-10A1.5 1.5 0 0 0 13.5 1h-10A1.5 1.5 0 0 0 2 2.5v6.636a.5.5 0 1 0 1 0V2.5a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v10a.5.5 0 0 1-.5.5H6.864a.5.5 0 0 0-.5.5"/>
-              <path fill-rule="evenodd" d="M11 5.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793l-8.147 8.146a.5.5 0 0 0 .708.708L10 6.707V10.5a.5.5 0 0 0 1 0z"/>
-              </svg>
-                   </button>
             `,
               },
             ],
             rowCallback: (row: Node, data: any, index: number) => {
               const btnViewDetail = $('button:first', row);
               const btnEdit = $('button:eq(1)', row);
-              const btnDelete = $('button:eq(2)', row);
+              const btnDelete = $('button:last', row);
+
               // const btnSubmitionDetails = $('button:last', row);
               // Attach click event handlers to the buttons
               btnViewDetail.on('click', () => {
@@ -169,7 +160,22 @@ export class JoinProgramListComponent implements OnInit {
                 );
               });
               btnDelete.on('click', () => {
-                this.joinProgramService._deleteProgram(data.id);
+                console.log(`Delete Button Clicked: ${data.id}`);
+                this.joinProgramService._deleteProgram(data.id).subscribe({
+                  next: (response: ResponseResult) => {
+                    if (
+                      response.statusCode == StatusCodes.success ||
+                      response.statusCode == StatusCodes.deleted
+                    ) {
+                      this.tosterService.success(response.message);
+                      this.initilizeDataTable();
+                    } else {
+                      this.tosterService.error(response.message);
+                    }
+
+                    // Optionally, you can remove the row or refresh the data table
+                  },
+                });
               });
 
               return row;

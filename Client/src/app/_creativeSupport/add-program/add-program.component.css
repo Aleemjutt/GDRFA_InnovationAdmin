@@ -1,0 +1,11 @@
+.form-check-input[type="checkbox"] {
+  border-radius: 0.25em;
+  margin-left: 5px;
+}
+.form-switch {
+  padding-left: 0;
+}
+
+.input-error {
+  border: 2px solid red; /* Change the color and width as needed */
+}

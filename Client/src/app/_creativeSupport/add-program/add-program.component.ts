@@ -1,10 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { HttpResponse } from '@angular/common/http';
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  OnInit,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { FilePondOptions } from 'filepond';
+import { FilePondOptions, Status } from 'filepond';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { TabsModule } from 'ngx-bootstrap/tabs';
@@ -14,6 +20,7 @@ import { EMPTY, finalize, Observable, Subscription } from 'rxjs';
 import { GlobalServiceService } from 'src/app/_global/-global-service.service';
 import {
   InterviewAttendanceViewModel,
+  InterviewStatus,
   InterviewViewModel,
 } from 'src/app/_models/CreativeSupport/interviewViewModel';
 import {
@@ -23,7 +30,6 @@ import {
 import {
   joinProgramViewModel,
   RegisterJoinProgramViewModel,
-  StautsCode,
 } from 'src/app/_models/CreativeSupport/joinProgramViewModel';
 import {
   MQSOptionViewModel,
@@ -33,6 +39,7 @@ import {
   QuestionViewModel,
 } from 'src/app/_models/CreativeSupport/participatingTestViewModel';
 import {
+  AttendanceStatus,
   WorkshopAttendanceViewModel,
   WorkshopViewModel,
 } from 'src/app/_models/CreativeSupport/workshopViewModel';
@@ -45,6 +52,8 @@ import { ListTestSubmitedComponent } from '../list-test-submited/list-test-submi
 import { ListWorkshopAttendanceComponent } from '../list-workshop-attendance/list-workshop-attendance.component';
 import { ListInterviewAttendanceComponent } from '../list-interview-attendance/list-interview-attendance.component';
 import { ListChallengedSubmitedComponent } from '../list-challenged-submited/list-challenged-submited.component';
+import { DataKeys, StatusCode } from 'src/app/_models/Common/enumsConnon';
+import { event } from 'jquery';
 
 @Component({
   selector: 'app-add-program',
@@ -65,9 +74,9 @@ import { ListChallengedSubmitedComponent } from '../list-challenged-submited/lis
   templateUrl: './add-program.component.html',
   styleUrl: './add-program.component.css',
 })
-export class AddProgramComponent implements OnInit {
+export class AddProgramComponent implements OnInit, AfterViewInit {
   @ViewChild('addProgramForm') addProgramForm: NgForm | undefined;
-
+  isComponentVisible = true;
   @ViewChild('wrokshopTemplate') wrokshopTemplate: TemplateRef<any> | undefined;
 
   @ViewChild('wrokshopTemplateDetails') wrokshopTemplateDetails:
@@ -108,6 +117,9 @@ export class AddProgramComponent implements OnInit {
 
   @ViewChild('challengeSubmitedDetailTemplete')
   challengeSubmitedDetailTemplete: TemplateRef<any> | undefined;
+
+  @ViewChild('listWorkshopAttendanceComponent', { static: false })
+  listWorkshopAttendanceComponent: ListWorkshopAttendanceComponent | undefined;
 
   modalRef?: BsModalRef;
   joinProgramModel: joinProgramViewModel;
@@ -161,10 +173,16 @@ export class AddProgramComponent implements OnInit {
 
   listRegisterProgramViewModel: RegisterJoinProgramViewModel[] = [];
   listWorkshopAttendanceViewModel: WorkshopAttendanceViewModel[] = [];
+
   listInterviewAttendanceViewModel: InterviewAttendanceViewModel[] = [];
   listChallengeSubmitedViewModel: JoinProgramChallengeSubmitViewModel[] = [];
   listParticipateAttendanceViewModel: ParticipationTestAttendnaceViewModel[] =
     [];
+  public StatusCode = StatusCode;
+
+  status = false;
+  count = 0;
+
   constructor(
     public globalService: GlobalServiceService,
     private tosterService: ToastrService,
@@ -181,7 +199,7 @@ export class AddProgramComponent implements OnInit {
       descriptionEn: '',
       startDate: '',
       endDate: '',
-      statusCode: StautsCode.IActive,
+      statusCode: StatusCode.InActive,
       joinProgramChallengeViewModels: this.joinProgramChallengeViewModels,
       interviewViewModels: this.interviewViewModels,
       workshopViewModels: this.workshopViewModels,
@@ -206,8 +224,9 @@ export class AddProgramComponent implements OnInit {
       id: 0,
       questionViewModels: [],
       participationTestAnswersViewModels: [],
-      status: false,
+      statusCode: StatusCode.InActive,
       programId: 0,
+      passingRating: 0,
     };
 
     this.joinProgramChallengeViewModel = {
@@ -235,6 +254,7 @@ export class AddProgramComponent implements OnInit {
       urlBase64: '',
       venue: 1,
       file: null,
+      interviewTimeTo: '',
     };
     this.workshopViewModel = {
       id: -1,
@@ -246,6 +266,7 @@ export class AddProgramComponent implements OnInit {
       locationDescription: '',
       workshopDate: '',
       workshopTime: '',
+      workshopTimeTo: '',
       programId: 0,
       venue: 1,
       imageUrl: '',
@@ -273,6 +294,7 @@ export class AddProgramComponent implements OnInit {
       locationDescription: '',
       workshopDate: '',
       workshopTime: '',
+      workshopTimeTo: '',
       programId: 0,
       venue: 1,
       imageUrl: '',
@@ -298,6 +320,7 @@ export class AddProgramComponent implements OnInit {
       urlBase64: '',
       venue: 1,
       file: null,
+      interviewTimeTo: '',
     };
     this._id = 0;
   }
@@ -328,6 +351,7 @@ export class AddProgramComponent implements OnInit {
     };
     //this.joinProgramChallengeViewModels = [];
   }
+
   pondHandleInit() {}
 
   pondHandleAddFile(event: { file: { file: File } }) {
@@ -343,13 +367,6 @@ export class AddProgramComponent implements OnInit {
   pondHandleActivateFile(event: any) {}
   pondHandleRemoveFile(event: any) {
     const removedFile = event.file;
-    // const index = this.imagesArray.findIndex(
-    //   (item: { fileName: any }) => item.fileName === removedFile.file
-    // );
-
-    // if (index !== -1) {
-    //   this.imagesArray.splice(index, 1);
-    // }
   }
 
   ngOnInit(): void {
@@ -421,8 +438,10 @@ export class AddProgramComponent implements OnInit {
       id: -1,
       questionViewModels: [],
       participationTestAnswersViewModels: [],
-      status: false,
+      //status: false,
+      statusCode: StatusCode.InActive,
       programId: 0,
+      passingRating: 0,
     };
     this.languageChangeSubscription = new Subscription();
 
@@ -438,6 +457,7 @@ export class AddProgramComponent implements OnInit {
   }
   ngAfterViewInit() {
     // Ensure the FilePond instance is correctly assigned after the view is initialized
+    console.log(this.listWorkshopAttendanceComponent);
     this.pond = this.myPond.filePond;
   }
   openModal(template: TemplateRef<void> | undefined) {
@@ -447,6 +467,8 @@ export class AddProgramComponent implements OnInit {
         template,
         Object.assign({}, { class: 'modal-lg' })
       );
+    this.globalService.resetValidation();
+    this.globalService.dataKeys = {};
   }
 
   editProgram(id: number) {
@@ -486,10 +508,10 @@ export class AddProgramComponent implements OnInit {
       },
     });
   }
-  checekIsActiveTest() {
-    if (this.participationTestViewModel.status) {
-      var isExist = this.participationTestViewModelList.find(
-        (a) => a.status == true
+  checekIsActiveTest(model: any, modelList: any[]) {
+    if (model.statusCode == StatusCode.IsActive) {
+      var isExist = modelList.find(
+        (a) => a.statusCode == StatusCode.IsActive && a.id != model.id
       );
 
       if (isExist == null) {
@@ -501,9 +523,25 @@ export class AddProgramComponent implements OnInit {
       return false;
     }
   }
+  validateTestModel(): boolean {
+    // return this.globalService.validateModel(this.participationTestViewModel, [
+    //   'textAr',
+    //   'textEn',
+    // ]);
 
+    return this.globalService.validateModel(this.participationTestViewModel, [
+      { key: 'textAr' },
+      { key: 'textEn' },
+    ]);
+  }
   addTest() {
-    if (!this.checekIsActiveTest()) {
+    //  if (this.validateTestModel()) {
+    if (
+      !this.checekIsActiveTest(
+        this.participationTestViewModel,
+        this.participationTestViewModelList
+      )
+    ) {
       if (this.joinProgramModel.id == 0) {
         this.participationTestViewModel.questionViewModels =
           this.questionViewModelList;
@@ -531,6 +569,7 @@ export class AddProgramComponent implements OnInit {
         if (this.participationTestViewModel.id == -1) {
           this.participationTestViewModel.id = 0;
         }
+
         this.participationTestViewModel.programId = this.joinProgramModel.id;
         this.participationTestViewModel.questionViewModels =
           this.questionViewModelList;
@@ -561,8 +600,10 @@ export class AddProgramComponent implements OnInit {
           : 'لا يمكن أن يكون هناك سوى اختبار واحد نشط في كل مرة!';
       this.tosterService.error(message);
     }
+    //}
   }
   updateTest() {
+    // if (this.validateTestModel()) {
     if (this.joinProgramModel.id == 0) {
       this.participationTestViewModel.questionViewModels =
         this.questionViewModelList;
@@ -596,6 +637,7 @@ export class AddProgramComponent implements OnInit {
           },
         });
     }
+    //}
   }
 
   viewTestDetail(id: number, template: TemplateRef<any> | undefined) {
@@ -739,45 +781,69 @@ export class AddProgramComponent implements OnInit {
   removeQuestion(index: number): void {
     this?.questionViewModelList.splice(index, 1);
   }
+  validateQuestionModel(): boolean {
+    // return this.globalService.validateModel(this.questionViewModel, [
+    //   'textAr',
+    //   'textEn',
+    // ]);
 
+    return this.globalService.validateModel(this.questionViewModel, [
+      { key: 'textAr' },
+      { key: 'textEn' },
+    ]);
+  }
   addQuestion(): void {
-    if (
-      this.questionViewModel?.textEn?.trim() !== '' ||
-      (this.questionViewModel?.textAr?.trim() !== '' &&
-        this.questionViewModelList != null)
-    ) {
-      if (this.questionViewModelList != null)
-        this.questionViewModel.mqsOptionsViewModel =
-          this.mQSOptionViewModelList;
+    if (this.validateQuestionModel()) {
+      if (
+        this.questionViewModel?.textEn?.trim() !== '' ||
+        (this.questionViewModel?.textAr?.trim() !== '' &&
+          this.questionViewModelList != null)
+      ) {
+        if (this.questionViewModelList != null)
+          this.questionViewModel.mqsOptionsViewModel =
+            this.mQSOptionViewModelList;
 
-      this.headingText = this.questionViewModel.textEn;
+        this.headingText = this.questionViewModel.textEn;
 
-      this.questionViewModelList?.push(this.questionViewModel);
-      this.mQSOptionViewModelList = [];
-      this.questionViewModel = {
-        textAr: '',
-        textEn: '',
-        id: 0,
-      };
+        this.questionViewModelList?.push(this.questionViewModel);
+        this.mQSOptionViewModelList = [];
+        this.questionViewModel = {
+          textAr: '',
+          textEn: '',
+          id: 0,
+        };
+      }
     }
   }
+  validateOptionModel(): boolean {
+    // return this.globalService.validateModel(this.mQSOptionViewModel, [
+    //   'textAr',
+    //   'textEn',
+    // ]);
 
+    return this.globalService.validateModel(this.mQSOptionViewModel, [
+      { key: 'textAr' },
+      { key: 'textEn' },
+    ]);
+  }
   addOption(): void {
-    if (
-      this.mQSOptionViewModel?.textEn?.trim() !== '' ||
-      (this.mQSOptionViewModel?.textAr?.trim() !== '' &&
-        this.mQSOptionViewModelList != null)
-    ) {
-      if (this.mQSOptionViewModelList != null)
-        this.mQSOptionViewModelList?.push(this.mQSOptionViewModel);
+    if (this.validateOptionModel()) {
+      if (
+        this.mQSOptionViewModel?.textEn?.trim() !== '' ||
+        (this.mQSOptionViewModel?.textAr?.trim() !== '' &&
+          this.mQSOptionViewModelList != null)
+      ) {
+        if (this.mQSOptionViewModelList != null)
+          this.mQSOptionViewModelList?.push(this.mQSOptionViewModel);
 
-      this.mQSOptionViewModel = {
-        textAr: '',
-        textEn: '',
-        questionId: 0,
-        id: 0,
-        isCorrect: false,
-      };
+        this.mQSOptionViewModel = {
+          textAr: '',
+          textEn: '',
+          questionId: 0,
+          id: 0,
+          isCorrect: false,
+        };
+      }
     }
   }
 
@@ -811,47 +877,63 @@ export class AddProgramComponent implements OnInit {
         Object.assign({}, { class: 'modal-lg' })
       );
     }
+    this.globalService.dataKeys = {};
+    this.globalService.resetValidation();
+  }
+  validateWorkshopModel(): boolean {
+    // return this.globalService.validateModel(this.workshopViewModel, [
+    //   'nameAr',
+    //   'nameEn',
+    // ]);
+
+    return this.globalService.validateModel(this.workshopViewModel, [
+      { key: 'nameAr' },
+      { key: 'nameEn' },
+      { key: 'workshopDate', type: 'date' },
+    ]);
   }
 
   saveWorkshop() {
-    if (this.joinProgramModel.id == 0) {
-      if (this.file != null) {
-        this.workshopViewModel.file = this.file;
-        this.workshopViewModel.imageUrl = this.file.name;
-      }
-      const index = this.workshopViewModels.findIndex(
-        (item) => item.id === this.workshopViewModel.id
-      );
-      if (index !== -1 && this.workshopViewModel.id !== -1) {
-        this.workshopViewModels.splice(index, 1, this.workshopViewModel);
+    if (this.validateWorkshopModel()) {
+      if (this.joinProgramModel.id == 0) {
+        if (this.file != null) {
+          this.workshopViewModel.file = this.file;
+          this.workshopViewModel.imageUrl = this.file.name;
+        }
+        const index = this.workshopViewModels.findIndex(
+          (item) => item.id === this.workshopViewModel.id
+        );
+        if (index !== -1 && this.workshopViewModel.id !== -1) {
+          this.workshopViewModels.splice(index, 1, this.workshopViewModel);
+        } else {
+          this.workshopViewModels.push(this.workshopViewModel);
+          //this._workshopViewModelsUpload.push(this.workshopViewModel);
+        }
+        this.initWrokshopModel();
+        this.file as File;
+        this.modalRef?.hide();
       } else {
-        this.workshopViewModels.push(this.workshopViewModel);
-        //this._workshopViewModelsUpload.push(this.workshopViewModel);
-      }
-      this.initWrokshopModel();
-      this.file as File;
-      this.modalRef?.hide();
-    } else {
-      if (this.file != null) {
-        // First, upload the file and then proceed to add the workshop
-        this.upload(this.file).subscribe({
-          next: (event: any) => {
-            if (event instanceof HttpResponse && event.status === 200) {
-              if (event.body.data && event.body.data.length > 0) {
-                this.workshopViewModel.imageUrl = event.body.data[0].url;
-                this.workshopViewModel.programId = this.joinProgramModel.id;
-                this.addWorkshop(); // Call the function that adds the workshop after upload completes
+        if (this.file != null) {
+          // First, upload the file and then proceed to add the workshop
+          this.upload(this.file).subscribe({
+            next: (event: any) => {
+              if (event instanceof HttpResponse && event.status === 200) {
+                if (event.body.data && event.body.data.length > 0) {
+                  this.workshopViewModel.imageUrl = event.body.data[0].url;
+                  this.workshopViewModel.programId = this.joinProgramModel.id;
+                  this.addWorkshop(); // Call the function that adds the workshop after upload completes
+                }
               }
-            }
-          },
-          error: (error) => {
-            this.tosterService.error('File upload failed. Please try again.');
-          },
-        });
-      } else {
-        // If there's no file to upload, directly add the workshop
-        this.workshopViewModel.programId = this.joinProgramModel.id;
-        this.addWorkshop();
+            },
+            error: (error) => {
+              this.tosterService.error('File upload failed. Please try again.');
+            },
+          });
+        } else {
+          // If there's no file to upload, directly add the workshop
+          this.workshopViewModel.programId = this.joinProgramModel.id;
+          this.addWorkshop();
+        }
       }
     }
   }
@@ -941,7 +1023,10 @@ export class AddProgramComponent implements OnInit {
       let _id = this.workshopViewModels[id].id;
       this.joinProgramService._deleteWorkshop(_id).subscribe({
         next: (respone: ResponseResult) => {
-          if (respone.statusCode == StatusCodes.success) {
+          if (
+            respone.statusCode == StatusCodes.success ||
+            respone.statusCode == StatusCodes.deleted
+          ) {
             this.tosterService.success(respone.message);
             this.listWorkshop();
           } else {
@@ -959,54 +1044,56 @@ export class AddProgramComponent implements OnInit {
   }
 
   updateWrokShop() {
-    if (this.joinProgramModel.id == 0) {
-      if (this.file != null) {
-        this.workshopViewModel.file = this.file;
-        this.workshopViewModel.imageUrl = this.file.name;
-      }
-      const index = this.workshopViewModels.findIndex(
-        (item) => item.id === this.workshopViewModel.id
-      );
+    if (this.validateWorkshopModel()) {
+      if (this.joinProgramModel.id == 0) {
+        if (this.file != null) {
+          this.workshopViewModel.file = this.file;
+          this.workshopViewModel.imageUrl = this.file.name;
+        }
+        const index = this.workshopViewModels.findIndex(
+          (item) => item.id === this.workshopViewModel.id
+        );
 
-      // const existingInterview = this.interviewViewModels.find(
-      //   (item) => item.id === this.interviewViewModel.id
-      // );
+        // const existingInterview = this.interviewViewModels.find(
+        //   (item) => item.id === this.interviewViewModel.id
+        // );
 
-      if (index !== -1 && this.workshopViewModel.id !== -1) {
-        // Remove the existing item at the specific index and insert the updated item at the same index
-        this.workshopViewModel.id = this._id;
+        if (index !== -1 && this.workshopViewModel.id !== -1) {
+          // Remove the existing item at the specific index and insert the updated item at the same index
+          this.workshopViewModel.id = this._id;
 
-        this.workshopViewModels.splice(index, 1, this.workshopViewModel);
+          this.workshopViewModels.splice(index, 1, this.workshopViewModel);
+        } else {
+          // If the item is not found, simply push the new item
+          this.workshopViewModels.push(this.workshopViewModel);
+        }
+
+        this.initWrokshopModel();
+        this.file as File;
+        this.modalRef?.hide();
       } else {
-        // If the item is not found, simply push the new item
-        this.workshopViewModels.push(this.workshopViewModel);
-      }
-
-      this.initWrokshopModel();
-      this.file as File;
-      this.modalRef?.hide();
-    } else {
-      if (this.file != null) {
-        this.upload(this.file).subscribe({
-          next: (event: any) => {
-            if (event instanceof HttpResponse && event.status === 200) {
-              if (event.body.data && event.body.data.length > 0) {
-                this.workshopViewModel.imageUrl = event.body.data[0].url;
-                this.workshopViewModel.programId = this.joinProgramModel.id;
-                this.workshopViewModel.id = 0;
-                this.updateWorkshop(); // Call the function that adds the workshop after upload completes
+        if (this.file != null) {
+          this.upload(this.file).subscribe({
+            next: (event: any) => {
+              if (event instanceof HttpResponse && event.status === 200) {
+                if (event.body.data && event.body.data.length > 0) {
+                  this.workshopViewModel.imageUrl = event.body.data[0].url;
+                  this.workshopViewModel.programId = this.joinProgramModel.id;
+                  this.workshopViewModel.id = 0;
+                  this.updateWorkshop(); // Call the function that adds the workshop after upload completes
+                }
               }
-            }
-          },
-          error: (error) => {
-            this.tosterService.error('File upload failed. Please try again.');
-          },
-        });
-        // this.upload(this.file);
-        // this.workshopViewModel.imageUrl = this.fileUrl;
-        //this.updateWorkshop();
-      } else {
-        this.updateWorkshop();
+            },
+            error: (error) => {
+              this.tosterService.error('File upload failed. Please try again.');
+            },
+          });
+          // this.upload(this.file);
+          // this.workshopViewModel.imageUrl = this.fileUrl;
+          //this.updateWorkshop();
+        } else {
+          this.updateWorkshop();
+        }
       }
     }
   }
@@ -1051,49 +1138,62 @@ export class AddProgramComponent implements OnInit {
       );
     }
   }
+  validateInterviewModel(): boolean {
+    // return this.globalService.validateModel(this.interviewViewModel, [
+    //   'nameAr',
+    //   'nameEn',
+    // ]);
 
+    return this.globalService.validateModel(this.interviewViewModel, [
+      { key: 'nameAr' },
+      { key: 'nameEn' },
+      { key: 'interviewDate', type: 'date' },
+    ]);
+  }
   saveInterview() {
-    if (this.joinProgramModel.id == 0) {
-      if (this.file != null) {
-        this.interviewViewModel.file = this.file;
-        this.interviewViewModel.imageUrl = this.file.name;
-      }
-      const index = this.interviewViewModels.findIndex(
-        (item) => item.id === this.interviewViewModel.id
-      );
-      if (index !== -1 && this.interviewViewModel.id !== -1) {
-        this.interviewViewModels.splice(index, 1, this.interviewViewModel);
+    if (this.validateInterviewModel()) {
+      if (this.joinProgramModel.id == 0) {
+        if (this.file != null) {
+          this.interviewViewModel.file = this.file;
+          this.interviewViewModel.imageUrl = this.file.name;
+        }
+        const index = this.interviewViewModels.findIndex(
+          (item) => item.id === this.interviewViewModel.id
+        );
+        if (index !== -1 && this.interviewViewModel.id !== -1) {
+          this.interviewViewModels.splice(index, 1, this.interviewViewModel);
+        } else {
+          this.interviewViewModels.push(this.interviewViewModel);
+          //this._interviewViewModelsUpload.push(this.interviewViewModel);
+        }
+        this.initInterviewModel();
+        this.file as File;
+        this.modalRef?.hide();
       } else {
-        this.interviewViewModels.push(this.interviewViewModel);
-        //this._interviewViewModelsUpload.push(this.interviewViewModel);
-      }
-      this.initInterviewModel();
-      this.file as File;
-      this.modalRef?.hide();
-    } else {
-      this.interviewViewModel.programId = this.joinProgramModel.id;
-      this.interviewViewModel.id = 0;
+        this.interviewViewModel.programId = this.joinProgramModel.id;
+        this.interviewViewModel.id = 0;
 
-      if (this.file != null) {
-        // First, upload the file and then proceed to add the workshop
-        this.upload(this.file).subscribe({
-          next: (event: any) => {
-            if (event instanceof HttpResponse && event.status === 200) {
-              if (event.body.data && event.body.data.length > 0) {
-                this.interviewViewModel.imageUrl = event.body.data[0].url;
+        if (this.file != null) {
+          // First, upload the file and then proceed to add the workshop
+          this.upload(this.file).subscribe({
+            next: (event: any) => {
+              if (event instanceof HttpResponse && event.status === 200) {
+                if (event.body.data && event.body.data.length > 0) {
+                  this.interviewViewModel.imageUrl = event.body.data[0].url;
 
-                this._addInterview(); // Call the function that adds the workshop after upload completes
+                  this._addInterview(); // Call the function that adds the workshop after upload completes
+                }
               }
-            }
-          },
-          error: (error) => {
-            this.tosterService.error('File upload failed. Please try again.');
-          },
-        });
-      } else {
-        // If there's no file to upload, directly add the workshop
+            },
+            error: (error) => {
+              this.tosterService.error('File upload failed. Please try again.');
+            },
+          });
+        } else {
+          // If there's no file to upload, directly add the workshop
 
-        this._addInterview();
+          this._addInterview();
+        }
       }
     }
   }
@@ -1184,7 +1284,10 @@ export class AddProgramComponent implements OnInit {
       let _id = this.interviewViewModels[id].id;
       this.joinProgramService._deleteInterView(_id).subscribe({
         next: (respone: ResponseResult) => {
-          if (respone.statusCode == StatusCodes.success) {
+          if (
+            respone.statusCode == StatusCodes.success ||
+            respone.statusCode == StatusCodes.deleted
+          ) {
             this.tosterService.success(respone.message);
             this.listInterview();
           } else {
@@ -1202,54 +1305,56 @@ export class AddProgramComponent implements OnInit {
   }
 
   updateInterview() {
-    if (this.joinProgramModel.id == 0) {
-      if (this.file != null) {
-        this.interviewViewModel.file = this.file;
-        this.interviewViewModel.imageUrl = this.file.name;
-      }
-      const index = this.interviewViewModels.findIndex(
-        (item) => item.id === this.interviewViewModel.id
-      );
+    if (this.validateInterviewModel()) {
+      if (this.joinProgramModel.id == 0) {
+        if (this.file != null) {
+          this.interviewViewModel.file = this.file;
+          this.interviewViewModel.imageUrl = this.file.name;
+        }
+        const index = this.interviewViewModels.findIndex(
+          (item) => item.id === this.interviewViewModel.id
+        );
 
-      // const existingInterview = this.interviewViewModels.find(
-      //   (item) => item.id === this.interviewViewModel.id
-      // );
+        // const existingInterview = this.interviewViewModels.find(
+        //   (item) => item.id === this.interviewViewModel.id
+        // );
 
-      if (index !== -1 && this.interviewViewModel.id !== -1) {
-        // Remove the existing item at the specific index and insert the updated item at the same index
-        this.interviewViewModel.id = this._id;
+        if (index !== -1 && this.interviewViewModel.id !== -1) {
+          // Remove the existing item at the specific index and insert the updated item at the same index
+          this.interviewViewModel.id = this._id;
 
-        this.interviewViewModels.splice(index, 1, this.interviewViewModel);
+          this.interviewViewModels.splice(index, 1, this.interviewViewModel);
+        } else {
+          // If the item is not found, simply push the new item
+          this.interviewViewModels.push(this.interviewViewModel);
+        }
+
+        this.initInterviewModel();
+        this.file as File;
+        this.modalRef?.hide();
       } else {
-        // If the item is not found, simply push the new item
-        this.interviewViewModels.push(this.interviewViewModel);
-      }
-
-      this.initInterviewModel();
-      this.file as File;
-      this.modalRef?.hide();
-    } else {
-      if (this.file != null) {
-        this.upload(this.file).subscribe({
-          next: (event: any) => {
-            if (event instanceof HttpResponse && event.status === 200) {
-              if (event.body.data && event.body.data.length > 0) {
-                this.interviewViewModel.imageUrl = event.body.data[0].url;
-                this.interviewViewModel.programId = this.joinProgramModel.id;
-                // this.interviewViewModel.id = 0;
-                this._updateInterview(); // Call the function that adds the workshop after upload completes
+        if (this.file != null) {
+          this.upload(this.file).subscribe({
+            next: (event: any) => {
+              if (event instanceof HttpResponse && event.status === 200) {
+                if (event.body.data && event.body.data.length > 0) {
+                  this.interviewViewModel.imageUrl = event.body.data[0].url;
+                  this.interviewViewModel.programId = this.joinProgramModel.id;
+                  // this.interviewViewModel.id = 0;
+                  this._updateInterview(); // Call the function that adds the workshop after upload completes
+                }
               }
-            }
-          },
-          error: (error) => {
-            this.tosterService.error('File upload failed. Please try again.');
-          },
-        });
-        // this.upload(this.file);
-        // this.workshopViewModel.imageUrl = this.fileUrl;
-        //this.updateWorkshop();
-      } else {
-        this._updateInterview();
+            },
+            error: (error) => {
+              this.tosterService.error('File upload failed. Please try again.');
+            },
+          });
+          // this.upload(this.file);
+          // this.workshopViewModel.imageUrl = this.fileUrl;
+          //this.updateWorkshop();
+        } else {
+          this._updateInterview();
+        }
       }
     }
   }
@@ -1302,47 +1407,60 @@ export class AddProgramComponent implements OnInit {
     }
   }
 
+  validateChallegeModel(): boolean {
+    // return this.globalService.validateModel(
+    //   this.joinProgramChallengeViewModel,
+    //   ['titleAr', 'titleEn']
+    // );
+
+    return this.globalService.validateModel(
+      this.joinProgramChallengeViewModel,
+      [{ key: 'titleAr' }, { key: 'titleEn' }]
+    );
+  }
   saveChallenge() {
-    if (this.joinProgramModel.id == 0) {
-      const index = this.joinProgramChallengeViewModels.findIndex(
-        (item) => item.id === this.joinProgramChallengeViewModel.id
-      );
-
-      if (index !== -1 && this.joinProgramChallengeViewModel.id !== -1) {
-        // Remove the existing item at the specific index and insert the updated item at the same index
-        this.joinProgramChallengeViewModels.splice(
-          index,
-          1,
-          this.joinProgramChallengeViewModel
+    if (this.validateChallegeModel()) {
+      if (this.joinProgramModel.id == 0) {
+        const index = this.joinProgramChallengeViewModels.findIndex(
+          (item) => item.id === this.joinProgramChallengeViewModel.id
         );
+
+        if (index !== -1 && this.joinProgramChallengeViewModel.id !== -1) {
+          // Remove the existing item at the specific index and insert the updated item at the same index
+          this.joinProgramChallengeViewModels.splice(
+            index,
+            1,
+            this.joinProgramChallengeViewModel
+          );
+        } else {
+          // If the item is not found, simply push the new item
+          this.joinProgramChallengeViewModels.push(
+            this.joinProgramChallengeViewModel
+          );
+        }
+
+        this.initChallengedViewModel();
+
+        this.modalRef?.hide();
       } else {
-        // If the item is not found, simply push the new item
-        this.joinProgramChallengeViewModels.push(
-          this.joinProgramChallengeViewModel
-        );
+        if (this.joinProgramChallengeViewModel.id == -1) {
+          this.joinProgramChallengeViewModel.id = 0;
+        }
+        this.joinProgramChallengeViewModel.programId = this.joinProgramModel.id;
+        this.joinProgramService
+          ._addChallenge(this.joinProgramChallengeViewModel)
+          .subscribe({
+            next: (response: ResponseResult) => {
+              if (response.statusCode == StatusCodes.success) {
+                this.tosterService.success(response.message);
+                this.listChalllenge();
+                this.modalRef?.hide();
+              } else {
+                this.tosterService.error(response.message);
+              }
+            },
+          });
       }
-
-      this.initChallengedViewModel();
-
-      this.modalRef?.hide();
-    } else {
-      if (this.joinProgramChallengeViewModel.id == -1) {
-        this.joinProgramChallengeViewModel.id = 0;
-      }
-      this.joinProgramChallengeViewModel.programId = this.joinProgramModel.id;
-      this.joinProgramService
-        ._addChallenge(this.joinProgramChallengeViewModel)
-        .subscribe({
-          next: (response: ResponseResult) => {
-            if (response.statusCode == StatusCodes.success) {
-              this.tosterService.success(response.message);
-              this.listChalllenge();
-              this.modalRef?.hide();
-            } else {
-              this.tosterService.error(response.message);
-            }
-          },
-        });
     }
   }
 
@@ -1396,7 +1514,10 @@ export class AddProgramComponent implements OnInit {
 
       this.joinProgramService._deleteChallenge(_id).subscribe({
         next: (respone: ResponseResult) => {
-          if (respone.statusCode == StatusCodes.deleted) {
+          if (
+            respone.statusCode == StatusCodes.success ||
+            respone.statusCode == StatusCodes.deleted
+          ) {
             this.tosterService.success(respone.message);
 
             this.listChalllenge();
@@ -1409,44 +1530,46 @@ export class AddProgramComponent implements OnInit {
   }
 
   updateChallenge() {
-    if (this.joinProgramModel.id == 0) {
-      const index = this.joinProgramChallengeViewModels.findIndex(
-        (item) => item.id === this.joinProgramChallengeViewModel.id
-      );
-
-      if (index !== -1 && this.joinProgramChallengeViewModel.id !== -1) {
-        // Remove the existing item at the specific index and insert the updated item at the same index
-        this.joinProgramChallengeViewModels.splice(
-          index,
-          1,
-          this.joinProgramChallengeViewModel
+    if (this.validateChallegeModel()) {
+      if (this.joinProgramModel.id == 0) {
+        const index = this.joinProgramChallengeViewModels.findIndex(
+          (item) => item.id === this.joinProgramChallengeViewModel.id
         );
+
+        if (index !== -1 && this.joinProgramChallengeViewModel.id !== -1) {
+          // Remove the existing item at the specific index and insert the updated item at the same index
+          this.joinProgramChallengeViewModels.splice(
+            index,
+            1,
+            this.joinProgramChallengeViewModel
+          );
+        } else {
+          // If the item is not found, simply push the new item
+          this.joinProgramChallengeViewModels.push(
+            this.joinProgramChallengeViewModel
+          );
+        }
+
+        this.initChallengedViewModel();
+        this.file as File;
+        this.modalRef?.hide();
       } else {
-        // If the item is not found, simply push the new item
-        this.joinProgramChallengeViewModels.push(
-          this.joinProgramChallengeViewModel
-        );
+        this.joinProgramChallengeViewModel.id = this._id;
+        this.joinProgramService
+          ._updateChallenge(this.joinProgramChallengeViewModel)
+          .subscribe({
+            next: (respone: ResponseResult) => {
+              if (respone.statusCode == StatusCodes.update) {
+                this.tosterService.success(respone.message);
+                this.modalRef?.hide();
+                this.listChalllenge();
+                this.initChallengedViewModel();
+              } else {
+                this.tosterService.error(respone.message);
+              }
+            },
+          });
       }
-
-      this.initChallengedViewModel();
-      this.file as File;
-      this.modalRef?.hide();
-    } else {
-      this.joinProgramChallengeViewModel.id = this._id;
-      this.joinProgramService
-        ._updateChallenge(this.joinProgramChallengeViewModel)
-        .subscribe({
-          next: (respone: ResponseResult) => {
-            if (respone.statusCode == StatusCodes.update) {
-              this.tosterService.success(respone.message);
-              this.modalRef?.hide();
-              this.listChalllenge();
-              this.initChallengedViewModel();
-            } else {
-              this.tosterService.error(respone.message);
-            }
-          },
-        });
     }
   }
 
@@ -1464,90 +1587,147 @@ export class AddProgramComponent implements OnInit {
 
   //Challenge *******//// End ************//////
 
+  // validateProgramModel(): boolean {
+  //   return this.globalService.validateModel(this.joinProgramModel, [
+  //     'descriptionEn',
+  //     'descriptionAr',
+  //   ]);
+  // }
+
+  validateProgramModel(): boolean {
+    return this.globalService.validateModel(this.joinProgramModel, [
+      { key: 'descriptionEn' },
+      { key: 'descriptionAr' },
+      { key: 'startDate', type: 'date' },
+      { key: 'endDate', type: 'date' },
+    ]);
+  }
+  setJoinProgramCheckBoxValue(event: Event) {
+    const isChecked = (event.target as HTMLInputElement).checked;
+
+    this.joinProgramModel.statusCode = isChecked
+      ? StatusCode.IsActive
+      : StatusCode.InActive;
+  }
   addProgram() {
     //this._challengesViewModelsUpload = [];
     //this._interviewViewModelsUpload = [];
     // this._workshopViewModelsUpload = [];
-    if (this.joinProgramModel.id == 0)
-      for (let workshop of this.workshopViewModels) {
-        // Check if the interview is not in _interviewViewModelsUpload
-        const alreadyUploaded = this._workshopViewModelsUpload.some(
-          (uploadedWorkshop) => uploadedWorkshop === workshop
-        );
 
-        if (!alreadyUploaded && workshop.file != null) {
-          this.upload(workshop.file);
-          workshop.imageUrl = this.fileUrl;
-          workshop.id = 0;
-          this._workshopViewModelsUpload.push(workshop); // Add to the uploaded list
-        } else if (!alreadyUploaded) {
-          this._workshopViewModelsUpload.push(workshop);
+    if (this.validateProgramModel()) {
+      if (this.joinProgramModel.id == 0) {
+        for (let workshop of this.workshopViewModels) {
+          // Check if the interview is not in _interviewViewModelsUpload
+          const alreadyUploaded = this._workshopViewModelsUpload.some(
+            (uploadedWorkshop) => uploadedWorkshop === workshop
+          );
+
+          if (!alreadyUploaded && workshop.file != null) {
+            this.upload(workshop.file);
+            workshop.imageUrl = this.fileUrl;
+            workshop.id = 0;
+            this._workshopViewModelsUpload.push(workshop); // Add to the uploaded list
+          } else if (!alreadyUploaded) {
+            this._workshopViewModelsUpload.push(workshop);
+          }
         }
-      }
 
-    if (this.interviewViewModels.length > 0) {
-      for (let interview of this.interviewViewModels) {
-        // Check if the interview is not in _interviewViewModelsUpload
-        const alreadyUploaded = this._interviewViewModelsUpload.some(
-          (uploadedInterview) => uploadedInterview === interview
+        if (this.interviewViewModels.length > 0) {
+          for (let interview of this.interviewViewModels) {
+            // Check if the interview is not in _interviewViewModelsUpload
+            const alreadyUploaded = this._interviewViewModelsUpload.some(
+              (uploadedInterview) => uploadedInterview === interview
+            );
+            if (!alreadyUploaded && interview.file != null) {
+              this.upload(interview.file);
+              interview.imageUrl = this.fileUrl;
+              interview.id = 0;
+              this._interviewViewModelsUpload.push(interview); // Add to the uploaded list
+            } else if (!alreadyUploaded) {
+              this._interviewViewModelsUpload.push(interview);
+            }
+          }
+        }
+        let _listOfWorkshop = this._workshopViewModelsUpload.map((element) => {
+          // Modify the element if necessary, for example, setting `id` to `null`
+          element.id = 0;
+          return element;
+        });
+
+        let _listOfInterview = this._interviewViewModelsUpload.map(
+          (element) => {
+            // Modify the element if necessary, for example, setting `id` to `null`
+            element.id = 0;
+            return element;
+          }
         );
-        if (!alreadyUploaded && interview.file != null) {
-          this.upload(interview.file);
-          interview.imageUrl = this.fileUrl;
-          interview.id = 0;
-          this._interviewViewModelsUpload.push(interview); // Add to the uploaded list
-        } else if (!alreadyUploaded) {
-          this._interviewViewModelsUpload.push(interview);
+
+        let _listOfParticipating = this.participationTestViewModelList.map(
+          (element) => {
+            // Modify the element if necessary, for example, setting `id` to `null`
+            element.id = 0;
+            return element;
+          }
+        );
+
+        let _listOfChallenge = this.joinProgramChallengeViewModels.map(
+          (element) => {
+            // Modify the element if necessary, for example, setting `id` to `null`
+            element.id = 0;
+            return element;
+          }
+        );
+
+        this.joinProgramModel.interviewViewModels = _listOfInterview; //this._interviewViewModelsUpload;
+        this.joinProgramModel.workshopViewModels = _listOfWorkshop; //this._workshopViewModelsUpload;
+        this.joinProgramModel.joinProgramChallengeViewModels = _listOfChallenge;
+        this.joinProgramModel.participationTestViewModels =
+          _listOfParticipating;
+        //participationTestViewModel
+
+        this.joinProgramService._addProgram(this.joinProgramModel).subscribe({
+          next: (respone: ResponseResult) => {
+            if (respone.statusCode == StatusCodes.success) {
+              this.initForm();
+              this._challengesViewModelsUpload = [];
+              this._interviewViewModelsUpload = [];
+              this._workshopViewModelsUpload = [];
+              this.tosterService.success(respone.message);
+
+              setTimeout(() => {
+                this.router.navigateByUrl('/creativeSupport/listProgram');
+              }, 1000);
+            } else {
+              this.tosterService.error(respone.message);
+            }
+          },
+        });
+      } else {
+        if (this.validateProgramModel()) {
+          this.joinProgramService
+            ._updateProgram(this.joinProgramModel)
+            .subscribe({
+              next: (respone: ResponseResult) => {
+                if (
+                  respone.statusCode == StatusCodes.success ||
+                  respone.statusCode == StatusCodes.update
+                ) {
+                  this.tosterService.success(respone.message);
+                  this._challengesViewModelsUpload = [];
+                  this._interviewViewModelsUpload = [];
+                  this._workshopViewModelsUpload = [];
+                  this.initForm();
+                  setTimeout(() => {
+                    this.router.navigateByUrl('/creativeSupport/listProgram');
+                  }, 1000);
+                } else {
+                  this.tosterService.error(respone.message);
+                }
+              },
+            });
         }
       }
     }
-    let _listOfWorkshop = this._workshopViewModelsUpload.map((element) => {
-      // Modify the element if necessary, for example, setting `id` to `null`
-      element.id = 0;
-      return element;
-    });
-
-    let _listOfInterview = this._interviewViewModelsUpload.map((element) => {
-      // Modify the element if necessary, for example, setting `id` to `null`
-      element.id = 0;
-      return element;
-    });
-
-    let _listOfParticipating = this.participationTestViewModelList.map(
-      (element) => {
-        // Modify the element if necessary, for example, setting `id` to `null`
-        element.id = 0;
-        return element;
-      }
-    );
-
-    let _listOfChallenge = this.joinProgramChallengeViewModels.map(
-      (element) => {
-        // Modify the element if necessary, for example, setting `id` to `null`
-        element.id = 0;
-        return element;
-      }
-    );
-
-    this.joinProgramModel.interviewViewModels = _listOfInterview; //this._interviewViewModelsUpload;
-    this.joinProgramModel.workshopViewModels = _listOfWorkshop; //this._workshopViewModelsUpload;
-    this.joinProgramModel.joinProgramChallengeViewModels = _listOfChallenge;
-    this.joinProgramModel.participationTestViewModels = _listOfParticipating;
-    //participationTestViewModel
-
-    this.joinProgramService._addProgram(this.joinProgramModel).subscribe({
-      next: (respone: ResponseResult) => {
-        if (respone.statusCode == StatusCodes.success) {
-          this.initForm();
-          this._challengesViewModelsUpload = [];
-          this._interviewViewModelsUpload = [];
-          this._workshopViewModelsUpload = [];
-          this.tosterService.success(respone.message);
-        } else {
-          this.tosterService.error(respone.message);
-        }
-      },
-    });
   }
 
   upload(file: File): Observable<any> {
@@ -1613,27 +1793,29 @@ export class AddProgramComponent implements OnInit {
   getTabValue(value: string): string {
     switch (value) {
       case 'Program':
-        return this.globalService.getCurrentLanguage() == 'en' ? 'Program' : '';
+        return this.globalService.getCurrentLanguage() == 'en'
+          ? 'Program'
+          : 'برنامج';
       case 'CreateTest':
         return this.globalService.getCurrentLanguage() == 'en'
           ? 'Create Test'
-          : '';
+          : 'إنشاء اختبار';
       case 'Wrokshop':
         return this.globalService.getCurrentLanguage() == 'en'
           ? 'Wrokshop'
-          : '';
+          : 'ورشة عمل';
       case 'Interview':
         return this.globalService.getCurrentLanguage() == 'en'
           ? 'Interview'
-          : '';
+          : 'مقابلة';
       case 'TranningCourse':
         return this.globalService.getCurrentLanguage() == 'en'
           ? 'Tranning Course'
-          : '';
+          : 'دورة تدريبية';
       case 'Challenges':
         return this.globalService.getCurrentLanguage() == 'en'
           ? 'Challenges'
-          : '';
+          : 'التحديات';
       default:
         return '';
     }
@@ -1718,5 +1900,99 @@ export class AddProgramComponent implements OnInit {
         );
       }
     }
+  }
+
+  /// listWorkshopAttendanceComponent Functions
+  toggleComponentVisibility() {
+    this.isComponentVisible = !this.isComponentVisible;
+  }
+  submitAttendance() {
+    const datatable: any = $('#workshopAttendanceDataTable').DataTable();
+    const data: any[] = datatable.rows().data().toArray(); // Get all rows data
+
+    this.listWorkshopAttendanceViewModel = data.map((row: any) => {
+      return {
+        registerDate: row.registerDate,
+        userId: row.userId,
+        userName: row.userName,
+        empId: row.empId,
+        empName: row.empName,
+        workshopId: this.workshopViewModel.id,
+        attendanceStatus: $(`#userStatusInput_${row.id}`).is(':checked')
+          ? AttendanceStatus.Present
+          : AttendanceStatus.Absent,
+      } as WorkshopAttendanceViewModel;
+    });
+
+    if (this.listWorkshopAttendanceViewModel) {
+      this.joinProgramService
+        ._markWorkshopeAttendance(this.listWorkshopAttendanceViewModel)
+        .subscribe({
+          next: (response: ResponseResult) => {
+            if (
+              response.statusCode == StatusCodes.success ||
+              StatusCodes.update
+            ) {
+              this.tosterService.success(response.message);
+              this.modalRef?.hide();
+              this.initWrokshopModel();
+              this.listWorkshopAttendanceViewModel = [];
+            } else {
+              this.tosterService.error(response.message);
+            }
+          },
+        });
+    }
+    console.log(this.listWorkshopAttendanceViewModel);
+    // if (this.listWorkshopAttendanceComponent) {
+    //   this.listWorkshopAttendanceComponent.submitAttendanceDataFromDataTable();
+    // } else {
+    //   console.log('listWorkshopAttendanceComponent is not yet initialized.');
+    // }
+  }
+
+  markInterviewStatus() {
+    const datatable: any = $('#interviewAttendanceDataTable').DataTable();
+    const data: any[] = datatable.rows().data().toArray(); // Get all rows data
+
+    this.listInterviewAttendanceViewModel = data.map((row: any) => {
+      return {
+        registerDate: row.interviewDate,
+        userId: row.userId,
+        userName: row.userName,
+        empId: row.empId,
+        empName: row.empName,
+        interviewId: this.interviewViewModel.id,
+        interviewStatus: $(`#userStatusInput_${row.id}`).is(':checked')
+          ? InterviewStatus.Passed
+          : InterviewStatus.Fail,
+      } as InterviewAttendanceViewModel;
+    });
+
+    if (this.listInterviewAttendanceViewModel) {
+      this.joinProgramService
+        ._markInterviewResult(this.listInterviewAttendanceViewModel)
+        .subscribe({
+          next: (response: ResponseResult) => {
+            if (
+              response.statusCode == StatusCodes.success ||
+              StatusCodes.update
+            ) {
+              this.tosterService.success(response.message);
+              this.modalRef?.hide();
+              this.initInterviewModel();
+              this.listInterviewAttendanceViewModel = [];
+            } else {
+              this.tosterService.error(response.message);
+            }
+          },
+        });
+    }
+    console.log(this.listInterviewAttendanceViewModel);
+    // if (this.listWorkshopAttendanceComponent) {
+    //   this.listWorkshopAttendanceComponent.submitAttendanceDataFromDataTable();
+    // } else {
+    //   console.log('listWorkshopAttendanceComponent is not yet initialized.');
+    // }
   }
 }

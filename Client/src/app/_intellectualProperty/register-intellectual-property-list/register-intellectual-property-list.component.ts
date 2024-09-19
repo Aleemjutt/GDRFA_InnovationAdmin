@@ -1,19 +1,28 @@
 import { CommonModule } from '@angular/common';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
-import { TypeModifier } from '@angular/compiler';
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormGroup, FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import { FilePond, FilePondOptions } from 'filepond';
+import { FilePondOptions } from 'filepond';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { FilePondModule } from 'ngx-filepond';
-import { TabsetComponent } from 'ngx-tabset';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, Subscription, finalize } from 'rxjs';
 import { GlobalServiceService } from 'src/app/_global/-global-service.service';
+import {
+  AccommodationType,
+  AuthorNature,
+  AuthorType,
+  Gender,
+  WorkbookType,
+} from 'src/app/_models/Common/enumsConnon';
+import {
+  AuthorDataModel,
+  ClassifierDataModel,
+  RegisteringIntellectualPropertyModel,
+} from 'src/app/_models/intecllectualProperty/registeringIntellectualPropertyModel';
 import { ResponseResult } from 'src/app/_models/responseResult';
-import { IntellectualPropertyIndexService } from 'src/app/_services/_intellectualProperty/intellectual-property-index.service';
 import { RegisterIntellectualPropertyService } from 'src/app/_services/_intellectualProperty/register-intellectual-property.service';
 import { FiledownloaderService } from 'src/app/_services/filedownloader.service';
 import { UploadServiceService } from 'src/app/_services/upload-service.service';
@@ -32,13 +41,16 @@ import { UploadServiceService } from 'src/app/_services/upload-service.service';
   styleUrl: './register-intellectual-property-list.component.css',
 })
 export class RegisterIntellectualPropertyListComponent implements OnInit {
-  registerIntecllectualPropertiesList = [];
+  registerIntecllectualPropertiesList: RegisteringIntellectualPropertyModel[] =
+    [];
   // Model: Model | undefined = undefined;
-  registerIntecllectualPropertyModel: any;
+  registerIntecllectualPropertyModel: RegisteringIntellectualPropertyModel;
   @ViewChild('template') template: TemplateRef<any> | undefined;
   @ViewChild('templateDetails') templateDetails: TemplateRef<any> | undefined;
   registerForm!: FormGroup;
   pondFiles: FilePondOptions['files'] = [];
+  authorDataModel: AuthorDataModel;
+  classifierDataModel: ClassifierDataModel;
 
   modalRef?: BsModalRef;
   fb: any;
@@ -60,6 +72,49 @@ export class RegisterIntellectualPropertyListComponent implements OnInit {
     private downloadService: FiledownloaderService
   ) {
     this.languageChangeSubscription = new Subscription();
+
+    this.authorDataModel = {
+      authorNature: AuthorNature.Non,
+      authorType: AuthorType.Non,
+      accommodationType: AccommodationType.Non,
+      nameEn: '',
+      nameAr: '',
+      nationality: 0,
+      mobile: '',
+      email: '',
+      registeringIntellectualPropertyId: 0,
+    };
+    this.classifierDataModel = {
+      nameofworkEn: '',
+      nameofworkAr: '',
+      workbookType: WorkbookType.Non,
+      descriptionWorkbook: '',
+      workbookContent: '',
+      registeringIntellectualPropertyId: 0,
+      attachmentsModel: [],
+    };
+    this.registerIntecllectualPropertyModel = {
+      id: 0,
+      fullNameEn: '',
+      fullNameAr: '',
+      firstNameEn: '',
+      firstNameAr: '',
+      secondNameEn: '',
+      secondNameAr: '',
+      thirdNameEn: '',
+      thirdNameAr: '',
+      familyNameEn: '',
+      familyNameAr: '',
+      dateofBirth: '',
+      gender: Gender.Non,
+      personsofDetermination: false,
+      mobile: '',
+      email: '',
+      emiratesIDNumber: '',
+      passportNumber: '',
+      authorDataModel: this.authorDataModel,
+      classifierDataModel: this.classifierDataModel,
+    };
   }
   ngOnInit(): void {
     this.languageChangeSubscription =
@@ -123,10 +178,10 @@ export class RegisterIntellectualPropertyListComponent implements OnInit {
             columns: [
               { data: 'id' },
               {
-                data: 'typeNameEn', //(row: any) => this.getDepartmentName(row.requestModel.sID),
+                data: 'fullNameEn', //(row: any) => this.getDepartmentName(row.requestModel.sID),
               },
               {
-                data: 'typeNameAr', //(row: any) => this.getDepartmentName(row.requestModel.sID),
+                data: 'fullNameAr', //(row: any) => this.getDepartmentName(row.requestModel.sID),
               },
               {
                 data: 'data',
@@ -354,10 +409,25 @@ export class RegisterIntellectualPropertyListComponent implements OnInit {
   initModel() {
     this.registerIntecllectualPropertyModel = {
       id: 0,
-      descriptionEn: '',
-      descriptionAr: '',
-      imageUrl: '',
-      urlBase64: '',
+      fullNameEn: '',
+      fullNameAr: '',
+      firstNameEn: '',
+      firstNameAr: '',
+      secondNameEn: '',
+      secondNameAr: '',
+      thirdNameEn: '',
+      thirdNameAr: '',
+      familyNameEn: '',
+      familyNameAr: '',
+      dateofBirth: '',
+      gender: Gender.Non,
+      personsofDetermination: false,
+      mobile: '',
+      email: '',
+      emiratesIDNumber: '',
+      passportNumber: '',
+      authorDataModel: this.authorDataModel,
+      classifierDataModel: this.classifierDataModel,
     };
   }
   openModal(template: TemplateRef<void> | undefined) {
@@ -380,15 +450,15 @@ export class RegisterIntellectualPropertyListComponent implements OnInit {
         .pipe(
           finalize(() => {
             if (this.attachmentList.length > 0) {
-              this.registerIntecllectualPropertyModel.url =
-                this.attachmentList[0].imageUrl;
-              if (type == 0) {
-                this.attachmentList = [];
-                this.addWithFile();
-              } else {
-                this._update();
-                this.attachmentList = [];
-              }
+              // this.registerIntecllectualPropertyModel.classifierDataModel?.attachmentsModel[0].url =
+              //   this.attachmentList[0].imageUrl;
+              // if (type == 0) {
+              //   this.attachmentList = [];
+              //   this.addWithFile();
+              // } else {
+              //   this._update();
+              //   this.attachmentList = [];
+              // }
             }
           })
         )

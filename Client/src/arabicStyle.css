@@ -183,3 +183,8 @@ td {
 .mr-110 {
   margin-right: 110px;
 }
+.text-danger {
+  color: red;
+  font-size: 0.875em;
+  margin-top: 0.25em;
+}

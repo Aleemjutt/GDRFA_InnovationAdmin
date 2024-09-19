@@ -4,5 +4,7 @@
   "TypeAr": "النوع باللغة العربيه",
   "Actions": "الاجراء",
   "DescriptionEn": "الوصف باللغة الانجليزيه",
-  "DescriptionAr": "الوصف باللغة العربيه"
+  "DescriptionAr": "الوصف باللغة العربيه",
+  "RegisterPersonNameEn": "تسجيل اسم الشخص باللغة الإنجليزية",
+  "RegisterPersonNameAr": "تسجيل اسم الشخص عربي"
 }

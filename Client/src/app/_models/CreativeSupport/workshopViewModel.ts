@@ -8,6 +8,7 @@ export interface WorkshopViewModel {
   locationDescription: string;
   workshopDate: string | null;
   workshopTime: string | null;
+  workshopTimeTo: string | null;
   programId: number | null;
   venue: number | null;
   imageUrl: string;

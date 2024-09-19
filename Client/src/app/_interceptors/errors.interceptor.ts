@@ -42,13 +42,19 @@ export class ErrorsInterceptor implements HttpInterceptor {
               break;
             case 404:
               //this.router.navigateByUrl('/notfound');
-              this.toster.error('something went wrong');
+              this.toster.error('not found');
+              console.log(error);
               break;
             case 500:
               const navitationExtrs: NavigationExtras = {
                 state: { error: error.error },
               };
               this.toster.error('Something went wrong');
+              console.log(error);
+              break;
+
+            case 0:
+              this.toster.error(error.message, 'API server not responding');
               console.log(error);
               break;
             default:

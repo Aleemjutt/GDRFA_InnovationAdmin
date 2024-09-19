@@ -1,9 +1,12 @@
+import { StatusCode } from '../Common/enumsConnon';
+
 export interface ParticipationTestViewModel {
   id: number;
   questionViewModels: QuestionViewModel[] | null;
   participationTestAnswersViewModels: ParticipationTestAnswerViewModel[] | null;
-  status: boolean;
+  statusCode: StatusCode;
   programId: number;
+  passingRating: number | 0;
 }
 
 export interface QuestionViewModel {

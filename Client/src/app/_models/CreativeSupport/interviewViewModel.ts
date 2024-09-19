@@ -13,6 +13,7 @@ export interface InterviewViewModel {
   urlBase64: string;
   venue: number;
   file: File | null;
+  interviewTimeTo: string | null;
 }
 
 export interface InterviewAttendanceViewModel {

@@ -2,6 +2,7 @@ import { JoinProgramChallengeViewModel } from './joinProgramChallengeViewModel';
 import { InterviewViewModel } from './interviewViewModel';
 import { WorkshopViewModel } from './workshopViewModel';
 import { ParticipationTestViewModel } from './participatingTestViewModel';
+import { StatusCode } from '../Common/enumsConnon';
 
 export interface joinProgramViewModel {
   id: number;
@@ -9,17 +10,12 @@ export interface joinProgramViewModel {
   descriptionAr: string | undefined;
   startDate: string | null;
   endDate: string | null;
-  statusCode: StautsCode | null;
+  statusCode: StatusCode | StatusCode.InActive;
 
   joinProgramChallengeViewModels: JoinProgramChallengeViewModel[] | null;
   interviewViewModels: InterviewViewModel[] | null;
   workshopViewModels: WorkshopViewModel[] | null;
   participationTestViewModels: ParticipationTestViewModel[] | null;
-}
-
-export enum StautsCode {
-  Active = 1,
-  IActive = 2,
 }
 
 export interface RegisterJoinProgramViewModel {

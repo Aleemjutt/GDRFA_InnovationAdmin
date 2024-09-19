@@ -24,8 +24,8 @@
             <thead>
               <tr>
                 <th>{{ "ID" | translate }}</th>
-                <th>{{ "TypeEn" | translate }}</th>
-                <th>{{ "TypeAr" | translate }}</th>
+                <th>{{ "RegisterPersonNameEn" | translate }}</th>
+                <th>{{ "RegisterPersonNameAr" | translate }}</th>
                 <th>{{ "Actions" | translate }}</th>
               </tr>
             </thead>
@@ -61,7 +61,7 @@
               "FullnameinArabic" | translate
             }}</label>
             <div class="mt-2">
-              {{ registerIntecllectualPropertyModel?.fullNameAr }}
+              {{ registerIntecllectualPropertyModel.fullNameAr }}
             </div>
           </div>
           <div class="col-md-6">
@@ -70,7 +70,7 @@
             }}</label>
 
             <div class="mt-2">
-              {{ registerIntecllectualPropertyModel?.fullNameEn }}
+              {{ registerIntecllectualPropertyModel.fullNameEn }}
             </div>
           </div>
         </div>
@@ -85,7 +85,7 @@
               "FirstName" | translate
             }}</label>
             <div class="mt-2">
-              {{ registerIntecllectualPropertyModel?.firstNameAr }}
+              {{ registerIntecllectualPropertyModel.firstNameAr }}
             </div>
           </div>
           <div class="col-md-4">
@@ -94,7 +94,7 @@
             }}</label>
 
             <div class="mt-2">
-              {{ registerIntecllectualPropertyModel?.secondNameAr }}
+              {{ registerIntecllectualPropertyModel.secondNameAr }}
             </div>
           </div>
 
@@ -104,7 +104,7 @@
             }}</label>
 
             <div class="mt-2">
-              {{ registerIntecllectualPropertyModel?.thirdNameAr }}
+              {{ registerIntecllectualPropertyModel.thirdNameAr }}
             </div>
           </div>
         </div>
@@ -119,7 +119,7 @@
               "FirstName" | translate
             }}</label>
             <div class="mt-2">
-              {{ registerIntecllectualPropertyModel?.firstNameEn }}
+              {{ registerIntecllectualPropertyModel.firstNameEn }}
             </div>
           </div>
           <div class="col-md-4">
@@ -128,7 +128,7 @@
             }}</label>
 
             <div class="mt-2">
-              {{ registerIntecllectualPropertyModel?.secondNameEn }}
+              {{ registerIntecllectualPropertyModel.secondNameEn }}
             </div>
           </div>
 
@@ -138,7 +138,7 @@
             }}</label>
 
             <div class="mt-2">
-              {{ registerIntecllectualPropertyModel?.thirdNameEn }}
+              {{ registerIntecllectualPropertyModel.thirdNameEn }}
             </div>
           </div>
         </div>
@@ -149,7 +149,7 @@
               "FamilyName" | translate
             }}</label>
             <div class="mt-2">
-              {{ registerIntecllectualPropertyModel?.familyNameEn }}
+              {{ registerIntecllectualPropertyModel.familyNameEn }}
             </div>
           </div>
           <div class="col-md-4">
@@ -158,7 +158,7 @@
             }}</label>
 
             <div class="mt-2">
-              {{ registerIntecllectualPropertyModel?.dateofBirth }}
+              {{ registerIntecllectualPropertyModel.dateofBirth }}
             </div>
           </div>
 
@@ -172,7 +172,7 @@
                   id="male"
                   formControlName="sex"
                   value="Male"
-                  [checked]="registerIntecllectualPropertyModel?.gender === 1"
+                  [checked]="registerIntecllectualPropertyModel.gender === 1"
                 />
                 <label class="form-check-label" for="male">{{
                   "Male" | translate
@@ -185,7 +185,7 @@
                   id="female"
                   formControlName="sex"
                   value="Female"
-                  [checked]="registerIntecllectualPropertyModel?.gender === 2"
+                  [checked]="registerIntecllectualPropertyModel.gender === 2"
                 />
                 <label class="form-check-label" for="female">{{
                   "Female" | translate
@@ -207,7 +207,7 @@
                   type="radio"
                   id="yes"
                   [checked]="
-                    registerIntecllectualPropertyModel?.personsofDetermination ===
+                    registerIntecllectualPropertyModel.personsofDetermination ===
                     true
                   "
                 />
@@ -221,7 +221,7 @@
                   type="radio"
                   id="no"
                   [checked]="
-                    registerIntecllectualPropertyModel?.personsofDetermination ===
+                    registerIntecllectualPropertyModel.personsofDetermination ===
                     false
                   "
                 />
@@ -236,7 +236,7 @@
               "Mobile" | translate
             }}</label>
             <div class="mt-2">
-              {{ registerIntecllectualPropertyModel?.mobile }}
+              {{ registerIntecllectualPropertyModel.mobile }}
             </div>
           </div>
           <div class="col-md-4">
@@ -245,7 +245,7 @@
             }}</label>
 
             <div class="mt-2">
-              {{ registerIntecllectualPropertyModel?.email }}
+              {{ registerIntecllectualPropertyModel.email }}
             </div>
           </div>
         </div>
@@ -256,7 +256,7 @@
               "EmiratesIDnumber" | translate
             }}</label>
             <div class="mt-2">
-              {{ registerIntecllectualPropertyModel?.emiratesIDNumber }}
+              {{ registerIntecllectualPropertyModel.emiratesIDNumber }}
             </div>
           </div>
           <div class="col-md-4">
@@ -265,7 +265,7 @@
             }}</label>
 
             <div class="mt-2">
-              {{ registerIntecllectualPropertyModel?.passportNumber }}
+              {{ registerIntecllectualPropertyModel.passportNumber }}
             </div>
           </div>
         </div>
@@ -280,7 +280,7 @@
               >
               <div class="mt-2">
                 {{
-                  registerIntecllectualPropertyModel?.classifierData
+                  registerIntecllectualPropertyModel.classifierDataModel
                     ?.nameofworkAr
                 }}
               </div>
@@ -292,7 +292,7 @@
 
               <div class="mt-6">
                 {{
-                  registerIntecllectualPropertyModel?.classifierData
+                  registerIntecllectualPropertyModel.classifierDataModel
                     ?.nameofworkEn
                 }}
               </div>
@@ -306,8 +306,8 @@
               <div class="mt-2">
                 {{
                   globalService.getWorkbookType(
-                    registerIntecllectualPropertyModel?.classifierData
-                      ?.workbookType
+                    registerIntecllectualPropertyModel.classifierDataModel
+                      ?.workbookType || null
                   )
                 }}
               </div>
@@ -320,7 +320,7 @@
               }}</label>
               <div class="mt-2">
                 {{
-                  registerIntecllectualPropertyModel?.classifierData
+                  registerIntecllectualPropertyModel.classifierDataModel
                     ?.descriptionWorkbook
                 }}
               </div>
@@ -331,7 +331,7 @@
               >
               <div class="mt-2">
                 {{
-                  registerIntecllectualPropertyModel?.classifierData
+                  registerIntecllectualPropertyModel.classifierDataModel
                     ?.workbookContent
                 }}
               </div>
@@ -357,7 +357,7 @@
                   <tr
                     *ngFor="
                       let attachment of registerIntecllectualPropertyModel
-                        ?.classifierData?.attachmentClassifiers
+                        ?.classifierDataModel?.attachmentsModel
                     "
                   >
                     <td>
@@ -406,7 +406,8 @@
               <div class="mt-2">
                 {{
                   globalService.getAuthorNature(
-                    registerIntecllectualPropertyModel?.authorData?.authorNature
+                    registerIntecllectualPropertyModel.authorDataModel
+                      ?.authorNature || null
                   )
                 }}
               </div>
@@ -419,7 +420,8 @@
               <div class="mt-2">
                 {{
                   globalService.getAuthorType(
-                    registerIntecllectualPropertyModel?.authorData?.authorType
+                    registerIntecllectualPropertyModel.authorDataModel
+                      ?.authorType || null
                   )
                 }}
               </div>
@@ -432,7 +434,7 @@
                 "ThenameisinArabic" | translate
               }}</label>
               <div class="mt-2">
-                {{ registerIntecllectualPropertyModel?.authorData?.authorType }}
+                {{ registerIntecllectualPropertyModel.authorDataModel?.nameAr }}
               </div>
             </div>
             <div class="col-md-6">
@@ -441,7 +443,7 @@
               </label>
 
               <div class="mt-2">
-                {{ registerIntecllectualPropertyModel?.authorData?.authorType }}
+                {{ registerIntecllectualPropertyModel.authorDataModel?.nameEn }}
               </div>
             </div>
           </div>
@@ -452,7 +454,10 @@
                 "Accommodationtype" | translate
               }}</label>
               <div class="mt-2">
-                {{ registerIntecllectualPropertyModel?.authorData?.authorType }}
+                {{
+                  registerIntecllectualPropertyModel.authorDataModel
+                    ?.accommodationType
+                }}
               </div>
             </div>
             <div class="col-md-6">
@@ -463,7 +468,8 @@
               <div class="mt-2">
                 {{
                   globalService.getCountryName(
-                    registerIntecllectualPropertyModel?.authorData?.nationality
+                    registerIntecllectualPropertyModel.authorDataModel
+                      ?.nationality || null
                   )
                 }}
               </div>
@@ -476,7 +482,7 @@
                 "Mobile" | translate
               }}</label>
               <div class="mt-2">
-                {{ registerIntecllectualPropertyModel?.authorData?.mobile }}
+                {{ registerIntecllectualPropertyModel.authorDataModel?.mobile }}
               </div>
             </div>
             <div class="col-md-6">
@@ -485,7 +491,7 @@
               </label>
 
               <div class="mt-2">
-                {{ registerIntecllectualPropertyModel?.authorData?.email }}
+                {{ registerIntecllectualPropertyModel.authorDataModel?.email }}
               </div>
             </div>
           </div>

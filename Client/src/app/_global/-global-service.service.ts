@@ -13,7 +13,13 @@ import {
   ResearchAndStudiesCategories,
 } from '../_models/knowledge/researchAndStudies';
 import { ResearchAreaCategory } from '../_models/ResearchCenter/presentation';
-import { NumberCardModule } from '@swimlane/ngx-charts';
+import {
+  AuthorNature,
+  AuthorType,
+  DataKeys,
+  StatusCode,
+  WorkbookType,
+} from '../_models/Common/enumsConnon';
 
 @Injectable({
   providedIn: 'root',
@@ -22,6 +28,8 @@ export class GlobalServiceService implements OnInit {
   currentLang: any = 'en';
   baseUrl = environment.apiUrl;
   imgServerBaseUrl: string = '';
+  count = 0;
+  dataKeys: DataKeys = {};
 
   private languageSubject: BehaviorSubject<string> =
     new BehaviorSubject<string>('en');
@@ -236,6 +244,35 @@ export class GlobalServiceService implements OnInit {
     return statuName;
   }
 
+  getStatusNameOnCodeBased(_statusCode: StatusCode) {
+    let statuName = '';
+    if (_statusCode == StatusCode.IsActive) {
+      statuName =
+        this.getCurrentLanguage() == 'en'
+          ? '<span class="badge badge-success">Active</span>'
+          : '<span class="badge badge-success">نشيط</span>';
+    } else {
+      statuName =
+        this.getCurrentLanguage() == 'en'
+          ? '<span class="badge badge-info">In-Active</span>'
+          : '<span class="badge badge-info">غير نشط</span>';
+    }
+
+    return statuName;
+  }
+
+  getStatusOnlyNameOnCodeBased(_statusCode: StatusCode) {
+    let statuName = '';
+    if (_statusCode == StatusCode.IsActive) {
+      statuName = this.getCurrentLanguage() == 'en' ? 'Active' : 'نشيط';
+    } else {
+      statuName =
+        this.getCurrentLanguage() == 'en' ? ' In-Active' : ' غير نشط<';
+    }
+
+    return statuName;
+  }
+
   getAttendanceStatusName(status: number) {
     let statuName = '';
     const currentLanguage = this.getCurrentLanguage();
@@ -300,7 +337,7 @@ export class GlobalServiceService implements OnInit {
     return statuName;
   }
 
-  getWorkbookType(workbookType: number) {
+  getWorkbookType(workbookType: WorkbookType | null) {
     let workbookTypeName = '';
     const language = this.getCurrentLanguage();
 
@@ -384,7 +421,7 @@ export class GlobalServiceService implements OnInit {
     return statuName;
   }
 
-  getAuthorNature(authorNature: number) {
+  getAuthorNature(authorNature: AuthorNature | null) {
     let authorNatureName = '';
     const language = this.getCurrentLanguage();
 
@@ -402,7 +439,7 @@ export class GlobalServiceService implements OnInit {
     return authorNatureName;
   }
 
-  getAuthorType(authorType: number) {
+  getAuthorType(authorType: AuthorType | null) {
     let authorTypeName = '';
     const language = this.getCurrentLanguage();
 
@@ -449,7 +486,7 @@ export class GlobalServiceService implements OnInit {
     return authorTypeName;
   }
 
-  getCountryName(countryValue: number) {
+  getCountryName(countryValue: number| null) {
     let countryName = '';
     const language = this.getCurrentLanguage();
 
@@ -1212,38 +1249,6 @@ export class GlobalServiceService implements OnInit {
     }
   }
 
-  // getImgServerBaseUrl(): Observable<string> {
-  //   return this.getFromServerBaseUrl().pipe(
-  //     map(() => 'http://localhost:44350/InnovationImages/'),
-  //     catchError(() => 'http://localhost:44350/InnovationImages/')
-  //   );
-  // }
-
-  // getFromServerBaseUrl(): Observable<any> {
-  //   return this.httpClient.get<any>(
-  //     this.baseUrl + 'FilePath',
-  //     this.getHttpOptions()
-  //   );
-  // }
-  // getImgServerBaseUrl() {
-  //   const fromServer = this.getFromServerBaseUrl();
-  //   console.log('server file path', fromServer);
-  //   if (fromServer) {
-  //     return 'http:\\localhost:44350\\InnovationImages\\';
-  //   } else {
-  //     return fromServer; //'http:\\localhost:44350\\InnovationImages\\';
-  //   }
-  // }
-
-  // getFromServerBaseUrl() {
-  //   // Replace 'http:\\localhost:44350\\InnovationImages\\' with your default string value
-  //   //const defaultValue = 'htpps//:';
-  //   return this.httpClient.put<any>(
-  //     this.baseUrl + 'FilePath',
-  //     this.getHttpOptions()
-  //   );
-  // }
-
   downloadPdf(base64String: string, fileName: string): void {
     const linkSource = `data:application/pdf;base64,${base64String}`;
     const downloadLink = document.createElement('a');
@@ -1263,4 +1268,94 @@ export class GlobalServiceService implements OnInit {
     downloadLink.download = fileNameWithExtension;
     downloadLink.click();
   }
+
+  validateDate(value: any): boolean {
+    // Check if the value is empty or not
+    if (!value || value.trim() === '') {
+      return false; // Invalid if empty
+    }
+
+    // Try to parse the date
+    const date = new Date(value);
+
+    // Check if the date is valid
+    return !isNaN(date.getTime());
+  }
+
+  validateInput(value: any, type?: string): boolean {
+    if (type === 'date') {
+      return !this.isValidDate(value);
+    }
+
+    return !value || !value.trim(); // Default to checking for empty strings
+  }
+
+  // Helper method to check if a date is valid
+  isValidDate(dateString: string): boolean {
+    const regex = /^\d{4}-\d{2}-\d{2}$/; // YYYY-MM-DD format
+    if (!dateString.match(regex)) {
+      return false;
+    }
+    const date = new Date(dateString);
+    const timestamp = date.getTime();
+    return !isNaN(timestamp);
+  }
+
+  validateModel(model: any, keys: { key: string; type?: string }[]): boolean {
+    let isValid = true;
+    this.count = 0; // Reset the count for this validation
+
+    keys.forEach(({ key, type }) => {
+      const value = model[key];
+      const hasError = this.validateInput(value, type);
+      this.dataKeys[key] = { value, isError: hasError };
+
+      if (hasError) {
+        this.count++;
+        isValid = false;
+      }
+    });
+
+    return isValid;
+  }
+
+  onInputChange(key: string, value: any, type?: string): void {
+    const hasError = this.validateInput(value, type);
+    this.dataKeys[key] = { value, isError: hasError };
+  }
+
+  // validateInput(value: any): boolean {
+  //   return !value.trim();
+  // }
+  // // Validate a model by checking all specified keys
+  // validateModel(model: any, keys: string[]): boolean {
+  //   let isValid = true;
+  //   this.count = 0; // Reset the count for this validation
+
+  //   keys.forEach((key) => {
+  //     const value = model[key];
+  //     const hasError = this.validateInput(value);
+  //     this.dataKeys[key] = { value, isError: hasError };
+
+  //     if (hasError) {
+  //       this.count++;
+  //       isValid = false;
+  //     }
+  //   });
+
+  //   return isValid;
+  // }
+
+  resetValidation(): void {
+    for (const key in this.dataKeys) {
+      if (this.dataKeys.hasOwnProperty(key)) {
+        this.dataKeys[key].isError = false;
+      }
+    }
+  }
+
+  // onInputChange(key: string, value: any): void {
+  //   const hasError = this.validateInput(value);
+  //   this.dataKeys[key] = { value, isError: hasError };
+  // }
 }
