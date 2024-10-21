@@ -77,6 +77,17 @@
             <select
               class="form-control"
               [(ngModel)]="awardDetailModel.awardClassification"
+              (ngModelChange)="
+                globalService.onInputChange(
+                  'awardClassification',
+                  $event,
+                  'select'
+                )
+              "
+              [ngClass]="{
+                'input-error':
+                  globalService.dataKeys['awardClassification']?.isError
+              }"
             >
               <option [ngValue]="1">
                 {{ "Everyone" | translate }}
@@ -91,6 +102,14 @@
                 {{ "Local" | translate }}
               </option>
             </select>
+
+            <span
+              *ngIf="globalService.dataKeys['awardClassification']?.isError"
+              class="text-danger"
+            >
+              <i class="bi bi-exclamation-circle"></i>
+              {{ "Thisfiledisrequired!" | translate }}
+            </span>
           </div>
         </div>
         <div class="col-md-6">
@@ -98,7 +117,16 @@
             <label for="basiInput" class="form-label">{{
               "Year" | translate
             }}</label>
-            <select class="form-control" [(ngModel)]="awardDetailModel.year">
+            <select
+              class="form-control"
+              [(ngModel)]="awardDetailModel.year"
+              (ngModelChange)="
+                globalService.onInputChange('year', $event, 'select')
+              "
+              [ngClass]="{
+                'input-error': globalService.dataKeys['year']?.isError
+              }"
+            >
               <option [ngValue]="2023">2023</option>
               <option [ngValue]="2024">2024</option>
               <option [ngValue]="2025">2025</option>
@@ -108,6 +136,14 @@
               <option [ngValue]="2029">2029</option>
               <option [ngValue]="2030">2030</option>
             </select>
+
+            <span
+              *ngIf="globalService.dataKeys['year']?.isError"
+              class="text-danger"
+            >
+              <i class="bi bi-exclamation-circle"></i>
+              {{ "Thisfiledisrequired!" | translate }}
+            </span>
           </div>
         </div>
       </div>
@@ -279,8 +315,23 @@
                 <textarea
                   class="form-control"
                   [(ngModel)]="awardMainModel.descriptionEn"
+                  (ngModelChange)="
+                    globalService.onInputChange('descriptionEn', $event)
+                  "
+                  [ngClass]="{
+                    'input-error':
+                      globalService.dataKeys['descriptionEn']?.isError
+                  }"
                 >
                 </textarea>
+
+                <span
+                  *ngIf="globalService.dataKeys['descriptionEn']?.isError"
+                  class="text-danger"
+                >
+                  <i class="bi bi-exclamation-circle"></i>
+                  {{ "Thisfiledisrequired!" | translate }}
+                </span>
               </div>
             </div>
             <div class="col-md-6">
@@ -291,8 +342,23 @@
                 <textarea
                   class="form-control"
                   [(ngModel)]="awardMainModel.descriptionAr"
+                  (ngModelChange)="
+                    globalService.onInputChange('descriptionAr', $event)
+                  "
+                  [ngClass]="{
+                    'input-error':
+                      globalService.dataKeys['descriptionAr']?.isError
+                  }"
                 >
                 </textarea>
+
+                <span
+                  *ngIf="globalService.dataKeys['descriptionAr']?.isError"
+                  class="text-danger"
+                >
+                  <i class="bi bi-exclamation-circle"></i>
+                  {{ "Thisfiledisrequired!" | translate }}
+                </span>
               </div>
             </div>
           </div>

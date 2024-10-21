@@ -105,7 +105,20 @@
             class="form-control"
             id="basiInput"
             [(ngModel)]="partnerModel.descriptionEn"
+            (ngModelChange)="
+              globalService.onInputChange('descriptionEn', $event)
+            "
+            [ngClass]="{
+              'input-error': globalService.dataKeys['descriptionEn']?.isError
+            }"
           />
+          <span
+            *ngIf="globalService.dataKeys['descriptionEn']?.isError"
+            class="text-danger"
+          >
+            <i class="bi bi-exclamation-circle"></i>
+            {{ "Thisfiledisrequired!" | translate }}
+          </span>
         </div>
       </div>
 
@@ -119,7 +132,20 @@
             class="form-control"
             id="basiInput"
             [(ngModel)]="partnerModel.descriptionAr"
+            (ngModelChange)="
+              globalService.onInputChange('descriptionAr', $event)
+            "
+            [ngClass]="{
+              'input-error': globalService.dataKeys['descriptionAr']?.isError
+            }"
           />
+          <span
+            *ngIf="globalService.dataKeys['descriptionAr']?.isError"
+            class="text-danger"
+          >
+            <i class="bi bi-exclamation-circle"></i>
+            {{ "Thisfiledisrequired!" | translate }}
+          </span>
         </div>
       </div>
 
@@ -128,7 +154,16 @@
           <label for="basiInput" class="form-label">{{
             "PartnerType" | translate
           }}</label>
-          <select class="form-control" [(ngModel)]="partnerModel.partnerType">
+          <select
+            class="form-control"
+            [(ngModel)]="partnerModel.partnerType"
+            (ngModelChange)="
+              globalService.onInputChange('partnerType', $event, 'select')
+            "
+            [ngClass]="{
+              'input-error': globalService.dataKeys['partnerType']?.isError
+            }"
+          >
             <option [ngValue]="0" class="form-control">
               {{ "Normal" | translate }}
             </option>
@@ -136,6 +171,14 @@
               {{ "Strategic" | translate }}
             </option>
           </select>
+
+          <span
+            *ngIf="globalService.dataKeys['partnerType']?.isError"
+            class="text-danger"
+          >
+            <i class="bi bi-exclamation-circle"></i>
+            {{ "Thisfiledisrequired!" | translate }}
+          </span>
         </div>
       </div>
       <div class="col-md-6">

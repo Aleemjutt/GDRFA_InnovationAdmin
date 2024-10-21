@@ -71,7 +71,18 @@
               class="form-control"
               id="basiInput"
               [(ngModel)]="agendaModel.headingEn"
+              (ngModelChange)="globalService.onInputChange('headingEn', $event)"
+              [ngClass]="{
+                'input-error': globalService.dataKeys['headingEn']?.isError
+              }"
             />
+            <span
+              *ngIf="globalService.dataKeys['headingEn']?.isError"
+              class="text-danger"
+            >
+              <i class="bi bi-exclamation-circle"></i>
+              {{ "Thisfiledisrequired!" | translate }}
+            </span>
           </div>
         </div>
         <div class="col-md-6">
@@ -84,7 +95,18 @@
               class="form-control"
               id="basiInput"
               [(ngModel)]="agendaModel.headingAr"
+              (ngModelChange)="globalService.onInputChange('headingAr', $event)"
+              [ngClass]="{
+                'input-error': globalService.dataKeys['headingAr']?.isError
+              }"
             />
+            <span
+              *ngIf="globalService.dataKeys['headingAr']?.isError"
+              class="text-danger"
+            >
+              <i class="bi bi-exclamation-circle"></i>
+              {{ "Thisfiledisrequired!" | translate }}
+            </span>
           </div>
         </div>
         <div class="col-md-6">
@@ -97,7 +119,20 @@
               class="form-control"
               id="basiInput"
               [(ngModel)]="agendaModel.descriptionEn"
+              (ngModelChange)="
+                globalService.onInputChange('descriptionEn', $event)
+              "
+              [ngClass]="{
+                'input-error': globalService.dataKeys['descriptionEn']?.isError
+              }"
             />
+            <span
+              *ngIf="globalService.dataKeys['descriptionEn']?.isError"
+              class="text-danger"
+            >
+              <i class="bi bi-exclamation-circle"></i>
+              {{ "Thisfiledisrequired!" | translate }}
+            </span>
           </div>
         </div>
         <div class="col-md-6">
@@ -110,7 +145,20 @@
               class="form-control"
               id="basiInput"
               [(ngModel)]="agendaModel.descriptionAr"
+              (ngModelChange)="
+                globalService.onInputChange('descriptionAr', $event)
+              "
+              [ngClass]="{
+                'input-error': globalService.dataKeys['descriptionAr']?.isError
+              }"
             />
+            <span
+              *ngIf="globalService.dataKeys['descriptionAr']?.isError"
+              class="text-danger"
+            >
+              <i class="bi bi-exclamation-circle"></i>
+              {{ "Thisfiledisrequired!" | translate }}
+            </span>
           </div>
         </div>
         <div class="col-md-6">
@@ -124,21 +172,47 @@
               class="form-control"
               bsDatepicker
               [(ngModel)]="agendaModel.date"
+              (ngModelChange)="
+                globalService.onInputChange('date', $event, 'date')
+              "
+              [ngClass]="{
+                'input-error': globalService.dataKeys['date']?.isError
+              }"
             />
+            <span
+              *ngIf="globalService.dataKeys['date']?.isError"
+              class="text-danger"
+            >
+              <i class="bi bi-exclamation-circle"></i>
+              {{ "Thisfiledisrequired!" | translate }}
+            </span>
           </div>
         </div>
         <div class="col-md-6">
           <div class="mt-3">
-            <label for="basiInput" class="form-label"
-              >{{ "HeadingEn" | translate }}Time</label
-            >
+            <label for="basiInput" class="form-label">{{
+              "Time" | translate
+            }}</label>
             <input
               type="time"
               placeholder="Time"
               class="form-control"
               bsDatepicker
               [(ngModel)]="agendaModel.time"
+              (ngModelChange)="
+                globalService.onInputChange('time', $event, 'time')
+              "
+              [ngClass]="{
+                'input-error': globalService.dataKeys['time']?.isError
+              }"
             />
+            <span
+              *ngIf="globalService.dataKeys['time']?.isError"
+              class="text-danger"
+            >
+              <i class="bi bi-exclamation-circle"></i>
+              {{ "Thisfiledisrequired!" | translate }}
+            </span>
           </div>
         </div>
         <div class="col-md-6">
@@ -146,12 +220,29 @@
             <label for="basiInput" class="form-label">{{
               "Venue" | translate
             }}</label>
-            <select class="form-control" [(ngModel)]="agendaModel.agendaVenue">
+            <select
+              class="form-control"
+              [(ngModel)]="agendaModel.agendaVenue"
+              (ngModelChange)="
+                globalService.onInputChange('agendaVenue', $event, 'select')
+              "
+              [ngClass]="{
+                'input-error': globalService.dataKeys['agendaVenue']?.isError
+              }"
+            >
               <option [ngValue]="0">
                 {{ "OnPremises" | translate }}
               </option>
               <option [ngValue]="1">{{ "Online" | translate }}</option>
             </select>
+
+            <span
+              *ngIf="globalService.dataKeys['agendaVenue']?.isError"
+              class="text-danger"
+            >
+              <i class="bi bi-exclamation-circle"></i>
+              {{ "Thisfiledisrequired!" | translate }}
+            </span>
           </div>
         </div>
         <div *ngIf="agendaModel.agendaVenue == 0">

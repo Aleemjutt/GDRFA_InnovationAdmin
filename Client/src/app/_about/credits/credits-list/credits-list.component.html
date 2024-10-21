@@ -103,7 +103,18 @@
           class="form-control"
           id="basiInput"
           [(ngModel)]="creditModel.descriptionEn"
+          (ngModelChange)="globalService.onInputChange('descriptionEn', $event)"
+          [ngClass]="{
+            'input-error': globalService.dataKeys['descriptionEn']?.isError
+          }"
         />
+        <span
+          *ngIf="globalService.dataKeys['descriptionEn']?.isError"
+          class="text-danger"
+        >
+          <i class="bi bi-exclamation-circle"></i>
+          {{ "Thisfiledisrequired!" | translate }}
+        </span>
       </div>
       <div class="col-md-6">
         <div class="mt-3">
@@ -115,7 +126,20 @@
             class="form-control"
             id="basiInput"
             [(ngModel)]="creditModel.descriptionAr"
+            (ngModelChange)="
+              globalService.onInputChange('descriptionAr', $event)
+            "
+            [ngClass]="{
+              'input-error': globalService.dataKeys['descriptionAr']?.isError
+            }"
           />
+          <span
+            *ngIf="globalService.dataKeys['descriptionAr']?.isError"
+            class="text-danger"
+          >
+            <i class="bi bi-exclamation-circle"></i>
+            {{ "Thisfiledisrequired!" | translate }}
+          </span>
         </div>
       </div>
       <div class="col-md-6">

@@ -188,3 +188,6 @@ td {
   font-size: 0.875em;
   margin-top: 0.25em;
 }
+.input-error {
+  border: 2px solid red; /* Change the color and width as needed */
+}

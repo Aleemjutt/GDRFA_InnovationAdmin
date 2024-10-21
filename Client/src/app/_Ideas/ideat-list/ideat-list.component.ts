@@ -42,7 +42,7 @@ export class IdeatListComponent implements OnInit {
   constructor(
     private ideaSerivces: IdeaService,
     private modalService: BsModalService,
-    private globalService: GlobalServiceService,
+    public globalService: GlobalServiceService,
     private tosterService: ToastrService,
     private downloadService: FiledownloaderService
   ) {

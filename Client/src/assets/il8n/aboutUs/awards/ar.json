@@ -9,5 +9,7 @@
   "DescriptionAr": "الوصف بالعربية",
   "AddAwardsMainText": "إضافة نص الجوائز الرئيسي",
   "AwardsList": "قائمة الجوائز",
-  "AddNewAwards": "إضافة جوائز جديدة"
+  "AddNewAwards": "إضافة جائزة جديدة",
+
+  "UpdateAwards": "تحديث الجائزة"
 }

@@ -15,7 +15,7 @@ import { UploadServiceService } from 'src/app/_services/upload-service.service';
 @Component({
   selector: 'app-overintellectual-property-index',
   standalone: true,
-  imports: [CommonModule, FormsModule, FilePondModule,TranslateModule],
+  imports: [CommonModule, FormsModule, FilePondModule, TranslateModule],
   templateUrl: './overintellectual-property-index.component.html',
   styleUrl: './overintellectual-property-index.component.css',
 })
@@ -93,12 +93,32 @@ export class OverintellectualPropertyIndexComponent implements OnInit {
     });
   }
 
+  _validateModel(): boolean {
+    // return this.globalService.validateModel(this.interviewViewModel, [
+    //   'nameAr',
+    //   'nameEn',
+    // ]);
+
+    return this.globalService.validateModel(this.overViewPropertyModel, [
+      { key: 'aboutDescriptionEn' },
+      { key: 'aboutDescriptionAr' },
+      { key: 'descriptionEn' },
+      { key: 'descriptionAr' },
+    ]);
+  }
+
   add() {
-    if (this.file != null) {
-      this.upload(this.file, 1);
+    if (this._validateModel()) {
+      if (this.file != null) {
+        this.upload(this.file, 1);
+      } else {
+        // Handle the case where no file is selected.
+        this._add();
+      }
     } else {
-      // Handle the case where no file is selected.
-      this._add();
+      this.toasterService.error(
+        this.globalService.getRequiredFiledErrorMessage()
+      );
     }
   }
 

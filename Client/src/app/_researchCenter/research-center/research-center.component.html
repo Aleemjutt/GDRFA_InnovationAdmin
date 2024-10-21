@@ -17,7 +17,28 @@
                     class="textareasize form-control"
                     name="descriptionEn"
                     [(ngModel)]="researchCenterInfoModel.descriptionEn"
-                  ></textarea>
+                    (ngModelChange)="
+                      globalService.onInputChange('descriptionEn', $event)
+                    "
+                    [ngClass]="{
+                      'input-error':
+                        globalService.dataKeys['descriptionEn']?.isError
+                    }"
+                  >
+                 
+              
+                <span
+                  *ngIf="globalService.dataKeys['descriptionEn']?.isError"
+                  class="text-danger"
+                >
+                  <i class="bi bi-exclamation-circle"></i>
+                  {{ "Thisfiledisrequired!" | translate }}
+                </span>
+              </div>
+                
+                
+                </textarea
+                  >
                   <label class="mt-3">{{
                     "AbouttheCenterAr" | translate
                   }}</label>
@@ -25,7 +46,30 @@
                     class="textareasize form-control"
                     name="descriptionAr"
                     [(ngModel)]="researchCenterInfoModel.descriptionAr"
-                  ></textarea>
+                    (ngModelChange)="
+                      globalService.onInputChange('descriptionAr', $event)
+                    "
+                    [ngClass]="{
+                      'input-error':
+                        globalService.dataKeys['descriptionAr']?.isError
+                    }"
+                  >
+               
+            
+              <span
+                *ngIf="globalService.dataKeys['descriptionAr']?.isError"
+                class="text-danger"
+              >
+                <i class="bi bi-exclamation-circle"></i>
+                {{ "Thisfiledisrequired!" | translate }}
+              </span>
+            </div>
+
+                  
+                
+                
+                </textarea
+                  >
                 </div>
               </tab>
 
@@ -73,70 +117,98 @@
                             aria-describedby="button-addon1"
                             name="textEn"
                             [(ngModel)]="researchAreaModel.textEn"
+                            (ngModelChange)="
+                              globalService.onInputChange('textEn', $event)
+                            "
+                            [ngClass]="{
+                              'input-error':
+                                globalService.dataKeys['textEn']?.isError
+                            }"
                           />
-                        </div>
-
-                        <div class="input-group mb-3">
-                          <div class="input-group-prepend">
-                            <label class="input-group-text">{{
-                              "ResearchAreaAr" | translate
-                            }}</label>
-                          </div>
-                          <input
-                            type="text"
-                            class="form-control"
-                            placeholder="Enter value for En"
-                            aria-label="Example text with button addon"
-                            aria-describedby="button-addon1"
-                            name="textAr"
-                            [(ngModel)]="researchAreaModel.textAr"
-                          />
-                          <div class="input-group-append">
-                            <button
-                              class="btn btn-outline-secondary"
-                              type="button"
-                              id="addOptions"
-                              (click)="addItem()"
-                            >
-                              {{ "Add" | translate }}
-                            </button>
-                          </div>
-                        </div>
-                        <div class="table-responsive">
-                          <table class="table">
-                            <thead>
-                              <tr>
-                                <th scope="col">
-                                  {{ "ResearchAreasEn" | translate }}
-                                </th>
-                                <th scope="col">
-                                  {{ "ResearchAreasAr" | translate }}
-                                </th>
-                                <th scope="col">{{ "Actions" | translate }}</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr
-                                *ngFor="
-                                  let item of researchCenterInfoModel.researchAreaModels;
-                                  let i = index
-                                "
-                              >
-                                <td>{{ item.textEn }}</td>
-                                <td>{{ item.textAr }}</td>
-                                <td>
-                                  <button
-                                    class="btn btn-danger btn-sm"
-                                    (click)="removeItem(i)"
-                                  >
-                                    {{ "Remove" | translate }}
-                                  </button>
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
+                          <span
+                            *ngIf="globalService.dataKeys['textEn']?.isError"
+                            class="text-danger"
+                          >
+                            <i class="bi bi-exclamation-circle"></i>
+                            {{ "Thisfiledisrequired!" | translate }}
+                          </span>
                         </div>
                       </div>
+
+                      <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <label class="input-group-text">{{
+                            "ResearchAreaAr" | translate
+                          }}</label>
+                        </div>
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="Enter value for En"
+                          aria-label="Example text with button addon"
+                          aria-describedby="button-addon1"
+                          name="textAr"
+                          [(ngModel)]="researchAreaModel.textAr"
+                          (ngModelChange)="
+                            globalService.onInputChange('textAr', $event)
+                          "
+                          [ngClass]="{
+                            'input-error':
+                              globalService.dataKeys['textAr']?.isError
+                          }"
+                        />
+                        <span
+                          *ngIf="globalService.dataKeys['textAr']?.isError"
+                          class="text-danger"
+                        >
+                          <i class="bi bi-exclamation-circle"></i>
+                          {{ "Thisfiledisrequired!" | translate }}
+                        </span>
+                      </div>
+                      <div class="input-group-append">
+                        <button
+                          class="btn btn-outline-secondary"
+                          type="button"
+                          id="addOptions"
+                          (click)="addItem()"
+                        >
+                          {{ "Add" | translate }}
+                        </button>
+                      </div>
+                    </div>
+                    <div class="table-responsive">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">
+                              {{ "ResearchAreasEn" | translate }}
+                            </th>
+                            <th scope="col">
+                              {{ "ResearchAreasAr" | translate }}
+                            </th>
+                            <th scope="col">{{ "Actions" | translate }}</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr
+                            *ngFor="
+                              let item of researchCenterInfoModel.researchAreaModels;
+                              let i = index
+                            "
+                          >
+                            <td>{{ item.textEn }}</td>
+                            <td>{{ item.textAr }}</td>
+                            <td>
+                              <button
+                                class="btn btn-danger btn-sm"
+                                (click)="removeItem(i)"
+                              >
+                                {{ "Remove" | translate }}
+                              </button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
                     </div>
                   </div>
                 </div>

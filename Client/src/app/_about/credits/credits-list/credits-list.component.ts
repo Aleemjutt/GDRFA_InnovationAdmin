@@ -116,18 +116,6 @@ export class CreditsListComponent implements OnInit {
             {
               data: 'descriptionAr', //(row: any) => this.getDepartmentName(row.requestModel.sID),
             },
-            // {
-            //   title: this.translateService.instant('Status'),
-            //   data: (row: any) => this.getStatus(row.saveType),
-            // },
-            // {
-            //   data: 'id',
-            //   render: (id: any) => `
-            //     <a  routerLink="/Credit/${id}/view" class="btn btn-info">View</a>
-            //     <a href="#" [routerLink]="['/Credit/', ${id}, 'edit']" class="btn btn-primary">Edit</a>
-
-            //   `,
-            // },
 
             {
               data: 'data',
@@ -225,12 +213,25 @@ export class CreditsListComponent implements OnInit {
     });
   }
 
+  _validateModel(): boolean {
+    return this.globalService.validateModel(this.creditModel, [
+      { key: 'descriptionAr' },
+      { key: 'descriptionEn' },
+    ]);
+  }
+
   add() {
-    if (this.file != null) {
-      this.upload(this.file, 0);
+    if (this._validateModel()) {
+      if (this.file != null) {
+        this.upload(this.file, 0);
+      } else {
+        // Handle the case where no file is selected.
+        this.addWithFile();
+      }
     } else {
-      // Handle the case where no file is selected.
-      this.addWithFile();
+      this.tosterService.error(
+        this.globalService.getRequiredFiledErrorMessage()
+      );
     }
   }
   addWithFile() {
@@ -251,11 +252,17 @@ export class CreditsListComponent implements OnInit {
   }
 
   update() {
-    if (this.file != null) {
-      this.upload(this.file, 1);
+    if (this._validateModel()) {
+      if (this.file != null) {
+        this.upload(this.file, 1);
+      } else {
+        // Handle the case where no file is selected.
+        this.updateCredit();
+      }
     } else {
-      // Handle the case where no file is selected.
-      this.updateCredit();
+      this.tosterService.error(
+        this.globalService.getRequiredFiledErrorMessage()
+      );
     }
   }
 

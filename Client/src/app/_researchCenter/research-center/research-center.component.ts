@@ -69,29 +69,42 @@ export class ResearchCenterComponent implements OnInit {
     });
   }
 
-  add() {
-    console.log(this.researchCenterInfoModel);
-    console.log(this.editForm?.value);
-    let model = this.editForm?.value;
-
-    model.id = this.researchCenterInfoModel.id;
-    model.researchAreaModels = this.researchCenterInfoModel.researchAreaModels;
-    this.researchCenterService._add(model).subscribe({
-      next: (response: ResponseResult) => {
-        if (response.statusCode == 0) {
-          this.tosterService.success(response.message);
-          this.getDetails();
-        }
-      },
-    });
+  _validateModel(): boolean {
+    return this.globalService.validateModel(this.editForm?.value, [
+      { key: 'descriptionEn' },
+      { key: 'descriptionAr' },
+    ]);
   }
 
+  add() {
+    let model = this.editForm?.value;
+    if (this._validateModel()) {
+      model.id = this.researchCenterInfoModel.id;
+      model.researchAreaModels =
+        this.researchCenterInfoModel.researchAreaModels;
+      this.researchCenterService._add(model).subscribe({
+        next: (response: ResponseResult) => {
+          if (response.statusCode == 0) {
+            this.tosterService.success(response.message);
+            this.getDetails();
+          }
+        },
+      });
+    } else {
+      this.tosterService.error(
+        this.globalService.getRequiredFiledErrorMessage()
+      );
+    }
+  }
+
+  _validateItemModel(): boolean {
+    return this.globalService.validateModel(this.researchAreaModel, [
+      { key: 'textEn' },
+      { key: 'textAr' },
+    ]);
+  }
   addItem(): void {
-    if (
-      this.researchAreaModel?.textEn?.trim() !== '' ||
-      (this.researchAreaModel?.textAr?.trim() !== '' &&
-        this.researchAreaModel !== null)
-    ) {
+    if (this._validateItemModel()) {
       if (this.researchAreaModel != null)
         this.researchCenterInfoModel?.researchAreaModels?.push(
           this.researchAreaModel

@@ -5,8 +5,8 @@ import { FormGroup, FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { FilePondOptions } from 'filepond';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { TabsModule } from 'ngx-bootstrap/tabs';
 import { FilePondModule } from 'ngx-filepond';
+import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, Subscription, finalize } from 'rxjs';
 import { GlobalServiceService } from 'src/app/_global/-global-service.service';
@@ -36,6 +36,7 @@ import { UploadServiceService } from 'src/app/_services/upload-service.service';
     FormsModule,
     TabsModule,
     TranslateModule,
+    TabsModule,
   ],
   templateUrl: './register-intellectual-property-list.component.html',
   styleUrl: './register-intellectual-property-list.component.css',
@@ -45,7 +46,7 @@ export class RegisterIntellectualPropertyListComponent implements OnInit {
     [];
   // Model: Model | undefined = undefined;
   registerIntecllectualPropertyModel: RegisteringIntellectualPropertyModel;
-  @ViewChild('template') template: TemplateRef<any> | undefined;
+  @ViewChild('templateEdit') templateEdit: TemplateRef<any> | undefined;
   @ViewChild('templateDetails') templateDetails: TemplateRef<any> | undefined;
   registerForm!: FormGroup;
   pondFiles: FilePondOptions['files'] = [];
@@ -200,32 +201,7 @@ export class RegisterIntellectualPropertyListComponent implements OnInit {
             <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
             </svg>
             </button>
-            <button
-            type="button"
-            class="btn btn-light mr-1"
-            data-bs-toggle="modal"
-            data-bs-target="#exampleModal"
-            (click)="edit(id, template)"
-            data-backdrop="static"
-            data-keyboard="false"
-          >
-            <svg
-              width="1em"
-              height="1em"
-              viewBox="0 0 16 16"
-              class="bi bi-pencil-square"
-              fill="currentColor"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"
-              />
-              <path
-                fill-rule="evenodd"
-                d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"
-              />
-            </svg>
-          </button>
+           
            
             <button
                 type="button"
@@ -255,15 +231,10 @@ export class RegisterIntellectualPropertyListComponent implements OnInit {
             ],
             rowCallback: (row: Node, data: any, index: number) => {
               const btnViewDetails = $('button:first', row);
-              const btnEdit = $('button:eq(1)', row);
               const btnDelete = $('button:last', row);
               // Attach click event handlers to the buttons
               btnViewDetails.on('click', () => {
                 this.viewDetails(data.id, this.templateDetails);
-              });
-
-              btnEdit.on('click', () => {
-                this.editDetails(data.id, this.template);
               });
 
               btnDelete.on('click', () => {
@@ -372,15 +343,15 @@ export class RegisterIntellectualPropertyListComponent implements OnInit {
     });
   }
 
-  editDetails(id: number, template: TemplateRef<any> | undefined) {
+  editDetails(id: number, templateDetails: TemplateRef<any> | undefined) {
     this.initModel();
     this.registerPropertyService._details(id).subscribe({
       next: (response: ResponseResult) => {
         if (response.statusCode == 0) {
-          if (template) {
+          if (templateDetails) {
             this.registerIntecllectualPropertyModel = response.data;
 
-            this.modalRef = this.modalService.show(template, {
+            this.modalRef = this.modalService.show(templateDetails, {
               class: 'gray modal-lg',
             });
           } else {
@@ -497,5 +468,35 @@ export class RegisterIntellectualPropertyListComponent implements OnInit {
     if (url) {
       this.downloadService.downloadFile(url);
     }
+  }
+
+  _translate(name: string): string {
+    let translString = '';
+    switch (name) {
+      case 'BasicInformation':
+        translString =
+          this.globalService.getCurrentLanguage() === 'en'
+            ? 'Basic Information'
+            : 'معلومات أساسية';
+        break;
+
+      case 'ClassifierData':
+        translString =
+          this.globalService.getCurrentLanguage() === 'en'
+            ? 'Classifier Data'
+            : 'بيانات التصنيف';
+        break;
+
+      case 'AuthorData':
+        translString =
+          this.globalService.getCurrentLanguage() === 'en'
+            ? 'Author Data'
+            : 'بيانات المؤلف';
+        break;
+
+      // Add other cases as needed
+    }
+
+    return translString;
   }
 }

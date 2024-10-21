@@ -5,8 +5,8 @@ export const environment = {
   //apiUrl: 'https://mtest.dnrd.ae:8443/InnovationProxyGateway/gateway/',
 
   //***  Localhost ***/
-  apiUrl: 'https://localhost:7010/gateway/',
+  //apiUrl: 'https://localhost:7010/gateway/',
 
   //*** Live Production ***/
-  //apiUrl: 'https://m.dnrd.ae:443/InnovationProxyGateway/gateway/',
+  apiUrl: 'https://m.dnrd.ae:443/InnovationProxyGateway/gateway/',
 };

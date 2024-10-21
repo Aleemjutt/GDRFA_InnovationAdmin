@@ -1,1 +1,11 @@
+.btn-success {
+  background-color: green !important;
+}
 
+.btn-danger {
+  background-color: red !important;
+}
+
+.btn-warning {
+  background-color: powderblue !important;
+}

@@ -5,5 +5,7 @@
   "ID": "ID",
   "Actions": "Actions",
   "AddNew": "Add New",
-  "ChooseFile": "Choose file"
+  "ChooseFile": "Choose file",
+  "AddNewMembership": "Add New Membership",
+  "UpdateMembership": "Update Membership"
 }

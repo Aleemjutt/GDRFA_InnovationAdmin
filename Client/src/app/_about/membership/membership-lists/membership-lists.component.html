@@ -97,14 +97,27 @@
       <div class="row">
         <div class="col-md-6">
           <label for="basiInput" class="form-label">{{
-            "DescriptionEng" | translate
+            "DescriptionEn" | translate
           }}</label>
           <input
             type="input"
             class="form-control"
             id="basiInput"
             [(ngModel)]="membershipModel.descriptionEn"
+            (ngModelChange)="
+              globalService.onInputChange('descriptionEn', $event)
+            "
+            [ngClass]="{
+              'input-error': globalService.dataKeys['descriptionEn']?.isError
+            }"
           />
+          <span
+            *ngIf="globalService.dataKeys['descriptionEn']?.isError"
+            class="text-danger"
+          >
+            <i class="bi bi-exclamation-circle"></i>
+            {{ "Thisfiledisrequired!" | translate }}
+          </span>
         </div>
         <div class="col-md-6">
           <label for="basiInput" class="form-label">{{
@@ -115,7 +128,20 @@
             class="form-control"
             id="basiInput"
             [(ngModel)]="membershipModel.descriptionAr"
+            (ngModelChange)="
+              globalService.onInputChange('descriptionAr', $event)
+            "
+            [ngClass]="{
+              'input-error': globalService.dataKeys['descriptionAr']?.isError
+            }"
           />
+          <span
+            *ngIf="globalService.dataKeys['descriptionAr']?.isError"
+            class="text-danger"
+          >
+            <i class="bi bi-exclamation-circle"></i>
+            {{ "Thisfiledisrequired!" | translate }}
+          </span>
         </div>
       </div>
       <div class="col-md-12 mt-3">

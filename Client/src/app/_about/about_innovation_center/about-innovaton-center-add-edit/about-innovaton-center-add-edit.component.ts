@@ -131,16 +131,31 @@ export class AboutInnovatonCenterAddEditComponent implements OnInit {
       });
   }
 
+  _validateModel(): boolean {
+    return this.globalService.validateModel(this.aboutInnovationCenterModel, [
+      { key: 'aboutDescriptionEn' },
+      { key: 'aboutDescriptionAr' },
+      { key: 'directorNameEn' },
+      { key: 'directorNameAr' },
+    ]);
+  }
+
   addAboutInnovation() {
-    if (this.imagesArray.length > 0) {
-      this.upload();
+    if (this._validateModel()) {
+      if (this.imagesArray.length > 0) {
+        this.upload();
+      } else {
+        this._addAboutInnovation();
+      }
     } else {
-      this._addAboutInnovation();
+      this.tosterService.error(
+        this.globalService.getRequiredFiledErrorMessage()
+      );
     }
   }
 
   _addAboutInnovation() {
-    console.log(this.aboutInnovationCenterModel);
+    //console.log(this.aboutInnovationCenterModel);
     this.aboutInnovationCenterservice
       .addAboutInnovcationCenterDetails(this.aboutInnovationCenterModel)
       .subscribe({
@@ -153,17 +168,20 @@ export class AboutInnovatonCenterAddEditComponent implements OnInit {
       });
   }
 
+  _validateOurGoalsModel(): boolean {
+    return this.globalService.validateModel(this.ourGoalModel, [
+      { key: 'ourGoalAr' },
+      { key: 'ourGoalEn' },
+    ]);
+  }
+
   addItem(): void {
     const datePipe = new DatePipe('en-US');
     const isoFormattedDate = datePipe.transform(
       new Date(),
       'yyyy-MM-ddTHH:mm:ssZ'
     );
-    if (
-      this.ourGoalModel?.ourGoalEn?.trim() !== '' ||
-      (this.ourGoalModel?.ourGoalAr?.trim() !== '' &&
-        this.ourGoalModel !== null)
-    ) {
+    if (this._validateOurGoalsModel()) {
       if (this.ourGoalModel != null)
         this.aboutInnovationCenterModel?.ourGoalsModel?.push(this.ourGoalModel);
       this.ourGoalModel = {
@@ -179,6 +197,13 @@ export class AboutInnovatonCenterAddEditComponent implements OnInit {
     this.aboutInnovationCenterModel?.ourGoalsModel?.splice(index, 1);
   }
 
+  _validateOurValuesModel(): boolean {
+    return this.globalService.validateModel(this.ourValueModel, [
+      { key: 'ourValuesEn' },
+      { key: 'ourValuesAr' },
+    ]);
+  }
+
   addItemValues(): void {
     const datePipe = new DatePipe('en-US');
     const isoFormattedDate = datePipe.transform(
@@ -186,11 +211,7 @@ export class AboutInnovatonCenterAddEditComponent implements OnInit {
       'yyyy-MM-ddTHH:mm:ssZ'
     );
 
-    if (
-      this.ourValueModel?.ourValuesEn?.trim() !== '' ||
-      (this.ourValueModel?.ourValuesAr?.trim() !== '' &&
-        this.ourValueModel != null)
-    ) {
+    if (this._validateOurValuesModel()) {
       if (this.ourValueModel != null)
         this.aboutInnovationCenterModel?.ourValuesModel?.push(
           this.ourValueModel

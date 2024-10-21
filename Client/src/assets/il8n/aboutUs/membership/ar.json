@@ -5,5 +5,7 @@
   "ID": "رقم المرجع",
   "Actions": "اجراء",
   "AddNew": "اضافه جديده",
-  "ChooseFile": "اختر الملف"
+  "ChooseFile": "اختر الملف",
+  "AddNewMembership": "إضافة عضوية جديدة",
+  "UpdateMembership": "تحديث العضوية"
 }

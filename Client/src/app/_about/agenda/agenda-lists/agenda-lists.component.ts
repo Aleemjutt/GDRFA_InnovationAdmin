@@ -291,12 +291,29 @@ export class AgendaListsComponent implements OnInit {
     });
   }
 
+  _validateModel(): boolean {
+    return this.globalService.validateModel(this.agendaModel, [
+      { key: 'headingEn' },
+      { key: 'headingAr' },
+      { key: 'descriptionEn' },
+      { key: 'descriptionAr' },
+      { key: 'date', type: 'date' },
+      { key: 'time', type: 'time' },
+      { key: 'agendaVenue', type: 'select' },
+    ]);
+  }
   add() {
-    if (this.imagesArray.length > 0) {
-      this.upload(0);
+    if (this._validateModel()) {
+      if (this.imagesArray.length > 0) {
+        this.upload(0);
+      } else {
+        // Handle the case where no file is selected.
+        this.addWithFile();
+      }
     } else {
-      // Handle the case where no file is selected.
-      this.addWithFile();
+      this.tosterService.error(
+        this.globalService.getRequiredFiledErrorMessage()
+      );
     }
   }
   addWithFile() {
@@ -321,11 +338,17 @@ export class AgendaListsComponent implements OnInit {
   }
 
   update() {
-    if (this.imagesArray.length > 0) {
-      this.upload(1);
+    if (this._validateModel()) {
+      if (this.imagesArray.length > 0) {
+        this.upload(1);
+      } else {
+        // Handle the case where no file is selected.
+        this.updateAgenda();
+      }
     } else {
-      // Handle the case where no file is selected.
-      this.updateAgenda();
+      this.tosterService.error(
+        this.globalService.getRequiredFiledErrorMessage()
+      );
     }
   }
 

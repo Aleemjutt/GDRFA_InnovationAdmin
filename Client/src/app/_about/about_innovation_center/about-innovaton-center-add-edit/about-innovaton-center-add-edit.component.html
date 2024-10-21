@@ -24,13 +24,58 @@
                     class="textareasize form-control"
                     name="aboutDescriptionAr"
                     [(ngModel)]="aboutInnovationCenterModel.aboutDescriptionEn"
-                  ></textarea>
+                    (ngModelChange)="
+                      globalService.onInputChange('aboutDescriptionEn', $event)
+                    "
+                    [ngClass]="{
+                      'input-error':
+                        globalService.dataKeys['aboutDescriptionEn']?.isError
+                    }"
+                  >
+             
+          
+            <span
+              *ngIf="globalService.dataKeys['aboutDescriptionEn']?.isError"
+              class="text-danger"
+            >
+              <i class="bi bi-exclamation-circle"></i>
+              {{ "Thisfiledisrequired!" | translate }}
+            </span>
+          </div>
+                
+                
+                
+                
+                </textarea
+                  >
                   <label class="mt-3">{{ "AboutCenterAr" | translate }}</label>
                   <textarea
                     class="textareasize form-control"
                     name="aboutDescriptionEn"
                     [(ngModel)]="aboutInnovationCenterModel.aboutDescriptionAr"
-                  ></textarea>
+                    (ngModelChange)="
+                      globalService.onInputChange('aboutDescriptionAr', $event)
+                    "
+                    [ngClass]="{
+                      'input-error':
+                        globalService.dataKeys['aboutDescriptionAr']?.isError
+                    }"
+                  >
+             
+          
+            <span
+              *ngIf="globalService.dataKeys['aboutDescriptionAr']?.isError"
+              class="text-danger"
+            >
+              <i class="bi bi-exclamation-circle"></i>
+              {{ "Thisfiledisrequired!" | translate }}
+            </span>
+          </div>
+                
+                
+                
+                </textarea
+                  >
                 </div>
               </tab>
 
@@ -124,18 +169,56 @@
                           [(ngModel)]="
                             aboutInnovationCenterModel.directorNameEn
                           "
+                          (ngModelChange)="
+                            globalService.onInputChange(
+                              'directorNameEn',
+                              $event
+                            )
+                          "
+                          [ngClass]="{
+                            'input-error':
+                              globalService.dataKeys['directorNameEn']?.isError
+                          }"
                         />
+                        <span
+                          *ngIf="
+                            globalService.dataKeys['directorNameEn']?.isError
+                          "
+                          class="text-danger"
+                        >
+                          <i class="bi bi-exclamation-circle"></i>
+                          {{ "Thisfiledisrequired!" | translate }}
+                        </span>
                         <label for="name" class="mt-3">{{
                           "DirectorNameAr" | translate
                         }}</label>
-                        <textarea
+                        <input
                           type=" text"
                           class="form-control"
                           name="directorNameAr"
                           [(ngModel)]="
                             aboutInnovationCenterModel.directorNameAr
                           "
-                        ></textarea>
+                          (ngModelChange)="
+                            globalService.onInputChange(
+                              'directorNameAr',
+                              $event
+                            )
+                          "
+                          [ngClass]="{
+                            'input-error':
+                              globalService.dataKeys['directorNameAr']?.isError
+                          }"
+                        />
+                        <span
+                          *ngIf="
+                            globalService.dataKeys['directorNameAr']?.isError
+                          "
+                          class="text-danger"
+                        >
+                          <i class="bi bi-exclamation-circle"></i>
+                          {{ "Thisfiledisrequired!" | translate }}
+                        </span>
                       </div>
                       <div class="col-md-12">
                         <label>{{ "DirectorProfilePhoto" | translate }}</label>
@@ -496,7 +579,21 @@
                             aria-describedby="button-addon1"
                             name="ourGoalAr"
                             [(ngModel)]="ourGoalModel.ourGoalAr"
+                            (ngModelChange)="
+                              globalService.onInputChange('ourGoalAr', $event)
+                            "
+                            [ngClass]="{
+                              'input-error':
+                                globalService.dataKeys['ourGoalAr']?.isError
+                            }"
                           />
+                          <span
+                            *ngIf="globalService.dataKeys['ourGoalAr']?.isError"
+                            class="text-danger"
+                          >
+                            <i class="bi bi-exclamation-circle"></i>
+                            {{ "Thisfiledisrequired!" | translate }}
+                          </span>
                         </div>
 
                         <div class="input-group mb-3">
@@ -513,7 +610,21 @@
                             aria-describedby="button-addon1"
                             name="ourGoalEn"
                             [(ngModel)]="ourGoalModel.ourGoalEn"
+                            (ngModelChange)="
+                              globalService.onInputChange('ourGoalEn', $event)
+                            "
+                            [ngClass]="{
+                              'input-error':
+                                globalService.dataKeys['ourGoalEn']?.isError
+                            }"
                           />
+                          <span
+                            *ngIf="globalService.dataKeys['ourGoalEn']?.isError"
+                            class="text-danger"
+                          >
+                            <i class="bi bi-exclamation-circle"></i>
+                            {{ "Thisfiledisrequired!" | translate }}
+                          </span>
                           <div class="input-group-append">
                             <button
                               class="btn btn-outline-secondary"
@@ -581,7 +692,23 @@
                             aria-describedby="button-addon1"
                             [(ngModel)]="ourValueModel.ourValuesAr"
                             name="ourValuesAr"
+                            (ngModelChange)="
+                              globalService.onInputChange('ourValuesAr', $event)
+                            "
+                            [ngClass]="{
+                              'input-error':
+                                globalService.dataKeys['ourValuesAr']?.isError
+                            }"
                           />
+                          <span
+                            *ngIf="
+                              globalService.dataKeys['ourValuesAr']?.isError
+                            "
+                            class="text-danger"
+                          >
+                            <i class="bi bi-exclamation-circle"></i>
+                            {{ "Thisfiledisrequired!" | translate }}
+                          </span>
                         </div>
 
                         <div class="input-group mb-3">
@@ -598,7 +725,23 @@
                             aria-describedby="button-addon1"
                             [(ngModel)]="ourValueModel.ourValuesEn"
                             name="ourValuesEn"
+                            (ngModelChange)="
+                              globalService.onInputChange('ourValuesEn', $event)
+                            "
+                            [ngClass]="{
+                              'input-error':
+                                globalService.dataKeys['ourValuesEn']?.isError
+                            }"
                           />
+                          <span
+                            *ngIf="
+                              globalService.dataKeys['ourValuesEn']?.isError
+                            "
+                            class="text-danger"
+                          >
+                            <i class="bi bi-exclamation-circle"></i>
+                            {{ "Thisfiledisrequired!" | translate }}
+                          </span>
                           <div class="input-group-append">
                             <a
                               class="btn btn-outline-secondary"

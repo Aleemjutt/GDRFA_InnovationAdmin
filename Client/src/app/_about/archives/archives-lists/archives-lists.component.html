@@ -118,7 +118,18 @@
               class="form-control"
               id="basiInput"
               [(ngModel)]="archivesModel.titleEn"
+              (ngModelChange)="globalService.onInputChange('titleEn', $event)"
+              [ngClass]="{
+                'input-error': globalService.dataKeys['titleEn']?.isError
+              }"
             />
+            <span
+              *ngIf="globalService.dataKeys['titleEn']?.isError"
+              class="text-danger"
+            >
+              <i class="bi bi-exclamation-circle"></i>
+              {{ "Thisfiledisrequired!" | translate }}
+            </span>
           </div>
         </div>
         <div class="col-md-12">
@@ -131,7 +142,22 @@
               class="form-control"
               id="basiInput"
               [(ngModel)]="archivesModel.descriptionEn"
-            ></textarea>
+              (ngModelChange)="
+                globalService.onInputChange('descriptionEn', $event)
+              "
+              [ngClass]="{
+                'input-error': globalService.dataKeys['descriptionEn']?.isError
+              }"
+            >
+            <span
+            *ngIf="globalService.dataKeys['descriptionEn']?.isError"
+            class="text-danger"
+          >
+            <i class="bi bi-exclamation-circle"></i>
+            {{ "Thisfiledisrequired!" | translate }}
+          </span>
+          </textarea
+            >
           </div>
         </div>
         <div class="col-md-12">
@@ -144,7 +170,18 @@
               class="form-control"
               id="basiInput"
               [(ngModel)]="archivesModel.titleAr"
+              (ngModelChange)="globalService.onInputChange('titleAr', $event)"
+              [ngClass]="{
+                'input-error': globalService.dataKeys['titleAr']?.isError
+              }"
             />
+            <span
+              *ngIf="globalService.dataKeys['titleAr']?.isError"
+              class="text-danger"
+            >
+              <i class="bi bi-exclamation-circle"></i>
+              {{ "Thisfiledisrequired!" | translate }}
+            </span>
           </div>
         </div>
         <div class="col-md-12">
@@ -157,7 +194,22 @@
               class="form-control"
               id="basiInput"
               [(ngModel)]="archivesModel.descriptionAr"
-            ></textarea>
+              (ngModelChange)="
+                globalService.onInputChange('descriptionAr', $event)
+              "
+              [ngClass]="{
+                'input-error': globalService.dataKeys['descriptionAr']?.isError
+              }"
+            >
+
+            <span
+            *ngIf="globalService.dataKeys['descriptionAr']?.isError"
+            class="text-danger"
+          >
+            <i class="bi bi-exclamation-circle"></i>
+            {{ "Thisfiledisrequired!" | translate }}
+          </span>
+            </textarea>
           </div>
         </div>
       </div>

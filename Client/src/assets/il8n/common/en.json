@@ -18,11 +18,18 @@
   "Innovation": "Innovation",
   "Status": "Status",
   "Submitted": "Submitted",
-  "In Review": "In Review",
-  "Approved": "Approved",
   "Rejected": "Rejected",
+
+  "Approved": "Approved",
+  "ModificationRequired": "Modification Required",
+  "UnderProcesses": "Under Processes ",
+  "Returned": "Returned",
+  "Accept": "Accept",
+  "InReview": "In Review",
   "ChooseFile": "Choose file",
   "Choosefile": "Choose file",
   "InActive": "InActive",
-  "Active": "Active"
+  "Active": "Active",
+  "Reject": "Reject",
+  "Modify": "Modify"
 }

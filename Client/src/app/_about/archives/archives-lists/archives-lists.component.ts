@@ -36,7 +36,7 @@ export class ArchivesListsComponent {
     private tosterService: ToastrService,
     private modalService: BsModalService,
     private archivesService: ArchivesService,
-    private globalService: GlobalServiceService
+    public globalService: GlobalServiceService
   ) {
     this.languageChangeSubscription = new Subscription();
   }
@@ -190,33 +190,53 @@ export class ArchivesListsComponent {
         }, 1);
       });
   }
+  _validateModel(): boolean {
+    return this.globalService.validateModel(this.archivesModel, [
+      { key: 'titleEn' },
+      { key: 'titleAr' },
+      { key: 'descriptionAr' },
+      { key: 'descriptionEn' },
+    ]);
+  }
 
   add() {
-    this.archivesService.addArchives(this.archivesModel).subscribe({
-      next: (response: ResponseResult) => {
-        if (response.statusCode == 0) {
-          this.modalRef?.hide();
-          this.tosterService.success(response.message);
-          this.initilizeDataTable();
-        } else {
-          this.tosterService.error(response.message);
-        }
-      },
-    });
+    if (this._validateModel()) {
+      this.archivesService.addArchives(this.archivesModel).subscribe({
+        next: (response: ResponseResult) => {
+          if (response.statusCode == 0) {
+            this.modalRef?.hide();
+            this.tosterService.success(response.message);
+            this.initilizeDataTable();
+          } else {
+            this.tosterService.error(response.message);
+          }
+        },
+      });
+    } else {
+      this.tosterService.error(
+        this.globalService.getRequiredFiledErrorMessage()
+      );
+    }
   }
 
   update() {
-    this.archivesService.updateArchives(this.archivesModel).subscribe({
-      next: (response: ResponseResult) => {
-        if (response.statusCode == 0) {
-          this.modalRef?.hide();
-          this.tosterService.success(response.message);
-          this.initilizeDataTable();
-        } else {
-          this.tosterService.error(response.message);
-        }
-      },
-    });
+    if (this._validateModel()) {
+      this.archivesService.updateArchives(this.archivesModel).subscribe({
+        next: (response: ResponseResult) => {
+          if (response.statusCode == 0) {
+            this.modalRef?.hide();
+            this.tosterService.success(response.message);
+            this.initilizeDataTable();
+          } else {
+            this.tosterService.error(response.message);
+          }
+        },
+      });
+    } else {
+      this.tosterService.error(
+        this.globalService.getRequiredFiledErrorMessage()
+      );
+    }
   }
 
   viewarchivesDetails(

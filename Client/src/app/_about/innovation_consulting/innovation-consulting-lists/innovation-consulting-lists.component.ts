@@ -50,24 +50,47 @@ export class InnovationConsultingListsComponent implements OnInit {
     this.details();
   }
 
+  _validateModel(): boolean {
+    return this.globalService.validateModel(this.consultingForm?.value, [
+      { key: 'toolFreeNumber' },
+      { key: 'twitterUrl' },
+      { key: 'instagramUrl' },
+      { key: 'facebookUrl' },
+      { key: 'submitSuggestion' },
+      { key: 'amirChart' },
+      { key: 'contactGeneralManager' },
+      { key: 'instantVideoCall' },
+      { key: 'email', type: 'email' },
+      { key: 'internationalPhoneNumber', type: 'phoneNumber' },
+      { key: 'postalAddress' },
+      { key: 'headquaterLocation' },
+    ]);
+  }
+
   saveDetails() {
-    console.log(this.consultingForm?.value);
-    if (this.consultingForm?.value.id == 0) {
-      this.innovationConsutling
-        .addinnovationConsulting(this.consultingForm?.value)
-        .subscribe({
-          next: (response: ResponseResult) => {
-            if (response.statusCode == 0) {
-              this.tosterService.success(response.message);
-            } else {
-              this.tosterService.error(response.message);
-            }
-          },
-        });
+    if (this._validateModel()) {
+      console.log(this.consultingForm?.value);
+      if (this.consultingForm?.value.id == 0) {
+        this.innovationConsutling
+          .addinnovationConsulting(this.consultingForm?.value)
+          .subscribe({
+            next: (response: ResponseResult) => {
+              if (response.statusCode == 0) {
+                this.tosterService.success(response.message);
+              } else {
+                this.tosterService.error(response.message);
+              }
+            },
+          });
+      } else {
+        this.consultingModel.id = this.consultingForm?.value.id;
+        console.log(this.consultingModel.id, 'id');
+        this.updateDetails(this.consultingForm?.value);
+      }
     } else {
-      this.consultingModel.id = this.consultingForm?.value.id;
-      console.log(this.consultingModel.id, 'id');
-      this.updateDetails(this.consultingForm?.value);
+      this.tosterService.error(
+        this.globalService.getRequiredFiledErrorMessage()
+      );
     }
   }
 

@@ -14,12 +14,14 @@ import {
 } from '../_models/knowledge/researchAndStudies';
 import { ResearchAreaCategory } from '../_models/ResearchCenter/presentation';
 import {
+  AccommodationType,
   AuthorNature,
   AuthorType,
   DataKeys,
   StatusCode,
   WorkbookType,
 } from '../_models/Common/enumsConnon';
+import { __values } from 'tslib';
 
 @Injectable({
   providedIn: 'root',
@@ -486,7 +488,40 @@ export class GlobalServiceService implements OnInit {
     return authorTypeName;
   }
 
-  getCountryName(countryValue: number| null) {
+  getAccomodationType(accommodationType: AccommodationType | null) {
+    let accommodationTypeName = '';
+    const language = this.getCurrentLanguage();
+
+    switch (accommodationType) {
+      case 0:
+        accommodationTypeName = language === 'en' ? 'Non' : 'غير';
+        break;
+      case 1:
+        accommodationTypeName = language === 'en' ? 'Citizen' : 'مواطن';
+        break;
+      case 2:
+        accommodationTypeName = language === 'en' ? 'Resident' : 'مقيم';
+        break;
+      case 3:
+        accommodationTypeName = language === 'en' ? 'Visitor' : 'زائر';
+        break;
+      case 4:
+        accommodationTypeName =
+          language === 'en'
+            ? 'Citizen of Gulf Cooperation Council Countries'
+            : 'مواطن من دول مجلس التعاون الخليجي';
+        break;
+      case 5:
+        accommodationTypeName = language === 'en' ? 'Other' : 'آخر';
+        break;
+
+      default:
+        accommodationTypeName = language === 'en' ? 'Unknown' : 'غير معروف';
+    }
+
+    return accommodationTypeName;
+  }
+  getCountryName(countryValue: number | null) {
     let countryName = '';
     const language = this.getCurrentLanguage();
 
@@ -1286,8 +1321,69 @@ export class GlobalServiceService implements OnInit {
     if (type === 'date') {
       return !this.isValidDate(value);
     }
+    if (type === 'select') {
+      return !this.isHasValidValue(value);
+    }
+
+    if (type === 'time') {
+      return !this.isHasValidValue(value);
+    }
+    if (type == 'phoneNumber') {
+      return !this.isValidPhoneNumber(value);
+    }
+    if (type == 'email') {
+      return !this.isValidEmail(value);
+    }
 
     return !value || !value.trim(); // Default to checking for empty strings
+  }
+
+  isValidEmail(value: string): boolean {
+    // Check if the value is undefined or empty
+    if (value === undefined || value === '') {
+      return false;
+    }
+
+    // Regular expression to match a standard email format
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+    // Test the value against the pattern
+    return emailPattern.test(value);
+  }
+
+  isHasValidValue(value: string): boolean {
+    let isValid = true;
+    if (value == undefined || value == '') {
+      isValid = false;
+    }
+
+    return isValid;
+  }
+
+  isValidValueTime(value: string): boolean {
+    // Check if the value is undefined or empty
+    if (value === undefined || value === '') {
+      return false;
+    }
+
+    // Regular expression to match time in HH:MM format
+    const timePattern = /^([01]\d|2[0-3]):([0-5]\d)$/;
+
+    // Test the value against the pattern
+    return timePattern.test(value);
+  }
+
+  isValidPhoneNumber(value: string): boolean {
+    // Check if the value is undefined or empty
+    if (value === undefined || value === '') {
+      return false;
+    }
+
+    // Regular expression to match an international phone number
+    const phonePattern = /^\+?(\d{1,3})?0*(\d{1,4})\d{7,10}$/;
+
+    // Test the value against the pattern
+    return phonePattern.test(value);
   }
 
   // Helper method to check if a date is valid
@@ -1352,6 +1448,12 @@ export class GlobalServiceService implements OnInit {
         this.dataKeys[key].isError = false;
       }
     }
+  }
+
+  getRequiredFiledErrorMessage(): string {
+    return this.getCurrentLanguage() === 'en'
+      ? 'Some of the fields are required!'
+      : 'بعض الحقول مطلوبة!';
   }
 
   // onInputChange(key: string, value: any): void {

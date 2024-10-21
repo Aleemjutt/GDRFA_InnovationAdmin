@@ -15,12 +15,13 @@
   "MobileNo": "MobileNo",
   "OfficeNo": "OfficeNo",
   "Address": "Address",
-  "Employeehappiness": "Employeehappiness",
-  "ImprovingServices": "ImprovingServices",
-  "Rationalizationofexpenses": "Rationalizationofexpenses",
-  "Customerhappiness": "Customerhappiness",
-  "Informationabouttechnologydevelopment": "Informationabouttechnologydevelopment",
+  "Employeehappiness": "Employee happiness",
+  "ImprovingServices": "Improving Services",
+  "Rationalizationofexpenses": "Rationalizationo fexpenses",
+  "Customerhappiness": "Customer happiness",
+  "Informationabouttechnologydevelopment": "Information about technology development",
   "Attachments": "Attachments",
   "Download": "Download",
-  "No": "File No"
+  "No": "File No",
+  "Findingnewsourcesoffunding": "Finding new sources of funding"
 }

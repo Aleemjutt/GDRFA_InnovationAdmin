@@ -16,12 +16,21 @@
   "Loading...": "تحميل...",
   "Innovation": "الابتكار",
   "Status": "الحالة",
-  "Submitted": "مقدم",
-  "InReview": "قيد المراجعة",
-  "Approved": "موافق عليه",
+
+  "Submitted": "تم التقديم",
   "Rejected": "مرفوض",
+
+  "Approved": "موافق عليه",
+  "ModificationRequired": "تعديل مطلوب",
+  "UnderProcesses": "قيد المعالجة",
+  "Returned": "مرتجع",
+  "Accept": "قبول",
+  "InReview": "قيد المراجعة",
+
   "ChooseFile": "اختر ملف",
   "Choosefile": "اختر ملف",
   "InActive": "غير نشط",
-  "Active": "نشط"
+  "Active": "نشط",
+  "Reject": "رفض",
+  "Modify": "تعديل"
 }

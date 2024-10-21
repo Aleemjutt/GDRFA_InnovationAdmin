@@ -21,10 +21,16 @@
                 aria-label="Default select example"
               >
                 <option selected>{{ "Status" | translate }}</option>
-                <option value="1">{{ "Submitted" | translate }}</option>
-                <option value="2">{{ "InReview" | translate }}</option>
-                <option value="3">{{ "Approved" | translate }}</option>
-                <option value="4">{{ "Rejected" | translate }}</option>
+                <option [value]="0">{{ "Submitted" | translate }}</option>
+                <option [value]="1">{{ "Rejected" | translate }}</option>
+                <option [value]="2">{{ "Approved" | translate }}</option>
+                <option [value]="3">
+                  {{ "ModificationRequired" | translate }}
+                </option>
+                <option [value]="4">{{ "UnderProcesses" | translate }}</option>
+
+                <option [value]="5">{{ "Returned" | translate }}</option>
+                <option [value]="6">{{ "Accept" | translate }}</option>
               </select>
               <button
                 type="button"
@@ -124,6 +130,7 @@
                       id="defaultCheck1"
                       disabled
                       [(ngModel)]="ideaSubmitModel.employeehappiness"
+                      [checked]="ideaSubmitModel.employeehappiness"
                     />
                     <label
                       class="form-check-label text-dark"
@@ -140,6 +147,7 @@
                       id="defaultCheck1"
                       disabled
                       [(ngModel)]="ideaSubmitModel.improvingservices"
+                      [checked]="ideaSubmitModel.improvingservices"
                     />
                     <label
                       class="form-check-label text-dark"
@@ -156,6 +164,7 @@
                       id="defaultCheck1"
                       disabled
                       [(ngModel)]="ideaSubmitModel.rationalizationofexpenses"
+                      [checked]="ideaSubmitModel.rationalizationofexpenses"
                     />
                     <label
                       class="form-check-label text-dark"
@@ -172,6 +181,7 @@
                       id="defaultCheck1"
                       disabled
                       [(ngModel)]="ideaSubmitModel.customerhappiness"
+                      [checked]="ideaSubmitModel.customerhappiness"
                     />
                     <label
                       class="form-check-label text-dark"
@@ -190,6 +200,9 @@
                       [(ngModel)]="
                         ideaSubmitModel.informationabouttechnologydevelopment
                       "
+                      [checked]="
+                        ideaSubmitModel.informationabouttechnologydevelopment
+                      "
                     />
                     <label
                       class="form-check-label text-dark"
@@ -206,6 +219,7 @@
                       id="defaultCheck1"
                       disabled
                       [(ngModel)]="ideaSubmitModel.findindnewsourcesoffinancing"
+                      [checked]="ideaSubmitModel.findindnewsourcesoffinancing"
                     />
                     <label
                       class="form-check-label text-dark"
@@ -314,12 +328,18 @@
           <label for="basiInput" class="form-label text-muted mb-0">{{
             "Date" | translate
           }}</label>
-          <div>{{ ideaSubmitModel?.createdDate }}</div>
+          <div>
+            {{
+              globalService.ConvertDateTimeToDateOnly(
+                ideaSubmitModel?.createdDate || null
+              )
+            }}
+          </div>
         </div>
         <div class="col-md-4">
-          <label for="basiInput" class="form-label text-muted mb-0"
-            >{{ "" | translate }}Status</label
-          >
+          <label for="basiInput" class="form-label text-muted mb-0">{{
+            "Status" | translate
+          }}</label>
           <div *ngIf="ideaSubmitModel?.workFlowStatus == 6">
             <div class="text-success badge badge-soft-success fs-12 fw-regular">
               {{ ideaSubmitModel?.workFlowStatusName }}
@@ -523,13 +543,12 @@
             <input
               class="form-check-input"
               type="checkbox"
-              id="employeeHappinessCheckbox"
               [checked]="ideaSubmitModel?.improvingservices"
             />
 
-            <label class="form-check-label" for="employeeHappinessCheckbox"
-              >إيجاد مصادر جديدة للتمويل</label
-            >
+            <label class="form-check-label" for="improvingservices"
+              >{{ "Findingnewsourcesoffunding" | translate }}
+            </label>
           </div>
         </div>
       </div>
@@ -643,7 +662,7 @@
 
       <div
         class="button-container"
-        *ngIf="ideaSubmitModel?.status != enum.UnderProcesses"
+        *ngIf="ideaSubmitModel?.workFlowStatus != enum.UnderProcesses"
       >
         <button
           type="button"

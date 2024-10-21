@@ -24,7 +24,7 @@ export class TypeOfPropertiesComponent implements OnInit {
   typeOfPropertyModelList = [];
   // Model: Model | undefined = undefined;
   typeOfPropertyModel: any;
-  @ViewChild('template') template: TemplateRef<any> | undefined;
+  @ViewChild('templateEdit') templateEdit: TemplateRef<any> | undefined;
   @ViewChild('templateDetails') templateDetails: TemplateRef<any> | undefined;
   registerForm!: FormGroup;
   pondFiles: FilePondOptions['files'] = [];
@@ -196,7 +196,7 @@ export class TypeOfPropertiesComponent implements OnInit {
               });
 
               btnEdit.on('click', () => {
-                this.editDetails(data.id, this.template);
+                this.editDetails(data.id, this.templateEdit);
               });
 
               btnDelete.on('click', () => {
@@ -212,12 +212,25 @@ export class TypeOfPropertiesComponent implements OnInit {
       });
   }
 
+  _validateModel(): boolean {
+    return this.globalService.validateModel(this.typeOfPropertyModel, [
+      { key: 'typeNameEn' },
+      { key: 'typeNameAr' },
+    ]);
+  }
+
   add() {
-    if (this.file != null) {
-      this.upload(this.file, 0);
-    } else {
-      // Handle the case where no file is selected.
-      this.addWithFile();
+    if (this._validateModel())
+      if (this.file != null) {
+        this.upload(this.file, 0);
+      } else {
+        // Handle the case where no file is selected.
+        this.addWithFile();
+      }
+    else {
+      this.tosterService.error(
+        this.globalService.getRequiredFiledErrorMessage()
+      );
     }
   }
   addWithFile() {
@@ -240,11 +253,17 @@ export class TypeOfPropertiesComponent implements OnInit {
   }
 
   update() {
-    if (this.file != null) {
-      this.upload(this.file, 1);
+    if (this._validateModel()) {
+      if (this.file != null) {
+        this.upload(this.file, 1);
+      } else {
+        // Handle the case where no file is selected.
+        this._update();
+      }
     } else {
-      // Handle the case where no file is selected.
-      this._update();
+      this.tosterService.error(
+        this.globalService.getRequiredFiledErrorMessage()
+      );
     }
   }
   _update() {

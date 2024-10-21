@@ -212,12 +212,24 @@ export class AwardsListsComponent implements OnInit {
     });
   }
 
+  _validateModel(): boolean {
+    return this.globalService.validateModel(this.awardDetailModel, [
+      { key: 'awardClassification', type: 'select' },
+      { key: 'year', type: 'select' },
+    ]);
+  }
   add() {
-    if (this.file != null) {
-      this.upload(this.file, 0);
+    if (this._validateModel()) {
+      if (this.file != null) {
+        this.upload(this.file, 0);
+      } else {
+        // Handle the case where no file is selected.
+        this.addWithFile();
+      }
     } else {
-      // Handle the case where no file is selected.
-      this.addWithFile();
+      this.tosterService.error(
+        this.globalService.getRequiredFiledErrorMessage()
+      );
     }
   }
   addWithFile() {
@@ -237,11 +249,17 @@ export class AwardsListsComponent implements OnInit {
   }
 
   update() {
-    if (this.file != null) {
-      this.upload(this.file, 1);
+    if (this._validateModel()) {
+      if (this.file != null) {
+        this.upload(this.file, 1);
+      } else {
+        // Handle the case where no file is selected.
+        this.updatepartner();
+      }
     } else {
-      // Handle the case where no file is selected.
-      this.updatepartner();
+      this.tosterService.error(
+        this.globalService.getRequiredFiledErrorMessage()
+      );
     }
   }
 
