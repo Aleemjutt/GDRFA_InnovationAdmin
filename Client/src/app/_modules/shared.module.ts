@@ -7,11 +7,11 @@ import { DataTablesModule } from 'angular-datatables';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { TabsModule } from 'ngx-bootstrap/tabs';
 import { BrowserModule } from '@angular/platform-browser';
 import { FilePondModule } from 'ngx-filepond';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
+import { TranslateModule } from '@ngx-translate/core';
 @NgModule({
   declarations: [],
   imports: [
@@ -20,7 +20,6 @@ import { AccordionModule } from 'ngx-bootstrap/accordion';
     BsDropdownModule.forRoot(),
     DataTablesModule,
     NgSelectModule,
-    TabsModule.forRoot(),
     ToastrModule.forRoot({
       positionClass: 'toast-top-right',
       closeButton: true,
@@ -36,6 +35,7 @@ import { AccordionModule } from 'ngx-bootstrap/accordion';
     BsDatepickerModule.forRoot(),
     AccordionModule.forRoot(),
     CommonModule,
+    //TranslateModule,
   ],
 
   exports: [
@@ -46,10 +46,11 @@ import { AccordionModule } from 'ngx-bootstrap/accordion';
     NgSelectModule,
     NgxChartsModule,
     BrowserAnimationsModule,
-    TabsModule,
+
     FilePondModule,
     BsDatepickerModule,
     AccordionModule,
+    //TranslateModule,
   ],
 })
 export class SharedModule {}

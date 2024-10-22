@@ -15,7 +15,6 @@ import { ResponseResult } from 'src/app/_models/responseResult';
 import { AboutService } from 'src/app/_services/_about/about.service';
 import { UploadServiceService } from 'src/app/_services/upload-service.service';
 import { GlobalServiceService } from 'src/app/_global/-global-service.service';
-
 @Component({
   selector: 'app-about-innovaton-center-add-edit',
   standalone: false,

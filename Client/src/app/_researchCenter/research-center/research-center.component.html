@@ -9,8 +9,8 @@
         </div>
         <div class="card-body" *ngIf="researchAreaModel">
           <form #editForm="ngForm" id="editForm" (ngSubmit)="add()">
-            <tabset>
-              <tab [heading]="getTabName(1)">
+            <mat-tab-group>
+              <mat-tab [label]="getTabName(1)">
                 <div class="row mt-3">
                   <label>{{ "AbouttheCenterEn" | translate }}</label>
                   <textarea
@@ -71,9 +71,9 @@
                 </textarea
                   >
                 </div>
-              </tab>
+              </mat-tab>
 
-              <tab [heading]="getTabName(2)">
+              <mat-tab [label]="getTabName(2)">
                 <div class="row mt-3">
                   <label
                     >{{ "PresentingScientificResearchEn" | translate }}
@@ -212,8 +212,8 @@
                     </div>
                   </div>
                 </div>
-              </tab>
-            </tabset>
+              </mat-tab>
+            </mat-tab-group>
             <button
               type="submit"
               class="btn btn-danger waves-effect waves-light ms-2 col-3 pull-right mt-2"

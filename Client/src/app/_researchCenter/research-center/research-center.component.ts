@@ -15,14 +15,14 @@ import {
   ResearchCenterInfoModel,
 } from 'src/app/_models/ResearchCenter/researchCneterInfo';
 import { ResearchCenterService } from 'src/app/_services/_researchCenter/research-center.service';
-import { TabComponent } from 'ngx-tabset';
-import { TabsModule } from 'ngx-bootstrap/tabs';
+
 import { TranslateModule } from '@ngx-translate/core';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @Component({
   selector: 'app-research-center',
   standalone: true,
-  imports: [CommonModule, FormsModule, TabsModule, TranslateModule],
+  imports: [CommonModule, FormsModule, MatTabsModule, TranslateModule],
   templateUrl: './research-center.component.html',
   styleUrl: './research-center.component.css',
 })
